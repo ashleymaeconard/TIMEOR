@@ -1,0 +1,368 @@
+<img src="https://github.com/ashleymaeconard/TIMEOR_App/blob/master/app/www/timeor_logo.png" height="150">
+
+### Trajectory Inference and Mechanism Exploration with Omics in R
+
+####  Author: Ashley Mae Conard
+
+Motivation
+==========
+
+[Here is a video of TIMEOR.]()
+
+Analyzing time series differential gene expression and other multi-omics
+data is computationally laborious and full of complex choices for the
+various types of time series experiment analyses. The TIMEOR
+web-application offers a solution as an interactive and adaptive R-Shiny
+web interface to **support reproducibility and the best tools for a given
+experimental design**. 
+
+TIMEOR can take in either raw .fastq files or a raw
+pre-computed count matrix (genes by samples), and after answering six
+questions about your experiment, **performs all analysis from quality
+control and differential gene expression to gene trajectory clustering
+and transcription factor gene regulatory network construction**. TIMEOR
+also suggests and allows users to integrate ChIP-seq data from ENCODE to
+help vialidate predicted transcription factors binding to gene clusters.
+Through a suite of published and novel methods, TIMEOR guides the user
+through 3 stages, suggesting adaptive default methods and comparing
+results for multiple normalization, alignment, and differential
+expression (DE) methods. Those stages are **Pre-processing (generating
+count matrix, normalizing and correcting data), Primary Analysis (DE and
+gene trajectory clustersing) and Secondary Analysis (enrichment, factor
+binding, and temporal relations)**. 
+
+TIMEOR’s **interactive data visualizations and publication-ready figures 
+streamline the process of time series data analysis and assist the user 
+to design follow-up experiments**. At any point in the analysis, the user 
+can scroll down and click **“Save your place”** to return to analysis later. 
+The web server is **completely free**, and will be accessible at 
+[timeor.org](timeor.org). It is **now available** through both a Conda 
+environment and Docker.
+
+Overview
+========
+
+The TIMEOR software gives users an intuitive web platform with which to
+upload their raw data and step through the entire temporal differential gene
+expression and gene dynamics analysis pipeline. The application is organized into three
+separate stages: Pre-processing, Primary Analysis, and Secondary Analysis.
+
+<p>
+ 
+</p>
+<center>
+<img src="https://github.com/ashleymaeconard/TIMEOR_App/blob/master/app/www/timeor_steps.png" style="width:95.0%" />
+</center>
+<p>
+ 
+</p>
+
+A.  **Pre-processing: Gather and configure time series RNA-seq data**.
+    The user can choose to process raw data (.fastq files) using a GEO
+    identifier, or upload a raw count matrix (genes by samples). TIMEOR
+    then automatically chooses from several methods with which to
+    perform quality control, alignment, and produce a count matrix. The
+    user can then choose between several methods to normalize and
+    correct the data.
+
+B.  **Primary Analysis: Use methods to perform differential gene
+    expression analysis and determine gene trajectory clusters**. TIMEOR
+    provides two continuous and one categorical DE method for the user.
+    Specifically, DE genes are determined using one or more of
+    [ImpulseDE2](https://bioconductor.org/packages/release/bioc/html/ImpulseDE2.html),
+    [Next
+    maSigPro](https://www.bioconductor.org/packages/release/bioc/html/maSigPro.html)
+    and/or
+    [DESeq2](http://bioconductor.org/packages/release/bioc/html/DESeq2.html),
+    depending on your answers to questions in the Pre-processing stage.
+    The user can then compare (via Venn diagram) the DE results between
+    methods with a previous study of their choice to determine which DE
+    method results to use for downstream analysis. The user can toggle
+    between methods to determine which results produce the most
+    resonable results to pass on to the next Secondary Analysis. TIMEOR
+    then automatically clusters and creates an interactive clustermap of
+    the selected DE gene trajectories over time. The user can choose a
+    different number of clusters if desired.
+
+C.  **Secondary Analysis: Assess enrichment, factor binding, and
+    temporal relations**. The user can analyze the gene trajectory
+    clusters using three categories of analysis in different tabs:
+    Enrichment, identifies the genes and gene types that are
+    over-represented within each cluster; Factor Binding, predicts which
+    TFs are post-transcriptionally influencing the expression of each
+    gene cluster using motif and ChIP-seq data; and Temporal Relations,
+    identifies transcription factor regulatory network.
+
+Installation
+============
+
+After cloning the TIMEOR repo from GitHub
+(<a href="https://github.com/ashleymaeconard/TIMEOR.git" class="uri">https://github.com/ashleymaeconard/TIMEOR.git</a>)
+
+### Conda Environment
+
+1. Install miniconda2
+2. Type `$eval "$(/PATH/TO/miniconda2/bin/conda shell.bash hook)"`
+3. Locate packages.yml in /TIMEOR\_App/
+4. Type `$conda env create -f packages.yml`
+5. Type `$conda activate timeor_conda_env`
+6. Type `$R`
+7. In R
+    1. Type `>library(shiny)`
+    2. Type `>runApp("app/", launch.browser=F)`
+    3. Go to brownser URL from R output
+        (e.g. <a href="http://127.0.0.1:3681" class="uri">http://127.0.0.1:3681</a>
+        )
+
+### Docker
+
+1. Building Docker image:
+    1. `docker build -t timeor .`
+2. Running Docker:
+    1. `docker run -p 9000:3838 timeor`
+    2. Shiny server will be running on port 9000
+
+Run TIMEOR
+===================
+
+Two ways:
+-   Import **SraRunTable from GEO**\* where TIMEOR will process raw data
+    through retrieving .fastq files, quality control, alignment, and
+    read count matrix creation
+-   Import **metadata file\*\* and count matrix \*\*\*** (skipping raw
+    data retrieval, quality control, alignment, and read count matrix
+    creation) and proceeding straight to normalization and correction
+
+Then simply follow the prompts. Fill out the **grey** boxes to begin
+interacting with each stage and tab. Follow demo **Run TIMEOR Using
+Simulated Data** below.
+
+### Input file types
+
+-   \* **SraRunTable from GEO** follow instructions in TIMEOR first tab
+    (“Process Raw Data”)
+-   \*\* **metadata file** requires at least these columns.
+    -   *ID, condition, time, batch*
+        -   *ID*: a unique identifier (ID) for the user
+            (e.g. case\_1min\_rep1)
+        -   *condition*: one word description (e.g. case, control)
+        -   *time*: numerical values e.g. (0, 20, 40)
+        -   *batch*: string description of batch (e.g. b1, b2, b3)
+-   \*\*\* **count matrix** : rows should be unique gene identifiers
+    (e.g. Flybase, Ensembl or Entrez IDs) and columns should be the IDs
+    from metadata file.
+
+### Run TIMEOR Using Simulated Data
+
+This tutorial uses simualted data and takes the user through TIMEOR’s
+functionality. NOTE: figures with two panels are the same page,
+split.
+
+1.  In the far left nagivation bar click on “Example Data” and then
+    “Load simulated data”.
+
+<p>
+     
+</p>
+<center>
+<img src="https://github.com/ashleymaeconard/TIMEOR_App/blob/master/app/www/T1.png" style="width:95.0%" />
+</center>
+<p>
+     
+</p>
+
+2.  Follow the pop-up prompt to explore results on each Pre-processing
+    tab (Process Raw Data, Load Count Matrix, and Normalize and Correct
+    Data).
+
+<p>
+ 
+</p>
+<center>
+<img src="https://github.com/ashleymaeconard/TIMEOR_App/blob/master/app/www/T2.png" style="width:95.0%" />
+</center>
+<p>
+ 
+</p>
+<p>
+ 
+</p>
+<center>
+<img src="https://github.com/ashleymaeconard/TIMEOR_App/blob/master/app/www/T3.png" style="width:95.0%" />
+</center>
+<p>
+ 
+</p>
+
+3.  On the Normalize and Correct Data tab, choose from normalization and
+    correction methods and click “Run” to view result.
+
+<p>
+ 
+</p>
+<center>
+<img src="https://github.com/ashleymaeconard/TIMEOR_App/blob/master/app/www/T4.png" style="width:95.0%" />
+</center>
+<p>
+ 
+</p>
+
+4.  Proceed to Primary Analysis and click “Run”
+
+5.  At the bottom right you will see a notification to click “Render
+    Venn Diagram” in the top right to compare differential expression
+    results between three methods (ImpulseDE2, Next maSigPro, and
+    DESeq2). See figure below, blue box, bottom left.
+
+6.  Download [prev\_study.txt](https://github.com/ashleymaeconard/TIMEOR_App/blob/master/demos/simulated_data/timeor/data/prev_study.txt) to then upload using the Browse button
+    to compare a previous study with the three differential expression
+    results. See figure below, left.
+
+7.  Examine differential expression method results in the bottom row.
+    Toggle under “Display Desired Differential Expression Method
+    Results” between ImpulseDE2, Next maSigPro, and DESeq2 on the left,
+    and the interactive clustermap with automated clustering will
+    display the differentially expressed gene trajectories for the
+    chosen method. See figure below, right.
+
+8.  Toggle under “Cluster Gene Expression Trajectories” to choose the
+    number of clusters desired. See figure below, right.
+
+<p>
+ 
+</p>
+<center>
+<img src="https://github.com/ashleymaeconard/TIMEOR_App/blob/master/app/www/T5.png" style="width:95.0%" />
+</center>
+<p>
+ 
+</p>
+
+9.  For this demo, please choose **ImpulseDE2** and **automatic
+    clustering** before proceeding to Secondary Analysis. These results
+    can be processed efficiently. NOTE: ImpulseDE2 is chosen because
+    it has the largest differential expressed gene overlap with the
+    previous study and other methods.
+
+10.  Under Gene Expression Trajectory Clusters choose cluster 1, 2, or 3
+    in the dropdown. On the right under “Chosen Cluster Gene Set” you
+    will see the genes in that cluster. They appear in the same color as
+    the cluster.
+
+11.  Once you have chosen which genes set to test for enrichment, click
+    the “Analyse” toggle to “ON”.
+
+12.  Wait to view any enriched gene ontology (GO) terms (Molecular
+    Function, Biological Process, or Cellular Component), pathway,
+    network, and/or motif analysis. NOTE: you may download the
+    interactive motif results for viewing.
+
+13.  Toggle the “Analyze” button to “OFF” to choose another gene set, and
+    repeat steps 10-13.
+
+<p>
+ 
+</p>
+<center>
+<img src="https://github.com/ashleymaeconard/TIMEOR_App/blob/master/app/www/T6.png" style="width:95.0%" />
+</center>
+<p>
+ 
+</p>
+
+14.  Proceed to the Factor Binding tab to view the perturbed and top
+    predicted transcription factors in each gene cluster (under
+    “Perturbed and Top 4 Predicted Transcription Factors to Bind Each
+    Cluster”).
+
+15.  In that same table on the right you will see ENCODE IDs indicating
+    published ChIP-seq data for the predicted transcription factors. You
+    may download the .bigWig files here ([ENCFF467OWR](https://github.com/ashleymaeconard/TIMEOR_App/blob/master/demos/simulated_data/timeor/data/ENCFF467OWR.bigWig), [ENCFF609FCZ](https://github.com/ashleymaeconard/TIMEOR_App/blob/master/demos/simulated_data/timeor/data/ENCFF609FCZ.bigWig), [ENCFF346CDA](https://github.com/ashleymaeconard/TIMEOR_App/blob/master/demos/simulated_data/timeor/data/ENCFF346CDA.bigWig)) or follow the prompts in the grey box under “Upload
+    .bigWig Files”. If you are interested, click on the “+” under
+    “Details about individual method predicted transcription factors” to
+    see the ranked lists of transcription factors and motifs by method.
+    NOTE: you can download the interactive cluster motif results to view
+    all motifs. NOTE: blanks indicate no transcription factor consensus
+    among all methods.
+
+<p>
+ 
+</p>
+<center>
+<img src="https://github.com/ashleymaeconard/TIMEOR_App/blob/master/app/www/T7.png" style="width:95.0%" />
+</center>
+<p>
+ 
+</p>
+
+16.  Under “Average Profiles Across Each Gene Expression Trajectory
+    Cluster”, in the first box type “stat92e”, upload
+    ENCFF445KNM.bigWig, and click “Go”. In the second box type “pho”,
+    upload ENCFF363ZNA.bigWig, and click “Go”. In the third box type
+    “ecr”, upload ENCFF680UFM.bigWig, and click “Go”. You will see 3
+    average profile distribution plots, one for each cluster, and easily
+    distinguishable by color (same as in clustermap).
+
+<p>
+ 
+</p>
+<center>
+<img src="https://github.com/ashleymaeconard/TIMEOR_App/blob/master/app/www/T8.png" style="width:85.0%" />
+</center>
+<p>
+ 
+</p>
+
+17.  Proceed to the last tab to view the temporal relations between
+    transcription factors. On the first row you are reminded of the
+    perturbed and predicted transcription factors to bind each gene
+    cluster. On the second row to the left you will see “Transcription
+    Factor Network of bith perturbed and predicted transcription
+    factors. On the right (”Temporal Relations Between Perturbed and Top
+    Predicted Transcription Factors") you will see a table highlighting
+    the temporal relations between transcription factors. 5 different
+    temporal relationships are identified and represented in the legend
+    (far right).
+
+18.  On the third row (“Network Customization: move and add desired genes
+    to describe temporal relation”) the user can use this information to
+    create a customized network to temporally relate all transcription
+    factors and other genes. Do so by clicking “Search” and then
+    “Multiple proteins”.
+
+19. Your results folder can be downloaded on the far left size under "Download Results Folder". NOTE: The original simulated data and results can be downloaded [here](https://github.com/ashleymaeconard/TIMEOR_App/tree/master/demos/simulated_data). 
+<p>
+ 
+</p>
+<center>
+<img src="https://github.com/ashleymaeconard/TIMEOR_App/blob/master/app/www/T9.png" style="width:95.0%" />
+</center>
+<p>
+ 
+</p>
+
+Details
+=======
+
+### Simulated Data in Tutorial
+
+The original simulated data folder can be downloaded [here](https://github.com/ashleymaeconard/TIMEOR_App/tree/master/demos/simulated_data).
+
+#### Secondary Analysis: Factor Binding
+
+To get the top 4 TFs a 25% concensus threshold was used, with a
+normalized enrichement score threshold of 3.
+
+Command used:
+`Rscript get_top_tfs.r /PATH/TO/simulated_results/ dme 3 4 25 /PATH/TO/TIMEOR_App/`
+
+The following bigWig files were collected:
+
+-   ENCFF467OWR (read-depth normalized signal between both replicates)
+    within dataset ENCSR240ADR for Stat92E
+
+-   ENCFF609FCZ (read-depth normalized signal between both replicates)
+    within dataset ENCSR681YMA for pho
+
+-   ENCFF346CDA (read-depth normalized signal between all three replicates)
+    within dataset ENCSR776AVR for CG7786
