@@ -1,0 +1,384 @@
+"","ID","Description","GeneRatio","BgRatio","pvalue","p.adjust","qvalue","geneID","Count"
+"GO:0007224","GO:0007224","smoothened signaling pathway","21/30","64/11228",2.60168324876499e-42,2.49761591881439e-39,1.25154657335327e-39,"ptc/Smurf/Su(fu)/hh/boi/rdx/Pka-C1/slmb/Cul3/ihog/Roc1a/disp/Usp8/Cul4/Gug/shf/Gprk2/dlp/dally/flw/cos",21
+"GO:0008589","GO:0008589","regulation of smoothened signaling pathway","19/30","61/11228",2.13337057199354e-37,1.0240178745569e-34,5.13131763895288e-35,"ptc/Smurf/Su(fu)/rdx/Pka-C1/slmb/Cul3/Roc1a/disp/Usp8/Cul4/Gug/shf/Gprk2/dlp/dally/flw/cos/rasp",19
+"GO:0045879","GO:0045879","negative regulation of smoothened signaling pathway","13/30","36/11228",3.72698309941177e-26,1.19263459181177e-23,5.97625009274098e-24,"ptc/Smurf/Su(fu)/rdx/Pka-C1/slmb/Cul3/Roc1a/Cul4/Gug/Gprk2/flw/cos",13
+"GO:0035220","GO:0035220","wing disc development","17/30","385/11228",7.04420018693247e-18,1.69060804486379e-15,8.47157759323194e-16,"ptc/hh/boi/Pka-C1/Cul3/ihog/disp/Shc/Usp8/Gug/Gprk2/dlp/dally/dco/flw/cos/rasp",17
+"GO:0045880","GO:0045880","positive regulation of smoothened signaling pathway","9/30","30/11228",2.53602438281713e-17,4.86916681500889e-15,2.43992240620511e-15,"Smurf/Pka-C1/disp/Usp8/shf/Gprk2/dlp/dally/rasp",9
+"GO:0009968","GO:0009968","negative regulation of signal transduction","15/30","310/11228",3.15133775036913e-16,5.0421404005906e-14,2.52659886301525e-14,"ptc/Smurf/Su(fu)/rdx/Pka-C1/slmb/Cul3/Roc1a/Cul4/Gug/krz/Gprk2/dally/flw/cos",15
+"GO:0010648","GO:0010648","negative regulation of cell communication","15/30","336/11228",1.04802695499468e-15,1.31452417430167e-13,6.58703451377045e-14,"ptc/Smurf/Su(fu)/rdx/Pka-C1/slmb/Cul3/Roc1a/Cul4/Gug/krz/Gprk2/dally/flw/cos",15
+"GO:0023057","GO:0023057","negative regulation of signaling","15/30","337/11228",1.09543681191806e-15,1.31452417430167e-13,6.58703451377045e-14,"ptc/Smurf/Su(fu)/rdx/Pka-C1/slmb/Cul3/Roc1a/Cul4/Gug/krz/Gprk2/dally/flw/cos",15
+"GO:0009967","GO:0009967","positive regulation of signal transduction","15/30","366/11228",3.73376115955223e-15,3.98267857018905e-13,1.99570625721096e-13,"Smurf/rdx/Pka-C1/disp/Shc/msn/Usp8/shf/Gprk2/dlp/dally/dco/flw/rasp/Sos",15
+"GO:0048585","GO:0048585","negative regulation of response to stimulus","15/30","374/11228",5.14346511422515e-15,4.93772650965614e-13,2.47427742863252e-13,"ptc/Smurf/Su(fu)/rdx/Pka-C1/slmb/Cul3/Roc1a/Cul4/Gug/krz/Gprk2/dally/flw/cos",15
+"GO:0010647","GO:0010647","positive regulation of cell communication","15/30","398/11228",1.28972331037954e-14,9.17739574058654e-13,4.59876080421935e-13,"Smurf/rdx/Pka-C1/disp/Shc/msn/Usp8/shf/Gprk2/dlp/dally/dco/flw/rasp/Sos",15
+"GO:0023056","GO:0023056","positive regulation of signaling","15/30","398/11228",1.28972331037954e-14,9.17739574058654e-13,4.59876080421935e-13,"Smurf/rdx/Pka-C1/disp/Shc/msn/Usp8/shf/Gprk2/dlp/dally/dco/flw/rasp/Sos",15
+"GO:0007560","GO:0007560","imaginal disc morphogenesis","15/30","399/11228",1.33837021216887e-14,9.17739574058654e-13,4.59876080421935e-13,"ptc/hh/Pka-C1/Cul3/Shc/msn/Usp8/Gug/Gprk2/dlp/dally/dco/flw/cos/Sos",15
+"GO:0048563","GO:0048563","post-embryonic animal organ morphogenesis","15/30","399/11228",1.33837021216887e-14,9.17739574058654e-13,4.59876080421935e-13,"ptc/hh/Pka-C1/Cul3/Shc/msn/Usp8/Gug/Gprk2/dlp/dally/dco/flw/cos/Sos",15
+"GO:0035120","GO:0035120","post-embryonic appendage morphogenesis","14/30","326/11228",2.19409104311803e-14,1.40421826759554e-12,7.03648846810483e-13,"ptc/hh/Pka-C1/Cul3/Shc/Usp8/Gug/Gprk2/dlp/dally/dco/flw/cos/Sos",14
+"GO:0035114","GO:0035114","imaginal disc-derived appendage morphogenesis","14/30","335/11228",3.19775262180698e-14,1.91865157308419e-12,9.61429571161703e-13,"ptc/hh/Pka-C1/Cul3/Shc/Usp8/Gug/Gprk2/dlp/dally/dco/flw/cos/Sos",14
+"GO:0035107","GO:0035107","appendage morphogenesis","14/30","338/11228",3.61698571022301e-14,2.04253310694946e-12,1.02350617310954e-12,"ptc/hh/Pka-C1/Cul3/Shc/Usp8/Gug/Gprk2/dlp/dally/dco/flw/cos/Sos",14
+"GO:0048737","GO:0048737","imaginal disc-derived appendage development","14/30","342/11228",4.2550887095963e-14,2.26938064511803e-12,1.13717867852954e-12,"ptc/hh/Pka-C1/Cul3/Shc/Usp8/Gug/Gprk2/dlp/dally/dco/flw/cos/Sos",14
+"GO:0048736","GO:0048736","appendage development","14/30","346/11228",4.99579939564772e-14,2.52419337885358e-12,1.26486444532466e-12,"ptc/hh/Pka-C1/Cul3/Shc/Usp8/Gug/Gprk2/dlp/dally/dco/flw/cos/Sos",14
+"GO:0048707","GO:0048707","instar larval or pupal morphogenesis","15/30","446/11228",6.88445848086934e-14,3.30454007081728e-12,1.6558934346091e-12,"ptc/hh/Pka-C1/Cul3/Shc/msn/Usp8/Gug/Gprk2/dlp/dally/dco/flw/cos/Sos",15
+"GO:0007476","GO:0007476","imaginal disc-derived wing morphogenesis","13/30","280/11228",8.96662108649816e-14,4.09902678239916e-12,2.05400793811011e-12,"ptc/hh/Pka-C1/Cul3/Shc/Usp8/Gug/Gprk2/dlp/dally/dco/flw/cos",13
+"GO:0009886","GO:0009886","post-embryonic animal morphogenesis","15/30","459/11228",1.04871837122915e-13,4.57622561990903e-12,2.29313060120441e-12,"ptc/hh/Pka-C1/Cul3/Shc/msn/Usp8/Gug/Gprk2/dlp/dally/dco/flw/cos/Sos",15
+"GO:0003002","GO:0003002","regionalization","15/30","464/11228",1.22887482271989e-13,4.91549929087955e-12,2.46313944729381e-12,"ptc/hh/boi/rdx/Pka-C1/slmb/ihog/disp/Shc/csw/Gug/dlp/dally/flw/rasp",15
+"GO:0048569","GO:0048569","post-embryonic animal organ development","15/30","464/11228",1.22887482271989e-13,4.91549929087955e-12,2.46313944729381e-12,"ptc/hh/Pka-C1/Cul3/Shc/msn/Usp8/Gug/Gprk2/dlp/dally/dco/flw/cos/Sos",15
+"GO:0007472","GO:0007472","wing disc morphogenesis","13/30","290/11228",1.4086422293407e-13,5.40918616066828e-12,2.71052420551031e-12,"ptc/hh/Pka-C1/Cul3/Shc/Usp8/Gug/Gprk2/dlp/dally/dco/flw/cos",13
+"GO:0060562","GO:0060562","epithelial tube morphogenesis","15/30","470/11228",1.4828474343883e-13,5.47512898851064e-12,2.74356792516378e-12,"ptc/hh/Pka-C1/Cul3/Shc/msn/Usp8/Gug/Gprk2/dlp/dally/dco/flw/cos/Sos",15
+"GO:0007552","GO:0007552","metamorphosis","15/30","473/11228",1.62733927667095e-13,5.78609520594116e-12,2.89939200560867e-12,"ptc/hh/Pka-C1/Cul3/Shc/msn/Usp8/Gug/Gprk2/dlp/dally/dco/flw/cos/Sos",15
+"GO:0048584","GO:0048584","positive regulation of response to stimulus","15/30","477/11228",1.84034879820107e-13,6.30976730811794e-12,3.16180225856349e-12,"Smurf/rdx/Pka-C1/disp/Shc/msn/Usp8/shf/Gprk2/dlp/dally/dco/flw/rasp/Sos",15
+"GO:0035282","GO:0035282","segmentation","12/30","229/11228",2.43095296781929e-13,8.04729258312593e-12,4.03247007729008e-12,"hh/rdx/Pka-C1/slmb/ihog/disp/Shc/csw/Gug/dlp/dally/rasp",12
+"GO:0009880","GO:0009880","embryonic pattern specification","11/30","207/11228",2.57805644585297e-12,8.24978062672951e-11,4.13393612545547e-11,"hh/rdx/Pka-C1/slmb/disp/Shc/csw/Gug/dlp/dally/rasp",11
+"GO:0032879","GO:0032879","regulation of localization","14/30","469/11228",3.20033529519606e-12,9.91071575286522e-11,4.96622488931953e-11,"ptc/Smurf/Su(fu)/hh/rdx/Pka-C1/slmb/Shc/krz/Gprk2/dlp/dally/dco/cos",14
+"GO:0007423","GO:0007423","sensory organ development","14/30","476/11228",3.91143989859616e-12,1.17343196957885e-10,5.88002642650805e-11,"ptc/hh/boi/rdx/Pka-C1/Cul3/ihog/Shc/csw/Gug/dlp/dally/dco/Sos",14
+"GO:0001654","GO:0001654","eye development","13/30","389/11228",5.96176060198832e-12,1.6352257651168e-10,8.19405893265763e-11,"ptc/hh/boi/rdx/Pka-C1/ihog/Shc/csw/Gug/dlp/dally/dco/Sos",13
+"GO:0048880","GO:0048880","sensory system development","13/30","389/11228",5.96176060198832e-12,1.6352257651168e-10,8.19405893265763e-11,"ptc/hh/boi/rdx/Pka-C1/ihog/Shc/csw/Gug/dlp/dally/dco/Sos",13
+"GO:0150063","GO:0150063","visual system development","13/30","389/11228",5.96176060198832e-12,1.6352257651168e-10,8.19405893265763e-11,"ptc/hh/boi/rdx/Pka-C1/ihog/Shc/csw/Gug/dlp/dally/dco/Sos",13
+"GO:0007447","GO:0007447","imaginal disc pattern formation","9/30","111/11228",7.80924037453149e-12,2.08246409987506e-10,1.04351545355582e-10,"ptc/hh/boi/Pka-C1/ihog/disp/dlp/dally/rasp",9
+"GO:0007427","GO:0007427","epithelial cell migration, open tracheal system","7/30","43/11228",1.38022960816136e-11,3.58113628063489e-10,1.79449482483568e-10,"ptc/hh/Shc/csw/dlp/dally/Sos",7
+"GO:0035222","GO:0035222","wing disc pattern formation","8/30","79/11228",2.15830002962694e-11,5.45254744326805e-10,2.73225239207621e-10,"ptc/hh/boi/ihog/disp/dlp/dally/rasp",8
+"GO:0007167","GO:0007167","enzyme linked receptor protein signaling pathway","11/30","260/11228",3.07784762562156e-11,7.57624030922231e-10,3.79642743565197e-10,"Smurf/slmb/Cul3/Roc1a/Shc/csw/Gug/krz/dlp/dally/Sos",11
+"GO:0007350","GO:0007350","blastoderm segmentation","10/30","190/11228",3.40272839158649e-11,8.16654813980758e-10,4.0922286183027e-10,"hh/rdx/Pka-C1/slmb/disp/Shc/csw/dlp/dally/rasp",10
+"GO:0007169","GO:0007169","transmembrane receptor protein tyrosine kinase signaling pathway","10/30","193/11228",3.97537868082426e-11,9.30820374046657e-10,4.6643082339838e-10,"slmb/Cul3/Roc1a/Shc/csw/Gug/krz/dlp/dally/Sos",10
+"GO:0071310","GO:0071310","cellular response to organic substance","11/30","317/11228",2.58755818296136e-10,5.91441870391168e-09,2.96369446018382e-09,"Smurf/rdx/Pka-C1/slmb/Cul3/Roc1a/Shc/csw/dlp/dally/Sos",11
+"GO:0070887","GO:0070887","cellular response to chemical stimulus","12/30","422/11228",3.18477501790807e-10,7.11019538881803e-09,3.56289396128272e-09,"Smurf/hh/rdx/Pka-C1/slmb/Cul3/Roc1a/Shc/csw/dlp/dally/Sos",12
+"GO:0007367","GO:0007367","segment polarity determination","6/30","38/11228",5.56188035299183e-10,1.21350116792549e-08,6.08081177348629e-09,"hh/rdx/disp/dlp/dally/rasp",6
+"GO:0060828","GO:0060828","regulation of canonical Wnt signaling pathway","7/30","77/11228",9.68888373217828e-10,2.0669618628647e-08,1.03574733698374e-08,"slmb/Roc1a/Usp8/dlp/dally/dco/flw",7
+"GO:0048749","GO:0048749","compound eye development","11/30","365/11228",1.15720771091678e-09,2.41504217930457e-08,1.21016916221731e-08,"hh/boi/rdx/Pka-C1/ihog/Shc/csw/dlp/dally/dco/Sos",11
+"GO:0051247","GO:0051247","positive regulation of protein metabolic process","10/30","283/11228",1.69979923656265e-09,3.47193035553222e-08,1.73977211894542e-08,"Smurf/rdx/Pka-C1/slmb/Cul3/Roc1a/msn/Cul4/krz/dco",10
+"GO:0007365","GO:0007365","periodic partitioning","6/30","47/11228",2.12779463305077e-09,4.25558926610154e-08,2.13246084935132e-08,"hh/rdx/disp/dlp/dally/rasp",6
+"GO:0030162","GO:0030162","regulation of proteolysis","8/30","140/11228",2.2193377540264e-09,4.34809029360275e-08,2.17881278966717e-08,"hh/rdx/Pka-C1/slmb/Cul3/Roc1a/krz/dco",8
+"GO:0060070","GO:0060070","canonical Wnt signaling pathway","7/30","90/11228",2.94049241725365e-09,5.645745441127e-08,2.82906323091561e-08,"slmb/Roc1a/Usp8/dlp/dally/dco/flw",7
+"GO:0030111","GO:0030111","regulation of Wnt signaling pathway","7/30","92/11228",3.43546311272065e-09,6.46675409453298e-08,3.24046778640523e-08,"slmb/Roc1a/Usp8/dlp/dally/dco/flw",7
+"GO:0007448","GO:0007448","anterior/posterior pattern specification, imaginal disc","5/30","25/11228",4.91006049124832e-09,8.89369447471394e-08,4.45659909533363e-08,"ptc/hh/Pka-C1/dally/rasp",5
+"GO:0046822","GO:0046822","regulation of nucleocytoplasmic transport","5/30","25/11228",4.91006049124832e-09,8.89369447471394e-08,4.45659909533363e-08,"Su(fu)/hh/rdx/Pka-C1/cos",5
+"GO:0045732","GO:0045732","positive regulation of protein catabolic process","6/30","56/11228",6.32849719841426e-09,1.12506616860698e-07,5.63766709488366e-08,"Smurf/Pka-C1/slmb/Roc1a/Cul4/dco",6
+"GO:0010631","GO:0010631","epithelial cell migration","8/30","168/11228",9.40263192708072e-09,1.64118666363591e-07,8.22392878598256e-08,"ptc/hh/slmb/Shc/csw/dlp/dally/Sos",8
+"GO:0090132","GO:0090132","epithelium migration","8/30","169/11228",9.852481096467e-09,1.68899675939434e-07,8.46350349828086e-08,"ptc/hh/slmb/Shc/csw/dlp/dally/Sos",8
+"GO:0008293","GO:0008293","torso signaling pathway","5/30","30/11228",1.30479858253632e-08,2.1975555074296e-07,1.10118735405189e-07,"Cul3/Shc/csw/krz/Sos",5
+"GO:0090130","GO:0090130","tissue migration","8/30","177/11228",1.41732241530813e-08,2.31910165516035e-07,1.16209370220206e-07,"ptc/hh/slmb/Shc/csw/dlp/dally/Sos",8
+"GO:1902531","GO:1902531","regulation of intracellular signal transduction","10/30","353/11228",1.4252812255673e-08,2.31910165516035e-07,1.16209370220206e-07,"Smurf/rdx/slmb/Shc/msn/krz/Gprk2/dco/flw/Sos",10
+"GO:0009952","GO:0009952","anterior/posterior pattern specification","8/30","179/11228",1.54798417269961e-08,2.45391366253853e-07,1.22964752607468e-07,"ptc/hh/Pka-C1/slmb/Shc/csw/dally/rasp",8
+"GO:0051049","GO:0051049","regulation of transport","9/30","260/11228",1.55925763973802e-08,2.45391366253853e-07,1.22964752607468e-07,"Smurf/Su(fu)/hh/rdx/Pka-C1/krz/Gprk2/dco/cos",9
+"GO:0008543","GO:0008543","fibroblast growth factor receptor signaling pathway","5/30","32/11228",1.83697492702592e-08,2.74575405618255e-07,1.37588772332832e-07,"Shc/csw/dlp/dally/Sos",5
+"GO:0044344","GO:0044344","cellular response to fibroblast growth factor stimulus","5/30","32/11228",1.83697492702592e-08,2.74575405618255e-07,1.37588772332832e-07,"Shc/csw/dlp/dally/Sos",5
+"GO:0071774","GO:0071774","response to fibroblast growth factor","5/30","32/11228",1.83697492702592e-08,2.74575405618255e-07,1.37588772332832e-07,"Shc/csw/dlp/dally/Sos",5
+"GO:0016055","GO:0016055","Wnt signaling pathway","7/30","117/11228",1.8591043088736e-08,2.74575405618255e-07,1.37588772332832e-07,"slmb/Roc1a/Usp8/dlp/dally/dco/flw",7
+"GO:0001667","GO:0001667","ameboidal-type cell migration","8/30","190/11228",2.46942156885645e-08,3.56544279116494e-07,1.78663087232717e-07,"ptc/hh/slmb/Shc/csw/dlp/dally/Sos",8
+"GO:1905114","GO:1905114","cell surface receptor signaling pathway involved in cell-cell signaling","7/30","122/11228",2.48838194800053e-08,3.56544279116494e-07,1.78663087232717e-07,"slmb/Roc1a/Usp8/dlp/dally/dco/flw",7
+"GO:0042981","GO:0042981","regulation of apoptotic process","8/30","193/11228",2.79093366508787e-08,3.94014164482994e-07,1.97439115316588e-07,"ptc/rdx/Pka-C1/slmb/Cul3/csw/dco/cos",8
+"GO:0042176","GO:0042176","regulation of protein catabolic process","6/30","72/11228",2.95699122462978e-08,4.114074747311e-07,2.06154842052755e-07,"Smurf/Pka-C1/slmb/Roc1a/Cul4/dco",6
+"GO:0070647","GO:0070647","protein modification by small protein conjugation or removal","9/30","283/11228",3.25164165877839e-08,4.44801223478373e-07,2.22888332378966e-07,"Smurf/hh/rdx/slmb/Cul3/Roc1a/Usp8/Cul4/krz",9
+"GO:0198738","GO:0198738","cell-cell signaling by wnt","7/30","127/11228",3.2896757153088e-08,4.44801223478373e-07,2.22888332378966e-07,"slmb/Roc1a/Usp8/dlp/dally/dco/flw",7
+"GO:0045862","GO:0045862","positive regulation of proteolysis","6/30","74/11228",3.4931967491407e-08,4.65759566552094e-07,2.33390484555161e-07,"Pka-C1/slmb/Cul3/Roc1a/krz/dco",6
+"GO:0090263","GO:0090263","positive regulation of canonical Wnt signaling pathway","5/30","37/11228",3.9395086888301e-08,5.18072375517382e-07,2.59604249573952e-07,"Usp8/dlp/dally/dco/flw",5
+"GO:0032387","GO:0032387","negative regulation of intracellular transport","4/30","15/11228",5.53777202257283e-08,7.18413667793232e-07,3.59994568181477e-07,"Su(fu)/rdx/Pka-C1/cos",4
+"GO:0030855","GO:0030855","epithelial cell differentiation","10/30","413/11228",6.31655015658152e-08,8.05189779131687e-07,4.03477773095593e-07,"ptc/hh/slmb/Shc/csw/Cul4/Gprk2/dco/cos/rasp",10
+"GO:0016477","GO:0016477","cell migration","9/30","306/11228",6.37679147997509e-08,8.05189779131687e-07,4.03477773095593e-07,"ptc/hh/slmb/disp/Shc/csw/dlp/dally/Sos",9
+"GO:0060341","GO:0060341","regulation of cellular localization","7/30","140/11228",6.45829302011874e-08,8.05189779131687e-07,4.03477773095593e-07,"Su(fu)/hh/rdx/Pka-C1/dlp/dally/cos",7
+"GO:0006511","GO:0006511","ubiquitin-dependent protein catabolic process","9/30","310/11228",7.12937062184904e-08,8.7746099961219e-07,4.39692628095143e-07,"Smurf/rdx/Pka-C1/slmb/Cul3/Roc1a/Usp8/Cul4/dco",9
+"GO:0019941","GO:0019941","modification-dependent protein catabolic process","9/30","314/11228",7.95850196860857e-08,9.60140509733433e-07,4.81123040513354e-07,"Smurf/rdx/Pka-C1/slmb/Cul3/Roc1a/Usp8/Cul4/dco",9
+"GO:0043067","GO:0043067","regulation of programmed cell death","8/30","221/11228",8.00117091444527e-08,9.60140509733433e-07,4.81123040513354e-07,"ptc/rdx/Pka-C1/slmb/Cul3/csw/dco/cos",8
+"GO:0030177","GO:0030177","positive regulation of Wnt signaling pathway","5/30","43/11228",8.60315485935112e-08,1.01963316851569e-06,5.10934603082971e-07,"Usp8/dlp/dally/dco/flw",5
+"GO:0043632","GO:0043632","modification-dependent macromolecule catabolic process","9/30","321/11228",9.61365069966075e-08,1.11265735830337e-06,5.57548698184913e-07,"Smurf/rdx/Pka-C1/slmb/Cul3/Roc1a/Usp8/Cul4/dco",9
+"GO:0048100","GO:0048100","wing disc anterior/posterior pattern formation","4/30","17/11228",9.61985007699789e-08,1.11265735830337e-06,5.57548698184913e-07,"ptc/hh/dally/rasp",4
+"GO:0043161","GO:0043161","proteasome-mediated ubiquitin-dependent protein catabolic process","8/30","230/11228",1.0892705986772e-07,1.24488068420251e-06,6.23805342851479e-07,"Smurf/rdx/Pka-C1/slmb/Cul3/Roc1a/Cul4/dco",8
+"GO:0071495","GO:0071495","cellular response to endogenous stimulus","8/30","231/11228",1.12635561989653e-07,1.27211928835373e-06,6.37454511817604e-07,"Smurf/slmb/Roc1a/Shc/csw/dlp/dally/Sos",8
+"GO:0071363","GO:0071363","cellular response to growth factor stimulus","6/30","93/11228",1.38794459358991e-07,1.5493334998213e-06,7.76365580502558e-07,"Smurf/Shc/csw/dlp/dally/Sos",6
+"GO:0070848","GO:0070848","response to growth factor","6/30","94/11228",1.47985020532006e-07,1.63293815759455e-06,8.18259581163059e-07,"Smurf/Shc/csw/dlp/dally/Sos",6
+"GO:0051603","GO:0051603","proteolysis involved in cellular protein catabolic process","9/30","342/11228",1.65168030882091e-07,1.79454803764488e-06,8.9924172500407e-07,"Smurf/rdx/Pka-C1/slmb/Cul3/Roc1a/Usp8/Cul4/dco",9
+"GO:0010498","GO:0010498","proteasomal protein catabolic process","8/30","243/11228",1.66369557656661e-07,1.79454803764488e-06,8.9924172500407e-07,"Smurf/rdx/Pka-C1/slmb/Cul3/Roc1a/Cul4/dco",8
+"GO:0007267","GO:0007267","cell-cell signaling","10/30","462/11228",1.80698940123273e-07,1.92376172986128e-06,9.6399025279233e-07,"hh/Pka-C1/slmb/Roc1a/Usp8/Pka-R1/dlp/dally/dco/flw",10
+"GO:0044257","GO:0044257","cellular protein catabolic process","9/30","346/11228",1.82356580643101e-07,1.92376172986128e-06,9.6399025279233e-07,"Smurf/rdx/Pka-C1/slmb/Cul3/Roc1a/Usp8/Cul4/dco",9
+"GO:0061564","GO:0061564","axon development","9/30","349/11228",1.96252810671502e-07,2.04785541570263e-06,1.02617316335099e-06,"ptc/hh/Pka-C1/Cul3/Shc/msn/dlp/dally/Sos",9
+"GO:0002064","GO:0002064","epithelial cell development","9/30","357/11228",2.37921773827929e-07,2.45596669757863e-06,1.23067629472964e-06,"ptc/hh/slmb/Shc/csw/Cul4/Gprk2/cos/rasp",9
+"GO:0010941","GO:0010941","regulation of cell death","8/30","255/11228",2.40840957051763e-07,2.45965232733716e-06,1.23252315086961e-06,"ptc/rdx/Pka-C1/slmb/Cul3/csw/dco/cos",8
+"GO:0048870","GO:0048870","cell motility","9/30","361/11228",2.61507073381182e-07,2.64259779416774e-06,1.32419648238449e-06,"ptc/hh/slmb/disp/Shc/csw/dlp/dally/Sos",9
+"GO:0051674","GO:0051674","localization of cell","9/30","366/11228",2.93836020334566e-07,2.93836020334566e-06,1.47240198786071e-06,"ptc/hh/slmb/disp/Shc/csw/dlp/dally/Sos",9
+"GO:0009719","GO:0009719","response to endogenous stimulus","8/30","263/11228",3.05059947505141e-07,3.00196126826534e-06,1.50427225833033e-06,"Smurf/slmb/Roc1a/Shc/csw/dlp/dally/Sos",8
+"GO:0000904","GO:0000904","cell morphogenesis involved in differentiation","10/30","489/11228",3.06450212802087e-07,3.00196126826534e-06,1.50427225833033e-06,"ptc/hh/slmb/Cul3/Shc/msn/Gprk2/dlp/dally/Sos",10
+"GO:0006915","GO:0006915","apoptotic process","8/30","264/11228",3.14036656949984e-07,3.04520394618166e-06,1.5259410125055e-06,"ptc/rdx/Pka-C1/slmb/Cul3/csw/dco/cos",8
+"GO:0030163","GO:0030163","protein catabolic process","9/30","371/11228",3.29594223316526e-07,3.16410454383865e-06,1.58552168479634e-06,"Smurf/rdx/Pka-C1/slmb/Cul3/Roc1a/Usp8/Cul4/dco",9
+"GO:0032270","GO:0032270","positive regulation of cellular protein metabolic process","8/30","268/11228",3.52251057391848e-07,3.34812886233836e-06,1.67773562509718e-06,"rdx/Pka-C1/slmb/Cul3/Roc1a/msn/krz/dco",8
+"GO:0009798","GO:0009798","axis specification","7/30","184/11228",4.1917375071238e-07,3.9451647125871e-06,1.97690819479419e-06,"hh/Pka-C1/slmb/Shc/csw/Pka-R1/flw",7
+"GO:0032386","GO:0032386","regulation of intracellular transport","5/30","62/11228",5.58259784707216e-07,5.20319799338764e-06,2.60730425765148e-06,"Su(fu)/hh/rdx/Pka-C1/cos",5
+"GO:0009896","GO:0009896","positive regulation of catabolic process","6/30","119/11228",6.0231270378025e-07,5.55980957335615e-06,2.786001069105e-06,"Smurf/Pka-C1/slmb/Roc1a/Cul4/dco",6
+"GO:0016567","GO:0016567","protein ubiquitination","7/30","207/11228",9.28956767667577e-07,8.49331901867499e-06,4.25597235913868e-06,"Smurf/hh/rdx/slmb/Cul3/Roc1a/Cul4",7
+"GO:0031399","GO:0031399","regulation of protein modification process","8/30","311/11228",1.08926720287622e-06,9.86506146001101e-06,4.94334768336078e-06,"hh/rdx/msn/Gug/krz/Pka-R1/dco/flw",8
+"GO:0048592","GO:0048592","eye morphogenesis","8/30","312/11228",1.11594950607617e-06,9.91396788909642e-06,4.96785452337397e-06,"ptc/hh/boi/rdx/Shc/csw/dco/Sos",8
+"GO:0090596","GO:0090596","sensory organ morphogenesis","8/30","312/11228",1.11594950607617e-06,9.91396788909642e-06,4.96785452337397e-06,"ptc/hh/boi/rdx/Shc/csw/dco/Sos",8
+"GO:0007163","GO:0007163","establishment or maintenance of cell polarity","7/30","213/11228",1.12564843740782e-06,9.91396788909642e-06,4.96785452337397e-06,"rdx/Pka-C1/slmb/Shc/csw/Pka-R1/dco",7
+"GO:0032436","GO:0032436","positive regulation of proteasomal ubiquitin-dependent protein catabolic process","4/30","32/11228",1.41360598160643e-06,1.22383127612116e-05,6.13257558319486e-06,"Pka-C1/slmb/Roc1a/dco",4
+"GO:0030707","GO:0030707","ovarian follicle cell development","8/30","322/11228",1.41505491301509e-06,1.22383127612116e-05,6.13257558319486e-06,"ptc/hh/slmb/Shc/csw/Cul4/cos/rasp",8
+"GO:0002066","GO:0002066","columnar/cuboidal epithelial cell development","8/30","323/11228",1.44841792770163e-06,1.24150108088711e-05,6.22111835488388e-06,"ptc/hh/slmb/Shc/csw/Cul4/cos/rasp",8
+"GO:0032446","GO:0032446","protein modification by small protein conjugation","7/30","224/11228",1.57747043526349e-06,1.34015187420615e-05,6.71545401877426e-06,"Smurf/hh/rdx/slmb/Cul3/Roc1a/Cul4",7
+"GO:0012501","GO:0012501","programmed cell death","8/30","329/11228",1.66306439690449e-06,1.40047528160378e-05,7.01773249663298e-06,"ptc/rdx/Pka-C1/slmb/Cul3/csw/dco/cos",8
+"GO:1901800","GO:1901800","positive regulation of proteasomal protein catabolic process","4/30","34/11228",1.81631435844459e-06,1.51622763835375e-05,7.59776349482086e-06,"Pka-C1/slmb/Roc1a/dco",4
+"GO:0007409","GO:0007409","axonogenesis","8/30","336/11228",1.94731084324867e-06,1.61156759441269e-05,8.0755086693706e-06,"ptc/hh/Cul3/Shc/msn/dlp/dally/Sos",8
+"GO:0002065","GO:0002065","columnar/cuboidal epithelial cell differentiation","8/30","339/11228",2.08126648250478e-06,1.70770583179879e-05,8.55725400364087e-06,"ptc/hh/slmb/Shc/csw/Cul4/cos/rasp",8
+"GO:2000060","GO:2000060","positive regulation of ubiquitin-dependent protein catabolic process","4/30","36/11228",2.2984705394036e-06,1.86994213375208e-05,9.37021442022699e-06,"Pka-C1/slmb/Roc1a/dco",4
+"GO:0044265","GO:0044265","cellular macromolecule catabolic process","9/30","473/11228",2.51137773212281e-06,2.02598539734277e-05,1.01521417388777e-05,"Smurf/rdx/Pka-C1/slmb/Cul3/Roc1a/Usp8/Cul4/dco",9
+"GO:0007424","GO:0007424","open tracheal system development","7/30","243/11228",2.71477578409996e-06,2.17182062727996e-05,1.08829169590674e-05,"ptc/hh/Shc/csw/dlp/dally/Sos",7
+"GO:0031175","GO:0031175","neuron projection development","9/30","478/11228",2.73900028033959e-06,2.17309113150909e-05,1.08892834111804e-05,"ptc/hh/Pka-C1/Cul3/Shc/msn/dlp/dally/Sos",9
+"GO:1903052","GO:1903052","positive regulation of proteolysis involved in cellular protein catabolic process","4/30","38/11228",2.86959411385751e-06,2.25804126992067e-05,1.13149655740542e-05,"Pka-C1/slmb/Roc1a/dco",4
+"GO:0032434","GO:0032434","regulation of proteasomal ubiquitin-dependent protein catabolic process","4/30","39/11228",3.19162291867004e-06,2.49102276579125e-05,1.24824276750724e-05,"Pka-C1/slmb/Roc1a/dco",4
+"GO:0060541","GO:0060541","respiratory system development","7/30","252/11228",3.45587586865285e-06,2.67551680153769e-05,1.34069208147228e-05,"ptc/hh/Shc/csw/dlp/dally/Sos",7
+"GO:0008219","GO:0008219","cell death","8/30","368/11228",3.83682070665882e-06,2.94667830271397e-05,1.47657015826786e-05,"ptc/rdx/Pka-C1/slmb/Cul3/csw/dco/cos",8
+"GO:1903364","GO:1903364","positive regulation of cellular protein catabolic process","4/30","41/11228",3.91507682872453e-06,2.98291567902821e-05,1.49472858039023e-05,"Pka-C1/slmb/Roc1a/dco",4
+"GO:0061136","GO:0061136","regulation of proteasomal protein catabolic process","4/30","43/11228",4.75334063546667e-06,3.59307638586457e-05,1.80047796967117e-05,"Pka-C1/slmb/Roc1a/dco",4
+"GO:0045185","GO:0045185","maintenance of protein location","4/30","44/11228",5.21898660864877e-06,3.88389701108745e-05,1.94620716454711e-05,"Su(fu)/boi/ihog/dally",4
+"GO:2000058","GO:2000058","regulation of ubiquitin-dependent protein catabolic process","4/30","44/11228",5.21898660864877e-06,3.88389701108745e-05,1.94620716454711e-05,"Pka-C1/slmb/Roc1a/dco",4
+"GO:0048469","GO:0048469","cell maturation","6/30","181/11228",6.95311037113365e-06,5.09540912693763e-05,2.55329163487993e-05,"Pka-C1/slmb/Roc1a/Usp8/Pka-R1/flw",6
+"GO:1902533","GO:1902533","positive regulation of intracellular signal transduction","6/30","181/11228",6.95311037113365e-06,5.09540912693763e-05,2.55329163487993e-05,"rdx/Shc/msn/Gprk2/dco/Sos",6
+"GO:0051051","GO:0051051","negative regulation of transport","4/30","49/11228",8.0704503397232e-06,5.82528746325885e-05,2.91903110823388e-05,"Su(fu)/rdx/Pka-C1/cos",4
+"GO:1903050","GO:1903050","regulation of proteolysis involved in cellular protein catabolic process","4/30","49/11228",8.0704503397232e-06,5.82528746325885e-05,2.91903110823388e-05,"Pka-C1/slmb/Roc1a/dco",4
+"GO:0006935","GO:0006935","chemotaxis","7/30","294/11228",9.53379963316297e-06,6.83018481181825e-05,3.42258164364138e-05,"ptc/hh/Shc/msn/dlp/dally/Sos",7
+"GO:0006468","GO:0006468","protein phosphorylation","8/30","420/11228",1.01637882211296e-05,7.22758273502552e-05,3.62171634858187e-05,"rdx/Pka-C1/msn/krz/Gprk2/Pka-R1/dco/flw",8
+"GO:1903362","GO:1903362","regulation of cellular protein catabolic process","4/30","52/11228",1.02548221628461e-05,7.23869799730311e-05,3.62728616750825e-05,"Pka-C1/slmb/Roc1a/dco",4
+"GO:0001745","GO:0001745","compound eye morphogenesis","7/30","298/11228",1.04137772767289e-05,7.2972453909925e-05,3.65662406105655e-05,"hh/boi/rdx/Shc/csw/dco/Sos",7
+"GO:0051235","GO:0051235","maintenance of location","5/30","112/11228",1.05450472038154e-05,7.33568501134987e-05,3.67588601994177e-05,"Su(fu)/boi/ihog/Roc1a/dally",5
+"GO:0006913","GO:0006913","nucleocytoplasmic transport","5/30","113/11228",1.10127153647849e-05,7.53797410124007e-05,3.77725237309946e-05,"Su(fu)/hh/rdx/Pka-C1/cos",5
+"GO:0051169","GO:0051169","nuclear transport","5/30","113/11228",1.10127153647849e-05,7.53797410124007e-05,3.77725237309946e-05,"Su(fu)/hh/rdx/Pka-C1/cos",5
+"GO:0031647","GO:0031647","regulation of protein stability","4/30","53/11228",1.10713994611964e-05,7.53797410124007e-05,3.77725237309946e-05,"rdx/shf/krz/cos",4
+"GO:0007351","GO:0007351","tripartite regional subdivision","5/30","115/11228",1.19966578208537e-05,8.05370035525845e-05,4.03568098942227e-05,"hh/Pka-C1/slmb/Shc/csw",5
+"GO:0008595","GO:0008595","anterior/posterior axis specification, embryo","5/30","115/11228",1.19966578208537e-05,8.05370035525845e-05,4.03568098942227e-05,"hh/Pka-C1/slmb/Shc/csw",5
+"GO:0046530","GO:0046530","photoreceptor cell differentiation","6/30","202/11228",1.30370456271548e-05,8.69136375143655e-05,4.35521187983169e-05,"hh/boi/Shc/csw/msn/Sos",6
+"GO:0000578","GO:0000578","embryonic axis specification","5/30","118/11228",1.36000369245534e-05,9.00416237763535e-05,4.51195417388087e-05,"hh/Pka-C1/slmb/Shc/csw",5
+"GO:1903827","GO:1903827","regulation of cellular protein localization","4/30","56/11228",1.38097969452193e-05,9.08041442973323e-05,4.55016380963606e-05,"hh/rdx/dlp/dally",4
+"GO:0001932","GO:0001932","regulation of protein phosphorylation","6/30","206/11228",1.45780914883499e-05,9.52038627810603e-05,4.7706321590948e-05,"rdx/msn/krz/Pka-R1/dco/flw",6
+"GO:0048667","GO:0048667","cell morphogenesis involved in neuron differentiation","8/30","442/11228",1.47511026909509e-05,9.55137418637632e-05,4.78616009119954e-05,"ptc/hh/Cul3/Shc/msn/dlp/dally/Sos",8
+"GO:0007446","GO:0007446","imaginal disc growth","4/30","57/11228",1.48245286851049e-05,9.55137418637632e-05,4.78616009119954e-05,"hh/dlp/dally/dco",4
+"GO:0048812","GO:0048812","neuron projection morphogenesis","8/30","445/11228",1.54947391276192e-05,9.91663304167632e-05,4.96919002198035e-05,"ptc/hh/Cul3/Shc/msn/dlp/dally/Sos",8
+"GO:0120039","GO:0120039","plasma membrane bounded cell projection morphogenesis","8/30","446/11228",1.57495573011336e-05,0.000100129635821777,5.01746091782369e-05,"ptc/hh/Cul3/Shc/msn/dlp/dally/Sos",8
+"GO:0048858","GO:0048858","cell projection morphogenesis","8/30","448/11228",1.62698380789035e-05,0.000102756872077286,5.14911080474994e-05,"ptc/hh/Cul3/Shc/msn/dlp/dally/Sos",8
+"GO:0021700","GO:0021700","developmental maturation","6/30","213/11228",1.76283591915314e-05,0.000110609312574315,5.5425938428138e-05,"Pka-C1/slmb/Roc1a/Usp8/Pka-R1/flw",6
+"GO:0009948","GO:0009948","anterior/posterior axis specification","5/30","126/11228",1.87028200366027e-05,0.000116406196903905,5.83307368257507e-05,"hh/Pka-C1/slmb/Shc/csw",5
+"GO:0032990","GO:0032990","cell part morphogenesis","8/30","457/11228",1.87947505417763e-05,0.000116406196903905,5.83307368257507e-05,"ptc/hh/Cul3/Shc/msn/dlp/dally/Sos",8
+"GO:0009894","GO:0009894","regulation of catabolic process","6/30","219/11228",2.06363245567195e-05,0.000126029915362578,6.31531483779585e-05,"Smurf/Pka-C1/slmb/Roc1a/Cul4/dco",6
+"GO:0007173","GO:0007173","epidermal growth factor receptor signaling pathway","4/30","62/11228",2.0742423570091e-05,0.000126029915362578,6.31531483779585e-05,"Shc/csw/Gug/Sos",4
+"GO:0038127","GO:0038127","ERBB signaling pathway","4/30","62/11228",2.0742423570091e-05,0.000126029915362578,6.31531483779585e-05,"Shc/csw/Gug/Sos",4
+"GO:0048260","GO:0048260","positive regulation of receptor-mediated endocytosis","3/30","21/11228",2.21629981854493e-05,0.000133814328666864,6.70538905710052e-05,"Smurf/krz/Gprk2",3
+"GO:0042325","GO:0042325","regulation of phosphorylation","6/30","231/11228",2.78977592600921e-05,0.000167386555560553,8.38768156701455e-05,"rdx/msn/krz/Pka-R1/dco/flw",6
+"GO:0031146","GO:0031146","SCF-dependent proteasomal ubiquitin-dependent protein catabolic process","4/30","67/11228",2.82370973332023e-05,0.000168370269812883,8.43697514303593e-05,"slmb/Cul3/Roc1a/Cul4",4
+"GO:0048599","GO:0048599","oocyte development","5/30","139/11228",3.0054430171805e-05,0.00017810032694403,8.92454489182254e-05,"Pka-C1/slmb/Gprk2/Pka-R1/flw",5
+"GO:0042330","GO:0042330","taxis","7/30","353/11228",3.11746248780358e-05,0.000183605152655916,9.20038977672739e-05,"ptc/hh/Shc/msn/dlp/dally/Sos",7
+"GO:0048259","GO:0048259","regulation of receptor-mediated endocytosis","3/30","24/11228",3.3545716953741e-05,0.000196365172412142,9.83978988951195e-05,"Smurf/krz/Gprk2",3
+"GO:0009953","GO:0009953","dorsal/ventral pattern formation","5/30","150/11228",4.33239910365331e-05,0.000252066856939829,0.000126309817567436,"Shc/csw/dlp/dally/flw",5
+"GO:0035265","GO:0035265","organ growth","4/30","79/11228",5.41340307256447e-05,0.000313064274076018,0.000156875409268355,"hh/dlp/dally/dco",4
+"GO:0007478","GO:0007478","leg disc morphogenesis","4/30","80/11228",5.6877630092719e-05,0.000326961226880301,0.000163839123557344,"hh/Gug/dally/Sos",4
+"GO:0009994","GO:0009994","oocyte differentiation","5/30","161/11228",6.07455643584997e-05,0.000347117510619998,0.000173939366615503,"Pka-C1/slmb/Gprk2/Pka-R1/flw",5
+"GO:0019220","GO:0019220","regulation of phosphate metabolic process","6/30","270/11228",6.68117366579079e-05,0.000377289807009362,0.000189058598468507,"rdx/msn/krz/Pka-R1/dco/flw",6
+"GO:0051174","GO:0051174","regulation of phosphorus metabolic process","6/30","270/11228",6.68117366579079e-05,0.000377289807009362,0.000189058598468507,"rdx/msn/krz/Pka-R1/dco/flw",6
+"GO:0007411","GO:0007411","axon guidance","6/30","276/11228",7.54792697440223e-05,0.000423743268738371,0.000212336265146311,"ptc/Shc/msn/dlp/dally/Sos",6
+"GO:0000209","GO:0000209","protein polyubiquitination","4/30","88/11228",8.26259476254514e-05,0.000461168079769961,0.000231089706639114,"Smurf/rdx/slmb/Cul3",4
+"GO:0001751","GO:0001751","compound eye photoreceptor cell differentiation","5/30","173/11228",8.54683742460982e-05,0.000474275371539042,0.000237657724554103,"hh/boi/Shc/csw/Sos",5
+"GO:0097485","GO:0097485","neuron projection guidance","6/30","285/11228",9.01473123167924e-05,0.000494828097009324,0.000247956623172435,"ptc/Shc/msn/dlp/dally/Sos",6
+"GO:0031400","GO:0031400","negative regulation of protein modification process","4/30","90/11228",9.02030385173246e-05,0.000494828097009324,0.000247956623172435,"hh/krz/dco/flw",4
+"GO:0007379","GO:0007379","segment specification","3/30","34/11228",9.74061610360129e-05,0.000531306332923706,0.000266235739195322,"ihog/Gug/dlp",3
+"GO:0001754","GO:0001754","eye photoreceptor cell differentiation","5/30","180/11228",0.000103100832887853,0.000559190958035813,0.000280208626998209,"hh/boi/Shc/csw/Sos",5
+"GO:0032880","GO:0032880","regulation of protein localization","4/30","101/11228",0.000141225287820164,0.00075740936484557,0.000379535175147396,"hh/rdx/dlp/dally",4
+"GO:0035218","GO:0035218","leg disc development","4/30","101/11228",0.000141225287820164,0.00075740936484557,0.000379535175147396,"hh/Gug/dally/Sos",4
+"GO:0051726","GO:0051726","regulation of cell cycle","6/30","310/11228",0.000143147612903583,0.000763453935485773,0.000382564088286183,"ptc/hh/slmb/dally/flw/Sos",6
+"GO:0006897","GO:0006897","endocytosis","5/30","195/11228",0.000150248417195493,0.000796897682362836,0.000399322632499798,"Smurf/csw/krz/Gprk2/dco",5
+"GO:0031331","GO:0031331","positive regulation of cellular catabolic process","4/30","104/11228",0.000158163602583508,0.000834269552088833,0.000418049545290128,"Pka-C1/slmb/Roc1a/dco",4
+"GO:1903429","GO:1903429","regulation of cell maturation","3/30","40/11228",0.000159094327010585,0.000834593190875202,0.000418211719550403,"Pka-C1/slmb/Roc1a",3
+"GO:0048512","GO:0048512","circadian behavior","4/30","108/11228",0.000182977089434246,0.000954663075309111,0.000478378317342395,"Pka-C1/slmb/Cul3/dco",4
+"GO:0007622","GO:0007622","rhythmic behavior","4/30","110/11228",0.000196386017651599,0.00101360525239535,0.000507914035465653,"Pka-C1/slmb/Cul3/dco",4
+"GO:0040012","GO:0040012","regulation of locomotion","4/30","110/11228",0.000196386017651599,0.00101360525239535,0.000507914035465653,"ptc/hh/slmb/Shc",4
+"GO:0051270","GO:0051270","regulation of cellular component movement","4/30","112/11228",0.000210491173255227,0.00108059639745999,0.000541483063200893,"ptc/hh/slmb/Shc",4
+"GO:1902532","GO:1902532","negative regulation of intracellular signal transduction","4/30","116/11228",0.000240875498353454,0.00122824026616783,0.000615466887761732,"Smurf/slmb/krz/flw",4
+"GO:0010632","GO:0010632","regulation of epithelial cell migration","3/30","46/11228",0.000241809802401792,0.00122824026616783,0.000615466887761732,"ptc/hh/slmb",3
+"GO:0019933","GO:0019933","cAMP-mediated signaling","3/30","47/11228",0.000257831885655305,0.00130272952752154,0.000652793195260245,"Pka-C1/Gprk2/Pka-R1",3
+"GO:0045807","GO:0045807","positive regulation of endocytosis","3/30","49/11228",0.00029190316475618,0.00145348563629389,0.000728336552397267,"Smurf/krz/Gprk2",3
+"GO:0007309","GO:0007309","oocyte axis specification","4/30","122/11228",0.000292211174796584,0.00145348563629389,0.000728336552397267,"Pka-C1/slmb/Pka-R1/flw",4
+"GO:0043408","GO:0043408","regulation of MAPK cascade","4/30","122/11228",0.000292211174796584,0.00145348563629389,0.000728336552397267,"rdx/msn/krz/flw",4
+"GO:0051050","GO:0051050","positive regulation of transport","4/30","123/11228",0.000301474081619495,0.00149183050698307,0.000747551032556209,"Smurf/hh/krz/Gprk2",4
+"GO:0040036","GO:0040036","regulation of fibroblast growth factor receptor signaling pathway","2/30","10/11228",0.000306468977439042,0.00150877035046913,0.000756039528689027,"dlp/dally",2
+"GO:0007308","GO:0007308","oocyte construction","4/30","125/11228",0.000320630702009172,0.00157043609147349,0.000786940015135292,"Pka-C1/slmb/Pka-R1/flw",4
+"GO:0098657","GO:0098657","import into cell","5/30","230/11228",0.000323857789734395,0.00157819024439096,0.000790825593954681,"Smurf/csw/krz/Gprk2/dco",5
+"GO:0016333","GO:0016333","morphogenesis of follicular epithelium","3/30","51/11228",0.000328757191416229,0.00159397426141202,0.000798734909501417,"slmb/Shc/csw",3
+"GO:0043433","GO:0043433","negative regulation of DNA-binding transcription factor activity","2/30","11/11228",0.000373951058828234,0.00179496508237552,0.000899450704655279,"Su(fu)/cos",2
+"GO:2000274","GO:2000274","regulation of epithelial cell migration, open tracheal system","2/30","11/11228",0.000373951058828234,0.00179496508237552,0.000899450704655279,"ptc/hh",2
+"GO:0006898","GO:0006898","receptor-mediated endocytosis","3/30","54/11228",0.000389462230055264,0.00185090960818343,0.000927484310241041,"Smurf/krz/Gprk2",3
+"GO:0090287","GO:0090287","regulation of cellular response to growth factor stimulus","3/30","54/11228",0.000389462230055264,0.00185090960818343,0.000927484310241041,"Smurf/dlp/dally",3
+"GO:0016322","GO:0016322","neuron remodeling","3/30","56/11228",0.00043368324131565,0.00205091582100012,0.0010277067217073,"slmb/Roc1a/Usp8",3
+"GO:0000165","GO:0000165","MAPK cascade","4/30","138/11228",0.000467107480481354,0.00219815284932402,0.00110148667997925,"rdx/msn/krz/flw",4
+"GO:0042551","GO:0042551","neuron maturation","3/30","58/11228",0.000481010989522487,0.00225253926800774,0.00112873952355213,"slmb/Roc1a/Usp8",3
+"GO:0023014","GO:0023014","signal transduction by protein phosphorylation","4/30","142/11228",0.000520445634290518,0.00242537771319853,0.00121534826198654,"rdx/msn/krz/flw",4
+"GO:0014042","GO:0014042","positive regulation of neuron maturation","2/30","13/11228",0.000528570759304553,0.0024395573506364,0.00122245362855355,"slmb/Roc1a",2
+"GO:1904801","GO:1904801","positive regulation of neuron remodeling","2/30","13/11228",0.000528570759304553,0.0024395573506364,0.00122245362855355,"slmb/Roc1a",2
+"GO:0006515","GO:0006515","protein quality control for misfolded or incompletely synthesized proteins","2/30","14/11228",0.000615642092222908,0.00281436385016187,0.00141026785035523,"rdx/Cul3",2
+"GO:1905475","GO:1905475","regulation of protein localization to membrane","2/30","14/11228",0.000615642092222908,0.00281436385016187,0.00141026785035523,"dlp/dally",2
+"GO:0007623","GO:0007623","circadian rhythm","4/30","150/11228",0.000639945842280683,0.0028978679650446,0.00145211146932608,"Pka-C1/slmb/Cul3/dco",4
+"GO:0010927","GO:0010927","cellular component assembly involved in morphogenesis","4/30","150/11228",0.000639945842280683,0.0028978679650446,0.00145211146932608,"hh/slmb/Cul4/rasp",4
+"GO:0071695","GO:0071695","anatomical structure maturation","3/30","65/11228",0.000672396103495463,0.00301739831338488,0.00151200770747466,"slmb/Roc1a/Usp8",3
+"GO:0048511","GO:0048511","rhythmic process","4/30","152/11228",0.000672628374025379,0.00301739831338488,0.00151200770747466,"Pka-C1/slmb/Cul3/dco",4
+"GO:0001933","GO:0001933","negative regulation of protein phosphorylation","3/30","66/11228",0.000703148271200517,0.00309459093741573,0.00155068866052521,"krz/dco/flw",3
+"GO:0019935","GO:0019935","cyclic-nucleotide-mediated signaling","3/30","66/11228",0.000703148271200517,0.00309459093741573,0.00155068866052521,"Pka-C1/Gprk2/Pka-R1",3
+"GO:0008069","GO:0008069","dorsal/ventral axis specification, ovarian follicular epithelium","2/30","15/11228",0.000709177089824438,0.00309459093741573,0.00155068866052521,"Shc/csw",2
+"GO:0051788","GO:0051788","response to misfolded protein","2/30","15/11228",0.000709177089824438,0.00309459093741573,0.00155068866052521,"rdx/Cul3",2
+"GO:0071218","GO:0071218","cellular response to misfolded protein","2/30","15/11228",0.000709177089824438,0.00309459093741573,0.00155068866052521,"rdx/Cul3",2
+"GO:1903431","GO:1903431","positive regulation of cell maturation","2/30","15/11228",0.000709177089824438,0.00309459093741573,0.00155068866052521,"slmb/Roc1a",2
+"GO:0007254","GO:0007254","JNK cascade","3/30","68/11228",0.000767315735499849,0.00331812209945881,0.00166269934150513,"rdx/msn/flw",3
+"GO:0042326","GO:0042326","negative regulation of phosphorylation","3/30","68/11228",0.000767315735499849,0.00331812209945881,0.00166269934150513,"krz/dco/flw",3
+"GO:0030100","GO:0030100","regulation of endocytosis","3/30","69/11228",0.000800751437484112,0.00342192595867973,0.00171471509113666,"Smurf/krz/Gprk2",3
+"GO:0007362","GO:0007362","terminal region determination","2/30","16/11228",0.000809142908979478,0.00342192595867973,0.00171471509113666,"Shc/csw",2
+"GO:0014041","GO:0014041","regulation of neuron maturation","2/30","16/11228",0.000809142908979478,0.00342192595867973,0.00171471509113666,"slmb/Roc1a",2
+"GO:0030713","GO:0030713","ovarian follicle cell stalk formation","2/30","16/11228",0.000809142908979478,0.00342192595867973,0.00171471509113666,"hh/slmb",2
+"GO:1904799","GO:1904799","regulation of neuron remodeling","2/30","16/11228",0.000809142908979478,0.00342192595867973,0.00171471509113666,"slmb/Roc1a",2
+"GO:0051493","GO:0051493","regulation of cytoskeleton organization","4/30","161/11228",0.000834516195426228,0.00351375240179464,0.0017607289995835,"Pka-C1/slmb/dco/flw",4
+"GO:0040007","GO:0040007","growth","6/30","432/11228",0.000847249713902261,0.0035517891936514,0.00177978910252049,"Smurf/hh/Pka-C1/dlp/dally/dco",6
+"GO:0045475","GO:0045475","locomotor rhythm","3/30","71/11228",0.000870377115030828,0.00363287839317215,0.00182042261587684,"slmb/Cul3/dco",3
+"GO:0009950","GO:0009950","dorsal/ventral axis specification","3/30","72/11228",0.000906586954213433,0.00376763409543245,0.00188794822545245,"Shc/csw/flw",3
+"GO:0007426","GO:0007426","tracheal outgrowth, open tracheal system","2/30","17/11228",0.000915506825871378,0.00378830410705398,0.00189830589574964,"Shc/Sos",2
+"GO:0030334","GO:0030334","regulation of cell migration","3/30","73/11228",0.000943741220487763,0.00388837584406975,0.00194845149203934,"ptc/hh/slmb",3
+"GO:0051403","GO:0051403","stress-activated MAPK cascade","3/30","75/11228",0.00102092178235293,0.00418839705580689,0.00209879106853481,"rdx/msn/flw",3
+"GO:0007480","GO:0007480","imaginal disc-derived leg morphogenesis","3/30","76/11228",0.00106096723166879,0.00433416401022145,0.00217183437792895,"Gug/dally/Sos",3
+"GO:0030029","GO:0030029","actin filament-based process","5/30","300/11228",0.00108395923813856,0.00440932571446193,0.00220949764419858,"Pka-C1/Gprk2/Pka-R1/dco/flw",5
+"GO:2000145","GO:2000145","regulation of cell motility","3/30","77/11228",0.00110199541640424,0.0044637789018906,0.00223678394535527,"ptc/hh/slmb",3
+"GO:0008103","GO:0008103","oocyte microtubule cytoskeleton polarization","2/30","19/11228",0.0011472986519453,0.0046277592683508,0.00231895393161877,"Pka-C1/Pka-R1",2
+"GO:0045664","GO:0045664","regulation of neuron differentiation","4/30","180/11228",0.00126376521047168,0.00507621172407034,0.00254367188366244,"slmb/Roc1a/Shc/csw",4
+"GO:0045165","GO:0045165","cell fate commitment","5/30","311/11228",0.00127291760728084,0.00509167042912337,0.00255141818652344,"ptc/hh/Cul3/csw/Sos",5
+"GO:0007346","GO:0007346","regulation of mitotic cell cycle","4/30","181/11228",0.0012899331857981,0.00513832306376006,0.00257479565804643,"ptc/hh/slmb/Sos",4
+"GO:0010563","GO:0010563","negative regulation of phosphorus metabolic process","3/30","82/11228",0.00132220190023573,0.00522351367994362,0.00261748437690158,"krz/dco/flw",3
+"GO:0045936","GO:0045936","negative regulation of phosphate metabolic process","3/30","82/11228",0.00132220190023573,0.00522351367994362,0.00261748437690158,"krz/dco/flw",3
+"GO:0007626","GO:0007626","locomotory behavior","4/30","185/11228",0.00139841887846065,0.00550197591525502,0.00275702082595564,"slmb/Cul3/krz/dco",4
+"GO:0042752","GO:0042752","regulation of circadian rhythm","3/30","86/11228",0.00151698797116457,0.00594411613191015,0.00297857573715235,"Pka-C1/Cul3/dco",3
+"GO:0007306","GO:0007306","eggshell chorion assembly","3/30","87/11228",0.00156834409188589,0.00609558837332169,0.00305447794584212,"slmb/Cul4/rasp",3
+"GO:0031098","GO:0031098","stress-activated protein kinase signaling cascade","3/30","87/11228",0.00156834409188589,0.00609558837332169,0.00305447794584212,"rdx/msn/flw",3
+"GO:0007354","GO:0007354","zygotic determination of anterior/posterior axis, embryo","2/30","23/11228",0.0016862327863835,0.00647513389971266,0.00324466687737794,"Shc/csw",2
+"GO:0046627","GO:0046627","negative regulation of insulin receptor signaling pathway","2/30","23/11228",0.0016862327863835,0.00647513389971266,0.00324466687737794,"slmb/Roc1a",2
+"GO:1900077","GO:1900077","negative regulation of cellular response to insulin stimulus","2/30","23/11228",0.0016862327863835,0.00647513389971266,0.00324466687737794,"slmb/Roc1a",2
+"GO:0031329","GO:0031329","regulation of cellular catabolic process","4/30","198/11228",0.00179510748507638,0.00686574974371842,0.00344040310622732,"Pka-C1/slmb/Roc1a/dco",4
+"GO:0032269","GO:0032269","negative regulation of cellular protein metabolic process","4/30","199/11228",0.00182854065355236,0.00696586915638992,0.00349057259262083,"hh/krz/dco/flw",4
+"GO:0051248","GO:0051248","negative regulation of protein metabolic process","4/30","200/11228",0.00186240553176558,0.00706683521934767,0.00354116633250207,"hh/krz/dco/flw",4
+"GO:0050795","GO:0050795","regulation of behavior","3/30","94/11228",0.00195857104061802,0.00740247322438306,0.00370935335914809,"Pka-C1/Cul3/Pka-R1",3
+"GO:0007280","GO:0007280","pole cell migration","2/30","25/11228",0.00199286190275154,0.00750253892800578,0.0037594959321257,"hh/disp",2
+"GO:0007293","GO:0007293","germarium-derived egg chamber formation","3/30","95/11228",0.0020188065696811,0.00757052463630411,0.00379356333200765,"Smurf/slmb/flw",3
+"GO:0060284","GO:0060284","regulation of cell development","5/30","348/11228",0.00209103800925775,0.00781088127971767,0.00391400520266554,"Pka-C1/slmb/Roc1a/Shc/csw",5
+"GO:0045500","GO:0045500","sevenless signaling pathway","2/30","26/11228",0.00215535563184486,0.00801992793244598,0.00401875774685067,"csw/Sos",2
+"GO:0043066","GO:0043066","negative regulation of apoptotic process","3/30","98/11228",0.00220642119417217,0.00817824071971151,0.00409808772906597,"slmb/csw/dco",3
+"GO:0032956","GO:0032956","regulation of actin cytoskeleton organization","3/30","99/11228",0.00227128777524456,0.0083862933239799,0.00420234215905572,"Pka-C1/dco/flw",3
+"GO:0007498","GO:0007498","mesoderm development","3/30","100/11228",0.00233733119438218,0.00859708025519881,0.00430796675068624,"hh/csw/flw",3
+"GO:1901700","GO:1901700","response to oxygen-containing compound","5/30","358/11228",0.00236653891461733,0.00867128762607875,0.00434515180385744,"Pka-C1/slmb/Roc1a/Pka-R1/dco",5
+"GO:0032970","GO:0032970","regulation of actin filament-based process","3/30","101/11228",0.0024045589262157,0.00877709722116759,0.00439817262069472,"Pka-C1/dco/flw",3
+"GO:0048589","GO:0048589","developmental growth","5/30","366/11228",0.00260540742538737,0.00947420881959044,0.0047474927966588,"hh/Pka-C1/dlp/dally/dco",5
+"GO:0016334","GO:0016334","establishment or maintenance of polarity of follicular epithelium","2/30","29/11228",0.00267917523718773,0.00970569142528384,0.0048634879181521,"Shc/csw",2
+"GO:0043069","GO:0043069","negative regulation of programmed cell death","3/30","106/11228",0.0027587185200154,0.00995627736546912,0.00498905565353003,"slmb/csw/dco",3
+"GO:0001736","GO:0001736","establishment of planar polarity","3/30","107/11228",0.00283320481088819,0.0101487933524353,0.00508552473910409,"rdx/msn/dco",3
+"GO:0007164","GO:0007164","establishment of tissue polarity","3/30","107/11228",0.00283320481088819,0.0101487933524353,0.00508552473910409,"rdx/msn/dco",3
+"GO:0007465","GO:0007465","R7 cell fate commitment","2/30","30/11228",0.0028657901758789,0.0102273552745121,0.0051248918426009,"csw/Sos",2
+"GO:0018193","GO:0018193","peptidyl-amino acid modification","5/30","375/11228",0.00289471197729728,0.0102923092526125,0.00515744005311834,"Pka-C1/Gug/krz/dco/rasp",5
+"GO:0048010","GO:0048010","vascular endothelial growth factor receptor signaling pathway","2/30","31/11228",0.00305835740141614,0.0108340335991125,0.0054288962223623,"Shc/Sos",2
+"GO:0019932","GO:0019932","second-messenger-mediated signaling","3/30","112/11228",0.00322429006949736,0.0113693530851606,0.00569714293850702,"Pka-C1/Gprk2/Pka-R1",3
+"GO:0007097","GO:0007097","nuclear migration","2/30","32/11228",0.0032568459358533,0.0113693530851606,0.00569714293850702,"msn/flw",2
+"GO:0016325","GO:0016325","oocyte microtubule cytoskeleton organization","2/30","32/11228",0.0032568459358533,0.0113693530851606,0.00569714293850702,"Pka-C1/Pka-R1",2
+"GO:0051090","GO:0051090","regulation of DNA-binding transcription factor activity","2/30","32/11228",0.0032568459358533,0.0113693530851606,0.00569714293850702,"Su(fu)/cos",2
+"GO:0035017","GO:0035017","cuticle pattern formation","2/30","34/11228",0.00367146358686773,0.0127703081282356,0.00639915659496015,"boi/ihog",2
+"GO:0001738","GO:0001738","morphogenesis of a polarized epithelium","3/30","118/11228",0.00373550613943978,0.0128995895462669,0.00646393905991663,"rdx/msn/dco",3
+"GO:0060627","GO:0060627","regulation of vesicle-mediated transport","3/30","118/11228",0.00373550613943978,0.0128995895462669,0.00646393905991663,"Smurf/krz/Gprk2",3
+"GO:0045187","GO:0045187","regulation of circadian sleep/wake cycle, sleep","2/30","35/11228",0.00388753131371726,0.0133286787898878,0.00667895417431876,"Pka-C1/Cul3",2
+"GO:1903320","GO:1903320","regulation of protein modification by small protein conjugation or removal","2/30","35/11228",0.00388753131371726,0.0133286787898878,0.00667895417431876,"hh/krz",2
+"GO:0033043","GO:0033043","regulation of organelle organization","5/30","402/11228",0.00390332044583178,0.0133351872882509,0.0066822155600117,"Pka-C1/slmb/Gug/dco/flw",5
+"GO:0043409","GO:0043409","negative regulation of MAPK cascade","2/30","36/11228",0.00410939756930671,0.0138909213610368,0.00696069195394057,"krz/flw",2
+"GO:0046626","GO:0046626","regulation of insulin receptor signaling pathway","2/30","36/11228",0.00410939756930671,0.0138909213610368,0.00696069195394057,"slmb/Roc1a",2
+"GO:1900076","GO:1900076","regulation of cellular response to insulin stimulus","2/30","36/11228",0.00410939756930671,0.0138909213610368,0.00696069195394057,"slmb/Roc1a",2
+"GO:0007304","GO:0007304","chorion-containing eggshell formation","3/30","123/11228",0.00419737550044582,0.0141385280015017,0.00708476677268233,"slmb/Cul4/rasp",3
+"GO:0035330","GO:0035330","regulation of hippo signaling","2/30","37/11228",0.00433703193974074,0.0145578694480808,0.00729489730018961,"Smurf/dco",2
+"GO:0030703","GO:0030703","eggshell formation","3/30","125/11228",0.00439143249137339,0.0146891121662664,0.00736066256577165,"slmb/Cul4/rasp",3
+"GO:0060548","GO:0060548","negative regulation of cell death","3/30","126/11228",0.00449047889416718,0.0149682629805573,0.00750054405933627,"slmb/csw/dco",3
+"GO:0050802","GO:0050802","circadian sleep/wake cycle, sleep","2/30","38/11228",0.00457040412288081,0.015181965252476,0.00760762951796222,"Pka-C1/Cul3",2
+"GO:0051647","GO:0051647","nucleus localization","2/30","39/11228",0.00480948392799628,0.0159210502444015,0.00797798241413539,"msn/flw",2
+"GO:0030951","GO:0030951","establishment or maintenance of microtubule cytoskeleton polarity","2/30","40/11228",0.00505424127541658,0.0166166836452052,0.00832656187045918,"Pka-C1/Pka-R1",2
+"GO:0090090","GO:0090090","negative regulation of canonical Wnt signaling pathway","2/30","40/11228",0.00505424127541658,0.0166166836452052,0.00832656187045918,"slmb/Roc1a",2
+"GO:0050767","GO:0050767","regulation of neurogenesis","4/30","265/11228",0.00512758541117719,0.0168002798454952,0.00841856128222733,"slmb/Roc1a/Shc/csw",4
+"GO:0045595","GO:0045595","regulation of cell differentiation","5/30","432/11228",0.00529793100270684,0.0172625774519896,0.00865021699074479,"Pka-C1/slmb/Roc1a/Shc/csw",5
+"GO:0030510","GO:0030510","regulation of BMP signaling pathway","2/30","41/11228",0.0053046461961843,0.0172625774519896,0.00865021699074479,"Smurf/dally",2
+"GO:0022410","GO:0022410","circadian sleep/wake cycle process","2/30","42/11228",0.0055606688317093,0.0179738790519897,0.00900664772670974,"Pka-C1/Cul3",2
+"GO:0042749","GO:0042749","regulation of circadian sleep/wake cycle","2/30","42/11228",0.0055606688317093,0.0179738790519897,0.00900664772670974,"Pka-C1/Cul3",2
+"GO:0008586","GO:0008586","imaginal disc-derived wing vein morphogenesis","2/30","43/11228",0.00582227943342376,0.0187563364298215,0.00939873437327679,"Gug/dally",2
+"GO:0080134","GO:0080134","regulation of response to stress","4/30","278/11228",0.00606915534498806,0.0194214964383411,0.00973204371965118,"rdx/krz/Gprk2/flw",4
+"GO:0035329","GO:0035329","hippo signaling","2/30","44/11228",0.0060894483624382,0.0194214964383411,0.00973204371965118,"Smurf/dco",2
+"GO:0051302","GO:0051302","regulation of cell division","2/30","44/11228",0.0060894483624382,0.0194214964383411,0.00973204371965118,"dco/flw",2
+"GO:0008355","GO:0008355","olfactory learning","2/30","45/11228",0.00636214608919848,0.0200909876501005,0.0100675234167718,"Pka-C1/Pka-R1",2
+"GO:0030178","GO:0030178","negative regulation of Wnt signaling pathway","2/30","45/11228",0.00636214608919848,0.0200909876501005,0.0100675234167718,"slmb/Roc1a",2
+"GO:0045570","GO:0045570","regulation of imaginal disc growth","2/30","45/11228",0.00636214608919848,0.0200909876501005,0.0100675234167718,"dlp/dally",2
+"GO:0030036","GO:0030036","actin cytoskeleton organization","4/30","283/11228",0.0064601926729167,0.0203337212000001,0.0101891563469299,"Pka-C1/Pka-R1/dco/flw",4
+"GO:0008354","GO:0008354","germ cell migration","2/30","47/11228",0.0069240103623655,0.0216516284946934,0.0108495550680646,"hh/disp",2
+"GO:0042745","GO:0042745","circadian sleep/wake cycle","2/30","47/11228",0.0069240103623655,0.0216516284946934,0.0108495550680646,"Pka-C1/Cul3",2
+"GO:0008592","GO:0008592","regulation of Toll signaling pathway","2/30","48/11228",0.0072131183932671,0.0224824469400533,0.011265875275882,"krz/Gprk2",2
+"GO:0030952","GO:0030952","establishment or maintenance of cytoskeleton polarity","2/30","49/11228",0.00750763819022502,0.0232494602019871,0.0116502229301624,"Pka-C1/Pka-R1",2
+"GO:0045451","GO:0045451","pole plasm oskar mRNA localization","2/30","49/11228",0.00750763819022502,0.0232494602019871,0.0116502229301624,"Pka-C1/slmb",2
+"GO:0035215","GO:0035215","genital disc development","2/30","50/11228",0.00780754076525037,0.0240974114710319,0.0120751283358131,"ptc/hh",2
+"GO:0032101","GO:0032101","regulation of response to external stimulus","3/30","154/11228",0.00783165872808537,0.0240974114710319,0.0120751283358131,"Shc/krz/Gprk2",3
+"GO:0002252","GO:0002252","immune effector process","3/30","155/11228",0.00797194436877171,0.0244506919936768,0.0122521559661297,"Shc/Gprk2/Sos",3
+"GO:0040008","GO:0040008","regulation of growth","4/30","301/11228",0.00800691179226149,0.0244797303202899,0.0122667069697067,"Smurf/dlp/dally/dco",4
+"GO:0035967","GO:0035967","cellular response to topologically incorrect protein","2/30","51/11228",0.00811279723765176,0.0246492676551354,0.0123516615333299,"rdx/Cul3",2
+"GO:0031401","GO:0031401","positive regulation of protein modification process","3/30","156/11228",0.0081137172698154,0.0246492676551354,0.0123516615333299,"rdx/msn/krz",3
+"GO:0008406","GO:0008406","gonad development","2/30","52/11228",0.00842337883369894,0.0251131791315248,0.0125841259463891,"ptc/hh",2
+"GO:0030509","GO:0030509","BMP signaling pathway","2/30","52/11228",0.00842337883369894,0.0251131791315248,0.0125841259463891,"Smurf/dally",2
+"GO:0045137","GO:0045137","development of primary sexual characteristics","2/30","52/11228",0.00842337883369894,0.0251131791315248,0.0125841259463891,"ptc/hh",2
+"GO:0048190","GO:0048190","wing disc dorsal/ventral pattern formation","2/30","52/11228",0.00842337883369894,0.0251131791315248,0.0125841259463891,"dlp/dally",2
+"GO:0071773","GO:0071773","cellular response to BMP stimulus","2/30","52/11228",0.00842337883369894,0.0251131791315248,0.0125841259463891,"Smurf/dally",2
+"GO:0090092","GO:0090092","regulation of transmembrane receptor protein serine/threonine kinase signaling pathway","2/30","52/11228",0.00842337883369894,0.0251131791315248,0.0125841259463891,"Smurf/dally",2
+"GO:0000278","GO:0000278","mitotic cell cycle","5/30","485/11228",0.00857888265314726,0.0254976078855151,0.0127767618461408,"ptc/hh/slmb/csw/Sos",5
+"GO:0008587","GO:0008587","imaginal disc-derived wing margin morphogenesis","2/30","53/11228",0.00873925688628738,0.0255783128379143,0.0128172028146128,"Usp8/dlp",2
+"GO:0019094","GO:0019094","pole plasm mRNA localization","2/30","53/11228",0.00873925688628738,0.0255783128379143,0.0128172028146128,"Pka-C1/slmb",2
+"GO:0035966","GO:0035966","response to topologically incorrect protein","2/30","53/11228",0.00873925688628738,0.0255783128379143,0.0128172028146128,"rdx/Cul3",2
+"GO:0048645","GO:0048645","animal organ formation","2/30","53/11228",0.00873925688628738,0.0255783128379143,0.0128172028146128,"hh/dally",2
+"GO:0071772","GO:0071772","response to BMP","2/30","53/11228",0.00873925688628738,0.0255783128379143,0.0128172028146128,"Smurf/dally",2
+"GO:1901701","GO:1901701","cellular response to oxygen-containing compound","3/30","162/11228",0.00899579210774846,0.0262075574796699,0.0131325150967205,"Pka-C1/slmb/Roc1a",3
+"GO:0007316","GO:0007316","pole plasm RNA localization","2/30","54/11228",0.00906040283460401,0.0262075574796699,0.0131325150967205,"Pka-C1/slmb",2
+"GO:0046843","GO:0046843","dorsal appendage formation","2/30","54/11228",0.00906040283460401,0.0262075574796699,0.0131325150967205,"slmb/rasp",2
+"GO:0051130","GO:0051130","positive regulation of cellular component organization","4/30","312/11228",0.00906344696171917,0.0262075574796699,0.0131325150967205,"Smurf/krz/Gprk2/dco",4
+"GO:0002164","GO:0002164","larval development","3/30","164/11228",0.00930187767660947,0.0268162239325678,0.0134375157205959,"hh/Gug/krz",3
+"GO:0007450","GO:0007450","dorsal/ventral pattern formation, imaginal disc","2/30","56/11228",0.00971838470462606,0.0276844193366202,0.0138725653912669,"dlp/dally",2
+"GO:0008063","GO:0008063","Toll signaling pathway","2/30","56/11228",0.00971838470462606,0.0276844193366202,0.0138725653912669,"krz/Gprk2",2
+"GO:0008306","GO:0008306","associative learning","2/30","56/11228",0.00971838470462606,0.0276844193366202,0.0138725653912669,"Pka-C1/Pka-R1",2
+"GO:0018105","GO:0018105","peptidyl-serine phosphorylation","2/30","56/11228",0.00971838470462606,0.0276844193366202,0.0138725653912669,"Pka-C1/dco",2
+"GO:0043900","GO:0043900","regulation of multi-organism process","3/30","168/11228",0.00993230000523295,0.0282100828550995,0.0141359735359435,"Pka-C1/slmb/Gprk2",3
+"GO:0007442","GO:0007442","hindgut morphogenesis","2/30","57/11228",0.0100551640331654,0.028391051387761,0.0142266562326829,"Smurf/hh",2
+"GO:0061525","GO:0061525","hindgut development","2/30","57/11228",0.0100551640331654,0.028391051387761,0.0142266562326829,"Smurf/hh",2
+"GO:0010243","GO:0010243","response to organonitrogen compound","3/30","170/11228",0.0102566871269268,0.0288751309145152,0.0144692267850148,"slmb/Roc1a/dco",3
+"GO:0001752","GO:0001752","compound eye photoreceptor fate commitment","2/30","58/11228",0.0103970980704383,0.0290997497015183,0.0145817824710459,"csw/Sos",2
+"GO:0007474","GO:0007474","imaginal disc-derived wing vein specification","2/30","58/11228",0.0103970980704383,0.0290997497015183,0.0145817824710459,"hh/Shc",2
+"GO:0018209","GO:0018209","peptidyl-serine modification","2/30","59/11228",0.0107441587821051,0.0298103827480373,0.0149378781972073,"Pka-C1/dco",2
+"GO:0042706","GO:0042706","eye photoreceptor cell fate commitment","2/30","59/11228",0.0107441587821051,0.0298103827480373,0.0149378781972073,"csw/Sos",2
+"GO:0045466","GO:0045466","R7 cell differentiation","2/30","59/11228",0.0107441587821051,0.0298103827480373,0.0149378781972073,"csw/Sos",2
+"GO:1901698","GO:1901698","response to nitrogen compound","3/30","175/11228",0.0110946089701404,0.030435615738872,0.0152511802551146,"slmb/Roc1a/dco",3
+"GO:0007178","GO:0007178","transmembrane receptor protein serine/threonine kinase signaling pathway","2/30","60/11228",0.0110963182381304,0.030435615738872,0.0152511802551146,"Smurf/dally",2
+"GO:0046328","GO:0046328","regulation of JNK cascade","2/30","60/11228",0.0110963182381304,0.030435615738872,0.0152511802551146,"rdx/flw",2
+"GO:0070646","GO:0070646","protein modification by small protein removal","2/30","60/11228",0.0110963182381304,0.030435615738872,0.0152511802551146,"Usp8/krz",2
+"GO:0010564","GO:0010564","regulation of cell cycle process","3/30","177/11228",0.0114406181913638,0.0312369507612424,0.0156527264231225,"slmb/flw/Sos",3
+"GO:0042067","GO:0042067","establishment of ommatidial planar polarity","2/30","61/11228",0.0114535486124555,0.0312369507612424,0.0156527264231225,"rdx/dco",2
+"GO:0008286","GO:0008286","insulin receptor signaling pathway","2/30","62/11228",0.0118158221826714,0.0319526459024354,0.0160113587471634,"slmb/Roc1a",2
+"GO:0008544","GO:0008544","epidermis development","2/30","62/11228",0.0118158221826714,0.0319526459024354,0.0160113587471634,"hh/dco",2
+"GO:0060811","GO:0060811","intracellular mRNA localization involved in anterior/posterior axis specification","2/30","62/11228",0.0118158221826714,0.0319526459024354,0.0160113587471634,"Pka-C1/slmb",2
+"GO:0032006","GO:0032006","regulation of TOR signaling","2/30","64/11228",0.0125553885374324,0.0336680809942322,0.0168709572525923,"slmb/Shc",2
+"GO:0032872","GO:0032872","regulation of stress-activated MAPK cascade","2/30","64/11228",0.0125553885374324,0.0336680809942322,0.0168709572525923,"rdx/flw",2
+"GO:0070302","GO:0070302","regulation of stress-activated protein kinase signaling cascade","2/30","64/11228",0.0125553885374324,0.0336680809942322,0.0168709572525923,"rdx/flw",2
+"GO:0060810","GO:0060810","intracellular mRNA localization involved in pattern specification process","2/30","65/11228",0.0129326263924781,0.0345830677904706,0.0173294539257073,"Pka-C1/slmb",2
+"GO:0007315","GO:0007315","pole plasm assembly","2/30","66/11228",0.013314797583768,0.0353099604431416,0.0176936972834602,"Pka-C1/slmb",2
+"GO:0046552","GO:0046552","photoreceptor cell fate commitment","2/30","66/11228",0.013314797583768,0.0353099604431416,0.0176936972834602,"csw/Sos",2
+"GO:0046620","GO:0046620","regulation of organ growth","2/30","66/11228",0.013314797583768,0.0353099604431416,0.0176936972834602,"dlp/dally",2
+"GO:0007612","GO:0007612","learning","2/30","68/11228",0.0140938312406562,0.037170543931401,0.0186260291410639,"Pka-C1/Pka-R1",2
+"GO:0048546","GO:0048546","digestive tract morphogenesis","2/30","68/11228",0.0140938312406562,0.037170543931401,0.0186260291410639,"Smurf/hh",2
+"GO:0051960","GO:0051960","regulation of nervous system development","4/30","357/11228",0.0143317672309373,0.0376945110731501,0.0188885872373132,"slmb/Roc1a/Shc/csw",4
+"GO:0043065","GO:0043065","positive regulation of apoptotic process","2/30","69/11228",0.0144906395929897,0.0378016685034515,0.0189422834496462,"rdx/Cul3",2
+"GO:0043410","GO:0043410","positive regulation of MAPK cascade","2/30","69/11228",0.0144906395929897,0.0378016685034515,0.0189422834496462,"rdx/msn",2
+"GO:0045471","GO:0045471","response to ethanol","2/30","69/11228",0.0144906395929897,0.0378016685034515,0.0189422834496462,"Pka-C1/Pka-R1",2
+"GO:0008283","GO:0008283","cell proliferation","4/30","359/11228",0.014602984289698,0.0379915038431167,0.0190374092722635,"hh/slmb/Roc1a/Shc",4
+"GO:0030431","GO:0030431","sleep","2/30","70/11228",0.0148922730543977,0.0385352618119185,0.0193098844825074,"Pka-C1/Cul3",2
+"GO:1905879","GO:1905879","regulation of oogenesis","2/30","70/11228",0.0148922730543977,0.0385352618119185,0.0193098844825074,"Pka-C1/slmb",2
+"GO:0031929","GO:0031929","TOR signaling","2/30","72/11228",0.0157099081883716,0.0405416985506364,0.0203153028921501,"slmb/Shc",2
+"GO:0007028","GO:0007028","cytoplasm organization","2/30","73/11228",0.0161258565536641,0.0415035450174734,0.0207972807817822,"Pka-C1/slmb",2
+"GO:0002168","GO:0002168","instar larval development","2/30","74/11228",0.016546523412851,0.0423590999368984,0.021225996349959,"hh/krz",2
+"GO:0032869","GO:0032869","cellular response to insulin stimulus","2/30","74/11228",0.016546523412851,0.0423590999368984,0.021225996349959,"slmb/Roc1a",2
+"GO:0045666","GO:0045666","positive regulation of neuron differentiation","2/30","75/11228",0.0169718823616317,0.0433324656041661,0.0217137464705087,"slmb/Roc1a",2
+"GO:0071375","GO:0071375","cellular response to peptide hormone stimulus","2/30","76/11228",0.017401907094874,0.0441953196060291,0.0221461195832843,"slmb/Roc1a",2
+"GO:1901653","GO:1901653","cellular response to peptide","2/30","76/11228",0.017401907094874,0.0441953196060291,0.0221461195832843,"slmb/Roc1a",2
+"GO:0032868","GO:0032868","response to insulin","2/30","78/11228",0.0182758491881736,0.0461705663701227,0.0231359088060812,"slmb/Roc1a",2
+"GO:0048663","GO:0048663","neuron fate commitment","2/30","78/11228",0.0182758491881736,0.0461705663701227,0.0231359088060812,"csw/Sos",2
+"GO:0042048","GO:0042048","olfactory behavior","2/30","79/11228",0.0187197144309899,0.0471677843930454,0.0236356112583572,"Pka-C1/Pka-R1",2
+"GO:0043434","GO:0043434","response to peptide hormone","2/30","80/11228",0.0191681412231634,0.0480454714732032,0.0240754171746205,"slmb/Roc1a",2
+"GO:1901652","GO:1901652","response to peptide","2/30","80/11228",0.0191681412231634,0.0480454714732032,0.0240754171746205,"slmb/Roc1a",2

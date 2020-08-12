@@ -1,0 +1,3 @@
+"","ID","Description","GeneRatio","BgRatio","pvalue","p.adjust","qvalue","geneID","Count"
+"GO:0000118","GO:0000118","histone deacetylase complex","3/41","24/10701",9.9922667605575e-05,0.0113911841070355,0.00873008569606603,"HDAC3/ebi/Smr",3
+"GO:0017053","GO:0017053","transcriptional repressor complex","3/41","35/10701",0.000313801019155037,0.0178866580918371,0.0137081497841411,"ebi/H/Smr",3
