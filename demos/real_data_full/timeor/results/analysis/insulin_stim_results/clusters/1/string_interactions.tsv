@@ -1,0 +1,6 @@
+#node1	node2	node1_string_internal_id	node2_string_internal_id	node1_external_id	node2_external_id	neighborhood_on_chromosome	gene_fusion	phylogenetic_cooccurrence	homology	coexpression	experimentally_determined_interaction	database_annotated	automated_textmining	combined_score
+cindr	drongo	3236770	3235375	7227.FBpp0302572	7227.FBpp0291330	0	0	0	0	0.107	0.100	0.900	0.069	0.915
+cindr	Hrs	3236770	3233183	7227.FBpp0302572	7227.FBpp0088692	0	0	0	0	0.047	0.138	0.900	0.047	0.911
+drongo	Hrs	3235375	3233183	7227.FBpp0291330	7227.FBpp0088692	0	0	0	0	0.045	0	0.900	0.045	0.900
+Cap-G	RnrS	3234567	3232570	7227.FBpp0288780	7227.FBpp0087152	0	0	0	0	0.727	0	0	0.223	0.778
+cindr	RhoGAP15B	3236770	3234497	7227.FBpp0302572	7227.FBpp0288535	0	0	0	0	0	0.171	0	0.397	0.478

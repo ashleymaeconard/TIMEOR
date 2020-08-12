@@ -1,0 +1,11 @@
+cluster,regulator,regulated,regulation_type,edge_type
+1,Hnf4,CG32772,r,pred_obs_pred_int
+1,cwo,CG32772,r,obs_obs_pred_int
+1,Tbp,CG32772,r,pred_obs_pred_int
+2,Tbp,cwo,a,pred_obs_pred_int
+2,CG32772,cwo,a,obs_obs_pred_int
+3,CG32772,Pdp1,a,obs_obs_pred_int
+3,Hnf4,Pdp1,a,pred_obs_pred_int
+3,cwo,Pdp1,a,obs_obs_known_int
+3,Tbp,Pdp1,a,pred_obs_known_int
+3,Myc,Pdp1,a,pred_obs_pred_int

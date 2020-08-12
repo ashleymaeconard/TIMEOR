@@ -1,0 +1,5 @@
+cisbp,jaspar,transfac,stark,hocomoco,yetfasco,elemento,taipale,flyfactorsurvey,factorbook,swissregulon,hdpi,homer,scertf,predrem,tiffin,bergman,mode_TF,prct_concordance,encode_accession_num
+,,,,,,,Clk,Met,Myc,,Usf,Myc,,,,Dref,Myc,33.3333333333333,ENCSR191VCQ|ENCSR949RDZ
+,,Myc,,,,,,Max,Max,Clk,Mitf,Myc,,,,,Max,33.3333333333333,ENCSR224YOT|ENCSR672KPS
+Mondo,,Max,,,,,Max,Myc,,,Usf,Myc,,,,,Max,33.3333333333333,ENCSR224YOT|ENCSR672KPS
+,,Myc,,,,,Ptx1,Clk,,,bigmax,,,,,,bigmax,25,ENCSR224YOT

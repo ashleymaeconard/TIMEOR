@@ -1,0 +1,5 @@
+#node1	node2	node1_string_internal_id	node2_string_internal_id	node1_external_id	node2_external_id	neighborhood_on_chromosome	gene_fusion	phylogenetic_cooccurrence	homology	coexpression	experimentally_determined_interaction	database_annotated	automated_textmining	combined_score
+B4	Pi3K21B	3237322	3236971	7227.FBpp0304785	7227.FBpp0303635	0	0	0	0	0	0.461	0	0.246	0.576
+Pi3K21B	Ir	3236971	3234161	7227.FBpp0303635	7227.FBpp0112185	0	0	0	0	0	0.529	0	0	0.529
+B4	ImpL2	3237322	3225404	7227.FBpp0304785	7227.FBpp0073106	0	0	0	0	0	0	0	0.463	0.463
+chrb	Orct2	3237129	3230962	7227.FBpp0304225	7227.FBpp0083982	0	0	0	0	0	0	0	0.437	0.437
