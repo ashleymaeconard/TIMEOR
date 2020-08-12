@@ -1,0 +1,1 @@
+(time parallel -j 1 --bar fastq-dump {1} --split-files -O /ltmp/aconard/tmp//timeor/data/fastq/ --gzip ::: SRR8843750 SRR8843738) &

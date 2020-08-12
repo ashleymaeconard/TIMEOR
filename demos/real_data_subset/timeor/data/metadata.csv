@@ -1,0 +1,3 @@
+ID,treatment,time,replicate,batch,Run
+insulin_40.3.3,insulin,40 min,3,3,SRR8843750
+baseline_baseline.2.2,baseline control,baseline control,2,2,SRR8843738

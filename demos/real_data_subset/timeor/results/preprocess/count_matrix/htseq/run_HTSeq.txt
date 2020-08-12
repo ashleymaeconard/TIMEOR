@@ -1,0 +1,4 @@
+(htseq-count -f bam -r pos -i gene_id /gpfs/data/compbio/aconard/TIMEOR/TIMEOR_App/app/../demos/real_data_subset///timeor/results/preprocess/alignment//hisat2//baseline_baseline/SRR8843738/*out.sorted.bam /gpfs/data/compbio/aconard/TIMEOR/TIMEOR_App/app//../genomes_info/dme/genes.gtf > /gpfs/data/compbio/aconard/TIMEOR/TIMEOR_App/app/../demos/real_data_subset///timeor/results/preprocess/count_matrix/htseq//baseline_baseline/SRR8843738/htseq_counts) &
+wait
+(htseq-count -f bam -r pos -i gene_id /gpfs/data/compbio/aconard/TIMEOR/TIMEOR_App/app/../demos/real_data_subset///timeor/results/preprocess/alignment//hisat2//insulin_40/SRR8843750/*out.sorted.bam /gpfs/data/compbio/aconard/TIMEOR/TIMEOR_App/app//../genomes_info/dme/genes.gtf > /gpfs/data/compbio/aconard/TIMEOR/TIMEOR_App/app/../demos/real_data_subset///timeor/results/preprocess/count_matrix/htseq//insulin_40/SRR8843750/htseq_counts) &
+wait

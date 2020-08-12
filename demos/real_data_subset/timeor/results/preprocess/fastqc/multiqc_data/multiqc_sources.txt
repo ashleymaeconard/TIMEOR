@@ -1,0 +1,3 @@
+Module	Section	Sample Name	Source
+FastQC	all_sections	SRR8843738_1	/gpfs/data/compbio/aconard/TIMEOR/TIMEOR_App/demos/real_data/timeor/results/preprocess/fastqc/SRR8843738_1_fastqc.zip
+FastQC	all_sections	SRR8843750_1	/gpfs/data/compbio/aconard/TIMEOR/TIMEOR_App/demos/real_data/timeor/results/preprocess/fastqc/SRR8843750_1_fastqc.zip

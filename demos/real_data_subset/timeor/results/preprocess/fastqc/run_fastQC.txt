@@ -1,0 +1,8 @@
+time parallel -j 1 fastqc {1} --outdir=/gpfs/data/compbio/aconard/TIMEOR/TIMEOR_App/app/../demos/real_data//timeor/results/preprocess/fastqc/ ::: /gpfs/data/compbio/aconard/TIMEOR/TIMEOR_App/app/../demos/real_data//timeor/data/fastq/SRR8843738_1.fastq.gz /gpfs/data/compbio/aconard/TIMEOR/TIMEOR_App/app/../demos/real_data//timeor/data/fastq/SRR8843750_1.fastq.gz
+eval "$(conda shell.bash hook)"
+conda deactivate
+conda activate timeor_py38
+cd /gpfs/data/compbio/aconard/TIMEOR/TIMEOR_App/app/../demos/real_data//timeor/results/preprocess/fastqc/
+multiqc .
+conda deactivate
+conda activate timeor_conda_env

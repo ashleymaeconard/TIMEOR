@@ -1,0 +1,3 @@
+Warning: Could not open read file "/ltmp/aconard/tmp//timeor/data/fastq//insulin_40/SRR8843750/*R1*" for reading; skipping...
+Error: No input read files were valid
+(ERR): hisat2-align exited with value 1
