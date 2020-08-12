@@ -1,4 +1,4 @@
-<img src="https://github.com/ashleymaeconard/TIMEOR_App/blob/master/app/www/timeor_logo.png" height="150">
+<img src="https://github.com/ashleymaeconard/TIMEOR/blob/master/app/www/timeor_logo.png" height="150">
 
 ### Trajectory Inference and Mechanism Exploration with Omics in R
 
@@ -51,7 +51,7 @@ separate stages: Pre-processing, Primary Analysis, and Secondary Analysis.
  
 </p>
 <center>
-<img src="https://github.com/ashleymaeconard/TIMEOR_App/blob/master/app/www/timeor_steps.png" style="width:95.0%" />
+<img src="https://github.com/ashleymaeconard/TIMEOR/blob/master/app/www/timeor_steps.png" style="width:95.0%" />
 </center>
 <p>
  
@@ -165,7 +165,7 @@ split.
      
 </p>
 <center>
-<img src="https://github.com/ashleymaeconard/TIMEOR_App/blob/master/app/www/T1.png" style="width:95.0%" />
+<img src="https://github.com/ashleymaeconard/TIMEOR/blob/master/app/www/T1.png" style="width:95.0%" />
 </center>
 <p>
      
@@ -179,7 +179,7 @@ split.
  
 </p>
 <center>
-<img src="https://github.com/ashleymaeconard/TIMEOR_App/blob/master/app/www/T2.png" style="width:95.0%" />
+<img src="https://github.com/ashleymaeconard/TIMEOR/blob/master/app/www/T2.png" style="width:95.0%" />
 </center>
 <p>
  
@@ -188,7 +188,7 @@ split.
  
 </p>
 <center>
-<img src="https://github.com/ashleymaeconard/TIMEOR_App/blob/master/app/www/T3.png" style="width:95.0%" />
+<img src="https://github.com/ashleymaeconard/TIMEOR/blob/master/app/www/T3.png" style="width:95.0%" />
 </center>
 <p>
  
@@ -201,7 +201,7 @@ split.
  
 </p>
 <center>
-<img src="https://github.com/ashleymaeconard/TIMEOR_App/blob/master/app/www/T4.png" style="width:95.0%" />
+<img src="https://github.com/ashleymaeconard/TIMEOR/blob/master/app/www/T4.png" style="width:95.0%" />
 </center>
 <p>
  
@@ -214,7 +214,7 @@ split.
     results between three methods (ImpulseDE2, Next maSigPro, and
     DESeq2). See figure below, blue box, bottom left.
 
-6.  Download [prev\_study.txt](https://github.com/ashleymaeconard/TIMEOR_App/blob/master/demos/simulated_data/timeor/data/prev_study.txt) to then upload using the Browse button
+6.  Download [prev\_study.txt](https://github.com/ashleymaeconard/TIMEOR/blob/master/demos/simulated_data/timeor/data/prev_study.txt) to then upload using the Browse button
     to compare a previous study with the three differential expression
     results. See figure below, left.
 
@@ -232,7 +232,7 @@ split.
  
 </p>
 <center>
-<img src="https://github.com/ashleymaeconard/TIMEOR_App/blob/master/app/www/T5.png" style="width:95.0%" />
+<img src="https://github.com/ashleymaeconard/TIMEOR/blob/master/app/www/T5.png" style="width:95.0%" />
 </center>
 <p>
  
@@ -264,7 +264,7 @@ split.
  
 </p>
 <center>
-<img src="https://github.com/ashleymaeconard/TIMEOR_App/blob/master/app/www/T6.png" style="width:95.0%" />
+<img src="https://github.com/ashleymaeconard/TIMEOR/blob/master/app/www/T6.png" style="width:95.0%" />
 </center>
 <p>
  
@@ -277,7 +277,7 @@ split.
 
 15.  In that same table on the right you will see ENCODE IDs indicating
     published ChIP-seq data for the predicted transcription factors. You
-    may download the .bigWig files here ([ENCFF467OWR](https://github.com/ashleymaeconard/TIMEOR_App/blob/master/demos/simulated_data/timeor/data/ENCFF467OWR.bigWig), [ENCFF609FCZ](https://github.com/ashleymaeconard/TIMEOR_App/blob/master/demos/simulated_data/timeor/data/ENCFF609FCZ.bigWig), [ENCFF346CDA](https://github.com/ashleymaeconard/TIMEOR_App/blob/master/demos/simulated_data/timeor/data/ENCFF346CDA.bigWig)) or follow the prompts in the grey box under “Upload
+    may download the .bigWig files here ([ENCFF467OWR](https://github.com/ashleymaeconard/TIMEOR/blob/master/demos/simulated_data/timeor/data/ENCFF467OWR.bigWig), [ENCFF609FCZ](https://github.com/ashleymaeconard/TIMEOR/blob/master/demos/simulated_data/timeor/data/ENCFF609FCZ.bigWig), [ENCFF346CDA](https://github.com/ashleymaeconard/TIMEOR/blob/master/demos/simulated_data/timeor/data/ENCFF346CDA.bigWig)) or follow the prompts in the grey box under “Upload
     .bigWig Files”. If you are interested, click on the “+” under
     “Details about individual method predicted transcription factors” to
     see the ranked lists of transcription factors and motifs by method.
@@ -289,7 +289,7 @@ split.
  
 </p>
 <center>
-<img src="https://github.com/ashleymaeconard/TIMEOR_App/blob/master/app/www/T7.png" style="width:95.0%" />
+<img src="https://github.com/ashleymaeconard/TIMEOR/blob/master/app/www/T7.png" style="width:95.0%" />
 </center>
 <p>
  
@@ -307,7 +307,7 @@ split.
  
 </p>
 <center>
-<img src="https://github.com/ashleymaeconard/TIMEOR_App/blob/master/app/www/T8.png" style="width:85.0%" />
+<img src="https://github.com/ashleymaeconard/TIMEOR/blob/master/app/www/T8.png" style="width:85.0%" />
 </center>
 <p>
  
@@ -330,12 +330,12 @@ split.
     factors and other genes. Do so by clicking “Search” and then
     “Multiple proteins”.
 
-19. Your results folder can be downloaded on the far left size under "Download Results Folder". NOTE: The original simulated data and results can be downloaded [here](https://github.com/ashleymaeconard/TIMEOR_App/tree/master/demos/simulated_data). 
+19. Your results folder can be downloaded on the far left size under "Download Results Folder". NOTE: The original simulated data and results can be downloaded [here](https://github.com/ashleymaeconard/TIMEOR/tree/master/demos/simulated_data). 
 <p>
  
 </p>
 <center>
-<img src="https://github.com/ashleymaeconard/TIMEOR_App/blob/master/app/www/T9.png" style="width:95.0%" />
+<img src="https://github.com/ashleymaeconard/TIMEOR/blob/master/app/www/T9.png" style="width:95.0%" />
 </center>
 <p>
  
@@ -346,7 +346,7 @@ Details
 
 ### Simulated Data in Tutorial
 
-The original simulated data folder can be downloaded [here](https://github.com/ashleymaeconard/TIMEOR_App/tree/master/demos/simulated_data).
+The original simulated data folder can be downloaded [here](https://github.com/ashleymaeconard/TIMEOR/tree/master/demos/simulated_data).
 
 #### Secondary Analysis: Factor Binding
 
@@ -354,7 +354,7 @@ To get the top 4 TFs a 25% concensus threshold was used, with a
 normalized enrichement score threshold of 3.
 
 Command used:
-`Rscript get_top_tfs.r /PATH/TO/simulated_results/ dme 3 4 25 /PATH/TO/TIMEOR_App/`
+`Rscript get_top_tfs.r /PATH/TO/simulated_results/ dme 3 4 25 /PATH/TO/TIMEOR/`
 
 The following bigWig files were collected:
 
