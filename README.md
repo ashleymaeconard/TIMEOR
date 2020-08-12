@@ -7,7 +7,7 @@
 Motivation
 ==========
 
-[Here is a video of TIMEOR.]()
+[Here is a video of TIMEOR.](https://www.youtube.com/watch?v=lp_k8hspgsY)
 
 Analyzing time series differential gene expression and other multi-omics
 data is computationally laborious and full of complex choices for the
@@ -101,9 +101,9 @@ After cloning the TIMEOR repo from GitHub
 
 ### Conda Environment
 
-1. Install miniconda2
-2. Type `$eval "$(/PATH/TO/miniconda2/bin/conda shell.bash hook)"`
-3. Locate packages.yml in /TIMEOR\_App/
+1. Install anacoda/miniconda (version 4.8.3). 
+2. Type `$eval "$(/PATH/TO/<CONDA_DIR>/bin/conda shell.bash hook)"`
+3. Locate packages.yml in /TIMEOR/
 4. Type `$conda env create -f packages.yml`
 5. Type `$conda activate timeor_conda_env`
 6. Type `$R`
