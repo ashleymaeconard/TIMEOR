@@ -7,7 +7,7 @@
 Motivation
 ==========
 
-[Here is a video of TIMEOR.](https://www.youtube.com/watch?v=-BV9B3L1ymg)
+[Click here for a video demonstration of TIMEOR!](https://www.youtube.com/watch?v=-BV9B3L1ymg)
 
 Analyzing time series differential gene expression and other multi-omics
 data is computationally laborious and full of complex choices for the
@@ -24,7 +24,7 @@ and transcription factor gene regulatory network construction**. TIMEOR
 also suggests and allows users to integrate ChIP-seq data from ENCODE to
 help vialidate predicted transcription factors binding to gene clusters.
 Through a suite of published and novel methods, TIMEOR guides the user
-through 3 stages, suggesting adaptive default methods and comparing
+through three stages, suggesting adaptive default methods and comparing
 results for multiple normalization, alignment, and differential
 expression (DE) methods. Those stages are **Pre-processing (generating
 count matrix, normalizing and correcting data), Primary Analysis (DE and
@@ -35,6 +35,7 @@ TIMEOR’s **interactive data visualizations and publication-ready figures
 streamline the process of time series data analysis and assist the user 
 to design follow-up experiments**. At any point in the analysis, the user 
 can scroll down and click **“Save your place”** to return to analysis later. 
+TIMEOR is available for *Homo sapiens, Mus musculus,* and *Drosophila melanogaster*.
 The web server is **completely free**, and will be accessible at 
 [timeor.org](timeor.org). It is **now available** through both a Conda 
 environment and Docker.
@@ -165,7 +166,7 @@ take the user through TIMEOR's "Process Raw Data" tab.
      
 </p>
 <center>
-<img src="https://github.com/ashleymaeconard/TIMEOR/blob/master/app/www/T01.png" style="width:95.0%" />
+<img src="https://github.com/ashleymaeconard/TIMEOR/blob/master/app/www/T00.png" style="width:95.0%" />
 </center>
 <p>
      
@@ -174,6 +175,18 @@ take the user through TIMEOR's "Process Raw Data" tab.
 2.  Follow the pop-up prompt to explore the default settings to questions 1-6 to set the adaptive 
     default parameters, and then click the "Run" button to begin retrieving the raw data (SRR8843738
     and SRR8843750), performing quality control, and aligning the reads using HISAT2 and Bowtie2.
+
+<p>
+     
+</p>
+<center>
+<img src="https://github.com/ashleymaeconard/TIMEOR/blob/master/app/www/T01.png" style="width:95.0%" />
+</center>
+<p>
+     
+</p>
+
+
 
 <p>
      
