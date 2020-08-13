@@ -7,7 +7,7 @@
 Motivation
 ==========
 
-[Here is a video of TIMEOR.](https://www.youtube.com/watch?v=lp_k8hspgsY)
+[Here is a video of TIMEOR.](https://www.youtube.com/watch?v=-BV9B3L1ymg)
 
 Analyzing time series differential gene expression and other multi-omics
 data is computationally laborious and full of complex choices for the
@@ -128,14 +128,16 @@ Run TIMEOR
 Two ways:
 -   Import **SraRunTable from GEO**\* where TIMEOR will process raw data
     through retrieving .fastq files, quality control, alignment, and
-    read count matrix creation
+    read count matrix creation. Follow **Run TIMEOR Using Real Data: 
+   Starting from Raw Time Series RNA-seq** below.
 -   Import **metadata file\*\* and count matrix \*\*\*** (skipping raw
     data retrieval, quality control, alignment, and read count matrix
-    creation) and proceeding straight to normalization and correction
+    creation) and proceeding straight to normalization and correction. 
+    Follow **Run TIMEOR Using Simulated Data: Starting from Read Count 
+    Matrix** below.
 
 Then simply follow the prompts. Fill out the **grey** boxes to begin
-interacting with each stage and tab. Follow demo **Run TIMEOR Using
-Simulated Data** below.
+interacting with each stage and tab. 
 
 ### Input file types
 
@@ -152,7 +154,9 @@ Simulated Data** below.
     (e.g. Flybase, Ensembl or Entrez IDs) and columns should be the IDs
     from metadata file.
 
-### Run TIMEOR Using Simulated Data
+### Run TIMEOR Using Real Data: Starting from Raw Time Series RNA-seq
+
+### Run TIMEOR Using Simulated Data: Starting from Read Count Matrix
 
 This tutorial uses simualted data and takes the user through TIMEOR’s
 functionality. NOTE: figures with two panels are the same page,
