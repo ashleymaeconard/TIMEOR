@@ -125,7 +125,7 @@ After cloning the TIMEOR repo from GitHub
 Run TIMEOR
 ===================
 
-Two ways:
+Two ways to input data:
 -   Import **SraRunTable from GEO**\* where TIMEOR will process raw data
     through retrieving .fastq files, quality control, alignment, and
     read count matrix creation. Follow **Run TIMEOR Using Real Data: 
@@ -155,6 +155,73 @@ interacting with each stage and tab.
     from metadata file.
 
 ### Run TIMEOR Using Real Data: Starting from Raw Time Series RNA-seq
+This tutorial uses a subset of real data used in the TIMEOR publication to
+take the user through TIMEOR's "Process Raw Data" tab.
+
+1.  In the far left nagivation bar click on “Example Data” and then
+    under “Load real data” click on "SraRunTable & raw data".
+
+<p>
+     
+</p>
+<center>
+<img src="https://github.com/ashleymaeconard/TIMEOR/blob/master/app/www/T01.png" style="width:95.0%" />
+</center>
+<p>
+     
+</p>
+
+2.  Follow the pop-up prompt to explore the default settings to questions 1-6 to set the adaptive 
+    default parameters, and then click the "Run" button to begin retrieving the raw data (SRR8843738
+    and SRR8843750), performing quality control, and aligning the reads using HISAT2 and Bowtie2.
+
+<p>
+     
+</p>
+<center>
+<img src="https://github.com/ashleymaeconard/TIMEOR/blob/master/app/www/T02.png" style="width:95.0%" />
+</center>
+<p>
+     
+</p>
+
+3.  Once the data have been retrieved and quality control has finished. You can view a summary under
+    the "Quality Control" panel on the right. Interactive results can be downloaded and viewed from MultiQC.
+
+<p>
+     
+</p>
+<center>
+<img src="https://github.com/ashleymaeconard/TIMEOR/blob/master/app/www/T03.png" style="width:95.0%" />
+</center>
+<p>
+     
+</p>
+ 
+<p>
+     
+</p>
+<center>
+<img src="https://github.com/ashleymaeconard/TIMEOR/blob/master/app/www/T04.png" style="width:95.0%" />
+</center>
+<p>
+     
+</p>   
+
+4.  You can explore the alignment results between both methods in the "Alignment Quality" panel. Note that
+    HISAT2 is splice-site aware). You can choose the method and then click "Generate count matrix" to have 
+    TIMEOR generate the read count matrix for the next tab "Load Count Matrix". 
+
+<p>
+     
+</p>
+<center>
+<img src="https://github.com/ashleymaeconard/TIMEOR/blob/master/app/www/T05.png" style="width:95.0%" />
+</center>
+<p>
+     
+</p>   
+
 
 ### Run TIMEOR Using Simulated Data: Starting from Read Count Matrix
 
@@ -163,7 +230,7 @@ functionality. NOTE: figures with two panels are the same page,
 split.
 
 1.  In the far left nagivation bar click on “Example Data” and then
-    “Load simulated data”.
+    under “Load simulated data” click on "Metadata & count matrix".
 
 <p>
      
