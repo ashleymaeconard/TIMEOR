@@ -7,7 +7,7 @@
 Motivation
 ==========
 
-[Click here for a video demonstration of TIMEOR!](https://www.youtube.com/watch?v=-BV9B3L1ymg)
+Click [here](https://www.youtube.com/watch?v=bBodWvGPD6g&t=8s) for a quick video demonstration of the TIMEOR application, and [here](https://www.youtube.com/watch?v=-BV9B3L1ymg) for a video guide through this tutorial below.
 
 Analyzing time series differential gene expression and other multi-omics
 data is computationally laborious and full of complex choices for the
