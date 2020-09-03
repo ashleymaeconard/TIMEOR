@@ -111,7 +111,7 @@ After cloning the TIMEOR repo from GitHub
 7. In R
     1. Type `>library(shiny)`
     2. Type `>runApp("app/", launch.browser=F)`
-    3. Go to brownser URL from R output
+    3. Go to browser URL from R output
         (e.g. <a href="http://127.0.0.1:3681" class="uri">http://127.0.0.1:3681</a>
         )
 
@@ -159,7 +159,7 @@ interacting with each stage and tab.
 This tutorial uses a subset of real data used in the TIMEOR publication to
 take the user through TIMEOR's "Process Raw Data" tab.
 
-1.  In the far left nagivation bar click on “Example Data” and then
+1.  In the far-left navigation bar click on “Example Data” and then
     under “Load real data” click on "SraRunTable & raw data".
 
 <p>
@@ -238,11 +238,11 @@ take the user through TIMEOR's "Process Raw Data" tab.
 
 ### Run TIMEOR Using Simulated Data: Starting from Read Count Matrix
 
-This tutorial uses simualted data and takes the user through TIMEOR’s
+This tutorial uses simulaated data and takes the user through TIMEOR’s
 functionality. NOTE: figures with two panels are the same page,
 split.
 
-1.  In the far left nagivation bar click on “Example Data” and then
+1.  In the far-left navigation bar click on “Example Data” and then
     under “Load simulated data” click on "Metadata & count matrix".
 
 <p>
@@ -334,7 +334,7 @@ split.
     the cluster.
 
 11.  Once you have chosen which genes set to test for enrichment, click
-    the “Analyse” toggle to “ON”.
+    the “Analyze” toggle to “ON”.
 
 12.  Wait to view any enriched gene ontology (GO) terms (Molecular
     Function, Biological Process, or Cellular Component), pathway,
@@ -406,7 +406,7 @@ split.
     Predicted Transcription Factors") you will see a table highlighting
     the temporal relations between transcription factors. 5 different
     temporal relationships are identified and represented in the legend
-    (far right).
+    (far-right).
 
 18.  On the third row (“Network Customization: move and add desired genes
     to describe temporal relation”) the user can use this information to
@@ -414,7 +414,7 @@ split.
     factors and other genes. Do so by clicking “Search” and then
     “Multiple proteins”.
 
-19. Your results folder can be downloaded on the far left size under "Download Results Folder". NOTE: The original simulated data and results can be downloaded [here](https://github.com/ashleymaeconard/TIMEOR/tree/master/demos/simulated_data). 
+19. Your results folder can be downloaded on the far-left side under "Download Results Folder". NOTE: The original simulated data and results can be downloaded [here](https://github.com/ashleymaeconard/TIMEOR/tree/master/demos/simulated_data). 
 <p>
  
 </p>
