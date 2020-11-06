@@ -37,8 +37,15 @@ to design follow-up experiments**. At any point in the analysis, the user
 can scroll down and click **“Save your place”** to return to analysis later. 
 TIMEOR is available for *Homo sapiens, Mus musculus,* and *Drosophila melanogaster*.
 The web server is **completely free**, and will be accessible at 
-[timeor.org](timeor.org). It is **now available** through both a Conda 
+[timeor.org](timeor.org) and [Harvard Medical School's DRSC TRiP Core Facility](https://fgr.hms.harvard.edu/). It is **now available** through both a Conda 
 environment and Docker.
+
+Paper and Citation
+=======
+
+Please join a number of labs already using TIMEOR. [Read our paper here](https://www.biorxiv.org/content/10.1101/2020.09.14.296418v1), and cite:
+
+Conard, A. M., Goodman, N., Hu, Y., Perrimon, N., Singh, R., Lawrence, C., & Larschan, E. (2020). TIMEOR: a web-based tool to uncover temporal regulatory mechanisms from multi-omics data. bioRxiv.
 
 Overview
 ========
@@ -102,7 +109,7 @@ After cloning the TIMEOR repo from GitHub
 
 ### Conda Environment
 
-1. Install anacoda/miniconda (version 4.8.3). 
+1. Install Anaconda/Miniconda (version 4.8.3). 
 2. Type `$eval "$(/PATH/TO/<CONDA_DIR>/bin/conda shell.bash hook)"`
 3. Locate packages.yml in /TIMEOR/
 4. Type `$conda env create -f packages.yml`
@@ -114,6 +121,7 @@ After cloning the TIMEOR repo from GitHub
     3. Go to browser URL from R output
         (e.g. <a href="http://127.0.0.1:3681" class="uri">http://127.0.0.1:3681</a>
         )
+Note, if TIMEOR is running on a remote machine, you may access the website through the ssh gateway. For example on port 8888, `ssh -L 8888:127.0.0.1:8888 USERNAME@SERVER -t host=SERVER -L 8888:127.0.0.1:3681`.
 
 ### Docker
 
@@ -122,6 +130,9 @@ After cloning the TIMEOR repo from GitHub
 2. Running Docker:
     1. `docker run -p 9000:3838 timeor`
     2. Shiny server will be running on port 9000
+
+### DRSC/TRiP Functional Genomics Resources at Harvard Medical School Core Facility
+Webtool hosting coming soon. You will be able to visit through www.timeor.org or at https://fgr.hms.harvard.edu/tools for web.
 
 Run TIMEOR
 ===================
