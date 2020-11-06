@@ -7,7 +7,7 @@
 Motivation
 ==========
 
-[Click here](https://www.youtube.com/watch?v=bBodWvGPD6g&t=8s) for a quick video demonstration of the TIMEOR application, and [click here](https://www.youtube.com/watch?v=-BV9B3L1ymg) for a video guide through the tutorial below.
+It's about time! [Click here](https://www.youtube.com/watch?v=bBodWvGPD6g&t=8s) for a quick video demonstration of the TIMEOR application, and [click here](https://www.youtube.com/watch?v=-BV9B3L1ymg) for a video guide through the tutorial below.
 
 Analyzing time series differential gene expression and other multi-omics
 data is computationally laborious and full of complex choices for the
@@ -133,7 +133,7 @@ Note, if TIMEOR is running on a remote machine, you may access the website throu
     2. Shiny server will be running on port 9000
 
 ### DRSC/TRiP Functional Genomics Resources at Harvard Medical School Core Facility
-Webtool hosting coming soon. You will be able to visit through www.timeor.org or at https://fgr.hms.harvard.edu/tools for web.
+Website hosting coming soon. You will be able to visit through www.timeor.org or at https://fgr.hms.harvard.edu/tools.
 
 Run TIMEOR
 ===================
