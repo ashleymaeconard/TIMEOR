@@ -121,6 +121,7 @@ After cloning the TIMEOR repo from GitHub
     3. Go to browser URL from R output
         (e.g. <a href="http://127.0.0.1:3681" class="uri">http://127.0.0.1:3681</a>
         )
+
 Note, if TIMEOR is running on a remote machine, you may access the website through the ssh gateway. For example on port 8888, `ssh -L 8888:127.0.0.1:8888 USERNAME@SERVER -t host=SERVER -L 8888:127.0.0.1:3681`.
 
 ### Docker
