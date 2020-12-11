@@ -1,4 +1,4 @@
-FROM continuumio/miniconda
+FROM continuumio/miniconda2
 COPY packages.yml /root/
 RUN conda env create -f /root/packages.yml
 RUN conda init bash
@@ -18,4 +18,7 @@ EXPOSE 3838
 CMD ["conda", "run", "-n", "timeor_conda_env", "R", "-e", "shiny::runApp('/root/app', launch.browser=F, host='0.0.0.0', port=3838)"]
 #CMD ["/bin/bash"]#conda", "run", "-n", "timeor_env_basics", "R"]
 #ENTRYPOINT ["conda", "run", "-n", "timeor_env_basics", "conda", "info"]
+
+# Sam said
+# copy the time consuming things early and running with the minimal things
 
