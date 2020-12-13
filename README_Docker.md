@@ -4,10 +4,10 @@
 
 # To build Docker image:
 
-docker build -t timeor .
+docker build -t timeor_conda_env .
 
 # To run Docker image:
 
-docker run -p 9111:3838 timeor
+docker run -p 9111:3838 timeor_conda_env
 
 # In this example, R Shiny will be running on port 9111

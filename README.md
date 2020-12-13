@@ -109,7 +109,7 @@ After cloning the TIMEOR repo from GitHub
 
 ### Conda Environment
 
-1. Install Anaconda/Miniconda (version 4.8.3). 
+1. Install Anaconda2/Miniconda2 (version 4.8.3). 
 2. Type `$eval "$(/PATH/TO/<CONDA_DIR>/bin/conda shell.bash hook)"`
 3. Locate packages.yml in /TIMEOR/
 4. Type `$conda env create -f packages.yml`
@@ -126,11 +126,11 @@ Note, if TIMEOR is running on a remote machine, you may access the website throu
 
 ### Docker
 
-1. Building Docker image:
-    1. `docker build -t timeor .`
+1. Building Docker image in TIMEOR directory:
+    1. `docker build -t timeor_conda_env .`
 2. Running Docker:
-    1. `docker run -p 9000:3838 timeor`
-    2. Shiny server will be running on port 9000
+    1. `docker run -p 9111:3838 timeor_conda_env`
+    2. Shiny server will be running on port 9111
 
 ### DRSC/TRiP Functional Genomics Resources at Harvard Medical School Core Facility
 Website hosting coming soon. You will be able to visit through www.timeor.org or at https://fgr.hms.harvard.edu/tools.
