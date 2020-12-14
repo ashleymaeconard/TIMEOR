@@ -118,7 +118,7 @@ function(input, output, session) {
     )
     
     # Set to simulated results directory
-    local_results_folder(paste(app_dir, "/../../demos/simulated_data/", sep = ""))
+    local_results_folder(paste(app_dir, "/../demos/simulated_data/", sep = ""))
     
     # Disable metadata file upload (using simulated data)
     disable("metadataFile")
@@ -202,7 +202,7 @@ function(input, output, session) {
     )
     
     # Set to simulated results directory
-    local_results_folder(paste(app_dir, "/../../demos/real_data_subset/", sep = ""))
+    local_results_folder(paste(app_dir, "/../demos/real_data_subset/", sep = ""))
     
     # Disable metadata file upload (using simulated data)
     disable("metadataFile")
@@ -1277,9 +1277,9 @@ function(input, output, session) {
             sep = "")
     
     atadetm <-
-      paste(app_dir, "/../../demos/simulated_data/timeor/data/metadata.csv", sep = "")
+      paste(app_dir, "/../demos/simulated_data/timeor/data/metadata.csv", sep = "")
     tnuoc <-
-      paste(app_dir, "/../../demos/simulated_data/timeor/data/countMatrix.csv", sep = "") #e.g. norm: mron_tnuoc <-"/ltmp/aconard/tmp/timeor/results/analysis/countMatrix_norm_correcteds.csv"
+      paste(app_dir, "/../demos/simulated_data/timeor/data/countMatrix.csv", sep = "") #e.g. norm: mron_tnuoc <-"/ltmp/aconard/tmp/timeor/results/analysis/countMatrix_norm_correcteds.csv"
     
     print("norm_corr_countMatrix_filepath")
     print(norm_corr_countMatrix_filepath())
