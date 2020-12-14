@@ -41,7 +41,7 @@ source(paste(app_dir, "/global.R", sep = ""))
 function(input, output, session) {
   # Setting all reactive values
   # Data input
-  local_results_folder  = reactiveVal("/ltmp/aconard/tmp/") # tempdir()
+  local_results_folder  = reactiveVal(tempdir()) # tempdir() # e.g. "/ltmp/aconard/tmp/"
   sim_demo_data         = reactiveVal(FALSE) # use simulated (demo) data
   real_demo_data        = reactiveVal(FALSE) # use real (demo) data
   user_input_data       = reactiveVal(FALSE) # user inputs data
@@ -118,7 +118,7 @@ function(input, output, session) {
     )
     
     # Set to simulated results directory
-    local_results_folder(paste(app_dir, "/../demos/simulated_data/", sep = ""))
+    local_results_folder(paste(app_dir, "/../../demos/simulated_data/", sep = ""))
     
     # Disable metadata file upload (using simulated data)
     disable("metadataFile")
@@ -202,7 +202,7 @@ function(input, output, session) {
     )
     
     # Set to simulated results directory
-    local_results_folder(paste(app_dir, "/../demos/real_data_subset/", sep = ""))
+    local_results_folder(paste(app_dir, "/../../demos/real_data_subset/", sep = ""))
     
     # Disable metadata file upload (using simulated data)
     disable("metadataFile")
@@ -1267,7 +1267,7 @@ function(input, output, session) {
     system(command, intern = TRUE)
   }
   
-  # Run NextMaSigPro
+  # Run NextMaSigPro 
   runNextMaSigPro <- function() {
     nextMaSigPro_script <-
       paste("Rscript ", app_dir, "/scripts/next_maSigPro.r", sep = "")
@@ -1277,10 +1277,9 @@ function(input, output, session) {
             sep = "")
     
     atadetm <-
-      "/ltmp/aconard/TIMEOR_App/demos/simulated_data/timeor/data/metadata.csv"
+      paste(app_dir, "/../../demos/simulated_data/timeor/data/metadata.csv", sep = "")
     tnuoc <-
-      "/ltmp/aconard/TIMEOR_App/demos/simulated_data/timeor/data/countMatrix.csv"
-    #mron_tnuoc <-"/ltmp/aconard/tmp/timeor/results/analysis/countMatrix_norm_correcteds.csv"
+      paste(app_dir, "/../../demos/simulated_data/timeor/data/countMatrix.csv", sep = "") #e.g. norm: mron_tnuoc <-"/ltmp/aconard/tmp/timeor/results/analysis/countMatrix_norm_correcteds.csv"
     
     print("norm_corr_countMatrix_filepath")
     print(norm_corr_countMatrix_filepath())
