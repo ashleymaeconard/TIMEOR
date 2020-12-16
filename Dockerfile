@@ -13,7 +13,6 @@ RUN apt-get update && apt-get install -y \
     libssl-dev \
     wget
 
-
 # Download and install shiny server
 RUN wget --no-verbose https://download3.rstudio.org/ubuntu-14.04/x86_64/VERSION -O "version.txt" && \
     VERSION=$(cat version.txt)  && \
@@ -23,7 +22,7 @@ RUN wget --no-verbose https://download3.rstudio.org/ubuntu-14.04/x86_64/VERSION 
     . /etc/environment && \
     sudo R -e 'install.packages(c("openssl", "httr", "rvest", "xml2"), dependencies=TRUE)' && \
     sudo R -e 'install.packages(c("autoplotly","biocmanager","broom","cluster","d3heatmap","data.table","devtools","domc","dorng","dplyr","dt","europepmc","factoextra","farver","fastmatch","fpc","ggforce","ggfortify","ggplot2","ggplotify","ggridges","globaloptions","graphlayouts","gridgraphics","heatmaply","markdown","plotly","png","polyclip","promises","reticulate","rmarkdown","rvcheck","shiny","shinyalert","shinycssloaders","shinydashboard","shinydashboardplus","shinyjs","shinylp","shinyWidgets","stringr","tibble","tidygraph","tidyr","tidyverse","triebeard","tweenr","urltools","vegan","zoo"))' && \
-    sudo R -e 'BiocManager::install(c("Harman")' && \
+    sudo R -e 'BiocManager::install("Harman")' && \
     sudo R -e 'install.packages("shinydashboardPlus")' && \
     sudo R -e 'install.packages("shinyLP")' && \
     sudo R -e 'install.packages("future")' && \
