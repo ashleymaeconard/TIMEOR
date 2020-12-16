@@ -11,7 +11,9 @@ RUN apt-get update && apt-get install -y \
     xtail \
     libxml2-dev \
     libssl-dev \
-    wget
+    wget \
+    python-pip \
+    python2.7 
 
 # Download and install shiny server
 RUN wget --no-verbose https://download3.rstudio.org/ubuntu-14.04/x86_64/VERSION -O "version.txt" && \
@@ -30,6 +32,11 @@ RUN wget --no-verbose https://download3.rstudio.org/ubuntu-14.04/x86_64/VERSION 
     sudo R -e 'BiocManager::install("DESeq2")' && \ 
     cp -R /usr/local/lib/R/site-library/shiny/examples/* /srv/shiny-server/ && \
     chown shiny:shiny /var/lib/shiny-server
+
+# Get python packages
+RUN pip install numpy
+RUN pip install pandas
+RUN pip install natsort
 
 EXPOSE 3838
 
