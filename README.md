@@ -99,6 +99,12 @@ C.  **Secondary Analysis: Assess enrichment, factor binding, and
     gene cluster using motif and ChIP-seq data; and Temporal Relations,
     identifies transcription factor regulatory network.
 
+Website
+=======
+
+### Computational Biology Core at Brown Univeristy and DRSC/TRiP Functional Genomics Resources at Harvard Medical School
+Website hosting available at www.timeor.brown.edu.
+
 Installation
 ============
 
@@ -129,9 +135,6 @@ Note, if TIMEOR is running on a remote machine, you may access the website throu
 2. Running Docker:
     1. `docker run -p 9111:3838 timeor_env`
     2. Shiny server will be running on port 9111
-
-### Computational Biology Core at Brown Univeristy and DRSC/TRiP Functional Genomics Resources at Harvard Medical School
-Website hosting available at www.timeor.brown.edu.
 
 Run TIMEOR
 ===================
