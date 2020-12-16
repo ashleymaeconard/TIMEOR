@@ -1,6 +1,6 @@
 # Follow these steps to build TIMEOR Docker Image
 ## Ashley Mae Conard
-### Last Mod. Aug. 9, 2020
+#### Last Mod. Aug. 9, 2020
 
 ### To build Docker image:
 
