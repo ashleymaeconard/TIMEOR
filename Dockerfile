@@ -28,15 +28,13 @@ RUN wget --no-verbose https://download3.rstudio.org/ubuntu-14.04/x86_64/VERSION 
     sudo R -e 'install.packages("future")' && \
     sudo R -e 'BiocManager::install("org.Dm.eg.db")' && \
     sudo R -e 'BiocManager::install("DESeq2")' && \ 
-    #R -e "install.packages(c('shiny', 'rmarkdown'), repos='$MRAN')" && \
     cp -R /usr/local/lib/R/site-library/shiny/examples/* /srv/shiny-server/ && \
     chown shiny:shiny /var/lib/shiny-server
 
 EXPOSE 3838
 
-#RUN mkdir -p /usr/bin/shiny-server/
-COPY shiny-server.sh /Users/ashleyconard/Desktop/shiny-server.sh
-ADD app /Users/ashleyconard/Desktop/shiny-server/
-ADD demos /Users/ashleyconard/Desktop/shiny-server/
+COPY shiny-server.sh ~/Desktop/shiny-server.sh
+ADD app ~/Desktop/shiny-server/
+ADD demos ~/Desktop/shiny-server/
 
-CMD ["/Users/ashleyconard/Desktop/shiny-server.sh"]
+CMD ["~/Desktop/shiny-server.sh"]
