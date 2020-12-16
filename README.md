@@ -36,9 +36,7 @@ streamline the process of time series data analysis and assist the user
 to design follow-up experiments**. At any point in the analysis, the user 
 can scroll down and click **“Save your place”** to return to analysis later. 
 TIMEOR is available for *Homo sapiens, Mus musculus,* and *Drosophila melanogaster*.
-The web server is **completely free**, and will be accessible at 
-[timeor.org](timeor.org) and [Harvard Medical School's DRSC TRiP Core Facility](https://fgr.hms.harvard.edu/). It is **now available** through both a Conda 
-environment and Docker.
+The web server is **completely free**, and is **accessible** at [timeor.brown.edu](timeor.brown.edu) in partnership with the [Computational Biology Core at Brown University](https://cbc.brown.edu/) and [Harvard Medical School's DRSC TRiP Core Facility](https://fgr.hms.harvard.edu/). It is **also available** through both a Conda environment and Docker.
 
 Paper and Citation
 =======
@@ -127,13 +125,13 @@ Note, if TIMEOR is running on a remote machine, you may access the website throu
 ### Docker
 
 1. Building Docker image in TIMEOR directory:
-    1. `docker build -t timeor_conda_env .`
+    1. `docker build -t timeor_env .`
 2. Running Docker:
-    1. `docker run -p 9111:3838 timeor_conda_env`
+    1. `docker run -p 9111:3838 timeor_env`
     2. Shiny server will be running on port 9111
 
-### DRSC/TRiP Functional Genomics Resources at Harvard Medical School Core Facility
-Website hosting coming soon. You will be able to visit through www.timeor.org or at https://fgr.hms.harvard.edu/tools.
+### Computational Biology Core at Brown Univeristy and DRSC/TRiP Functional Genomics Resources at Harvard Medical School
+Website hosting available at www.timeor.brown.edu.
 
 Run TIMEOR
 ===================
