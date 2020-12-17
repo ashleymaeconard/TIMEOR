@@ -133,8 +133,8 @@ Note, if TIMEOR is running on a remote machine, you may access the website throu
 1. Building Docker image in TIMEOR directory:
     1. `docker build -t timeor_env .`
 2. Running Docker:
-    1. `docker run -p 9111:3838 timeor_env`
-    2. Shiny server will be running on port 9111
+    1. `docker run -p 3838:3838 timeor_env`
+    2. Shiny server will be running on port 3838. Thus, in a browser visit `localhost:3838`.
 
 Run TIMEOR
 ===================
