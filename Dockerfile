@@ -1,6 +1,7 @@
 FROM rocker/r-ver:3.6.1
 
 RUN apt-get update && apt-get install -y \
+    libjpeg-dev \
     sudo \
     gdebi-core \
     pandoc \
@@ -32,7 +33,7 @@ RUN wget --no-verbose https://download3.rstudio.org/ubuntu-14.04/x86_64/VERSION 
     sudo R -e 'BiocManager::install("DESeq2")' && \ 
     cp -R /usr/local/lib/R/site-library/shiny/examples/* /srv/shiny-server/ && \
     chown shiny:shiny /var/lib/shiny-server
-
+ 
 # Get python packages
 RUN pip install numpy
 RUN pip install pandas
@@ -40,8 +41,10 @@ RUN pip install natsort
 
 EXPOSE 3838
 
-COPY shiny-server.sh ~/Desktop/shiny-server.sh
-ADD app ~/Desktop/shiny-server/
-ADD demos ~/Desktop/shiny-server/
+COPY shiny-server.sh /usr/bin/shiny-server.sh
+RUN mkdir -p /srv/demos/
+ADD app /srv/shiny-server/
+ADD demos /srv/demos/
+RUN chown -R shiny:shiny /srv/demos/
 
-CMD ["~/Desktop/shiny-server.sh"]
+CMD ["/usr/bin/shiny-server.sh"]
