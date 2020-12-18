@@ -1032,7 +1032,7 @@ function(input, output, session) {
         shinyalert(
           "Please check Count Matrix.",
           "1) Make sure 1st column is unique identifiers (IDs), and says 'ID'.
-2) Make sure metadata sample names match other column names",
+           2) Make sure metadata sample names match other column names",
           type = "error"
         )
         
@@ -2570,17 +2570,16 @@ function(input, output, session) {
   # Download zipped results folder
   output$downloadResultsFolder <- downloadHandler(
     filename = function() {
-      paste("timeor_output", "zip", sep = ".")
+      paste("timeor", "zip", sep = ".")
     },
     content = function(folderName) {
       print(paste0(
-        "Local results folder: ",
+        "HERE: Local results folder: ",
         local_results_folder(),
         "/timeor/"
       ))
-      zip(zipfile = folderName,
-          paste(local_results_folder(), "/timeor/", sep = ""))
-    },
-    contentType = "application/zip"
+      file.copy(paste(local_results_folder(), "/timeor.zip", sep = ""), folderName)},
+      #tar(folderName, paste(local_results_folder(), "/timeor/", sep = ""))}
+      contentType = "application/zip"
   )
 }

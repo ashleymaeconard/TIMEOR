@@ -64,13 +64,13 @@ function(request) {
             tabName = "exampleData",
             icon = icon("table"),
             menuItem(
-              "Load simulated data",
-              actionButton("runSim", "Metadata & count matrix", style =
+              "Load count matrix",
+              actionButton("runSim", "Metadata & read count file", style =
                              "margin: 6px 5px 6px 0px; width:90%")
             ),
             menuItem(
-              "Load real data",
-              actionButton("runReal", "SraRunTable & raw data", style =
+              "Load raw data",
+              actionButton("runReal", "SraRunTable & .fastq files", style =
                              "margin: 6px 5px 6px 0px; width:90%")
             )
           ),
@@ -79,7 +79,7 @@ function(request) {
             tabName = "resultsFolder",
             icon = icon("download"),
             downloadButton("downloadResultsFolder", "Download results", style =
-                             "width:90%")
+                             "width:90%;color:#444")
           )
         )
       ),
@@ -108,7 +108,7 @@ function(request) {
                           titlePanel(h3("Search and Retrieve")),
                           width = 6,
                           h4(
-                            "Processing your own data? Jump to step 4 to load your metadata file, answer 6 questions on the right panel, then proceed to the 'Load Count Matrix' tab."
+                            "Processing your own data? Jump to step 4 to load your metadata file, answer 6 questions on the right panel, then proceed to the 'Process Count Matrix' tab."
                           ),
                           tags$hr(), # horizontal line 
                           h4(
@@ -273,10 +273,10 @@ function(request) {
                     ),
                     
 #################### Pre-Process Stage ##################
-#################### Load Count Matrix ##################
+#################### Process Count Matrix ##################
                     
                     tabPanel(
-                      "Load Count Matrix",
+                      "Process Count Matrix",
                       fluidRow(box(width=4, # sidebar panel for read count matrix inputs
                           
                           # Input a read count matrix
@@ -698,6 +698,6 @@ function(request) {
         )
       )
     ),
-    bookmarkButton(label = "Save your place.")
+    #bookmarkButton(label = "Save your place.")
   )
 }
