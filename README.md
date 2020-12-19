@@ -42,7 +42,7 @@ Quick Start
 =======
 1. Visit https://timeor.brown.edu.
 2. TIMEOR can take as input a RNA-seq time-series read count matrix [(e.g. here)](https://github.com/ashleymaeconard/TIMEOR/blob/master/demos/simulated_data/timeor/data/countMatrix.csv) and metadata file [(e.g. here)](https://github.com/ashleymaeconard/TIMEOR/blob/master/demos/simulated_data/timeor/data/metadata.csv). On the left click on "Example Data", then "Load count matrix". Then simply follow the prompts to see TIMEOR's full functionality. Fill out the **grey** boxes to begin interacting with each stage and tab. See [Run TIMEOR](https://github.com/ashleymaeconard/TIMEOR#run-timeor-using-simulated-data-starting-from-read-count-matrix) below for walk-through.
-3. TIMEOR can also take as input raw RNA-seq time-series .fastq files and an SraRunTable[(e.g. here)](https://github.com/ashleymaeconard/TIMEOR/blob/master/demos/real_data_subset/timeor/data/SraRunTable.csv). On the left click on "Example Data", then "Load raw data". Then follow the prompts to see a demonstration of the first tab functionality. See [Run TIMEOR](https://github.com/ashleymaeconard/TIMEOR#run-timeor-from-raw-data-starting-from-raw-time-series-rna-seq) below for walk-through.
+3. TIMEOR can also take as input raw RNA-seq time-series .fastq files and an SraRunTable [(e.g. here)](https://github.com/ashleymaeconard/TIMEOR/blob/master/demos/real_data_subset/timeor/data/SraRunTable.csv). On the left click on "Example Data", then "Load raw data". Then follow the prompts to see a demonstration of the first tab functionality. See [Run TIMEOR](https://github.com/ashleymaeconard/TIMEOR#run-timeor-from-raw-data-starting-from-raw-time-series-rna-seq) below for walk-through.
 
 
 Paper and Citation
@@ -175,7 +175,7 @@ interacting with each stage and tab.
     (e.g. Flybase, Ensembl or Entrez IDs) and columns should be the IDs
     from metadata file.
 
-### Run TIMEOR From Raw Data: Starting from Raw Time Series RNA-seq
+### Run TIMEOR From Raw Data: Starting from .fastq Time-Series RNA-seq
 This tutorial uses a subset of real data used in the TIMEOR publication to
 take the user through TIMEOR's "Process Raw Data" tab.
 
