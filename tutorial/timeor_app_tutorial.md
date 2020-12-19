@@ -1,43 +1,17 @@
-<img src="https://github.com/ashleymaeconard/TIMEOR_App/blob/master/app/www/timeor_logo.png" height="150">
+Quick Start
+=======
+1. Visit https://timeor.brown.edu.
+2. TIMEOR can take as input a RNA-seq time-series read count matrix [(e.g. here)](https://github.com/ashleymaeconard/TIMEOR/blob/master/demos/simulated_data/timeor/data/countMatrix.csv) and metadata file [(e.g. here)](https://github.com/ashleymaeconard/TIMEOR/blob/master/demos/simulated_data/timeor/data/metadata.csv). On the left click on "Example Data", then "Load count matrix". Then simply follow the prompts to see TIMEOR's full functionality. Fill out the **grey** boxes to begin interacting with each stage and tab. See [Run TIMEOR](https://github.com/ashleymaeconard/TIMEOR#run-timeor-using-simulated-data-starting-from-read-count-matrix) below for walk-through.
+3. Refresh your page.
+4. TIMEOR can also take as input raw RNA-seq time-series .fastq files and an SraRunTable [(e.g. here)](https://github.com/ashleymaeconard/TIMEOR/blob/master/demos/real_data_subset/timeor/data/SraRunTable.csv). On the left click on "Example Data", then "Load raw data". Then follow the prompts to see a demonstration of the first tab functionality. See [Run TIMEOR](https://github.com/ashleymaeconard/TIMEOR#run-timeor-from-raw-data-starting-from-fastq-time-series-rna-seq) below for walk-through.
 
-### Trajectory Inference and Mechanism Exploration with Omics in R
 
-####  Author: Ashley Mae Conard
+Paper and Citation
+=======
 
-Motivation
-==========
+Please join a number of labs already using TIMEOR. [Read our paper here](https://www.biorxiv.org/content/10.1101/2020.09.14.296418v1), and cite:
 
-[Here is a video of TIMEOR.]()
-
-Analyzing time series differential gene expression and other multi-omics
-data is computationally laborious and full of complex choices for the
-various types of time series experiment analyses. The TIMEOR
-web-application offers a solution as an interactive and adaptive R-Shiny
-web interface to **support reproducibility and the best tools for a given
-experimental design**. 
-
-TIMEOR can take in either raw .fastq files or a raw
-pre-computed count matrix (genes by samples), and after answering six
-questions about your experiment, **performs all analysis from quality
-control and differential gene expression to gene trajectory clustering
-and transcription factor gene regulatory network construction**. TIMEOR
-also suggests and allows users to integrate ChIP-seq data from ENCODE to
-help vialidate predicted transcription factors binding to gene clusters.
-Through a suite of published and novel methods, TIMEOR guides the user
-through 3 stages, suggesting adaptive default methods and comparing
-results for multiple normalization, alignment, and differential
-expression (DE) methods. Those stages are **Pre-processing (generating
-count matrix, normalizing and correcting data), Primary Analysis (DE and
-gene trajectory clustersing) and Secondary Analysis (enrichment, factor
-binding, and temporal relations)**. 
-
-TIMEOR’s **interactive data visualizations and publication-ready figures 
-streamline the process of time series data analysis and assist the user 
-to design follow-up experiments**. At any point in the analysis, the user 
-can scroll down and click **“Save your place”** to return to analysis later. 
-The web server is **completely free**, and will be accessible at 
-[timeor.org](timeor.org). It is **now available** through both a Conda 
-environment and Docker.
+Conard, A. M., Goodman, N., Hu, Y., Perrimon, N., Singh, R., Lawrence, C., & Larschan, E. (2020). TIMEOR: a web-based tool to uncover temporal regulatory mechanisms from multi-omics data. bioRxiv.
 
 Overview
 ========
@@ -51,7 +25,7 @@ separate stages: Pre-processing, Primary Analysis, and Secondary Analysis.
  
 </p>
 <center>
-<img src="https://github.com/ashleymaeconard/TIMEOR_App/blob/master/app/www/timeor_steps.png" style="width:95.0%" />
+<img src="timeor_steps.png" style="width:95.0%" />
 </center>
 <p>
  
@@ -93,6 +67,12 @@ C.  **Secondary Analysis: Assess enrichment, factor binding, and
     gene cluster using motif and ChIP-seq data; and Temporal Relations,
     identifies transcription factor regulatory network.
 
+Website
+=======
+
+### Computational Biology Core at Brown Univeristy and DRSC/TRiP Functional Genomics Resources at Harvard Medical School Partnership
+Website hosting available at https://timeor.brown.edu.
+
 Installation
 ============
 
@@ -101,41 +81,45 @@ After cloning the TIMEOR repo from GitHub
 
 ### Conda Environment
 
-1. Install miniconda2
-2. Type `$eval "$(/PATH/TO/miniconda2/bin/conda shell.bash hook)"`
-3. Locate packages.yml in /TIMEOR\_App/
+1. Install Anaconda2/Miniconda2 (version 4.8.3). 
+2. Type `$eval "$(/PATH/TO/<CONDA_DIR>/bin/conda shell.bash hook)"`
+3. Locate packages.yml in /TIMEOR/
 4. Type `$conda env create -f packages.yml`
 5. Type `$conda activate timeor_conda_env`
 6. Type `$R`
 7. In R
     1. Type `>library(shiny)`
     2. Type `>runApp("app/", launch.browser=F)`
-    3. Go to brownser URL from R output
+    3. Go to browser URL from R output
         (e.g. <a href="http://127.0.0.1:3681" class="uri">http://127.0.0.1:3681</a>
         )
 
+Note, if TIMEOR is running on a remote machine, you may access the website through the ssh gateway. For example on port 8888, `ssh -L 8888:127.0.0.1:8888 USERNAME@SERVER -t host=SERVER -L 8888:127.0.0.1:3681`.
+
 ### Docker
 
-1. Building Docker image:
-    1. `docker build -t timeor .`
+1. Building Docker image in TIMEOR directory:
+    1. `docker build -t timeor_env .`
 2. Running Docker:
-    1. `docker run -p 9000:3838 timeor`
-    2. Shiny server will be running on port 9000
+    1. `docker run -p 3838:3838 timeor_env`
+    2. Shiny server will be running on port 3838. Thus, in a browser visit `localhost:3838`.
 
 Run TIMEOR
 ===================
 
-Two ways:
+Two ways to input data:
 -   Import **SraRunTable from GEO**\* where TIMEOR will process raw data
     through retrieving .fastq files, quality control, alignment, and
-    read count matrix creation
+    read count matrix creation. Follow **Run TIMEOR Using Real Data: 
+   Starting from Raw Time Series RNA-seq** below.
 -   Import **metadata file\*\* and count matrix \*\*\*** (skipping raw
     data retrieval, quality control, alignment, and read count matrix
-    creation) and proceeding straight to normalization and correction
+    creation) and proceeding straight to normalization and correction. 
+    Follow **Run TIMEOR Using Simulated Data: Starting from Read Count 
+    Matrix** below.
 
 Then simply follow the prompts. Fill out the **grey** boxes to begin
-interacting with each stage and tab. Follow demo **Run TIMEOR Using
-Simulated Data** below.
+interacting with each stage and tab. 
 
 ### Input file types
 
@@ -152,20 +136,101 @@ Simulated Data** below.
     (e.g. Flybase, Ensembl or Entrez IDs) and columns should be the IDs
     from metadata file.
 
-### Run TIMEOR Using Simulated Data
+### Run TIMEOR From Raw Data: Starting from .fastq Time-Series RNA-seq
+This tutorial uses a subset of real data used in the TIMEOR publication to
+take the user through TIMEOR's "Process Raw Data" tab.
 
-This tutorial uses simualted data and takes the user through TIMEOR’s
-functionality. NOTE: figures with two panels are the same page,
-split.
-
-1.  In the far left nagivation bar click on “Example Data” and then
-    “Load simulated data”.
+1.  In the far-left navigation bar click on “Example Data” and then
+    under “Load real data” click on "SraRunTable & raw data".
 
 <p>
      
 </p>
 <center>
-<img src="https://github.com/ashleymaeconard/TIMEOR_App/blob/master/app/www/T1.png" style="width:95.0%" />
+<img src="T00.png" style="width:95.0%" />
+</center>
+<p>
+     
+</p>
+
+2.  Follow the pop-up prompt to explore the default settings to questions 1-6 to set the adaptive 
+    default parameters, and then click the "Run" button to begin retrieving the raw data (SRR8843738
+    and SRR8843750), performing quality control, and aligning the reads using HISAT2 and Bowtie2.
+
+<p>
+     
+</p>
+<center>
+<img src="T01.png" style="width:95.0%" />
+</center>
+<p>
+     
+</p>
+
+
+
+<p>
+     
+</p>
+<center>
+<img src="T02.png" style="width:95.0%" />
+</center>
+<p>
+     
+</p>
+
+3.  Once the data have been retrieved and quality control has finished. You can view a summary under
+    the "Quality Control" panel on the right. Interactive results can be downloaded and viewed from MultiQC.
+
+<p>
+     
+</p>
+<center>
+<img src="T03.png" style="width:95.0%" />
+</center>
+<p>
+     
+</p>
+ 
+<p>
+     
+</p>
+<center>
+<img src="T04.png" style="width:95.0%" />
+</center>
+<p>
+     
+</p>   
+
+4.  You can explore the alignment results between both methods in the "Alignment Quality" panel. Note that
+    HISAT2 is splice-site aware). You can choose the method and then click "Generate count matrix" to have 
+    TIMEOR generate the read count matrix for the next tab "Load Count Matrix". 
+
+<p>
+     
+</p>
+<center>
+<img src="T05.png" style="width:95.0%" />
+</center>
+<p>
+     
+</p>   
+
+
+### Run TIMEOR Using Simulated Data: Starting from Read Count Matrix
+
+This tutorial uses simulaated data and takes the user through TIMEOR’s
+functionality. NOTE: figures with two panels are the same page,
+split.
+
+1.  In the far-left navigation bar click on “Example Data” and then
+    under “Load simulated data” click on "Metadata & count matrix".
+
+<p>
+     
+</p>
+<center>
+<img src="T1.png" style="width:95.0%" />
 </center>
 <p>
      
@@ -179,7 +244,7 @@ split.
  
 </p>
 <center>
-<img src="https://github.com/ashleymaeconard/TIMEOR_App/blob/master/app/www/T2.png" style="width:95.0%" />
+<img src="T2.png" style="width:95.0%" />
 </center>
 <p>
  
@@ -188,7 +253,7 @@ split.
  
 </p>
 <center>
-<img src="https://github.com/ashleymaeconard/TIMEOR_App/blob/master/app/www/T3.png" style="width:95.0%" />
+<img src="T3.png" style="width:95.0%" />
 </center>
 <p>
  
@@ -201,7 +266,7 @@ split.
  
 </p>
 <center>
-<img src="https://github.com/ashleymaeconard/TIMEOR_App/blob/master/app/www/T4.png" style="width:95.0%" />
+<img src="T4.png" style="width:95.0%" />
 </center>
 <p>
  
@@ -214,7 +279,7 @@ split.
     results between three methods (ImpulseDE2, Next maSigPro, and
     DESeq2). See figure below, blue box, bottom left.
 
-6.  Download [prev\_study.txt](https://github.com/ashleymaeconard/TIMEOR_App/blob/master/demos/simulated_data/timeor/data/prev_study.txt) to then upload using the Browse button
+6.  Download [prev\_study.txt](https://github.com/ashleymaeconard/TIMEOR/blob/master/demos/simulated_data/timeor/data/prev_study.txt) to then upload using the Browse button
     to compare a previous study with the three differential expression
     results. See figure below, left.
 
@@ -232,7 +297,7 @@ split.
  
 </p>
 <center>
-<img src="https://github.com/ashleymaeconard/TIMEOR_App/blob/master/app/www/T5.png" style="width:95.0%" />
+<img src="T5.png" style="width:95.0%" />
 </center>
 <p>
  
@@ -250,7 +315,7 @@ split.
     the cluster.
 
 11.  Once you have chosen which genes set to test for enrichment, click
-    the “Analyse” toggle to “ON”.
+    the “Analyze” toggle to “ON”.
 
 12.  Wait to view any enriched gene ontology (GO) terms (Molecular
     Function, Biological Process, or Cellular Component), pathway,
@@ -264,7 +329,7 @@ split.
  
 </p>
 <center>
-<img src="https://github.com/ashleymaeconard/TIMEOR_App/blob/master/app/www/T6.png" style="width:95.0%" />
+<img src="T6.png" style="width:95.0%" />
 </center>
 <p>
  
@@ -277,7 +342,7 @@ split.
 
 15.  In that same table on the right you will see ENCODE IDs indicating
     published ChIP-seq data for the predicted transcription factors. You
-    may download the .bigWig files here ([ENCFF467OWR](https://github.com/ashleymaeconard/TIMEOR_App/blob/master/demos/simulated_data/timeor/data/ENCFF467OWR.bigWig), [ENCFF609FCZ](https://github.com/ashleymaeconard/TIMEOR_App/blob/master/demos/simulated_data/timeor/data/ENCFF609FCZ.bigWig), [ENCFF346CDA](https://github.com/ashleymaeconard/TIMEOR_App/blob/master/demos/simulated_data/timeor/data/ENCFF346CDA.bigWig)) or follow the prompts in the grey box under “Upload
+    may download the .bigWig files here ([ENCFF467OWR](https://github.com/ashleymaeconard/TIMEOR/blob/master/demos/simulated_data/timeor/data/ENCFF467OWR.bigWig), [ENCFF609FCZ](https://github.com/ashleymaeconard/TIMEOR/blob/master/demos/simulated_data/timeor/data/ENCFF609FCZ.bigWig), [ENCFF346CDA](https://github.com/ashleymaeconard/TIMEOR/blob/master/demos/simulated_data/timeor/data/ENCFF346CDA.bigWig)) or follow the prompts in the grey box under “Upload
     .bigWig Files”. If you are interested, click on the “+” under
     “Details about individual method predicted transcription factors” to
     see the ranked lists of transcription factors and motifs by method.
@@ -289,7 +354,7 @@ split.
  
 </p>
 <center>
-<img src="https://github.com/ashleymaeconard/TIMEOR_App/blob/master/app/www/T7.png" style="width:95.0%" />
+<img src="T7.png" style="width:95.0%" />
 </center>
 <p>
  
@@ -297,9 +362,9 @@ split.
 
 16.  Under “Average Profiles Across Each Gene Expression Trajectory
     Cluster”, in the first box type “stat92e”, upload
-    ENCFF445KNM.bigWig, and click “Go”. In the second box type “pho”,
-    upload ENCFF363ZNA.bigWig, and click “Go”. In the third box type
-    “ecr”, upload ENCFF680UFM.bigWig, and click “Go”. You will see 3
+    ENCFF467OWR.bigWig, and click “Go”. In the second box type “pho”,
+    upload ENCFF609FCZ.bigWig, and click “Go”. In the third box type
+    “CG7786”, upload ENCFF346CDA.bigWig, and click “Go”. You will see 3
     average profile distribution plots, one for each cluster, and easily
     distinguishable by color (same as in clustermap).
 
@@ -307,7 +372,7 @@ split.
  
 </p>
 <center>
-<img src="https://github.com/ashleymaeconard/TIMEOR_App/blob/master/app/www/T8.png" style="width:85.0%" />
+<img src="T8.png" style="width:85.0%" />
 </center>
 <p>
  
@@ -322,7 +387,7 @@ split.
     Predicted Transcription Factors") you will see a table highlighting
     the temporal relations between transcription factors. 5 different
     temporal relationships are identified and represented in the legend
-    (far right).
+    (far-right).
 
 18.  On the third row (“Network Customization: move and add desired genes
     to describe temporal relation”) the user can use this information to
@@ -330,12 +395,12 @@ split.
     factors and other genes. Do so by clicking “Search” and then
     “Multiple proteins”.
 
-19. Your results folder can be downloaded on the far left size under "Download Results Folder". NOTE: The original simulated data and results can be downloaded [here](https://github.com/ashleymaeconard/TIMEOR_App/tree/master/demos/simulated_data). 
+19. Your results folder can be downloaded on the far-left side under "Download Results Folder". NOTE: The original simulated data and results can be downloaded [here](https://github.com/ashleymaeconard/TIMEOR/tree/master/demos/simulated_data). 
 <p>
  
 </p>
 <center>
-<img src="https://github.com/ashleymaeconard/TIMEOR_App/blob/master/app/www/T9.png" style="width:95.0%" />
+<img src="T9.png" style="width:95.0%" />
 </center>
 <p>
  
@@ -344,9 +409,13 @@ split.
 Details
 =======
 
+### Real Data Subset in Tutorial
+
+The original temporal RNA-seq data analyzed in our paper comes from Zirin et al., 2019). In this tutorial SRR8843750 and SRR8843738 are analyzed to demonstrate the "Process Raw Data" tab in which raw RNA-seq data are retrieved, quality checked, aligned (with HISAT2 and Bowtie2), and converted to a read count matrix. The real data subset folder (which TIMEOR automatically generates) can be downloaded [here](https://github.com/ashleymaeconard/TIMEOR/tree/master/demos/real_data_subset).
+
 ### Simulated Data in Tutorial
 
-The original simulated data folder can be downloaded [here](https://github.com/ashleymaeconard/TIMEOR_App/tree/master/demos/simulated_data).
+The original simulated data folder can be downloaded [here](https://github.com/ashleymaeconard/TIMEOR/tree/master/demos/simulated_data).
 
 #### Secondary Analysis: Factor Binding
 
@@ -354,7 +423,7 @@ To get the top 4 TFs a 25% concensus threshold was used, with a
 normalized enrichement score threshold of 3.
 
 Command used:
-`Rscript get_top_tfs.r /PATH/TO/simulated_results/ dme 3 4 25 /PATH/TO/TIMEOR_App/`
+`Rscript get_top_tfs.r /PATH/TO/simulated_results/ dme 3 4 25 /PATH/TO/TIMEOR/`
 
 The following bigWig files were collected:
 
@@ -366,3 +435,7 @@ The following bigWig files were collected:
 
 -   ENCFF346CDA (read-depth normalized signal between all three replicates)
     within dataset ENCSR776AVR for CG7786
+
+### Real Data in Publication
+
+The results presented in TIMEOR's publication can be downloaded in TIMEOR's automatically generated folders [here](https://github.com/ashleymaeconard/TIMEOR/tree/master/demos/real_data_full).

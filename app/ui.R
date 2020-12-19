@@ -690,10 +690,16 @@ function(request) {
 ######################## Tutorial ########################
           
           tabItem(tabName = "tutorials_ft_bk",
-                  fluidRow(
-                    box(titlePanel(h3("R Shiny TIMEOR", htmlOutput("web")))),
-                    box(titlePanel(h3("Command Line TIMEOR", htmlOutput("commandLine"))))
-                  )
+                  tabsetPanel(
+                    tabPanel( "Webserver",
+                    fluidRow(box(width=12,
+                    titlePanel(htmlOutput("web"))),
+                    #box(titlePanel(h3("Command Line TIMEOR", htmlOutput("commandLine"))))
+                  )),tabPanel( "Command Line",
+                    fluidRow(box(width=12,
+                    titlePanel( htmlOutput("commandLine"))),
+                    #box(titlePanel(h3("Command Line TIMEOR", htmlOutput("commandLine"))))
+                  )))
           )
         )
       )

@@ -2553,7 +2553,7 @@ function(input, output, session) {
   output$web <- renderUI({
     #Shiny takes .md so convert .Rmd to .md with: library("rmarkdown"), render("timeor_app_tutorial.Rmd", output_format = "md_document")
     withMathJax(includeMarkdown(
-      paste(app_dir, "/../tutorial/web/timeor_app_tutorial.md", sep = "")
+      paste(app_dir, "/../tutorial/timeor_app_tutorial.md", sep = "")
     ))
   })
   
@@ -2561,7 +2561,7 @@ function(input, output, session) {
     withMathJax(includeMarkdown(
       paste(
         app_dir,
-        "/../tutorial/command_line/timeor_app_tutorial.md",
+        "/../tutorial/timeor_command_line_tutorial.md",
         sep = ""
       )
     ))
