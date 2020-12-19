@@ -38,6 +38,13 @@ can scroll down and click **“Save your place”** to return to analysis later.
 TIMEOR is available for *Homo sapiens, Mus musculus,* and *Drosophila melanogaster*.
 The web server is **completely free**, and is **accessible** at [https://timeor.brown.edu](timeor.brown.edu) in partnership with the [Computational Biology Core at Brown University](https://cbc.brown.edu/) and [Harvard Medical School's DRSC TRiP Core Facility](https://fgr.hms.harvard.edu/). It is **also available** through both a Conda environment and Docker.
 
+Quick Start
+=======
+1. Visit https://timeor.brown.edu.
+2. TIMEOR can start from an input RNA-seq time-series read count matrix [https://github.com/ashleymaeconard/TIMEOR/blob/master/demos/simulated_data/timeor/data/countMatrix.csv](e.g. here) and metadata file [https://github.com/ashleymaeconard/TIMEOR/blob/master/demos/simulated_data/timeor/data/metadata.csv](e.g. here). On the left click on "Example Data", then "Load count matrix". Then simply follow the prompts to see TIMEOR's full functionality. Fill out the **grey** boxes to begin interacting with each stage and tab. See [https://github.com/ashleymaeconard/TIMEOR#run-timeor-using-simulated-data-starting-from-read-count-matrix](Run TIMEOR) below for walk-through.
+3. TIMEOR can also start from raw RNA-seq time-series .fastq files and an SraRunTable [https://github.com/ashleymaeconard/TIMEOR/blob/master/demos/real_data_subset/timeor/data/SraRunTable.csv](e.g. here) or metadata file. On the left click on "Example Data", then "Load raw data". Then follow the prompts to see a demonstration of the first tab functionality. See [https://github.com/ashleymaeconard/TIMEOR#run-timeor-from-raw-data-starting-from-raw-time-series-rna-seq](Run TIMEOR) below for walk-through.
+
+
 Paper and Citation
 =======
 
@@ -102,7 +109,7 @@ C.  **Secondary Analysis: Assess enrichment, factor binding, and
 Website
 =======
 
-### Computational Biology Core at Brown Univeristy and DRSC/TRiP Functional Genomics Resources at Harvard Medical School
+### Computational Biology Core at Brown Univeristy and DRSC/TRiP Functional Genomics Resources at Harvard Medical School Partnership
 Website hosting available at https://timeor.brown.edu.
 
 Installation
@@ -168,7 +175,7 @@ interacting with each stage and tab.
     (e.g. Flybase, Ensembl or Entrez IDs) and columns should be the IDs
     from metadata file.
 
-### Run TIMEOR Using Real Data: Starting from Raw Time Series RNA-seq
+### Run TIMEOR From Raw Data: Starting from Raw Time Series RNA-seq
 This tutorial uses a subset of real data used in the TIMEOR publication to
 take the user through TIMEOR's "Process Raw Data" tab.
 
@@ -394,9 +401,9 @@ split.
 
 16.  Under “Average Profiles Across Each Gene Expression Trajectory
     Cluster”, in the first box type “stat92e”, upload
-    ENCFF445KNM.bigWig, and click “Go”. In the second box type “pho”,
-    upload ENCFF363ZNA.bigWig, and click “Go”. In the third box type
-    “ecr”, upload ENCFF680UFM.bigWig, and click “Go”. You will see 3
+    ENCFF467OWR.bigWig, and click “Go”. In the second box type “pho”,
+    upload ENCFF609FCZ.bigWig, and click “Go”. In the third box type
+    “CG7786”, upload ENCFF346CDA.bigWig, and click “Go”. You will see 3
     average profile distribution plots, one for each cluster, and easily
     distinguishable by color (same as in clustermap).
 
