@@ -43,8 +43,11 @@ EXPOSE 3838
 
 COPY shiny-server.sh /usr/bin/shiny-server.sh
 RUN mkdir -p /srv/demos/
+RUN mkdir -p /srv/tutorial/
 ADD app /srv/shiny-server/
 ADD demos /srv/demos/
+ADD tutorial /srv/tutorial/
 RUN chown -R shiny:shiny /srv/demos/
+RUN chown -R shiny:shiny /srv/tutorial/
 
 CMD ["/usr/bin/shiny-server.sh"]
