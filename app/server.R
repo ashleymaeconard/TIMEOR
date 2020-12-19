@@ -99,8 +99,8 @@ function(input, output, session) {
   observeEvent(input$runSim, {
     print("running simulation")
     shinyalert(
-      "Simulated Data Uploaded",
-      "Metadata, adaptive default methods, and count matrix are loaded (see 'Load Count Matrix' tab).
+      "Read Count Matrix Data and Metadata File Uploaded",
+      "Metadata, adaptive default methods, and count matrix are loaded (see 'Process Count Matrix' tab).
       Please proceed to last tab: 'Normalize and Correct Data'.",
       type = "success"
     )
@@ -184,7 +184,7 @@ function(input, output, session) {
   # Use real data
   observeEvent(input$runReal, {
     shinyalert(
-      "Real Data Uploaded",
+      "Raw Data and SraRunTable Uploaded",
       "SraRunTable will be converted to metadata, adaptive default methods will be set. Press 'Run' to process raw RNA-seq time series data. NOTE: this is a Process Raw Data tab demo only.",
       type = "success"
     )
@@ -471,7 +471,7 @@ function(input, output, session) {
         (input$experiment == "NA")) {
       shinyalert(
         "Please answer questions.",
-        "Please select the organism, sequencing and experiment type.",
+        "Please load data and then select the organism, sequencing and experiment type.",
         type = "error"
       )
     } else{
@@ -481,7 +481,7 @@ function(input, output, session) {
           if (metadata_input()) {
             paste0(
               "<p> <br>",
-              "You uploaded a metadata file. No need to retrieve and process data. <br> Please proceed to 'Load Count Matrix' tab.",
+              "You uploaded a metadata file. No need to retrieve and process data. <br> Please proceed to 'Process Count Matrix' tab.",
               "</p>"
             )
           } else if (sra_input()) {
@@ -2574,11 +2574,11 @@ function(input, output, session) {
     },
     content = function(folderName) {
       print(paste0(
-        "HERE: Local results folder: ",
+        "Local results folder: ",
         local_results_folder(),
         "/timeor/"
       ))
-      file.copy(paste(local_results_folder(), "/timeor.zip", sep = ""), folderName)},
+      file.copy(paste(local_results_folder(), "/timeor.tar.gz", sep = ""), folderName)},
       #tar(folderName, paste(local_results_folder(), "/timeor/", sep = ""))}
       contentType = "application/zip"
   )
