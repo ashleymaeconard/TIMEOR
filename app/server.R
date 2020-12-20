@@ -93,20 +93,39 @@ function(input, output, session) {
   diffExpDone           = reactiveVal(0)
   numClusters           = reactiveVal()
   
+  shinyalert("Welcome, it's about time!
+              Quick start:",
+              "TIMEOR accepts 2 input types: 
+              (1) raw .fastq files
+              (2) read count matrix. 
+              
+              For (1) in 'Example Data' (side-bar) under
+
+              'Load raw data' click 'SraRunTable & .fastq files' button.
+              
+              This will guide you through the 'Process Raw Data' tab demo.",
+            type = "info"
+            )
+
   #################### If User Clicks on Demo (Simulated or Real) Data ###################
-  
+
   # Use simulated data
   observeEvent(input$runSim, {
     print("running simulation")
     shinyalert(
       "Read Count Matrix Data and Metadata File Uploaded",
-      "Metadata, adaptive default methods, and count matrix are loaded (see 'Process Count Matrix' tab).
-      Please proceed to last tab: 'Normalize and Correct Data'.",
+      "Metadata, adaptive defaults methods, and 
+      read count matrix are loaded. 
+
+      1) Go to 'Process Count Matrix' tab to see raw data metrics.
+      2) Then go to 'Normalize and Correct Data' tab and 
+      fill in the grey box.",
       type = "success"
     )
     
     # Use simulated metadata and count matrix (from demo folder)
     sim_demo_data(TRUE)
+    real_demo_data(FALSE)
     metadata_input(TRUE)
     
     # Update switch to show metadata is being used
@@ -120,6 +139,16 @@ function(input, output, session) {
     # Set to simulated results directory
     local_results_folder(paste(app_dir, "/../demos/simulated_data/", sep = ""))
     
+    # Enable buttons disabled from Load raw data button
+    enable("runCorrection")
+    enable("runDE")
+    enable("renderVen")
+    enable("prevStudy")
+    enable("inputNumClust")
+    enable("bigWigGo1")
+    enable("bigWigGo2")
+    enable("bigWigGo3")
+
     # Disable metadata file upload (using simulated data)
     disable("metadataFile")
     
@@ -136,6 +165,10 @@ function(input, output, session) {
     disable("multipleMethods")
     updateTextInput(session, "trans_time", value = paste("2"))
     disable("trans_time")
+
+    # Disable run (quality control button, choosing alignment method)
+    toggleState("qcDownload", condition = F)
+    disable("runGenCountMat")
     
     # Disable run (primary analysis: preprocessing) and read count matrix (primary analysis: load count matrix)
     disable("run_adaptive_defaults")
@@ -161,9 +194,6 @@ function(input, output, session) {
     # Disable toggle between number of clusters
     disable("numClusts")
     
-    # Disable toggle between number of clusters
-    disable("numClusts")
-    
     
   }, ignoreInit = TRUE)
   
@@ -185,12 +215,17 @@ function(input, output, session) {
   observeEvent(input$runReal, {
     shinyalert(
       "Raw Data and SraRunTable Uploaded",
-      "SraRunTable will be converted to metadata, adaptive default methods will be set. Press 'Run' to process raw RNA-seq time series data. NOTE: this is a Process Raw Data tab demo only.",
+      "SraRunTable will be converted to metadata, adaptive default methods will be set. 
+      
+      Press 'Run' to process raw RNA-seq time series data. 
+      
+      Follow pop-ups and fill in grey boxes.",
       type = "success"
     )
     
     # Use real data (so SraRunTable will be automatically converted to metadata) and count matrix (from demo folder)
     real_demo_data(TRUE)
+    sim_demo_data(FALSE)
     sra_input(TRUE)
     
     # Update switch to show metadata is being used
@@ -227,39 +262,35 @@ function(input, output, session) {
     trans_time_ad("2")
     disable("trans_time")
     
-    # Disable load count matrix
+    # Disable load count matrix and correction
     disable("count_mat")
+    disable("runCorrection")
     
-    # Set default analysis results folder name
-    analysis_folder_name("insulin_stim")
-    
-    # DISABLE....
-    
-    # Insert results folder name in primary analysis and disable change
-    updateTextInput(session, "analysisFolder", value = paste(analysis_folder_name()))
+    # Disable differential expression
     disable("analysisFolder")
-    
-    # Set default adjusted p-value threshold
-    adj_p_analysis_folder("0.05")
-    
-    # Insert adjusted p-value in primary analysis and disable change
-    updateTextInput(session, "pValue", value = paste(adj_p_analysis_folder()))
+    disable("runDE")
     disable("pValue")
+    disable("renderVen")
+    disable("prevStudy")
     
     # Disable toggle between differential expression methods
     disable("whichMethodInput")
     
     # Disable toggle between number of clusters
     disable("numClusts")
+    disable("inputNumClust")
     
-    # Disable toggle between number of clusters
-    disable("numClusts")
-    
+    # Disable factor binding Gos
+    disable("bigWigGo1")
+    disable("bigWigGo2")
+    disable("bigWigGo3")
+
   })
   
   # Render SraRunTable from REAL (DEMO) data
   observeEvent(real_demo_data(), {
     if (real_demo_data() == TRUE) {
+
       # Create metadata dataframe
       df <- create_metadata_df()
       
@@ -481,13 +512,14 @@ function(input, output, session) {
           if (metadata_input()) {
             paste0(
               "<p> <br>",
-              "You uploaded a metadata file. No need to retrieve and process data. <br> Please proceed to 'Process Count Matrix' tab.",
+              "You uploaded a metadata file. No need to retrieve and process raw data. <br> Please proceed to 'Process Count Matrix' tab.",
               "</p>"
             )
           } else if (sra_input()) {
             paste0(
               "<p> <br>",
-              "Raw data will be retrieved, quality checked, aligned, and saved as a read count matrix.",
+              "Raw data will be retrieved, quality checked, and aligned. 
+              Choose the alignment method to then generate the read count matrix (below).",
               "</p>"
             )
           } else{
@@ -734,6 +766,7 @@ function(input, output, session) {
     
     # Output QC table
     output$qcTable <- renderDataTable({
+      req(!sim_demo_data())
       qc_folder <-
         paste(
           local_results_folder(),
@@ -937,6 +970,7 @@ function(input, output, session) {
   
   # Checking to create count matrix using HTSeq
   observeEvent(alignBdone(), {
+    req(!sim_demo_data())
     if (alignBdone() == FALSE) {
       toggleState("runGenCountMat", condition = F)
     } else{
@@ -948,7 +982,21 @@ function(input, output, session) {
   # Checking to run HTSeq only once 'Generate Count Matrix' button is enabled
   observeEvent(input$runGenCountMat, {
     req(input$runGenCountMat)
-    
+    shinyalert("Quick start:",
+                  "You completed the 'Process Raw Data' tab demo.
+                  
+                  TIMEOR accepts 2 input types: 
+                  (1) raw .fastq files
+                  (2) read count matrix. 
+              
+                  For (2) in 'Example Data' (side-bar) under
+
+                  'Load count matrix' click 'Metadata & read count file' button. 
+                  
+                  This will guide you through the rest of the full method demo.",
+                  type = "info"
+                )
+
     # 'Generate count matrix' button must be pressed
     results_folder_alignment <-
       paste(
@@ -1137,6 +1185,13 @@ function(input, output, session) {
     req(input$runCorrection)
     print("outputNoralizedData")
     
+    shinyalert(
+      "Completed Pre-processing.",
+      "Proceed to Primary Analysis (side-bar). 
+      Follow pop-ups and fill in grey box.",
+      type = "info"
+    )
+
     # Computing normalization
     if (input$normMethods == "Trimmed Mean of M-Values") {
       print("TMM")
@@ -1518,7 +1573,23 @@ function(input, output, session) {
       contentType = 'image/png/pdf',
       alt = "No data found"
     )
-  }, deleteFile = FALSE) #
+  }, deleteFile = FALSE)
+
+  # Notify user to proceed to Secondary Analysis tab
+  observeEvent(input$renderVen, {
+    req(input$renderVen)
+    shinyalert(
+      "Completed Primary Analysis.",
+      "NOTE: demo chose 'ImpulseDE2' output and 
+      'automatic' gene trajectory clustering. 
+      On new data, the user can choose these.
+      
+      Proceed to Secondary Analysis (side-bar). 
+      
+      Follow pop-ups and fill in grey boxes.",
+      type = "info"
+    )
+  })
   
   # Output results of differential expression as a data fame
   output$deResults <- DT::renderDataTable({
@@ -1606,6 +1677,7 @@ function(input, output, session) {
   
   # Analysis button pressed (toggle between on and off)
   observeEvent(input$runEnrichment, {
+    req(!real_demo_data())
     if (input$runEnrichment == TRUE) {
       toggleState("inputNumClust", condition = F)
       toggleState("memeHTML", condition = T)
@@ -2082,6 +2154,7 @@ function(input, output, session) {
   
   # Return transcription factor  table
   output$tfTable <- output$tfTable2 <- renderDataTable({
+    req(input$runDE)
     req(analysis_folder_name())
     req(local_results_folder())
     tf_table_file <-
@@ -2424,6 +2497,7 @@ function(input, output, session) {
   })
   
   output$tfTempTable <- DT::renderDataTable({
+    req(input$bigWigGo1)
     req(analysis_folder_name())
     req(local_results_folder())
     req(diffExpDone())
@@ -2511,6 +2585,7 @@ function(input, output, session) {
   # Network plot # aspect ratio and disable scrolling and remove white space
   output$TFnetwork <- renderImage({
     # Set requirements
+    req(input$bigWigGo1)
     req(analysis_folder_name())
     req(local_results_folder())
     req(diffExpDone())
@@ -2553,7 +2628,7 @@ function(input, output, session) {
   output$web <- renderUI({
     #Shiny takes .md so convert .Rmd to .md with: library("rmarkdown"), render("timeor_app_tutorial.Rmd", output_format = "md_document")
     withMathJax(includeMarkdown(
-      paste(app_dir, "/../tutorial/timeor_app_tutorial.md", sep = "")
+      paste(app_dir, "/tutorial/timeor_app_tutorial.md", sep = "")
     ))
   })
   
@@ -2561,7 +2636,7 @@ function(input, output, session) {
     withMathJax(includeMarkdown(
       paste(
         app_dir,
-        "/../tutorial/timeor_command_line_tutorial.md",
+        "/tutorial/timeor_command_line_tutorial.md",
         sep = ""
       )
     ))

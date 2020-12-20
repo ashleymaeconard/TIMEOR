@@ -64,13 +64,13 @@ function(request) {
             tabName = "exampleData",
             icon = icon("table"),
             menuItem(
-              "Load count matrix",
-              actionButton("runSim", "Metadata & read count file", style =
+              "Load raw data",
+              actionButton("runReal", "SraRunTable & .fastq files", style =
                              "margin: 6px 5px 6px 0px; width:90%")
             ),
             menuItem(
-              "Load raw data",
-              actionButton("runReal", "SraRunTable & .fastq files", style =
+              "Load count matrix",
+              actionButton("runSim", "Metadata & read count file", style =
                              "margin: 6px 5px 6px 0px; width:90%")
             )
           ),
@@ -139,12 +139,12 @@ function(request) {
                               ".txt"
                             )
                           ),
-                          dataTableOutput("metadataTable"),
+                          DT::dataTableOutput("metadataTable"),
                           style="background: #E8E8E8"),
                         box(style="background: #E8E8E8",
                           
                           # Determine adaptive default parameters text within upper rightmost app body within Process Raw Data Tab
-                          titlePanel(h3("Determine Adaptive Default Parameters")),
+                          titlePanel(h3("Determine Adaptive Default Methods")),
                           h4("1. What type of organism?"),
                           selectInput(
                             "organism",
@@ -253,10 +253,10 @@ function(request) {
                           titlePanel(h3("Quality Control")),
                           downloadButton("qcDownload", "Download interactive results summary."),
                           fluidRow(tags$br(), tags$br(), 
-                                   box(width=12,dataTableOutput('qcTable'))
+                                   box(width=12,DT::dataTableOutput('qcTable'))
                           )
                         )),
-                      fluidRow(box(
+                      fluidRow(box(style="background: #E8E8E8",
                         width=12, height=700, 
                         titlePanel(h3("Alignment Quality")),
 			h4("Which alignment method?"),
@@ -323,7 +323,7 @@ function(request) {
                         
                         # Display read count matrix
                         box(titlePanel(h3("Count Matrix")), width=8,
-                            withSpinner(dataTableOutput("countMatrix")))
+                            withSpinner(DT::dataTableOutput("countMatrix")))
                       ),
                       
                       # Show raw read count matrix principal component analysis (PCA)
@@ -432,7 +432,7 @@ function(request) {
                         label = "Which method?",
                         choices = c("ImpulseDE2", "NextMaSigPro", "DESeq2")
                       ),
-                      withSpinner(dataTableOutput("deResults"))
+                      withSpinner(DT::dataTableOutput("deResults"))
                     ),
                     box(titlePanel(h3("Cluster Gene Expression Trajectories")),
                       selectInput(
@@ -544,10 +544,10 @@ function(request) {
                                    withSpinner(plotlyOutput("deClustering2"))),
                                
                                box(titlePanel(h3("Observed and Top Predicted Transcription Factors",h4("At least 40% of methods must agree on top predicted transcription factors, otherwise cell is left blank. Row names are clusters."))),
-                                   withSpinner(dataTableOutput("tfTable"))),
-                               boxPlus(collapsed = TRUE, collapsible = TRUE, closable = FALSE, title="Details about individual method predicted transcription factors", titlePanel(
+                                   withSpinner(DT::dataTableOutput("tfTable"))),
+                               boxPlus(collapsed = TRUE, collapsible = TRUE, closable = FALSE, title="Details about each individual method's predicted transcription factors", titlePanel(
                                    h3("Methods' Transcription Factor Prediction Rankings",
-                                      h4("Blanks indicate an enriched motif is not assigned to a transcription factor region. Row names are top 1 - 4 factors."))),
+                                      h4("Blanks indicate an enriched motif is not assigned to a transcription factor region (to see motif click 'Download interactive cluster motif result'). Row names are top 1 - 4 transcription factors."))),
                                        selectInput(
                                         "rcisClustNum",
                                         label = "Which cluster?",
@@ -555,7 +555,7 @@ function(request) {
                                       ),
                                        downloadButton("interactiveRcisResults", "Download interactive cluster motif results."),
                                       HTML("<br/>"),
-                                      withSpinner(dataTableOutput("rcistargetConsensus"))
+                                      withSpinner(DT::dataTableOutput("rcistargetConsensus"))
                                 )
                              ),
                              fluidRow(
@@ -568,22 +568,27 @@ function(request) {
                                    h4(strong("Upload .bigWig Files")),
                                    height = "auto",
                                    width = 2,
-                                   h5(strong("(e.g. ChIP-seq or CUT&RUN)")),
+                                   h5(strong("(private or public ChIP-seq or CUT&RUN)")),
+                                   tags$br(),
+                                   h4("If using public data:"),
                                    tags$br(),
                                    h4(
                                      "1. Go to ",
                                      tags$a(href = "https://www.encodeproject.org", target = "_blank", "ENCODE"),"."
                                    ),
-                                   h4("2. Choose ENCODE data from provided ENCODE ID or TF name."),
+                                   h4("2. Choose ENCODE data from provided ENCODE ID or TF name above."),
                                    h4("3. Download .bigWig file."),
                                    h4("4. Upload to TIMEOR to visualize."),
                                    tags$br(),
                                    h4(
                                      strong("Note"),
-                                     ": each cluster is the same color as in clustermap."
+                                     ": each distribution is the same color as in clustermap."
                                    ),
                                    h5("ID: identifier, TF: transcription factor"),
                                    style="background: #E8E8E8"),
+                                   
+                                   # Show an example of an average profile.
+                                   actionButton("showAvgProf", label="Show example"),
                                  
                                  box(
                                    textInput("tf1", label = "TF name:"),
@@ -634,7 +639,7 @@ function(request) {
                         box(titlePanel(h3("Gene Expression Trajectory Clusters")),
                             withSpinner(plotlyOutput("deClustering3"))),
                         box(titlePanel(h3("Observed and Top Predicted Transcription Factors")),
-                            dataTableOutput("tfTable2"))
+                            DT::dataTableOutput("tfTable2"))
                       ),       
                       fluidRow(
                             column(
@@ -666,7 +671,7 @@ function(request) {
                           fluidRow(
                            column(9,
                                     height = "500",
-                                    dataTableOutput("tfTempTable")
+                                    DT::dataTableOutput("tfTempTable")
                                   ),
                             column(3,
                                    titlePanel(tags$a(
@@ -693,7 +698,9 @@ function(request) {
                   tabsetPanel(
                     tabPanel( "Webserver",
                     fluidRow(box(width=12,
-                    titlePanel(htmlOutput("web"))),
+                    titlePanel(
+                    tags$iframe(src="./timeor_app_tutorial.html", width='100%', height='1000px',frameborder=0,scrolling='auto') 
+                    )),
                     #box(titlePanel(h3("Command Line TIMEOR", htmlOutput("commandLine"))))
                   )),tabPanel( "Command Line",
                     fluidRow(box(width=12,
