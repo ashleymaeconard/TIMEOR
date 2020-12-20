@@ -24,7 +24,7 @@ RUN wget --no-verbose https://download3.rstudio.org/ubuntu-14.04/x86_64/VERSION 
     rm -f version.txt ss-latest.deb && \
     . /etc/environment && \
     sudo R -e 'install.packages(c("openssl", "httr", "rvest", "xml2"), dependencies=TRUE)' && \
-    sudo R -e 'install.packages(c("autoplotly","biocmanager","broom","cluster","d3heatmap","data.table","devtools","domc","dorng","dplyr","dt","europepmc","factoextra","farver","fastmatch","fpc","ggforce","ggfortify","ggplot2","ggplotify","ggridges","globaloptions","graphlayouts","gridgraphics","heatmaply","markdown","plotly","png","polyclip","promises","reticulate","rmarkdown","rvcheck","shiny","shinyalert","shinycssloaders","shinydashboard","shinydashboardplus","shinyjs","shinylp","shinyWidgets","stringr","tibble","tidygraph","tidyr","tidyverse","triebeard","tweenr","urltools","vegan","zoo"))' && \
+    sudo R -e 'install.packages(c("UpSetR, corrplot","autoplotly","biocmanager","broom","cluster","d3heatmap","data.table","devtools","domc","dorng","dplyr","dt","europepmc","factoextra","farver","fastmatch","fpc","ggforce","ggfortify","ggplot2","ggplotify","ggridges","globaloptions","graphlayouts","gridgraphics","heatmaply","markdown","plotly","png","polyclip","promises","reticulate","rmarkdown","rvcheck","shiny","shinyalert","shinycssloaders","shinydashboard","shinydashboardplus","shinyjs","shinylp","shinyWidgets","stringr","tibble","tidygraph","tidyr","tidyverse","triebeard","tweenr","urltools","vegan","zoo"))' && \
     sudo R -e 'BiocManager::install("Harman")' && \
     sudo R -e 'install.packages("shinydashboardPlus")' && \
     sudo R -e 'install.packages("shinyLP")' && \
@@ -34,7 +34,8 @@ RUN wget --no-verbose https://download3.rstudio.org/ubuntu-14.04/x86_64/VERSION 
     cp -R /usr/local/lib/R/site-library/shiny/examples/* /srv/shiny-server/ && \
     chown shiny:shiny /var/lib/shiny-server
  
-# Get python packages
+# Get pip packages
+RUN pip install intervene
 RUN pip install numpy
 RUN pip install pandas
 RUN pip install natsort
@@ -43,11 +44,8 @@ EXPOSE 3838
 
 COPY shiny-server.sh /usr/bin/shiny-server.sh
 RUN mkdir -p /srv/demos/
-RUN mkdir -p /srv/tutorial/
 ADD app /srv/shiny-server/
 ADD demos /srv/demos/
-ADD tutorial /srv/tutorial/
 RUN chown -R shiny:shiny /srv/demos/
-RUN chown -R shiny:shiny /srv/tutorial/
 
 CMD ["/usr/bin/shiny-server.sh"]

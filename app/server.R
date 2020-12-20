@@ -92,6 +92,9 @@ function(input, output, session) {
   deSeq_out_file        = reactiveVal()
   diffExpDone           = reactiveVal(0)
   numClusters           = reactiveVal()
+
+  # Secondary Analysis 
+  avg_prof_name         = reactiveVal()
   
   shinyalert("Welcome, it's about time!
               Quick start:",
@@ -193,7 +196,13 @@ function(input, output, session) {
     
     # Disable toggle between number of clusters
     disable("numClusts")
-    
+
+    # Set average profile for 1 transcription factor (pho) as example
+    avg_prof_name("pho")
+    updateTextInput(session, "tf1", value = paste("example: pho"))
+    disable("tf1")
+    disable("bigWig1")
+    disable("bigWigGo1")
     
   }, ignoreInit = TRUE)
   
@@ -2290,38 +2299,64 @@ function(input, output, session) {
   
   # 1st .bigWig file
   output$bigWigResults1a <- renderImage({
-    req(input$bigWigGo1)
-    req(!is.null(input$tf1))
-    req(!is.null(input$bigWig1))
-    
-    avg_prof_png_folder <-
-      paste(
-        local_results_folder(),
-        "/timeor/results/analysis/",
-        analysis_folder_name(),
-        "_results/factor_binding/",
-        sep = ""
-      )
-    pngName <- paste("avg_profile", input$tf1, "png", sep = ".")
-    avg_prof_png_file <- paste(avg_prof_png_folder, pngName, sep = "/")
-    
-    print("avgprof")
-    print(avg_prof_png_file)
-    
-    # Create average profiles if file does not exist
-    if (!file.exists(avg_prof_png_file)) {
-      print("creating profile")
+    if(sim_demo_data() == TRUE){
+      req(input$renderVen)
+      avg_prof_png_folder <-
+        paste(
+          local_results_folder(),
+          "/timeor/results/analysis/",
+          analysis_folder_name(),
+          "_results/factor_binding/",
+          sep = ""
+        )
+      pngName <- paste("avg_profile", avg_prof_name(), "png", sep = ".")
+      avg_prof_png_file <- paste(avg_prof_png_folder, pngName, sep = "/")
       
-      runBigWig(input$bigWig1$datapath, input$tf1)
+      print("avgprof")
+      print(avg_prof_png_file)
+      
+      list(
+        src = avg_prof_png_file,
+        width = "100%",
+        style = "object-fit: contain; max-width: 100%; display: block; margin-left: auto; margin-right: auto;",
+        contentType = 'image/png',
+        alt = "Image for the first bigwig does not exist"
+      )
+
+    } else{
+      req(input$bigWigGo1)
+      req(!is.null(input$tf1))
+      req(!is.null(input$bigWig1))
+      
+      avg_prof_png_folder <-
+        paste(
+          local_results_folder(),
+          "/timeor/results/analysis/",
+          analysis_folder_name(),
+          "_results/factor_binding/",
+          sep = ""
+        )
+      pngName <- paste("avg_profile", input$tf1, "png", sep = ".")
+      avg_prof_png_file <- paste(avg_prof_png_folder, pngName, sep = "/")
+      
+      print("avgprof")
+      print(avg_prof_png_file)
+      
+      # Create average profiles if file does not exist
+      if (!file.exists(avg_prof_png_file)) {
+        print("creating profile")
+        
+        runBigWig(input$bigWig1$datapath, input$tf1)
+      }
+      req(file.exists(avg_prof_png_file))
+      list(
+        src = avg_prof_png_file,
+        width = "100%",
+        style = "object-fit: contain; max-width: 100%; display: block; margin-left: auto; margin-right: auto;",
+        contentType = 'image/png',
+        alt = "Image for the first bigwig does not exist"
+      )
     }
-    req(file.exists(avg_prof_png_file))
-    list(
-      src = avg_prof_png_file,
-      width = "100%",
-      style = "object-fit: contain; max-width: 100%; display: block; margin-left: auto; margin-right: auto;",
-      contentType = 'image/png',
-      alt = "Image for the first bigwig does not exist"
-    )
   }, deleteFile = FALSE)
   
   output$bigWigResults1b <- renderImage({
@@ -2497,7 +2532,7 @@ function(input, output, session) {
   })
   
   output$tfTempTable <- DT::renderDataTable({
-    req(input$bigWigGo1)
+    req(input$renderVen)
     req(analysis_folder_name())
     req(local_results_folder())
     req(diffExpDone())
@@ -2585,7 +2620,7 @@ function(input, output, session) {
   # Network plot # aspect ratio and disable scrolling and remove white space
   output$TFnetwork <- renderImage({
     # Set requirements
-    req(input$bigWigGo1)
+    req(input$renderVen)
     req(analysis_folder_name())
     req(local_results_folder())
     req(diffExpDone())

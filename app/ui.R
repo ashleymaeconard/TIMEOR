@@ -543,7 +543,7 @@ function(request) {
                                box(titlePanel(h3("Gene Expression Trajectory Clusters")),
                                    withSpinner(plotlyOutput("deClustering2"))),
                                
-                               box(titlePanel(h3("Observed and Top Predicted Transcription Factors",h4("At least 40% of methods must agree on top predicted transcription factors, otherwise cell is left blank. Row names are clusters."))),
+                               box(titlePanel(h3("Observed and Top Predicted Transcription Factors",h4("At least 40% of methods must agree on top predicted transcription factors, otherwise cell is left blank. Row names are gene expression trajectory clusters."))),
                                    withSpinner(DT::dataTableOutput("tfTable"))),
                                boxPlus(collapsed = TRUE, collapsible = TRUE, closable = FALSE, title="Details about each individual method's predicted transcription factors", titlePanel(
                                    h3("Methods' Transcription Factor Prediction Rankings",
@@ -696,17 +696,23 @@ function(request) {
           
           tabItem(tabName = "tutorials_ft_bk",
                   tabsetPanel(
-                    tabPanel( "Webserver",
+                    tabPanel( "Overview and Contact",
                     fluidRow(box(width=12,
                     titlePanel(
-                    tags$iframe(src="./timeor_app_tutorial.html", width='100%', height='1000px',frameborder=0,scrolling='auto') 
+                    tags$iframe(src="./overview_timeor.html", width='100%', height='1000px',frameborder=0,scrolling='auto') 
                     )),
                     #box(titlePanel(h3("Command Line TIMEOR", htmlOutput("commandLine"))))
+                  )),tabPanel( "Webserver",
+                    fluidRow(box(width=12,
+                    titlePanel( 
+                    tags$iframe(src="./timeor_app_tutorial.html", width='100%', height='1000px',frameborder=0,scrolling='auto')
+                    ))
                   )),tabPanel( "Command Line",
                     fluidRow(box(width=12,
-                    titlePanel( htmlOutput("commandLine"))),
-                    #box(titlePanel(h3("Command Line TIMEOR", htmlOutput("commandLine"))))
-                  )))
+                    titlePanel( 
+                    tags$iframe(src="./timeor_command_line_tutorial.html", width='100%', height='1000px',frameborder=0,scrolling='auto')
+                    )))
+                  ))
           )
         )
       )
