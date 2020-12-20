@@ -2679,7 +2679,7 @@ function(input, output, session) {
   # STRINGdb website for user to explore temporally related transcription factors and other genes (if desired)
   output$stringDB_web <- renderUI({
     string_db <-
-      tags$iframe(src = "https://string-db.org/",
+      tags$iframe(src = "https://string-db.org/cgi/input",
                   height = "1300",
                   width = "100%")
     string_db

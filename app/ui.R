@@ -667,7 +667,7 @@ function(request) {
                           ),
                             column(
                           6,
-                          box(width = "auto", height = "500", titlePanel(h3("Temporal Relations Between Observed and Predicted Transcription Factors")),
+                          box(width = "auto", height = "500", titlePanel(h3("Temporal Relations Between Observed and Predicted Transcription Factors"), "For edge_type 'a' is activation, 'r' is repression."),
                           fluidRow(
                            column(9,
                                     height = "500",
@@ -686,7 +686,7 @@ function(request) {
                       )
                       ),    
                       fluidRow(height=50, 
-                               box(width=12, h3("Network Customization: move and add desired genes to describe temporal relation"), "hi",style="background: #E8E8E8"),
+                               box(width=12, h3("Network Customization: move and add desired genes to describe temporal relation"), "Click 'Search' then 'Multiple proteins' to begin adding gene names from above. User can also visit website directly (https://string-db.org/cgi/input)",style="background: #E8E8E8"),
                       fluidRow(height = 1500,
                               htmlOutput("stringDB_web")))
                     )
