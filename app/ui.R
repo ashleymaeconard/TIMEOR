@@ -458,7 +458,7 @@ function(request) {
                           titlePanel(h3("Gene Expression Trajectory Clusters")),
                           selectInput(
                             "inputNumClust",
-                            label = paste("Select a gene trajectory cluster to analyze:", sep = ""),
+                            label = paste("Clusters are labeled in ascending order from 1 for top-most cluster. Select a gene trajectory cluster to analyze:", sep = ""),
                             selected = "NA",
                             choices = c(
                               "NA" = "NA", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"
@@ -543,9 +543,9 @@ function(request) {
                                box(titlePanel(h3("Gene Expression Trajectory Clusters")),
                                    withSpinner(plotlyOutput("deClustering2"))),
                                
-                               box(titlePanel(h3("Observed and Top Predicted Transcription Factors",h4("At least 40% of methods must agree on top predicted transcription factors, otherwise cell is left blank. Row names are gene expression trajectory clusters."))),
+                               box(titlePanel(h3("Observed and Top Predicted Transcription Factors",h4("At least 40% of methods must agree on their top predicted transcription factors, otherwise cell is left blank. Row names are gene expression trajectory clusters."))),
                                    withSpinner(DT::dataTableOutput("tfTable"))),
-                               boxPlus(collapsed = TRUE, collapsible = TRUE, closable = FALSE, title="Details about each individual method's predicted transcription factors", titlePanel(
+                               boxPlus(collapsed = TRUE, collapsible = TRUE, closable = FALSE, title="See each method's predicted transcription factors:", titlePanel(
                                    h3("Methods' Transcription Factor Prediction Rankings",
                                       h4("Blanks indicate an enriched motif is not assigned to a transcription factor region (to see motif click 'Download interactive cluster motif result'). Row names are top 1 - 4 transcription factors."))),
                                        selectInput(
@@ -686,7 +686,7 @@ function(request) {
                       )
                       ),    
                       fluidRow(height=50, 
-                               box(width=12, h3("Network Customization: move and add desired genes to describe temporal relation"), style="background: #E8E8E8"),
+                               box(width=12, h3("Network Customization: move and add desired genes to describe temporal relation"), "hi",style="background: #E8E8E8"),
                       fluidRow(height = 1500,
                               htmlOutput("stringDB_web")))
                     )

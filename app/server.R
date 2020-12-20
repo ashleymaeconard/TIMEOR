@@ -1195,9 +1195,9 @@ function(input, output, session) {
     print("outputNoralizedData")
     
     shinyalert(
-      "Completed Pre-processing.",
+      "Completed Pre-processing",
       "Proceed to Primary Analysis (side-bar). 
-      Follow pop-ups and fill in grey box.",
+      Fill in grey box and follow pop-ups.",
       type = "info"
     )
 
@@ -1588,10 +1588,10 @@ function(input, output, session) {
   observeEvent(input$renderVen, {
     req(input$renderVen)
     shinyalert(
-      "Completed Primary Analysis.",
+      "Completed Primary Analysis",
       "NOTE: demo chose 'ImpulseDE2' output and 
       'automatic' gene trajectory clustering. 
-      On new data, the user can choose these.
+      On new data the user can choose these.
       
       Proceed to Secondary Analysis (side-bar). 
       
@@ -2360,32 +2360,59 @@ function(input, output, session) {
   }, deleteFile = FALSE)
   
   output$bigWigResults1b <- renderImage({
-    req(input$bigWigGo1)
-    req(!is.null(input$tf1))
-    req(!is.null(input$bigWig1))
-    
-    heatmap_png_folder <-
-      paste(
-        local_results_folder(),
-        "/timeor/results/analysis/",
-        analysis_folder_name(),
-        "_results/factor_binding/",
-        sep = ""
+    if(sim_demo_data() == TRUE){
+      req(input$renderVen)
+      
+      heatmap_png_folder <-
+        paste(
+          local_results_folder(),
+          "/timeor/results/analysis/",
+          analysis_folder_name(),
+          "_results/factor_binding/",
+          sep = ""
+        )
+      pngName <-
+        paste("heatmap_genes.clusters", avg_prof_name(), "png", sep = ".")
+      heatmap_png_file <- paste(heatmap_png_folder, pngName, sep = "/")
+      
+      print("heatmap")
+      print(heatmap_png_file)
+      req(file.exists(heatmap_png_file))
+      list(
+        src = heatmap_png_file,
+        width = "100%",
+        style = "object-fit: contain; max-width: 100%; display: block; margin-left: auto; margin-right: auto;",
+        contentType = 'image/png',
+        alt = "Image for the first bigwig does not exist"
       )
-    pngName <-
-      paste("heatmap_genes.clusters", input$tf1, "png", sep = ".")
-    heatmap_png_file <- paste(heatmap_png_folder, pngName, sep = "/")
-    
-    print("heatmap")
-    print(heatmap_png_file)
-    req(file.exists(heatmap_png_file))
-    list(
-      src = heatmap_png_file,
-      width = "100%",
-      style = "object-fit: contain; max-width: 100%; display: block; margin-left: auto; margin-right: auto;",
-      contentType = 'image/png',
-      alt = "Image for the first bigwig does not exist"
-    )
+    } else{
+      req(input$bigWigGo1)
+      req(!is.null(input$tf1))
+      req(!is.null(input$bigWig1))
+      
+      heatmap_png_folder <-
+        paste(
+          local_results_folder(),
+          "/timeor/results/analysis/",
+          analysis_folder_name(),
+          "_results/factor_binding/",
+          sep = ""
+        )
+      pngName <-
+        paste("heatmap_genes.clusters", input$tf1, "png", sep = ".")
+      heatmap_png_file <- paste(heatmap_png_folder, pngName, sep = "/")
+      
+      print("heatmap")
+      print(heatmap_png_file)
+      req(file.exists(heatmap_png_file))
+      list(
+        src = heatmap_png_file,
+        width = "100%",
+        style = "object-fit: contain; max-width: 100%; display: block; margin-left: auto; margin-right: auto;",
+        contentType = 'image/png',
+        alt = "Image for the first bigwig does not exist"
+      )
+    }
   }, deleteFile = FALSE)
   
   # 2nd .bigWig
