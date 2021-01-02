@@ -44,7 +44,7 @@ Quick Start: 3 Steps
 
 
 1. Visit https://timeor.brown.edu.
-2. For (1) in 'Example Data' (side-bar) under 'Load raw data' click the 'SraRunTable & .fastq files' button. This will guide you through the 'Process Raw Data' tab demo. **Follow pop-ups and fill in grey boxes**. See [Run TIMEOR](#run-timeor-from-raw-data-starting-from-.fastq-time-series-rna-seq) below for walk-through.
+2. For (1) in 'Example Data' (side-bar) under 'Load raw data' click the 'SraRunTable & .fastq files' button. This will guide you through the 'Process Raw Data' tab demo. **Follow pop-ups and fill in grey boxes**. See [Run TIMEOR](#run-timeor-from-raw-data-starting-from-fastq-time-series-rna-seq) below for walk-through.
 3. Next, for (2) in 'Example Data' (side-bar) under 'Load count matrix' click the 'Metadata & read count file' button. This will guide you through the rest of the full method demo. **Follow pop-ups and fill in grey boxes**. See [Run TIMEOR](#run-timeor-using-simulated-data-starting-from-read-count-matrix) below for full application walk-through.
 
 
@@ -61,7 +61,7 @@ Overview
 The [TIMEOR software (web, Conda, and Docker)](https://github.com/ashleymaeconard/TIMEOR) gives users a flexible and intuitive web platform with which to
 upload their time-series RNA-seq data and protein-DNA data, and step through the entire temporal differential gene
 expression and gene dynamics analysis pipeline to generate gene regulatory networks. The application is organized into three
-separate stages: Pre-processing, Primary Analysis, and Secondary Analysis. [Click here](https://www.youtube.com/watch?v=bBodWvGPD6g&t=8s) for a quick video demonstration of the TIMEOR webserver, and [click here](https://www.youtube.com/watch?v=-BV9B3L1ymg) for a video guide through the webserver tutorial (next tab).
+separate stages: Pre-processing, Primary Analysis, and Secondary Analysis. [Click here](https://www.youtube.com/watch?v=bBodWvGPD6g&t=8s) for a quick video demonstration of the TIMEOR webserver, and [click here](https://www.youtube.com/watch?v=-BV9B3L1ymg) for a video guide through the webserver tutorial (below in [Run TIMEOR](https://github.com/ashleymaeconard/TIMEOR#run-timeor).
 
 <p>
  
@@ -154,7 +154,7 @@ Run TIMEOR
 
 1.   Import **SraRunTable from GEO**\* where TIMEOR will process raw data
     through retrieving .fastq files, quality control, alignment, and
-    read count matrix creation. Read [this section](#run-timeor-from-raw-data-starting-from-.fastq-time-series-rna-seq) below.
+    read count matrix creation. Read [this section](#run-timeor-from-raw-data-starting-from-fastq-time-series-rna-seq) below.
 
 2.   Import **metadata file\*\* and count matrix \*\*\*** (skipping raw
     data retrieval, quality control, alignment, and read count matrix
@@ -288,7 +288,7 @@ This tutorial uses simulaated data and takes the user through TIMEOR’s full
 functionality beginning from a read count matrix (genes x sample/time). **NOTE**: figures with two panels are the same page,
 just split. There are 20 steps.
 
-**The user can begin this tutorial before *or* after following ["Run TIMEOR from Raw Data: Starting from .fastq Time-Series RNA-seq"](#run-timeor-from-raw-data-starting-from-.fastq-time-series-rna-seq).**
+**The user can begin this tutorial before *or* after following ["Run TIMEOR from Raw Data: Starting from .fastq Time-Series RNA-seq"](#run-timeor-from-raw-data-starting-from-fastq-time-series-rna-seq).**
 
 1.  In the far-left side-bar click on “Example Data” and then
     under “Load simulated data” click on "Metadata & read count file".
