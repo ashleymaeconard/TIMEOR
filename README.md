@@ -67,7 +67,7 @@ separate stages: Pre-processing, Primary Analysis, and Secondary Analysis. [Clic
  
 </p>
 <center>
-<img src="timeor_steps.png" style="width:95.0%" />
+<img src="https://github.com/ashleymaeconard/TIMEOR/blob/master/app/www/timeor_steps.png" style="width:95.0%" />
 </center>
 <p>
  
@@ -190,7 +190,7 @@ There are 4 steps.
      
 </p>
 <center>
-<img src="T000.png" style="width:95.0%" />
+<img src="https://github.com/ashleymaeconard/TIMEOR/blob/master/app/www/T000.png" style="width:95.0%" />
 </center>
 <p>
      
@@ -203,7 +203,7 @@ There are 4 steps.
      
 </p>
 <center>
-<img src="T00.png" style="width:95.0%" />
+<img src="https://github.com/ashleymaeconard/TIMEOR/blob/master/app/www/T00.png" style="width:95.0%" />
 </center>
 <p>
      
@@ -217,7 +217,7 @@ There are 4 steps.
      
 </p>
 <center>
-<img src="T01.png" style="width:95.0%" />
+<img src="https://github.com/ashleymaeconard/TIMEOR/blob/master/app/www/T01.png" style="width:95.0%" />
 </center>
 <p>
      
@@ -229,7 +229,7 @@ There are 4 steps.
      
 </p>
 <center>
-<img src="T02.png" style="width:95.0%" />
+<img src="https://github.com/ashleymaeconard/TIMEOR/blob/master/app/www/T02.png" style="width:95.0%" />
 </center>
 <p>
      
@@ -242,7 +242,7 @@ There are 4 steps.
      
 </p>
 <center>
-<img src="T03.png" style="width:95.0%" />
+<img src="https://github.com/ashleymaeconard/TIMEOR/blob/master/app/www/T03.png" style="width:95.0%" />
 </center>
 <p>
      
@@ -252,7 +252,7 @@ There are 4 steps.
      
 </p>
 <center>
-<img src="T04.png" style="width:95.0%" />
+<img src="https://github.com/ashleymaeconard/TIMEOR/blob/master/app/www/T04.png" style="width:95.0%" />
 </center>
 <p>
      
@@ -266,7 +266,7 @@ There are 4 steps.
      
 </p>
 <center>
-<img src="T05.png" style="width:95.0%" />
+<img src="https://github.com/ashleymaeconard/TIMEOR/blob/master/app/www/T05.png" style="width:95.0%" />
 </center>
 <p>
      
@@ -276,7 +276,7 @@ There are 4 steps.
      
 </p>
 <center>
-<img src="T050.png" style="width:95.0%" />
+<img src="https://github.com/ashleymaeconard/TIMEOR/blob/master/app/www/T050.png" style="width:95.0%" />
 </center>
 <p>
      
@@ -297,7 +297,7 @@ just split. There are 20 steps.
      
 </p>
 <center>
-<img src="T1.png" style="width:95.0%" />
+<img src="https://github.com/ashleymaeconard/TIMEOR/blob/master/app/www/T1.png" style="width:95.0%" />
 </center>
 <p>
      
@@ -310,7 +310,7 @@ just split. There are 20 steps.
  
 </p>
 <center>
-<img src="T2.png" style="width:95.0%" />
+<img src="https://github.com/ashleymaeconard/TIMEOR/blob/master/app/www/T2.png" style="width:95.0%" />
 </center>
 <p>
  
@@ -319,7 +319,7 @@ just split. There are 20 steps.
  
 </p>
 <center>
-<img src="T3.png" style="width:95.0%" />
+<img src="https://github.com/ashleymaeconard/TIMEOR/blob/master/app/www/T3.png" style="width:95.0%" />
 </center>
 <p>
  
@@ -332,7 +332,7 @@ just split. There are 20 steps.
  
 </p>
 <center>
-<img src="T4.png" style="width:95.0%" />
+<img src="https://github.com/ashleymaeconard/TIMEOR/blob/master/app/www/T4.png" style="width:95.0%" />
 </center>
 <p>
  
@@ -342,7 +342,7 @@ just split. There are 20 steps.
  
 </p>
 <center>
-<img src="T40.png" style="width:95.0%" />
+<img src="https://github.com/ashleymaeconard/TIMEOR/blob/master/app/www/T40.png" style="width:95.0%" />
 </center>
 <p>
  
@@ -361,7 +361,7 @@ just split. There are 20 steps.
  
 </p>
 <center>
-<img src="T50.png" style="width:95.0%" />
+<img src="https://github.com/ashleymaeconard/TIMEOR/blob/master/app/www/T50.png" style="width:95.0%" />
 </center>
 <p>
  
@@ -371,7 +371,7 @@ just split. There are 20 steps.
  
 </p>
 <center>
-<img src="T51.png" style="width:95.0%" />
+<img src="https://github.com/ashleymaeconard/TIMEOR/blob/master/app/www/T51.png" style="width:95.0%" />
 </center>
 <p>
  
@@ -384,7 +384,7 @@ just split. There are 20 steps.
  
 </p>
 <center>
-<img src="T52.png" style="width:95.0%" />
+<img src="https://github.com/ashleymaeconard/TIMEOR/blob/master/app/www/T52.png" style="width:95.0%" />
 </center>
 <p>
  
@@ -407,7 +407,7 @@ just split. There are 20 steps.
  
 </p>
 <center>
-<img src="T5.png" style="width:95.0%" />
+<img src="https://github.com/ashleymaeconard/TIMEOR/blob/master/app/www/T5.png" style="width:95.0%" />
 </center>
 <p>
  
@@ -434,7 +434,7 @@ just split. There are 20 steps.
  
 </p>
 <center>
-<img src="T6.png" style="width:95.0%" />
+<img src="https://github.com/ashleymaeconard/TIMEOR/blob/master/app/www/T6.png" style="width:95.0%" />
 </center>
 <p>
  
@@ -448,7 +448,7 @@ just split. There are 20 steps.
  
 </p>
 <center>
-<img src="T70.png" style="width:95.0%" />
+<img src="https://github.com/ashleymaeconard/TIMEOR/blob/master/app/www/T70.png" style="width:95.0%" />
 </center>
 <p>
  
@@ -468,7 +468,7 @@ just split. There are 20 steps.
  
 </p>
 <center>
-<img src="T7.png" style="width:95.0%" />
+<img src="https://github.com/ashleymaeconard/TIMEOR/blob/master/app/www/T7.png" style="width:95.0%" />
 </center>
 <p>
  
@@ -485,7 +485,7 @@ just split. There are 20 steps.
  
 </p>
 <center>
-<img src="T8.png" style="width:85.0%" />
+<img src="https://github.com/ashleymaeconard/TIMEOR/blob/master/app/www/T8.png" style="width:85.0%" />
 </center>
 <p>
  
@@ -499,7 +499,7 @@ just split. There are 20 steps.
  
 </p>
 <center>
-<img src="T9.png" style="width:95.0%" />
+<img src="https://github.com/ashleymaeconard/TIMEOR/blob/master/app/www/T9.png" style="width:95.0%" />
 </center>
 <p>
  
@@ -517,7 +517,7 @@ just split. There are 20 steps.
  
 </p>
 <center>
-<img src="T90.png" style="width:95.0%" />
+<img src="https://github.com/ashleymaeconard/TIMEOR/blob/master/app/www/T90.png" style="width:95.0%" />
 </center>
 <p>
  
@@ -533,7 +533,7 @@ just split. There are 20 steps.
  
 </p>
 <center>
-<img src="T10.png" style="width:95.0%" />
+<img src="https://github.com/ashleymaeconard/TIMEOR/blob/master/app/www/T10.png" style="width:95.0%" />
 </center>
 <p>
  
@@ -545,7 +545,7 @@ just split. There are 20 steps.
  
 </p>
 <center>
-<img src="T11.png" style="width:95.0%" />
+<img src="https://github.com/ashleymaeconard/TIMEOR/blob/master/app/www/T11.png" style="width:95.0%" />
 </center>
 <p>
  
