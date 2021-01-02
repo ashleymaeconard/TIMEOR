@@ -107,7 +107,7 @@ C.  ***Secondary Analysis*: Assess enrichment, factor binding, and
     over-represented within each cluster; *Factor Binding*, predicts which
     TFs are post-transcriptionally influencing the expression of each
     gene cluster using motif and ChIP-seq data; and *Temporal Relations*,
-    identifies transcription factor (TF) gene regulatory network (GRN). <div class="text-white bg-blue mb-2"> **Blue arrow:** </div> predicted TF to observed TF, experimentally determined interaction</span>. <span style="color:#D6678D"> **Pink arrow:** observed TF to observed TF, experimentally determined interaction</span>. <span style="color:#F7C144"> **Yellow arrow:** observed TF to observed TF, predicted interaction</span>. <span style="color:#5B8179"> **Green arrow:** predicted TF to observed TF, predicted interaction</span>. Network displayed in table format in app to enhance flexibility of GRN visualization.
+    identifies transcription factor (TF) gene regulatory network (GRN). <span style="color:#3F88DE"> **Blue arrow:** predicted TF to observed TF, experimentally determined interaction</span>. <span style="color:#D6678D"> **Pink arrow:** observed TF to observed TF, experimentally determined interaction</span>. <span style="color:#F7C144"> **Yellow arrow:** observed TF to observed TF, predicted interaction</span>. <span style="color:#5B8179"> **Green arrow:** predicted TF to observed TF, predicted interaction</span>. Network displayed in table format in app to enhance flexibility of GRN visualization.
 
 
 Website
