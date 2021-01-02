@@ -511,7 +511,7 @@ just split. There are 20 steps.
     Predicted Transcription Factors") you will see a table highlighting
     the temporal relations between transcription factors. **TIMEOR identified the transcription factor (TF) gene regulatory network (GRN).**
     These temporal relationships are identified and represented in the legend
-    (far-right). <span style="color:#3F88DE"> **Blue arrow/highlight:** predicted TF to observed TF, experimentally determined interaction</span>. <span style="color:#D6678D"> **Pink arrow/highlight:** observed TF to observed TF, experimentally determined interaction</span>. <span style="color:#F7C144"> **Yellow arrow/highlight:** observed TF to observed TF, predicted interaction</span>. <span style="color:#5B8179"> **Green arrow/highlight:** predicted TF to observed TF, predicted interaction</span>. Network displayed in table format in app to enhance flexibility of GRN visualization.
+    (far-right). ![#D6678D](https://via.placeholder.com/15/D6678D/000000?text=+)**Blue arrow/highlight:** predicted TF to observed TF, experimentally determined interaction. <span style="color:#D6678D"> **Pink arrow/highlight:** observed TF to observed TF, experimentally determined interaction</span>. <span style="color:#F7C144"> **Yellow arrow/highlight:** observed TF to observed TF, predicted interaction</span>. <span style="color:#5B8179"> **Green arrow/highlight:** predicted TF to observed TF, predicted interaction</span>. Network displayed in table format in app to enhance flexibility of GRN visualization.
 
 <p>
  
