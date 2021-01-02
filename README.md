@@ -36,7 +36,7 @@ streamline the process of time series data analysis and assist the user
 to design follow-up experiments**. At any point in the analysis, the user 
 can scroll down and click **“Save your place”** to return to analysis later. 
 TIMEOR is available for *Homo sapiens, Mus musculus,* and *Drosophila melanogaster*.
-The web server is **completely free**, and is **accessible** at [https://timeor.brown.edu](timeor.brown.edu) in partnership with the [Computational Biology Core at Brown University](https://cbc.brown.edu/) and [Harvard Medical School's DRSC TRiP Core Facility](https://fgr.hms.harvard.edu/). It is **also available** through both a Conda environment and Docker.
+The web server is **completely free**, and is **accessible** at https://timeor.brown.edu in **a partnership** between the [Computational Biology Core at Brown University](https://cbc.brown.edu/) and [Harvard Medical School's DRSC TRiP Core Facility](https://fgr.hms.harvard.edu/). It is **also available** through both a Conda environment and Docker.
 
 Quick Start: 3 Steps
 =======
@@ -511,7 +511,7 @@ just split. There are 20 steps.
     Predicted Transcription Factors") you will see a table highlighting
     the temporal relations between transcription factors. **TIMEOR identified the transcription factor (TF) gene regulatory network (GRN).**
     These temporal relationships are identified and represented in the legend
-    (far-right). ![#D6678D](https://via.placeholder.com/15/D6678D/000000?text=+)**Blue arrow/highlight:** predicted TF to observed TF, experimentally determined interaction. <span style="color:#D6678D"> **Pink arrow/highlight:** observed TF to observed TF, experimentally determined interaction</span>. <span style="color:#F7C144"> **Yellow arrow/highlight:** observed TF to observed TF, predicted interaction</span>. <span style="color:#5B8179"> **Green arrow/highlight:** predicted TF to observed TF, predicted interaction</span>. Network displayed in table format in app to enhance flexibility of GRN visualization.
+    (far-right). <span style="color:#3F88DE"> **Blue arrow/highlight:** predicted TF to observed TF, experimentally determined interaction</span>. <span style="color:#D6678D"> **Pink arrow/highlight:** observed TF to observed TF, experimentally determined interaction</span>. <span style="color:#F7C144"> **Yellow arrow/highlight:** observed TF to observed TF, predicted interaction</span>. <span style="color:#5B8179"> **Green arrow/highlight:** predicted TF to observed TF, predicted interaction</span>. Network displayed in table format in app to enhance flexibility of GRN visualization.
 
 <p>
  
