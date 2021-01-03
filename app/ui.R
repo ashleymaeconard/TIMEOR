@@ -586,9 +586,6 @@ function(request) {
                                    ),
                                    h5("ID: identifier, TF: transcription factor"),
                                    style="background: #E8E8E8"),
-                                   
-                                   # Show an example of an average profile.
-                                   actionButton("showAvgProf", label="Show example"),
                                  
                                  box(
                                    textInput("tf1", label = "TF name:"),
@@ -686,7 +683,7 @@ function(request) {
                       )
                       ),    
                       fluidRow(height=50, 
-                               box(width=12, h3("Network Customization: move and add desired genes to describe temporal relation"), "Click 'Search' then 'Multiple proteins' to begin adding gene names from above. User can also visit website directly (https://string-db.org/cgi/input)",style="background: #E8E8E8"),
+                               box(width=12, h3("Network Customization: move and add desired genes to describe temporal relation"), "Click 'Search' then 'Multiple proteins' to begin adding gene names from above. User can also visit website directly (https://string-db.org/cgi/input).",style="background: #E8E8E8"),
                       fluidRow(height = 1500,
                               htmlOutput("stringDB_web")))
                     )
@@ -702,7 +699,7 @@ function(request) {
                     tags$iframe(src="./overview_timeor.html", width='100%', height='1000px',frameborder=0,scrolling='auto') 
                     )),
                     #box(titlePanel(h3("Command Line TIMEOR", htmlOutput("commandLine"))))
-                  )),tabPanel( "Webserver",
+                  )),tabPanel( "Web Server",
                     fluidRow(box(width=12,
                     titlePanel( 
                     tags$iframe(src="./timeor_app_tutorial.html", width='100%', height='1000px',frameborder=0,scrolling='auto')
