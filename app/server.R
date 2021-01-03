@@ -1,6 +1,6 @@
-# Ashley Conard
 # server.R
-# Last Modified: 6 June 2020
+# Ashley Mae Conard
+# Last Mod. 6 June 2020
 
 library(shiny)
 library(shinydashboard)
