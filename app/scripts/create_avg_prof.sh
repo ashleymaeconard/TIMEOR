@@ -1,7 +1,8 @@
 #!/bin/bash
 # create_avg_prof.sh
 # Ashley Mae Conard
-# Last Mod: Dec 29, 2019
+# Last Mod. 12/29/2019
+# Purpose: Create average profile from most importantly: input .bigWig file and list of colors
 # Resources: https://www.biostars.org/p/42844/
 #            http://seqanswers.com/forums/archive/index.php/t-45817.html (remove chr from file and remove header)
 

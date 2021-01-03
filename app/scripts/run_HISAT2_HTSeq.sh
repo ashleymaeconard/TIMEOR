@@ -1,8 +1,8 @@
 #!/bin/bash
 # run_HISAT2_HTSeq.sh
 # Ashley Mae Conard
-# Last Mod: July 11, 2019
-# Runs HISAT2 in /research/compbio/software/hisat2-2.1.0 for all .fastq.gz files in a given directory and then HTSeq
+# Last Mod. 11/11/2019
+# Purpose: Runs HISAT2 in /research/compbio/software/hisat2-2.1.0 for all .fastq.gz files in a given directory and then HTSeq
 
 # Check to make sure input is correct
 if [ $# -ne 7 ]; then
@@ -48,9 +48,6 @@ if [ "$REF_TYPE" = "genom" ]; then
     genome_HISAT2="~+/genome"
     genome_HTSeq="~+/dmel_genome/genes.gtf"
                           
-# elif [ "$REF_TYPE" = "trans" ]; then
-#     genome_HISAT2="/data/compbio/aconard/BDGP6/transcriptome_dir/pub/infphilo/hisat2/data/bdgp6_tran/genome_tran"
-#         genome_HTSeq="/data/compbio/aconard/BDGP6/transcriptome_dir/pub/infphilo/hisat2/data/bdgp6_tran/Drosophila_melanogaster.BDGP6.84.gtf"
 else
     echo "ERROR - must input 'genom' or 'trans' for reference type"
     exit 1

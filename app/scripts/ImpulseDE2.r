@@ -1,8 +1,9 @@
 # Ashley Conard
 # ImpulseDE2.r
 # Last Mod. 12/12/2019
+# Purpose: Run ImpulseDE2 to identify differentially expressed genes from time series data.
 
-# Input arguments
+# Checking input arguments
 args = commandArgs(trailingOnly=TRUE)
 if (length(args)==0) {
   stop("Type:ImpulseDE2.r /FULL/PATH/TO/METDATA_FILE/ /FULL/PATH/TO/COUNT_MATRIX_FILE/ (not normalized and corrected) /FULL/PATH/TO/OUTPUTDIR/ RES_FOLDER (e.g. insulin_stim) PVAL_THRESH", call.=FALSE)
@@ -12,9 +13,10 @@ if (length(args)==0) {
     stop("Pass in 5 arguments. Type:ImpulseDE2.r /FULL/PATH/TO/METDATA_FILE/ /FULL/PATH/TO/COUNT_MATRIX_FILE/ (not normalized and corrected) /FULL/PATH/TO/OUTPUTDIR/ RES_FOLDER (e.g. insulin_stim) PVAL_THRESH")
 }
 
-METADATA <- args[1] # e.g. ~/Desktop/timeor_insulin/data/metadata_5tp_insulin.csv
-COUNTDATA <- args[2] # e.g.  ~/Desktop/timeor_insulin/data/countMatrix_5tp_insulin.csv
-OUTDIR <- args[3] # e.g. ~/Desktop/timeor_insulin/results/insulin_mini/
+# Input arguments
+METADATA <- args[1] 
+COUNTDATA <- args[2] 
+OUTDIR <- args[3] 
 RES_FOLDER <- args[4]
 PVAL_THRESH <- as.numeric(args[5])
 

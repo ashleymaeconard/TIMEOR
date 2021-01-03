@@ -1,8 +1,8 @@
 #!/bin/bash
 # run_fastQC.sh
 # Ashley Mae Conard
-# Last Mod: Oct 15, 2019
-# Purpose: Runs FastQC in /FastQC for all .fastq.gz files in a given directory
+# Last Mod. 10/15/2019
+# Purpose: Runs FastQC in /fastqc folder for all .fastq.gz files in a given directory
 
 # Check to make sure input is correct
 if [ $# -ne 2 ]; then

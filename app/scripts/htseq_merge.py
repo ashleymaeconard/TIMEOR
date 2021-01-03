@@ -1,9 +1,11 @@
 #!/usr/bin/python
+# htseq_merge.py
 # Ashley Conard
-# July 17, 2019
-# Merges all HTSeq files into one table of genes by conditions
-# Assumes structure of .../project/results/hisat2_htseq/SAMPLE_NAME/REPLICATE/htseq_counts
+# Last Mod. 7/17/2019
+# Purpose: Merges all HTSeq files into one table of genes by conditions
+#          Assumes structure of .../project/results/hisat2_htseq/SAMPLE_NAME/REPLICATE/htseq_counts
 
+# Importing libraries
 import sys, os, csv, glob
 import pandas as pd
 

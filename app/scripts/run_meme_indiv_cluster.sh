@@ -1,7 +1,7 @@
 #!/bin/bash
 # run_meme.sh
-# Ashley Conard
-# Last Mod: Feb 25, 2019
+# Ashley Mae Conard
+# Last Mod. 2/25/2020
 # Runs MEME to identify motifs de novo for a set of genes
 
 # Checking input arguments

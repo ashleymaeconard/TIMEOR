@@ -1,6 +1,6 @@
 # Ashley Mae Conard
 # get_tf_relations.r
-# Last Modified: Feb 19, 2020
+# Last Mod. 2/19/2020
 # Determines network and relationship between TFs across clusters
 
 # Checking input arguments

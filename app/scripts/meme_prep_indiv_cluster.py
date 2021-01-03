@@ -1,7 +1,7 @@
-# Ashley Mae Conard
 # meme_prep.py
-# Last Modified: July 7, 2019
-# Creates MEME input list of DNA sequences for a set of genes
+# Ashley Mae Conard
+# Last Mod. 7/7/2019
+# Purpose: Creates MEME input list of DNA sequences for a set of genes
 
 # Checking for arguments
 import sys
@@ -15,11 +15,11 @@ if len(sys.argv) != 6:
     sys.exit (1)    
 
 # Inputting arguments
-GENES_GTF_DM6 = sys.argv[1] # e.g. "/data/compbio/aconard/BDGP6/genes.gtf"
-OUTPUT_DIR = sys.argv[2] # e.g. "/data/compbio/aconard/perrimon/results/"
-CHROMS = sys.argv[3] # e.g. "~/timeor-shiny-app-v1/genomes_info/dmel_chromosomes" OR "/data/compbio/aconard/BDGP6/Drosophila_melanogaster/Ensembl/BDGP6/Sequence/Chromosomes/"
-TSS_only = int(sys.argv[4]) # set to 1 if you want to look +1KB upstream of gene and to 0 if you want to look at entire gene (i.e. -1KB_gene_+1KB)
-GENOME = sys.argv[5] # dm6, mmu, or hsa
+GENES_GTF_DM6 = sys.argv[1] 
+OUTPUT_DIR = sys.argv[2] 
+CHROMS = sys.argv[3] 
+TSS_only = int(sys.argv[4])
+GENOME = sys.argv[5] 
 
 # Importing libraries
 import os, math, re, glob, subprocess
@@ -40,7 +40,6 @@ def main(argv):
     df1_genes_gtf = pd.read_csv(GENES_GTF_DM6)
 
     # Form .txt files for input into MEME for each gene_cluster within each case/control pair
-    
     if TSS_only:
         print("Processing",OUTPUT_DIR," into gene_name, gene_id, chrom, TSS-1000, TSS+1000 files.\n")
     else:

@@ -1,7 +1,7 @@
-# Ashley Mae Conard
 # get_top_tfs.r
-# Last Modified: Feb 13, 2020
-# Runs rcis_target in 3 steps* then TIMEOR ranks results to find TOP TFs sets, creating 5 table types**.
+# Ashley Mae Conard
+# Last Mod: 2/13/2020
+# Purpose: Runs rcis_target in 3 steps* then TIMEOR ranks results to find TOP TFs sets, creating 5 table types**.
 #   * Rcistarget steps are (1) motif enrichment analysis, (2) motif-TF annotation, and (3) selection of significant genes (taken from Rcistarget tutorial)
 #   ** Table 1: Rcistarget interactive output table via Shiny
 #      Table 2: Rcistarget output table

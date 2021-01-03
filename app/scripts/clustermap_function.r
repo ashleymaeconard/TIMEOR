@@ -1,13 +1,14 @@
-# Ashley Conard
-# clustermap.r
+# clustermap_function.r
+# Ashley Mae Conard
 # Last Mod. 12/12/2019
+# Purpose: Produces clustermap of differentially expressed genes
 # Resources: https://declara.com/content/lgAyPkg4
 #           If issues installing packages: # install.packages("vegan", repos = "https://cran.rstudio.com", dependencies = TRUE)
-# Input arguments
-# Libraries
+
+# Importing libraries
 library("org.Dm.eg.db")
 library(data.table)
-source("./scripts/geneID_converter.r") # find in scripts folder!
+source("./scripts/geneID_converter.r")
 library(plotly)
 library(htmlwidgets)
 library(heatmaply)
@@ -28,6 +29,22 @@ if (!require("vegan")) {
 
 # Parameters
 produceClusterMap <- function(RESULTS_DIR, HEATMAP_INPUT_FILE, LIST_EXP, CT, USER_CHOOSE_CLUST_NUMBER, DIST_METHOD, HCLUSTER_METHOD){
+  '''
+  Produces clustermap of differentially expressed genes
+
+  Input Args:
+      RESULTS_DIR               := results directory
+      HEATMAP_INPUT_FILE        := heatmap input file from ImpulseDE2, DESeq2, or nextMaSigPro
+      LIST_EXP                  := experiment name by user
+      CT                        := close timepoint or not (z-score input or fold change for far timepoints)
+      USER_CHOOSE_CLUST_NUMBER  := choose the number of clusters (numbers 1-15) or let it be automatic (0)
+      DIST_METHOD               := gene clustering method
+      HCLUSTER_METHOD           := gene group clustering 
+
+  Outputs:
+      clustermap of differentially expressed genes
+  '''
+
   # Arguments that could be parameters if desired
   NUM_CLUSTERS_TO_TEST = 15
   USER_CHOOSE_CLUST_NUMBER = as.numeric(USER_CHOOSE_CLUST_NUMBER)
@@ -248,13 +265,13 @@ produceClusterMap <- function(RESULTS_DIR, HEATMAP_INPUT_FILE, LIST_EXP, CT, USE
     # Remove cluster subfolders that are left over
     dirs <- list.dirs(path = out_subdir)
     dirs <- dirs[2:length(dirs)]
-#     for(d in dirs){
-#         if(!grepl("heatmaply", d, fixed = TRUE)){
-#             if(strtoi(basename(d), base = 0L) > strtoi(opti_num_clust, base = 0L)){
-#                 unlink(d, recursive=TRUE)
-#             }
-#         }
-#     }
+    #     for(d in dirs){
+    #         if(!grepl("heatmaply", d, fixed = TRUE)){
+    #             if(strtoi(basename(d), base = 0L) > strtoi(opti_num_clust, base = 0L)){
+    #                 unlink(d, recursive=TRUE)
+    #             }
+    #         }
+    #     }
 
     # Plotting interactive clustermaps (heatmaply)
     if (CT){

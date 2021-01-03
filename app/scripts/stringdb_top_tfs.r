@@ -1,7 +1,7 @@
-# Ashley Mae Conard
 # stringdb_top_tfs.r
-# Last Modified: Jan 9, 2020
-# Finds the network (if any) connecting genes, given a list of genes.
+# Ashley Mae Conard
+# Last Mod. 1/9/2020
+# Purpose: Finds the network (if any) connecting genes, given a list of genes.
 
 # Checking input arguments
 args = commandArgs(trailingOnly=TRUE)

@@ -1,6 +1,6 @@
 # corr_plot.r
 # Ashley Mae Conard
-# Last Modified: October 11, 2019
+# Last Mod. 11/11/2019
 # Purpose: Creates plotly correlation plot between samples using pearson
 
 # Input arguments
@@ -16,7 +16,7 @@ OUTPUT_DIR <- args[2]
 # Make directory if does not exist
 dir.create(file.path(OUTPUT_DIR), recursive=TRUE)
 
-# Importing packages
+# Importing libraries
 library(heatmaply)
 library(ggplot2)
 library(htmlwidgets)

@@ -1,6 +1,7 @@
-# Ashley Conard
 # venns_intervene.r
+# Ashley Conard
 # Last Mod. 12/12/2019
+# Purpose: Creates venn diagram of overlap between differentially expression method results (DESeq2, Next MaSigPro, and ImpulseDE2)
 
 # Input arguments
 args = commandArgs(trailingOnly=TRUE)

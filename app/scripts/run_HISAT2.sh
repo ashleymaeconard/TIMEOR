@@ -1,10 +1,10 @@
 #!/bin/bash
 # run_HISAT2.sh
 # Ashley Mae Conard
-# Last Mod: July 11, 2019
-# Runs HISAT2 in for all .fastq.gz files in a given directory
+# Last Mod. 7/11/2019
+# Purpose: Runs HISAT2 in for all .fastq.gz files in a given directory
 
-# Checking to make sure input is correct
+# Checking input arguments
 if [ $# -ne 5 ]; then
 	echo $0: "Usage: ./run_HISAT2.sh 
 		1) /PATH/TO/NAMED_FASTQ_DIR/ (NAMED folders containing replicate fastq.gz files) 
@@ -15,7 +15,7 @@ if [ $# -ne 5 ]; then
 	exit 1
 fi
 
-# Assigning input to variable names
+# Arguments
 INPUT_DIR=$1
 RESULTS_DIR=$2
 PAIRED_OR_NOT=$3

@@ -1,5 +1,8 @@
 #!/bin/R
-# DESeq2 
+# DESeq2.r
+# Last Mod. 12/12/2019
+# Ashley Mae Conard
+# Purpose: Run DESeq2 to identify differentially expressed genes from time series data.
 # Resources: http://seqanswers.com/forums/showthread.php?t=64039
 #            http://bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html
 #            https://lashlock.github.io/compbio/R_presentation.html
@@ -8,31 +11,11 @@
 #            http://master.bioconductor.org/packages/release/workflows/vignettes/rnaseqGene/inst/doc/rnaseqGene.html#time-course-experiments    
 #            https://support.bioconductor.org/p/101613/
 
-
-#Input arguments
-# args = commandArgs(trailingOnly=TRUE)
-# if (length(args)==0) {
-#   stop("Type:DESeq2.r /FULL/PATH/TO/METDATA_FILE/ /FULL/PATH/TO/COUNT_MATRIX_FILE/ (not normalized and corrected) /FULL/PATH/TO/OUTPUTDIR/ CONDITION (e.g. insulin_stim) BATCH_EFFECT (0 or 1) TIME_COURSE (0 or 1) ADJP_THRESH", call.=FALSE)
-# } else if (length(args) == 7) {
-#     cat("Passed in:", args,"\n")
-# } else{
-#     stop("Pass in 7 arguments. Type:DESeq2.r 1) /FULL/PATH/TO/METDATA_FILE/ 2) /FULL/PATH/TO/COUNT_MATRIX_FILE/ (not normalized and corrected) 3) /FULL/PATH/TO/OUTPUTDIR/ 4) CONDITION (e.g. insulin_stim) 5) BATCH_EFFECT (0 or 1) 6) TIME_COURSE (0 or 1) ADJP_THRESH")
-# }
-
-# METDATA <- args[1] 
-# COUNTDATA <- args[2]
-# OUTPUTDIR <- args[3] 
-# CONDITION <- args[4]
-# BATCH_EFFECT <- as.numeric(args[5]) # 0 or 1, where 1 sets the reduced model to calculate the effect of time, controlling for the effect of batch (in reduced model)
-# TC <- as.numeric(args[6]) # 0 or 1, if time course then 1
-# PVAL_THRESH <- as.numeric(args[7])
-
-# Libraries
-library("DESeq2")# make sure 1.22
+# Importing libraries
+library("DESeq2") # make sure 1.22
 library(dplyr)
 library(annotate)
 library("org.Dm.eg.db")
-#source("~/Documents/LL_labs/timeor-shiny-app-v1/app/scripts/geneID_converter.r", local=TRUE)
 source("./scripts/geneID_converter.r", local=TRUE)
 library(data.table)
 
@@ -196,17 +179,10 @@ run_DESeq2 <- function(METDATA, COUNTDATA, OUTPUTDIR, CONDITION, BATCH_EFFECT, T
     mat <- betasTC[topGenes, -(batch_cols)]
     write("batch_cols", stderr())
     write(batch_cols, stderr())
-    #thr <- 3 
-    #mat[mat < -thr] <- -thr
-    #mat[mat > thr] <- thr
     
     # Generating clustermap normal shrinkage matrix (NOTE 1,2,3 removed the batch effect columns)
     batch_cols <- seq(1,length(unique(metaData$time)))
     matN <- betasTC[topGenesN, -batch_cols]
-    #thrN <- 3 
-    #matN[matN < -thrN] <- -thrN
-    #matN[matN > thrN] <- thrN
-    #pheatmap(mat, breaks=seq(from=-thr, to=thr, length=101), cluster_col=FALSE)
 
     # Adding gene symbol and placing it in the front for clustermap input matricies (no shrinkage)
     df_mat <- as.data.frame(mat)

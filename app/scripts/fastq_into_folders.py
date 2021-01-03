@@ -1,8 +1,9 @@
-# Ashley Conard
 # fastq_into_folders.py
-# October 23, 2019
-# Creates sample and replicate subfolders and moves fastq.gz files into those subfolders.
+# Ashley Mae Conard
+# Last Mod. 11/23/2019
+# Purpose: Creates sample and replicate subfolders and moves fastq.gz files into those subfolders.
 
+# Importing libraries
 import sys, os, csv, glob
 import pandas as pd
 

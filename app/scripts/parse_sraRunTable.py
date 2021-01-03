@@ -1,7 +1,7 @@
-# Ashley Conard
 # parse_sraRunTable.py
-# October 23, 2019
-# Goals: 1) create timeor/ folder structure
+# Ashley Mae Conard
+# Last Mod. 10/23/2019
+# Purpose: 1) create timeor/ folder structure
 #		 2) create SraAccList.txt
 # 		 3) create metadatafile.csv
 

@@ -1,6 +1,7 @@
 # next_MaSigPro.r
-# Ashley Conard
-# Last Modified: June 13, 2020
+# Ashley Mae Conard
+# Last Mod. 6/13/2020
+# Purpose: Run nextMaSigPro to identify differentially expressed genes from time series data.
 
 # Input arguments
 args = commandArgs(trailingOnly=TRUE)
@@ -28,11 +29,9 @@ library(tibble)
 library(data.table)
 source("./scripts/geneID_converter.r", local=TRUE)
 
-    
 # Import metaData
 metaData <- read.csv(file=METADATA,row.names=1)
 setnames(metaData, old=c("condition","time", "batch"), new=c("Group", "Time", "Batch"))
-#write(head(metaData), stderr())
 
 # Convert Group (i.e. condition) column to numeric for processing
 iter <- 1
@@ -63,9 +62,10 @@ design <- make.design.matrix(metaData, degree = 1)
 write("design", stderr())
 fit <- p.vector(ct, metaData)#,counts=TRUE) # "By default maSigPro corrects this p-value for multiple comparisons by applying the linear step-up (B-H) false discovery rate (FDR) procedure (Benjamini and Hochberg, 1995)."
 write("fit", stderr())
-# fit$i # "returns the number of significant genes"
-# fit$alfa # "gives p-value at the Q false discovery control level"
-# fit$SELEC # "is a matrix with significant genes and their expression values"
+# For edification:
+  # fit$i # "returns the number of significant genes"
+  # fit$alfa # "gives p-value at the Q false discovery control level"
+  # fit$SELEC # "is a matrix with significant genes and their expression values"
 
 # Finding significant differences
 tstep <- T.fit(fit, step.method = "backward", alfa = as.numeric(PVAL_THRESH))

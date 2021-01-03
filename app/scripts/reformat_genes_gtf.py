@@ -1,11 +1,11 @@
-# Ashley Mae Conard
 # reformat_genes_gtf.py
-# Last Modified: Feb 3, 2020
-# Reformats genes.gtf and creates reformatted_genes_gtf.csv with cols: 
+# Ashley Mae Conard
+# Last Mod. 2/3/2020
+# Purpose: Reformats genes.gtf and creates reformatted_genes_gtf.csv with cols: 
 #           index	chrom	type_prot	start_chrom	end_chrom	gene_name	
 #           gene_biotype	gene_id	transcript_name	transcript_id	tss_id 
 
-# Checking for parameters
+# Checking input arguments
 import sys
 if len(sys.argv) != 3:
     print("Type: python reformat_genes_gtf.py \n"+
@@ -17,7 +17,7 @@ if len(sys.argv) != 3:
 import os, math, re, glob
 import pandas as pd
 
-# Importing parameters
+# Importing arguments
 GENES_GTF_DM6 = sys.argv[1] # e.g. "/data/compbio/aconard/BDGP6/genes.gtf"
 OUTPUT_DIR = sys.argv[2]
 

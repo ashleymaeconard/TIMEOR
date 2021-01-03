@@ -1,17 +1,9 @@
 # geneID_converter.r
-# Ashley Conard
-# Last Modified: Aug. 9, 2019
-# Resource: function get.symbolIDsDm TAKEN FROM https://www.researchgate.net/publication/308990864_R_function_getsymbolIDsDm_to_convert_Uniprot_Flybase_etc_to_gene_symbol
-
-
-# args = commandArgs(trailingOnly=TRUE)
-# if (length(args)==0) {
-#   stop("Type: /usr/local/bin/Rscript clusterProfiler.r /PATH/TO/INPUT_OUTPUT_DIR/ (Pass in Input/Output Directory - will be the same - e.g. /Users/ashleymaeconard/Desktop/RESULTS/Feb4_min5_clusters/) OVERLAP_NOT_EXPERIMENTS (set to 1 to run overlap comparison, 0 otherwise)", call.=FALSE)
-# } else if (length(args) == 2) {
-#     cat("Passed in:", args,"\n")
-# } else{
-#     stop("Pass in 1) Input/Output Directory (e.g. /Users/ashleymaeconard/Desktop/RESULTS/Feb4_min5_clusters/) 2) OVERLAP_NOT_EXPERIMENTS (set to 1 to run overlap comparison, 0 otherwise)")
-# }
+# Ashley Mae Conard
+# Last Mod. from resource below: 9/9/2019
+# Purpose: integrate gene symbol extraction into TIMEOR.
+# Resource: function get.symbolIDsDm MODIFIED FROM https://www.researchgate.net/publication/308990864_R_function_getsymbolIDsDm_to_convert_Uniprot_Flybase_etc_to_gene_symbol
+# NOTE: ORIGINALLY PROGRAMMED BY Benjamin Tovar | February 25, 2014 AND Christoph Metzendorf | October 11, 2016
 
 get.symbolIDsDm <- function(id,id.type){
   

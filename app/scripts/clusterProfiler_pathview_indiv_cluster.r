@@ -1,7 +1,7 @@
-# Ashley Mae Conard
 # clusterProfiler_pathview_indiv_cluster.r
-# Last Modified: Jan 15, 2019
-# Runs clusterProfiler and pathview to find and visualize gene enrichment within each cluster.
+# Ashley Mae Conard
+# Last Mod. 1/15/2019
+# Purpose: Runs clusterProfiler and pathview to find and visualize gene enrichment within each cluster.
 # References: https://yulab-smu.github.io/clusterProfiler-book/chapter12.html          
 
 # CHECKING ARGUMENTS 
@@ -23,7 +23,7 @@ if (length(args)==0) {
                   5) ADJ_PVAL (recommend 0.05))")
 }
 
-# ASSIGNING INPUT ARGUMENTS
+# Assigning input arguments
 IN_OUTPUT <- args[1] #e.g. ~/timeor/results/primary/
 EXPERIMENT_NAME <- args[2] # without "_results" added
 SEP_TPS <- args[3] # 0 or 1 
@@ -31,7 +31,7 @@ ORGANISM <- args[4] # dme (Drosophila melanogaster), hsa (Homo sapiens), mmu (Mu
 options(digits=5)
 ADJ_PVAL <- as.double(args[5]) # recommend 0.05
 
-# ASSIGNING ORGANISM LIBRARY
+# Assigning organism library
 if(ORGANISM=="dme"){
     ORG_DB="org.Dm.eg.db"
 } else if(ORGANISM=="hsa"){
@@ -42,14 +42,9 @@ if(ORGANISM=="dme"){
     stop("Please enter dme (Drosophila melanogaster), hsa (Homo sapiens), or mmu (Mus musculus)")
 }
 
-# LOADING PACKAGES
+# Importing libraries
 library(biomaRt)
 library(devtools)
-#install_github("GuangchuangYu/bitr")
-#library(bitr)
-# if (!requireNamespace("BiocManager", quietly = TRUE))
-#     install.packages("BiocManager")
-# BiocManager::install("clusterProfiler")
 library(clusterProfiler)
 library(ORG_DB, character.only = TRUE) # organism database library
 library("pathview")

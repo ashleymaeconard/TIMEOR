@@ -1,6 +1,7 @@
-# Ashley Conard
-# clustermap.r
+# Ashley Mae Conard
+# clustermap_script.r
 # Last Mod. 12/12/2019
+# Goal: Produces clustermap of differentially expressed genes
 # Resources: https://declara.com/content/lgAyPkg4
 #           If issues installing packages: # install.packages("vegan", repos = "https://cran.rstudio.com", dependencies = TRUE)
 
@@ -26,15 +27,7 @@ HCLUSTER_METHOD = args[7] #"ward.D", "ward.D2", "single", "complete", "average",
 # Arguments that could be parameters if desired
 NUM_CLUSTERS_TO_TEST = 15
 
-# Libraries
-# library(data.table)
-# source("geneID_converter.r") # find in scripts folder!
-# library(plotly)
-# library(htmlwidgets)
-# library(heatmaply)
-
-
-# Libraries
+# Importing libraries
 library(data.table)
 library("org.Dm.eg.db")
 source("./scripts/geneID_converter.r") # find in scripts folder!
@@ -55,9 +48,6 @@ if (!require("RColorBrewer")) {
 if (!require("vegan")) {
   install.packages("vegan")
   library(vegan)}
-
-# Parameters
-#produceClusterMap <- function(RESULTS_DIR, HEATMAP_INPUT_FILE, LIST_EXP, CT, USER_CHOOSE_CLUST_NUMBER, DIST_METHOD, HCLUSTER_METHOD){
 
 # Arguments that could be parameters if desired
 NUM_CLUSTERS_TO_TEST = 15

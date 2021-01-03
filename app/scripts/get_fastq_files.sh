@@ -1,7 +1,7 @@
 #!/bin/bash
 # get_fastq_files.sh
-# Ashley Conard
-# Last Modified: July 9, 2019
+# Ashley Mae Conard
+# Last Mod. 7/9/2019
 # Resource: https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE129292
 
 if [ $# -ne 2 ]; then

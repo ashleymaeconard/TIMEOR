@@ -1,8 +1,8 @@
 #!/bin/bash
 # run_HTSeq.sh
 # Ashley Mae Conard
-# Last Mod: July 11, 2019
-# Runs HTSeq for all out.sorted.bam files in a given directory
+# Last Mod. 7/11/2019
+# Purpose: Runs HTSeq for all out.sorted.bam files in a given directory
 
 # Check to make sure input is correct
 if [ $# -ne 3 ]; then

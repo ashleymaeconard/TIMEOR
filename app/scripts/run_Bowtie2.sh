@@ -1,8 +1,8 @@
 #!/bin/bash
 # run_Bowtie2.sh
 # Ashley Mae Conard
-# Last Mod: July 11, 2019
-# Runs Bowtie2 in for all .fastq.gz files in a given directory
+# Last Mod. 7/11/2019
+# Purpose: Runs Bowtie2 in for all .fastq.gz files in a given directory
 
 # Checking to make sure input is correct
 if [ $# -ne 5 ]; then

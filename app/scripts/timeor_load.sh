@@ -1,7 +1,9 @@
 #!/bin/bash
-# TIMEOR_load commands
-# Ashley Conard
-# Last Modified: 9/27/19
+# TIMEOR_load.sh
+# Ashley Mae Conard
+# Last Mod. 9/27/19
+# Purpose: Run 3 first steps to gather data, run FastQC and align using HISAT2
+# NOTE: This script is useful for the command line version of TIMEOR
 
 if [ $# -ne 4 ]; then
 	echo $0: "Usage: ./get_fastq_files.sh NUM_THREADS /FASTQ/DIR/ /PATH/TO/SraAccList.txt /OUT/DIR/results/"

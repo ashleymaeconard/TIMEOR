@@ -1,6 +1,6 @@
-# Ashley Mae Conard
 # stringdb.r
-# Last Modified: Jan 9, 2019
+# Ashley Mae Conard
+# Last Mod. 1/9/2020
 # Finds the network (if any) connecting genes, given a list of genes.
 
 # Checking input arguments

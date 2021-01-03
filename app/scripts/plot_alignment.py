@@ -1,6 +1,7 @@
 # plot_alignment.py
-# Ashley Conard
-# Last Mod: June 23, 2019
+# Ashley Mae Conard
+# Last Mod. 6/23/2019
+# Purpose: Plot alignment scores of input method
 
 import matplotlib as mpl
 mpl.use('Agg')
@@ -14,6 +15,7 @@ import matplotlib.pyplot as plt
 sns.set_style('whitegrid')
 sns.set_context("notebook", font_scale=2.5)
 
+# Checking input arguments
 if len(sys.argv) != 6 :
     print("Usage: python plot_alignment.py \n 1) METHOD_COMPARE (0-no, 1-yes) \n 2) /FULL/PATH/TO/ALIGNMENT/ (e.g. ../timeor/results/preprocess/ALIGNMENT_METHOD_FOLDER) \n 3) PAIRED_OR_NOT (0-single, 1-paired) \n 4) METHOD_NAME_1 (e.g. HISAT2) \n 5) METHOD_NAME_2 (e.g. Bowtie2 or NA)")
     sys.exit (1)    
