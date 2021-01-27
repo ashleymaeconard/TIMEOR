@@ -171,7 +171,8 @@ interacting with each stage and tab.
     (“Process Raw Data”)
 
    \*\* **metadata file** requires at least these columns.
-    -   *ID, condition, time, batch*
+   
+        -   *ID, condition, time, batch*
         -   *ID*: a unique identifier (ID) for the user
             (e.g. case\_1min\_rep1)
         -   *condition*: one word description (ideally: 'control' and 'case')
