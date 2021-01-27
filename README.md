@@ -172,12 +172,12 @@ interacting with each stage and tab.
 
    \*\* **metadata file** requires at least these columns.
    
-        -   *ID, condition, time, batch*
-        -   *ID*: a unique identifier (ID) for the user
+   -   *ID, condition, time, batch*
+   -   *ID*: a unique identifier (ID) for the user
             (e.g. case\_1min\_rep1)
-        -   *condition*: one word description (ideally: 'control' and 'case')
-        -   *time*: numerical values e.g. (0, 20, 40)
-        -   *batch*: string description of batch (e.g. b1, b2, b3)
+   -   *condition*: one word description ('control' and 'case')
+   -   *time*: numerical values e.g. (0, 20, 40)
+   -   *batch*: string description of batch (e.g. b1, b2, b3)
 
   \*\*\* **count matrix** : rows should be unique gene identifiers
     (e.g. Flybase, Ensembl or Entrez IDs) and columns should be the IDs
