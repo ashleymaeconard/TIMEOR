@@ -1316,7 +1316,7 @@ function(input, output, session) {
             "/timeor/results/analysis/",
             sep = "")
     
-    # Run ImpulseDE2 script
+    # Run ImpulseDE2.r script
     print("Running ImpulseDE2 command")
     command <-
       paste(
@@ -1340,20 +1340,16 @@ function(input, output, session) {
             "/timeor/results/analysis/",
             sep = "")
     
-    atadetm <-
-      paste(app_dir, "/../demos/simulated_data/timeor/data/metadata.csv", sep = "")
-    tnuoc <-
-      paste(app_dir, "/../demos/simulated_data/timeor/data/countMatrix.csv", sep = "") #e.g. norm: mron_tnuoc <-"/ltmp/aconard/tmp/timeor/results/analysis/countMatrix_norm_correcteds.csv"
-    
-    print("norm_corr_countMatrix_filepath")
+    print("Normalized and corrected countMatrix filepath")
     print(norm_corr_countMatrix_filepath())
-    # Run NextMaSigPro script
+    
+    # Run next_maSigPro.r script
     print("Running NextMaSigPro command")
     command <-
       paste(
         nextMaSigPro_script,
         metadata_filepath(),
-        countMatrix_filepath(),
+        norm_corr_countMatrix_filepath(),
         path_to_output,
         analysis_folder_name(),
         adj_p_analysis_folder()
@@ -1393,7 +1389,9 @@ function(input, output, session) {
       analysis_folder_name(),
       batch_effect,
       time,
-      adj_p_analysis_folder()
+      adj_p_analysis_folder(),
+      'control', 
+      input$organism
     )
   }
   

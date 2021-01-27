@@ -1,7 +1,6 @@
-#!/bin/R
 # DESeq2.r
-# Last Mod. 12/12/2019
 # Ashley Mae Conard
+# Last Mod. 12/12/2019
 # Purpose: Run DESeq2 to identify differentially expressed genes from time series data.
 # Resources: http://seqanswers.com/forums/showthread.php?t=64039
 #            http://bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html
@@ -14,24 +13,45 @@
 # Importing libraries
 library("DESeq2") # make sure 1.22
 library(dplyr)
-library(annotate)
-library("org.Dm.eg.db")
 source("./scripts/geneID_converter.r", local=TRUE)
 library(data.table)
 
-run_DESeq2 <- function(METDATA, COUNTDATA, OUTPUTDIR, CONDITION, BATCH_EFFECT, TC, PVAL_THRESH){
+run_DESeq2 <- function(METDATA, COUNTDATA, OUTPUTDIR, CONDITION, BATCH_EFFECT, TC, PVAL_THRESH, CONTROL, ORGANISM){
+    
+    # Assigning organism library
+    if(ORGANISM=="dme"){
+        ORG_DB="org.Dm.eg.db"
+    } else if(ORGANISM=="hsa"){
+        ORG_DB="org.Hs.eg.db"
+    }else if(ORGANISM=="mmu"){
+        ORG_DB="org.Mm.eg.db" 
+    } else{
+        stop("Please enter dme (Drosophila melanogaster), hsa (Homo sapiens), or mmu (Mus musculus)")
+    }
+    library(ORG_DB, character.only = TRUE) # organism database library
     
     # Set database to work with
-    gene_ID_database <- toTable(org.Dm.egFLYBASE)
-    gene_ID_database_name <- "flybase"
+    gene_ID_database <- toTable(ORG_DB)
+    if(ORGANISM=="dme"){
+        gene_ID_database_name <- "flybase"
+    } else if(ORGANISM!="dme"){
+        gene_ID_database_name <- "NA"
+    } else{
+        stop("Please enter dme (Drosophila melanogaster), hsa (Homo sapiens), or mmu (Mus musculus)")
+    }
 
     # Create or set output directory
     CONDIT_DIR <- paste(CONDITION,"results",sep="_")
     FULL_OUTDIR <- paste(OUTPUTDIR,CONDIT_DIR,"deseq2",sep="/")
-    if (!dir.exists(FULL_OUTDIR)){
-    dir.create(FULL_OUTDIR)
+    if (!dir.exists(CONDIT_DIR)){
+        dir.create(CONDIT_DIR)
     } else {
-        print("Directory already exists.")
+        print("Results directory already exists.")
+    }
+    if (!dir.exists(FULL_OUTDIR)){
+        dir.create(FULL_OUTDIR)
+    } else {
+        print("DESeq2 directory already exists.")
     }
     cat("Output directory: ", FULL_OUTDIR)
 
@@ -39,6 +59,7 @@ run_DESeq2 <- function(METDATA, COUNTDATA, OUTPUTDIR, CONDITION, BATCH_EFFECT, T
     # Import count data
     countData1 <- read.csv(COUNTDATA, header=TRUE, sep=",")
     col_name = "ID"
+    
     # Import metadata
     metaData <- read.csv(METDATA, header=TRUE, sep=",")
     col_for_index="ID"
@@ -92,19 +113,29 @@ run_DESeq2 <- function(METDATA, COUNTDATA, OUTPUTDIR, CONDITION, BATCH_EFFECT, T
     }
 
     # Create DESeq2 object and run DESeq2
-    #options for DESeq to add later: DESeq(object, test = c("Wald", "LRT"), fitType = c("parametric", "local", "mean"), betaPrior, full = design(object), reduced, quiet = FALSE, minReplicatesForReplace = 7, modelMatrixType, parallel = FALSE, BPPARAM = bpparam())
-    # The LRT test tests whether the terms removed in the reduced model explain a significant amount of variation in the input data
-    # LRT is recommended for time course - http://master.bioconductor.org/packages/release/workflows/vignettes/rnaseqGene/inst/doc/rnaseqGene.html
+    # LRT tests whether the terms removed in reduced model explain a significant amount of variation in the input data. It is recommended for time series - http://master.bioconductor.org/packages/release/workflows/vignettes/rnaseqGene/inst/doc/rnaseqGene.html
     # LRT is recommended without betaPrior - https://support.bioconductor.org/p/87224/
+    
     # 3 variables
     if(BATCH_EFFECT & TC & CASEvsCONT){ # batch effect, timecourse, and case vs. control
         write("Batch effect, timecourse, and case vs. control", stderr())
         if(!any(freq_case_contr$Freq >= floor(dim(metaData)[1]/2))){
+            write("Batch effect, timecourse with timepoint t compared to t-1", stderr())
             dds <- DESeqDataSetFromMatrix(countData = countData, colData = metaData, design = ~ batch + condition + time + condition:time) # examine effect of condition over time
+            
+            # Set reference level for case control comparison
+            dds$condition <- relevel(dds$condition, ref = CONTROL)
+           
+            # Run DESeq2
             dds <- DESeq(dds, test="LRT", reduced= ~ batch + condition + time)
-        } else{
+        } else{ # Reference: http://52.71.54.154/help/course-materials/2015/LearnBioconductorFeb2015/B02.1.1_RNASeqLab.html#time
             write("Batch effect and timecourse with control as 1st timepoint", stderr())
             dds <- DESeqDataSetFromMatrix(countData = countData, colData = metaData, design = ~ batch + time)# examine effect of time
+            
+            # Set reference level for case control comparison
+            dds$condition <- relevel(dds$condition, ref = CONTROL)
+
+            # Run DESeq2            
             dds <- DESeq(dds, test="LRT", reduced= ~ batch)
         }
     # 2 variables
@@ -141,34 +172,35 @@ run_DESeq2 <- function(METDATA, COUNTDATA, OUTPUTDIR, CONDITION, BATCH_EFFECT, T
     res_no_padj <- results(dds)
     res <- res_no_padj[which(res_no_padj$padj < PVAL_THRESH),]
     
-    # Performing normal shrinkage transformation
-    resNorm_no_padj <- lfcShrink(dds, coef=3, type="normal") # coef=3 is treatment_odor_vs_etoh  
-    resNorm <- resNorm_no_padj[which(resNorm_no_padj$padj < PVAL_THRESH),]
+    # Performing apeglm shrinkage transformation
+    # Resource: https://rdrr.io/bioc/DESeq2/man/lfcShrink.html
+    resApe_no_padj <- lfcShrink(dds, type="apeglm")
+    resApe <- resApe_no_padj[which(resApe_no_padj$padj < PVAL_THRESH),]
 
     # Saving MA plots before and after shrinkage
     pdf(paste(FULL_OUTDIR,paste('ma_plot_noShrinkage_padj',toString(PVAL_THRESH),'.pdf',sep=""),sep="/"))
     plotMA(res, ylim=c(-4,4), cex=.8)
     abline(h=c(-1,1), col="dodgerblue", lwd=2)
     dev.off()
-    pdf(paste(FULL_OUTDIR,paste('ma_plot_normalShrinkage_padj',toString(PVAL_THRESH),'.pdf',sep=""), sep="/"))
-    plotMA(resNorm, ylim=c(-4,4), cex=.8)
+    pdf(paste(FULL_OUTDIR,paste('ma_plot_apeShrinkage_padj',toString(PVAL_THRESH),'.pdf',sep=""), sep="/"))
+    plotMA(resApe, ylim=c(-4,4), cex=.8)
     abline(h=c(-1,1), col="dodgerblue", lwd=2)
     dev.off()
 
-    # Adding gene symbol and placing it in the front for no and normal shrinkage matricies
+    # Adding gene symbol and placing it in the front for no and apeglm shrinkage matricies
     ids.type  <- gene_ID_database_name
     ids <- rownames(res)
-    idsN <- rownames(resNorm)
+    idsN <- rownames(resApe)
     
     res['gene_id'] <- rownames(res)
     res$gene_name <- as.vector(get.symbolIDsDm(ids,ids.type))
     res_sym_front <- as.data.frame(res) %>% dplyr::select(gene_name, gene_id, everything())    
     
-    resNorm['gene_id'] <- rownames(resNorm)
-    resNorm$gene_name <- as.vector(get.symbolIDsDm(idsN,ids.type))
-    resN_sym_front <- as.data.frame(resNorm) %>% dplyr::select(gene_name, gene_id, everything())    
+    resApe['gene_id'] <- rownames(resApe)
+    resApe$gene_name <- as.vector(get.symbolIDsDm(idsN,ids.type))
+    resN_sym_front <- as.data.frame(resApe) %>% dplyr::select(gene_name, gene_id, everything())    
 
-    # Creating clustermap inputs for no and normal shrinkage
+    # Creating clustermap inputs for no and apeglm shrinkage
     betasTC <- coef(dds)
     colnames(betasTC)
     topGenes <- which(res_sym_front$padj < PVAL_THRESH, arr.ind = FALSE) # get indicies for all results
@@ -180,7 +212,7 @@ run_DESeq2 <- function(METDATA, COUNTDATA, OUTPUTDIR, CONDITION, BATCH_EFFECT, T
     write("batch_cols", stderr())
     write(batch_cols, stderr())
     
-    # Generating clustermap normal shrinkage matrix (NOTE 1,2,3 removed the batch effect columns)
+    # Generating clustermap apeglm shrinkage matrix (NOTE 1,2,3 removed the batch effect columns)
     batch_cols <- seq(1,length(unique(metaData$time)))
     matN <- betasTC[topGenesN, -batch_cols]
 
@@ -196,7 +228,7 @@ run_DESeq2 <- function(METDATA, COUNTDATA, OUTPUTDIR, CONDITION, BATCH_EFFECT, T
         df_mat_sym_front$gene_name <- ifelse(is.na(df_mat_sym_front$gene_name), df_mat_sym_front$gene_id, df_mat_sym_front$gene_name)
     }
 
-    # Adding gene symbol and placing it in the front for clustermap input matricies (normal shrinkage)
+    # Adding gene symbol and placing it in the front for clustermap input matricies (apeglm shrinkage)
     df_matN <- as.data.frame(matN)
     idsMN <- rownames(df_matN)
     df_matN['gene_id'] <- idsMN
@@ -210,10 +242,10 @@ run_DESeq2 <- function(METDATA, COUNTDATA, OUTPUTDIR, CONDITION, BATCH_EFFECT, T
 
     # Saving sorted (by padj) results
     resSort <- res_sym_front[order(res_sym_front$padj),]
-    resSortNormShr <- resN_sym_front[order(resN_sym_front$padj),]
+    resSortApeShr <- resN_sym_front[order(resN_sym_front$padj),]
     
     write.csv(as.data.frame(resSort), file=paste(FULL_OUTDIR,paste("deseq2_output_noShrinkage_padj",toString(PVAL_THRESH),'.csv',sep=""), sep="/"), row.names=FALSE, quote=FALSE)
-    write.csv(as.data.frame(resSortNormShr), file=paste(FULL_OUTDIR,paste("deseq2_output_normalShrinkage_padj",toString(PVAL_THRESH),'.csv',sep=""), sep="/"), row.names=FALSE, quote=FALSE)
+    write.csv(as.data.frame(resSortApeShr), file=paste(FULL_OUTDIR,paste("deseq2_output_ApeShrinkage_padj",toString(PVAL_THRESH),'.csv',sep=""), sep="/"), row.names=FALSE, quote=FALSE)
     write.csv(na.omit(df_mat_sym_front),paste(FULL_OUTDIR,paste('deseq2_noShrinkage_clustermapInput_padj',toString(PVAL_THRESH),'.csv',sep=""),sep='/'), row.names=FALSE, quote=FALSE) # clustermap input
-    write.csv(na.omit(df_matN_sym_front),paste(FULL_OUTDIR,paste('deseq2_normalShrinkage_clustermapInput_padj',toString(PVAL_THRESH),'.csv',sep=""),sep='/'), row.names=FALSE, quote=FALSE) # clustermap input
+    write.csv(na.omit(df_matN_sym_front),paste(FULL_OUTDIR,paste('deseq2_ApeShrinkage_clustermapInput_padj',toString(PVAL_THRESH),'.csv',sep=""),sep='/'), row.names=FALSE, quote=FALSE) # clustermap input
 }  
