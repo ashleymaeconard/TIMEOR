@@ -61,7 +61,7 @@ Overview
 The [TIMEOR software (web, Conda, and Docker)](https://github.com/ashleymaeconard/TIMEOR) gives users a flexible and intuitive web platform with which to
 upload their time-series RNA-seq data and protein-DNA data, and step through the entire temporal differential gene
 expression and gene dynamics analysis pipeline to generate gene regulatory networks. The application is organized into three
-separate stages: Pre-processing, Primary Analysis, and Secondary Analysis. [Click here](https://www.youtube.com/watch?v=bBodWvGPD6g&t=8s) for a quick video demonstration of the TIMEOR webserver, and [click here](https://www.youtube.com/watch?v=-BV9B3L1ymg) for a video guide through the webserver tutorial (below in [Run TIMEOR](https://github.com/ashleymaeconard/TIMEOR#run-timeor).
+separate stages: Pre-processing, Primary Analysis, and Secondary Analysis. [Click here](https://www.youtube.com/watch?v=bBodWvGPD6g&t=8s) for a quick video demonstration of the TIMEOR webserver, and [click here](https://www.youtube.com/watch?v=-BV9B3L1ymg) for a video guide through the webserver tutorial (below in [Run TIMEOR](https://github.com/ashleymaeconard/TIMEOR#run-timeor)).
 
 <p>
  
@@ -174,7 +174,7 @@ interacting with each stage and tab.
     -   *ID, condition, time, batch*
         -   *ID*: a unique identifier (ID) for the user
             (e.g. case\_1min\_rep1)
-        -   *condition*: one word description (e.g. case, control)
+        -   *condition*: one word description (ideally: 'control' and 'case')
         -   *time*: numerical values e.g. (0, 20, 40)
         -   *batch*: string description of batch (e.g. b1, b2, b3)
 
