@@ -29,21 +29,18 @@ if (!require("vegan")) {
 
 # Parameters
 produceClusterMap <- function(RESULTS_DIR, HEATMAP_INPUT_FILE, LIST_EXP, CT, USER_CHOOSE_CLUST_NUMBER, DIST_METHOD, HCLUSTER_METHOD){
-  '''
-  Produces clustermap of differentially expressed genes
-
-  Input Args:
-      RESULTS_DIR               := results directory
-      HEATMAP_INPUT_FILE        := heatmap input file from ImpulseDE2, DESeq2, or nextMaSigPro
-      LIST_EXP                  := experiment name by user
-      CT                        := close timepoint or not (z-score input or fold change for far timepoints)
-      USER_CHOOSE_CLUST_NUMBER  := choose the number of clusters (numbers 1-15) or let it be automatic (0)
-      DIST_METHOD               := gene clustering method
-      HCLUSTER_METHOD           := gene group clustering 
-
-  Outputs:
-      clustermap of differentially expressed genes
-  '''
+  
+  # Produces clustermap of differentially expressed genes
+  # Input Args:
+  #     RESULTS_DIR               := results directory
+  #     HEATMAP_INPUT_FILE        := heatmap input file from ImpulseDE2, DESeq2, or nextMaSigPro
+  #     LIST_EXP                  := experiment name by user
+  #     CT                        := close timepoint or not (z-score input or fold change for far timepoints)
+  #     USER_CHOOSE_CLUST_NUMBER  := choose the number of clusters (numbers 1-15) or let it be automatic (0)
+  #     DIST_METHOD               := gene clustering method
+  #     HCLUSTER_METHOD           := gene group clustering 
+  # Outputs:
+  #     Clustermap of differentially expressed genes
 
   # Arguments that could be parameters if desired
   NUM_CLUSTERS_TO_TEST = 15
