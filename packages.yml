@@ -19,6 +19,7 @@ dependencies:
   - bioconductor-maSigPro=1.58.0
   - bioconductor-org.dm.eg.db=3.10.0
   - bioconductor-org.hs.eg.db=3.10.0
+  - bioconductor-org.mm.eg.db=3.10.0
   - bioconductor-pathview=1.26.0
   - bioconductor-polyester=1.22.0
   - bioconductor-rcistarget=1.6

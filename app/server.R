@@ -52,7 +52,8 @@ function(input, output, session) {
   norm_corr_countMatrix_filepath = reactiveVal() # normalized and corrected count matrix filepath
   sra_input             = reactiveVal(FALSE) # if sra_input = T, user input raw data
   metadata_input        = reactiveVal(FALSE) # if metadata_input = T, user input count matrix
-  
+  incorrect_adaptive_defaults = reactiveVal(FALSE) # if incorrect_adaptive_defaults = T, error and prompt to answer
+
   # Adaptive defaults
   organism_ad           = reactiveVal()
   sequencing_ad         = reactiveVal()
@@ -514,6 +515,7 @@ function(input, output, session) {
         "Please load data and then select the organism, sequencing and experiment type.",
         type = "error"
       )
+      incorrect_adaptive_defaults(TRUE) # set to TRUE if adaptive default question have not been answered.
     } else{
       # Output statement about data processing
       if (!is.null(metadata_filepath())) {
@@ -551,6 +553,9 @@ function(input, output, session) {
   
   # Get FastQ files
   getfastQFiles <- function(folder, updateProgress = NULL) {
+    req(sra_input())
+    req(!metadata_input())
+
     print("Running command to get .fastq files")
     
     script <-
@@ -567,9 +572,9 @@ function(input, output, session) {
   }
   
   # Performing quality control
-  qualityControl <-
-    function(qc_results_folder, updateProgress = NULL) {
-      print("Running command perform QC")
+  qualityControl <- function(qc_results_folder, updateProgress = NULL) {
+      req(retrieveDone())
+      print("Running command to perform QC.")
       
       script <-  paste(app_dir, "/scripts/run_fastQC.sh", sep = "")
       fastQDir <-

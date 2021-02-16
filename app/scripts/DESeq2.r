@@ -174,7 +174,7 @@ run_DESeq2 <- function(METDATA, COUNTDATA, OUTPUTDIR, CONDITION, BATCH_EFFECT, T
     
     # Performing apeglm shrinkage transformation
     # Resource: https://rdrr.io/bioc/DESeq2/man/lfcShrink.html
-    resApe_no_padj <- lfcShrink(dds, type="apeglm")
+    resApe_no_padj <- lfcShrink(res, type="apeglm")
     resApe <- resApe_no_padj[which(resApe_no_padj$padj < PVAL_THRESH),]
 
     # Saving MA plots before and after shrinkage
