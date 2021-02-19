@@ -55,7 +55,6 @@ RUN pip install numpy
 RUN pip install pandas
 RUN pip install natsort
 # RUN pip install multiqc
-# RUN pip install multiqc
 # RUN pip install pybigwig
 # RUN pip install pysam
 # RUN pip install pyyaml
