@@ -55,7 +55,6 @@ RUN pip install numpy
 RUN pip install pandas
 RUN pip install natsort
 # RUN pip install multiqc
-# RUN pip install multiqc
 # RUN pip install pybigwig
 # RUN pip install pysam
 # RUN pip install pyyaml
@@ -63,6 +62,14 @@ RUN pip install natsort
 # RUN pip install deeptools
 # RUN pip install intervene
 # RUN pip install htseq # 1) if needed try .tar, then 2) update to python 3 
+
+# Build Bowtie2 (https://sites.google.com/site/wiki4metagenomics/tools/bowtie2/install)
+RUN apt update
+RUN apt install bowtie2
+
+# Build HISAT2 (https://www.howtoinstall.me/ubuntu/18-04/hisat2/)
+RUN apt update
+RUN apt install hisat2
 
 # Build samtools
 wget https://github.com/samtools/samtools/releases/download/1.11/samtools-1.11.tar.bz2
@@ -72,7 +79,7 @@ cd samtools-1.11
 make
 make install
 
-# sra-tools
+# Build sra-tools
 apt-get --quiet install --yes libxml-libxml-perl
 echo "installing sra toolkit to /usr/local/ncbi"
 rm -rf .ncbi /usr/local/ncbi /etc/ncbi /etc/profile.d/sra-tools* # remove old install if any
@@ -80,7 +87,7 @@ curl https://ftp-trace.ncbi.nlm.nih.gov/sra/sdk/2.10.9/sratoolkit.2.10.9-centos_
 echo "Please 'source /etc/profile.d/sra-tools.sh' to setup your path"
 RUN 'source /etc/profile.d/sra-tools.sh'
 
-# fastqc
+# Build fastqc
 ENV URL=http://www.bioinformatics.babraham.ac.uk/projects/fastqc/
 ENV ZIP=fastqc_v0.11.8.zip
 RUN wget $URL/$ZIP -O $DST/$ZIP && \
