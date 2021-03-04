@@ -41,7 +41,7 @@ source(paste(app_dir, "/global.R", sep = ""))
 function(input, output, session) {
   # Setting all reactive values
   # Data input
-  local_results_folder  = reactiveVal(tempdir()) # tempdir() # e.g. "/ltmp/aconard/tmp/"
+  local_results_folder  = reactiveVal(tempdir()) # tempdir()
   sim_demo_data         = reactiveVal(FALSE) # use simulated (demo) data
   real_demo_data        = reactiveVal(FALSE) # use real (demo) data
   user_input_data       = reactiveVal(FALSE) # user inputs data
@@ -52,7 +52,6 @@ function(input, output, session) {
   norm_corr_countMatrix_filepath = reactiveVal() # normalized and corrected count matrix filepath
   sra_input             = reactiveVal(FALSE) # if sra_input = T, user input raw data
   metadata_input        = reactiveVal(FALSE) # if metadata_input = T, user input count matrix
-  incorrect_adaptive_defaults = reactiveVal(FALSE) # if incorrect_adaptive_defaults = T, error and prompt to answer
 
   # Adaptive defaults
   organism_ad           = reactiveVal()
@@ -72,9 +71,7 @@ function(input, output, session) {
   fastqOrgDone          = reactiveVal(FALSE)
   alignHdone            = reactiveVal(FALSE)
   plotAlignH            = reactiveVal(FALSE)
-  run_Bowtie            = reactive({
-    list(qcDone(), alignHdone())
-  })
+  run_Bowtie            = reactive({list(qcDone(), alignHdone())})
   alignBdone            = reactiveVal(FALSE)
   plotAlignB            = reactiveVal(FALSE)
   whichAligner          = reactiveVal('hisat2')
@@ -515,7 +512,6 @@ function(input, output, session) {
         "Please load data and then select the organism, sequencing and experiment type.",
         type = "error"
       )
-      incorrect_adaptive_defaults(TRUE) # set to TRUE if adaptive default question have not been answered.
     } else{
       # Output statement about data processing
       if (!is.null(metadata_filepath())) {
@@ -553,8 +549,6 @@ function(input, output, session) {
   
   # Get FastQ files
   getfastQFiles <- function(folder, updateProgress = NULL) {
-    req(sra_input())
-    req(!metadata_input())
 
     print("Running command to get .fastq files")
     
@@ -2709,17 +2703,34 @@ function(input, output, session) {
   
   # Download zipped results folder
   output$downloadResultsFolder <- downloadHandler(
-    filename = function() {
-      paste("timeor", "zip", sep = ".")
-    },
-    content = function(folderName) {
-      print(paste0(
-        "Local results folder: ",
-        local_results_folder(),
-        "/timeor/"
-      ))
-      file.copy(paste(local_results_folder(), "/timeor.tar.gz", sep = ""), folderName)},
-      #tar(folderName, paste(local_results_folder(), "/timeor/", sep = ""))}
-      contentType = "application/zip"
+    
+    # Download simulated or real data used
+    if(sim_demo_data() || real_demo_data()){
+      filename = function() {
+        paste("timeor", "tar.gz", sep = ".")
+      },
+      content = function(folderName) {
+        print(paste0(
+          "Local results folder: ",
+          local_results_folder(),
+          "/timeor/"
+        ))
+        file.copy(paste(local_results_folder(), "/timeor.tar.gz", sep = ""), folderName)},
+        #tar(folderName, paste(local_results_folder(), "/timeor/", sep = ""))}
+        contentType = "application/zip"
+    }else{
+
+      # Download new data 
+      filename = function() {
+        paste("timeor", "tar", "gz", sep = ".")
+      },
+      content = function(folderName) {
+        command <- paste("tar -czvf ", local_results_folder(),"/timeor.tar.gz ",local_results_folder(),"/timeor", sep = "")
+        cat(command)
+        system(paste("tar --usage", "> /tmp/file_output.txt",  sep=" "))# , intern = TRUE)
+        system(command)# , intern=TRUE)
+        file.copy(paste(local_results_folder(), "/timeor.tar.gz", sep = ""), folderName)},
+        contentType = "application/octet-stream"
+    }
   )
 }

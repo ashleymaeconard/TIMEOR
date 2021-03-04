@@ -141,6 +141,8 @@ Note, if TIMEOR is running on a remote machine, you may access the website throu
 
 ### Docker
 
+Either with Docker Hub type `$docker pull ashleymaeconard/timeor:latest` or build it with the following commands:
+
 1. Install Docker (version 20.10.0 recommended)
 2. Building Docker image in TIMEOR directory:
     1. `$docker build -t timeor_env .`
