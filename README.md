@@ -194,7 +194,7 @@ There are 4 steps.
      
 </p>
 <center>
-<img src="https://github.com/ashleymaeconard/TIMEOR/blob/master/app/www/T000.png" style="width:95.0%" />
+<img src="https://github.com/ashleymaeconard/TIMEOR/blob/master/app/www/Ts000.png" style="width:95.0%" />
 </center>
 <p>
      
