@@ -104,7 +104,9 @@ function(input, output, session) {
 
               'Load raw data' click 'SraRunTable & .fastq files' button.
               
-              This will guide you through the 'Process Raw Data' tab demo.",
+              This will guide you through the 'Process Raw Data' tab demo.
+              
+              This website is free and open for everyone.",
             type = "info"
             )
 
