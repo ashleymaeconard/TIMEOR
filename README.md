@@ -67,7 +67,7 @@ separate stages: Pre-processing, Primary Analysis, and Secondary Analysis. [Clic
  
 </p>
 <center>
-<img src="https://github.com/ashleymaeconard/TIMEOR/blob/master/app/www/timeor_steps.png" style="width:95.0%" />
+<img src="https://github.com/ashleymaeconard/TIMEOR/blob/master/app/www/timeor_ssteps.png" style="width:95.0%" />
 </center>
 <p>
  
@@ -194,7 +194,7 @@ There are 4 steps.
      
 </p>
 <center>
-<img src="https://github.com/ashleymaeconard/TIMEOR/blob/master/app/www/Ts000.png" style="width:95.0%" />
+<img src="https://github.com/ashleymaeconard/TIMEOR/blob/master/app/www/T000.png" style="width:95.0%" />
 </center>
 <p>
      
@@ -537,7 +537,7 @@ just split. There are 20 steps.
  
 </p>
 <center>
-<img src="https://github.com/ashleymaeconard/TIMEOR/blob/master/app/www/T10.png" style="width:95.0%" />
+<img src="https://github.com/ashleymaeconard/TIMEOR/blob/master/app/www/T10s.png" style="width:95.0%" />
 </center>
 <p>
  
