@@ -114,7 +114,7 @@ Website
 =======
 
 ### Computational Biology Core at Brown Univeristy and DRSC/TRiP Functional Genomics Resources at Harvard Medical School Partnership
-TIMEOR is available online at https://timeor.brown.edu.
+TIMEOR is available online at https://timeor.brown.edu. This website is free and open to everyone!
 
 Installation
 ============
