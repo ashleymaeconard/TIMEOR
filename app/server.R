@@ -1588,9 +1588,10 @@ function(input, output, session) {
     req(input$renderVen)
     shinyalert(
       "Completed Primary Analysis",
-      "NOTE: demo chose 'ImpulseDE2' output and 
-      'automatic' gene trajectory clustering. 
-      On new data the user can choose these.
+      "Output from 'ImpulseDE2' and 'automatic'
+      gene trajectory clustering shown. 
+
+      On new data the user can change these.
       
       Proceed to Secondary Analysis (side-bar). 
       
@@ -1826,7 +1827,7 @@ function(input, output, session) {
         p_value
       )
     print(command_GO_path)
-    system(command_GO_path, intern = TRUE)
+    system(command_GO_path, intern = FALSE)
     
     # Network script calls
     stringdb_script <-
@@ -1851,17 +1852,16 @@ function(input, output, session) {
     meme_prep_script <-
       paste(app_dir, "/scripts/meme_prep_indiv_cluster.py", sep = "")
     reformatted_gtf <-
-      paste(app_dir,
-            "/../genomes_info/dme/reformatted_genes_gtf.csv",
+      paste("/srv/genomes_info/dme/reformatted_genes_gtf.csv",
             sep = "")
-    dm6_fa <- paste(app_dir, "/../genomes_info/dme/dm6.fa", sep = "")
+    genome_fa <- paste("/srv/genomes_info/",animal,"/genome_bowtie2/genome.fa", sep = "")
     command_meme_prep <-
       paste(
         "python",
         meme_prep_script,
         reformatted_gtf,
         currentClust_dir,
-        dm6_fa,
+        genome_fa,
         0,
         animal,
         sep = " "
@@ -2170,7 +2170,7 @@ function(input, output, session) {
         local_results_folder(),
         "/timeor/results/analysis/",
         analysis_folder_name(),
-        "_results/factor_binding/observed_putative_tfs_n_encode.csv",
+        "_results/factor_binding/observed_predicted_tfs_n_encode.csv",
         sep = ""
       )
     
@@ -2215,6 +2215,7 @@ function(input, output, session) {
             4,
             40,
             app_dir,
+            "high",
             sep = " ")
     system(command_avg_prof, intern = TRUE)
   }
@@ -2707,32 +2708,15 @@ function(input, output, session) {
   output$downloadResultsFolder <- downloadHandler(
     
     # Download simulated or real data used
-    if(sim_demo_data() || real_demo_data()){
-      filename = function() {
-        paste("timeor", "tar.gz", sep = ".")
-      },
-      content = function(folderName) {
-        print(paste0(
-          "Local results folder: ",
-          local_results_folder(),
-          "/timeor/"
-        ))
-        file.copy(paste(local_results_folder(), "/timeor.tar.gz", sep = ""), folderName)},
-        #tar(folderName, paste(local_results_folder(), "/timeor/", sep = ""))}
-        contentType = "application/zip"
-    }else{
-
-      # Download new data 
-      filename = function() {
-        paste("timeor", "tar", "gz", sep = ".")
-      },
-      content = function(folderName) {
-        command <- paste("tar -czvf ", local_results_folder(),"/timeor.tar.gz ",local_results_folder(),"/timeor", sep = "")
-        cat(command)
-        system(paste("tar --usage", "> /tmp/file_output.txt",  sep=" "))# , intern = TRUE)
-        system(command)# , intern=TRUE)
-        file.copy(paste(local_results_folder(), "/timeor.tar.gz", sep = ""), folderName)},
-        contentType = "application/octet-stream"
-    }
+    filename = function() {
+      paste("timeor", "tar", "gz", sep = ".")
+    },
+    content = function(folderName) {
+      command <- paste("tar -czvf ", local_results_folder(),"/timeor.tar.gz ",local_results_folder(),"/timeor", sep = "")
+      cat(command)
+      system(paste("tar --usage", "> /tmp/file_output.txt",  sep=" "))# , intern = TRUE)
+      system(command)
+      file.copy(paste(local_results_folder(), "/timeor.tar.gz", sep = ""), folderName)},
+      contentType = "application/octet-stream"
   )
 }

@@ -110,23 +110,19 @@ plotPathway <- function(gl, exper, pathwayName, subdi, num_g_clust){
         }
 
         # Plotting pathway (no significance limit because searching based on pvalue thresholded clusterProfiler GO terms)
+        
         pathview(gene.data = gl,
                             pathway.id = paste(ORGANISM,pathwayID[,1],sep=""),
                             species = ORGANISM, 
-                            out.suffix = paste(num_g_clust,"_pathview",sep="") )
+                            out.suffix = paste(num_g_clust,"_pathview",sep=""),
+                            kegg.native=TRUE, 
+                            kegg.dir=wwwsvg_subdirec)
         
-        # Moving automatic output from Pathview to correct output folder 
-        pathview_higlighted_genes_file_name <- paste(paste(ORGANISM,pathwayID[,1],sep=""),paste(num_g_clust,"pathview.multi.png",sep="_"),sep=".")
-        file.rename(paste(getwd(),pathview_higlighted_genes_file_name,sep="/" ),  
-                    paste(wwwsvg_subdirec, pathview_higlighted_genes_file_name, sep="/"))
-
-        pathview_all_genes_file_name <- paste(ORGANISM,pathwayID[,1],".png",sep="")
-        file.rename(paste(getwd(),pathview_all_genes_file_name,sep="/" ),  
-                    paste(subdi, pathview_all_genes_file_name, sep="/"))
-
-        pathview_xml_file_name <- paste(ORGANISM,pathwayID[,1],".xml",sep="")
-        file.rename(paste(getwd(),pathview_xml_file_name,sep="/" ),  
-                    paste(subdi, pathview_xml_file_name, sep="/"))
+        # Moving multiple timepoint automatic output from Pathview to correct output folder 
+        pathview_higlighted_genes_file_name <- paste(paste(ORGANISM,pathwayID[,1],sep=""),paste(num_g_clust,"pathview.multi.png",sep="_"),sep="_")
+        file.copy(paste(getwd(),pathview_higlighted_genes_file_name,sep="/" ),  
+                  paste(wwwsvg_subdirec, pathview_higlighted_genes_file_name, sep="/"))
+        file.remove(paste(getwd(),pathview_higlighted_genes_file_name,sep="/" ))
     }
 }
 

@@ -155,7 +155,7 @@ for dir in $INPUT_DIR/*/*
                     # Writing HISAT2 command to a file, followed by .bam creation and sorting
                     echo "Adding ${fileName} to run_HISAT2.txt script"
                     echo " "
-                    echo "(hisat2 -p ${NUM_PROCESSORS} --dta -x $genome -1 $R1 -2 $R2 -t --un-conc-gz $folderName/out_unconc.gz --al-conc-gz $folderName/out_al_conc_atleastonce.gz --known-splicesite-infile $APP_DIR/genomes_info/dm6/splicesites.txt --novel-splicesite-outfile $folderName/novel_splicesite --summary-file $folderName/summaryfile.txt --met-file $folderName/met-file.txt -S $folderName/out.sam 2> $folderName/alignmentsummary.txt; samtools sort -O sam -T $folderName/out.sorted -o $folderName/out.sorted.sam $folderName/out.sam; samtools view -S -b $folderName/out.sorted.sam > $folderName/out.sorted.bam; rm -rf $folderName/out.sam $folderName/out.sorted.sam) &">> $COMMAND_SCRIPT            
+                    echo "(hisat2 -p ${NUM_PROCESSORS} --dta -x $genome -1 $R1 -2 $R2 -t --un-conc-gz $folderName/out_unconc.gz --al-conc-gz $folderName/out_al_conc_atleastonce.gz --known-splicesite-infile $APP_DIR/genomes_info/dme/splicesites.txt --novel-splicesite-outfile $folderName/novel_splicesite --summary-file $folderName/summaryfile.txt --met-file $folderName/met-file.txt -S $folderName/out.sam 2> $folderName/alignmentsummary.txt; samtools sort -O sam -T $folderName/out.sorted -o $folderName/out.sorted.sam $folderName/out.sam; samtools view -S -b $folderName/out.sorted.sam > $folderName/out.sorted.bam; rm -rf $folderName/out.sam $folderName/out.sorted.sam) &">> $COMMAND_SCRIPT            
                     echo "Outputting results to $folderName"
             done
        fi

@@ -118,8 +118,9 @@ main <- function(){
     # Creating the table for protein IDs to map gene name to Pubmed ID
     protein_ID_table <- string_db$get_proteins()
     
+    APP_DIR_redirect <- "/srv/"
     if(NCBI_TAXO == 7227){
-        strdb_file_folder <- paste(APP_DIR,"../genomes_info/dme/",sep="")
+        strdb_file_folder <- paste(APP_DIR_redirect,"/genomes_info/dme/",sep="")
         
         if(!file.exists(paste(strdb_file_folder,"7227__protein_aliases_tf.tsv.gz", sep=""))){   
             print("FILE DOES NOT EXIST")
@@ -128,13 +129,22 @@ main <- function(){
             downloadAbsentFile('http://string.uzh.ch/permanent/string/10/proteins/7227__proteins.tsv.gz', oD=strdb_file_folder)
         }
      } else if(NCBI_TAXO == 9606){
-        strdb_file_folder <- paste(APP_DIR,"../genomes_info/hsa/",sep="")
+        strdb_file_folder <- paste(APP_DIR_redirect,"/genomes_info/hsa/",sep="")
         if(!file.exists(paste(strdb_file_folder,"9606__protein_aliases_tf.tsv.gz", sep=""))){
             print("FILE DOES NOT EXIST")
             print(paste(strdb_file_folder,"9606__protein_aliases_tf.tsv.gz"))
             downloadAbsentFile('http://string.uzh.ch/permanent/string/10/protein_aliases/9606__protein_aliases_tf.tsv.gz', oD = strdb_file_folder)
             downloadAbsentFile('http://string.uzh.ch/permanent/string/10/protein_links/9606__protein_links.tsv.gz', oD = strdb_file_folder)
             downloadAbsentFile('http://string.uzh.ch/permanent/string/10/proteins/9606__proteins.tsv.gz', oD=strdb_file_folder)
+         }
+     } else if(NCBI_TAXO == 10090){
+        strdb_file_folder <- paste(APP_DIR_redirect,"/genomes_info/mmu/",sep="")
+        if(!file.exists(paste(strdb_file_folder,"10090__protein_aliases_tf.tsv.gz", sep=""))){
+            print("FILE DOES NOT EXIST")
+            print(paste(strdb_file_folder,"10090__protein_aliases_tf.tsv.gz"))
+            downloadAbsentFile('http://string.uzh.ch/permanent/string/10/protein_aliases/10090__protein_aliases_tf.tsv.gz', oD = strdb_file_folder)
+            downloadAbsentFile('http://string.uzh.ch/permanent/string/10/protein_links/10090__protein_links.tsv.gz', oD = strdb_file_folder)
+            downloadAbsentFile('http://string.uzh.ch/permanent/string/10/proteins/10090__proteins.tsv.gz', oD=strdb_file_folder)
          }
      } else{
         stop("Add necessary organism information.")
