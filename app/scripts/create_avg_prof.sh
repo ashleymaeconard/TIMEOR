@@ -38,13 +38,13 @@ do
 done
 
 # Computing matrix
-computeMatrix scale-regions -S ${INPUT_BIGWIG} -R ${LIST_BEDS[@]} --binSize 250 --beforeRegionStartLength 1000 --afterRegionStartLength 1000 --regionBodyLength 5000 -o ${OUTPUT_DIR}/matrix.genes.clusters.mat.gz --skipZeros --smartLabels --sortRegions descend
+/deepTools-3.1.0/bin/./computeMatrix scale-regions -S ${INPUT_BIGWIG} -R ${LIST_BEDS[@]} --binSize 250 --beforeRegionStartLength 1000 --afterRegionStartLength 1000 --regionBodyLength 5000 -o ${OUTPUT_DIR}/matrix.genes.clusters.mat.gz --skipZeros --smartLabels --sortRegions descend
 
 # Plotting heatmap
-plotHeatmap -m ${OUTPUT_DIR}/matrix.genes.clusters.mat.gz -out ${OUTPUT_DIR}/heatmap_genes.clusters.${TF}.png --heatmapHeight 25 --heatmapWidth 15 --labelRotation 45 --missingDataColor red --whatToShow="heatmap and colorbar"
+/deepTools-3.1.0/bin/./plotHeatmap -m ${OUTPUT_DIR}/matrix.genes.clusters.mat.gz -out ${OUTPUT_DIR}/heatmap_genes.clusters.${TF}.png --heatmapHeight 25 --heatmapWidth 15 --labelRotation 45 --missingDataColor red --whatToShow="heatmap and colorbar"
 
 # Plotting average profile - with standard error (used colorspace::rainbow_hcl(15) to determine colors used in heatmaply)
-plotProfile -m ${OUTPUT_DIR}/matrix.genes.clusters.mat.gz -out ${OUTPUT_DIR}/avg_profile.${TF}.png --plotType=se --labelRotation 45 --plotHeight 15 --plotWidth 15 --colors ${LIST_COLORS[@]} -T="${TF} Average Profile"
+/deepTools-3.1.0/bin/./plotProfile -m ${OUTPUT_DIR}/matrix.genes.clusters.mat.gz -out ${OUTPUT_DIR}/avg_profile.${TF}.png --plotType=se --labelRotation 45 --plotHeight 15 --plotWidth 15 --colors ${LIST_COLORS[@]} -T="${TF} Average Profile"
 
 echo "Saved heatmap.clusters.${TF}.png and average avg_profile.${TF}.png in ${OUTPUT_DIR}"
 rm ${OUTPUT_DIR}"/matrix.genes.clusters.mat.gz"

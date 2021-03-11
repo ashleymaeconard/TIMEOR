@@ -31,7 +31,7 @@ declare -a arr
 for file in ${1}/*.fastq*; do arr=(${arr[@]} "$file"); done
 echo "FastQC on $num_files files: ${arr[@]}"
 echo ${2}/run_fastQC.txt
-echo "time parallel -j $NUM_PROCESSORS fastqc {1} --outdir=${2} ::: ${arr[@]}" > ${2}/run_fastQC.txt
+echo "time parallel -j $NUM_PROCESSORS /FastQC/./fastqc {1} --outdir=${2} ::: ${arr[@]}" > ${2}/run_fastQC.txt
 
 # Summarize all FastQC results with MultiQC
 #echo "eval '$(conda shell.bash hook)'" >> ${2}/run_fastQC.txt

@@ -91,15 +91,20 @@ find_perturbed_tfs <- function(geneLi, all_clust_top_X_tfs, geneClustNum, tfs_tf
             perturbed_tfs_list <- union(perturbed_tfs_list, geneLi$cluster[i])
         }
     }
-    all_clust_top_X_tfs$perturbed_TFs[geneClustNum] <- list(perturbed_tfs_list)
+    all_clust_top_X_tfs$observed_TFs[geneClustNum] <- list(perturbed_tfs_list)
     all_clust_top_X_tfs$cluster <- seq.int(nrow(all_clust_top_X_tfs))
     return(all_clust_top_X_tfs)
 }
 
 report_n_collect_encode_results <- function(top_X_tf_per_db_cleaned, OUTDIR){
+    
     # Gathering ENCODE numbers if exist
     top_X_tf_per_db_cleaned$encode_accession_num <- "NA"
     for(gene in 1:nrow(top_X_tf_per_db_cleaned)){
+        
+        #write("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! HERE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", stderr())
+        #cat("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! HERE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", file=stderr())
+
         query_res <- queryEncodeGeneric(organism=ENCODE_ORG, assay="ChIP-seq", file_format="bigWig", target=top_X_tf_per_db_cleaned$mode_TF[gene], fuzzy=T) 
         top_X_tf_per_db_cleaned$encode_accession_num[gene] <- list(unique(query_res$accession))
         per_conc <- as.double(format(top_X_tf_per_db_cleaned$prct_concordance[gene], digits=3))

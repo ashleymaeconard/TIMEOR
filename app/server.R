@@ -562,6 +562,7 @@ function(input, output, session) {
             sep = "")
     command <- paste(script, folder, accessionList)
     system(command, intern = TRUE)
+    ## returning too soon
     showNotification("All .fastq files saved in personal analysis session folder.")
     
     retrieveDone(TRUE)
@@ -570,6 +571,7 @@ function(input, output, session) {
   # Performing quality control
   qualityControl <- function(qc_results_folder, updateProgress = NULL) {
       req(retrieveDone())
+      
       print("Running command to perform QC.")
       
       script <-  paste(app_dir, "/scripts/run_fastQC.sh", sep = "")
@@ -2196,7 +2198,7 @@ function(input, output, session) {
   
   # Get the top transcription factors
   getTopTfs <- function() {
-    avg_prof_script <-
+    top_tfs_script <-
       paste(app_dir, "/scripts/get_top_tfs.r", sep = "")
     res_folder <-
       paste(
@@ -2206,7 +2208,7 @@ function(input, output, session) {
         "_results/",
         sep = ""
       )
-    command_avg_prof <-
+    command_top_tfs <-
       paste("Rscript",
             avg_prof_script,
             res_folder,
@@ -2217,7 +2219,7 @@ function(input, output, session) {
             app_dir,
             "high",
             sep = " ")
-    system(command_avg_prof, intern = TRUE)
+    system(command_top_tfs, intern = TRUE)
   }
   
   # Rcistarget interactive results download
@@ -2573,8 +2575,8 @@ function(input, output, session) {
         "_results/temporal_relations/",
         sep = ""
       )
-    tf_temp_file <-
-      Sys.glob(file.path(tf_temp_folder, "/TF_temp_rel.csv"))
+    tf_temp_file <- 
+      file.path(tf_temp_folder, "/TF_temp_rel.csv")
     
     # Run get_tf_relations.r if needed
     if (!file.exists(tf_temp_file)) {
@@ -2618,7 +2620,7 @@ function(input, output, session) {
     }
     
     command_tf_rel <-
-      paste(tf_rel_script, res_folder, ncbi_id, app_dir, sep = " ")
+      paste(tf_rel_script, res_folder, ncbi_id, app_dir, input$trans_time, sep = " ")
     system(command_tf_rel, intern = TRUE)
   }
   

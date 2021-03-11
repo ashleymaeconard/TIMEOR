@@ -102,7 +102,7 @@ def main(argv):
             gene_seqs_out_file = outdir_meme_input+geneClusterID[-1].split(".",1)[0]+"_DNAseqs.fasta"                
         
         # Calling bedtools to produce fasta file of DNA sequences for a given list of genes
-        subprocess.call(["/usr/local/sbin/bedtools", "getfasta", "-fi", CHROMS, "-bed", bed_file_loc, "-name", "-fo",gene_seqs_out_file])
+        subprocess.call(["/bedtools2/bin/./bedtools", "getfasta", "-fi", CHROMS, "-bed", bed_file_loc, "-name", "-fo",gene_seqs_out_file])
         
 if __name__ == "__main__": # in Python 3 we need not use this, instead just main() but this is more universal.
     main(sys.argv[1:])

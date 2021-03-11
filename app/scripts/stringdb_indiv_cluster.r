@@ -118,34 +118,32 @@ save_stringdb_network_n_table <- function(s_t, IO){
 
 main <- function(){
     
-    APP_DIR_redirect <- "/srv/"
+    APP_DIR_redirect <- "~/Desktop/"
     # Getting alias files if needed
     if(NCBI_TAXO == 7227){
         strdb_file_folder <- paste(APP_DIR_redirect,"/genomes_info/dme/",sep="")
         
-        if(!file.exists(paste(strdb_file_folder,"7227__protein_aliases_tf.tsv.gz", sep=""))){   
-            print("FILE DOES NOT EXIST")
-            downloadAbsentFile('http://string.uzh.ch/permanent/string/10/protein_aliases/7227__protein_aliases_tf.tsv.gz', oD = strdb_file_folder)
-            downloadAbsentFile('http://string.uzh.ch/permanent/string/10/protein_links/7227__protein_links.tsv.gz', oD = strdb_file_folder)
-            downloadAbsentFile('http://string.uzh.ch/permanent/string/10/proteins/7227__proteins.tsv.gz', oD=strdb_file_folder)
+        if(!file.exists(paste(strdb_file_folder,"7227.protein.aliases.v11.0.txt.gz", sep="/"))){   
+            cat("FILE DOES NOT EXIST", file=stderr())
+            downloadAbsentFile('https://stringdb-static.org/download/protein.aliases.v11.0/7227.protein.aliases.v11.0.txt.gz', oD = strdb_file_folder)
+            downloadAbsentFile('https://stringdb-static.org/download/protein.links.v11.0/7227.protein.links.v11.0.txt.gz', oD = strdb_file_folder)
+            downloadAbsentFile('https://stringdb-static.org/download/protein.info.v11.0/7227.protein.info.v11.0.txt.gz', oD=strdb_file_folder)
         }
      } else if(NCBI_TAXO == 9606){
         strdb_file_folder <- paste(APP_DIR_redirect,"/genomes_info/hsa/",sep="")
-        if(!file.exists(paste(strdb_file_folder,"9606__protein_aliases_tf.tsv.gz", sep=""))){
-            print("FILE DOES NOT EXIST")
-            print(paste(strdb_file_folder,"9606__protein_aliases_tf.tsv.gz"))
-            downloadAbsentFile('http://string.uzh.ch/permanent/string/10/protein_aliases/9606__protein_aliases_tf.tsv.gz', oD = strdb_file_folder)
-            downloadAbsentFile('http://string.uzh.ch/permanent/string/10/protein_links/9606__protein_links.tsv.gz', oD = strdb_file_folder)
-            downloadAbsentFile('http://string.uzh.ch/permanent/string/10/proteins/9606__proteins.tsv.gz', oD=strdb_file_folder)
+        if(!file.exists(paste(strdb_file_folder,"9606.protein.aliases.v11.0.txt.gz", sep="/"))){
+            cat("FILE DOES NOT EXIST", file=stderr())
+            downloadAbsentFile('https://stringdb-static.org/download/protein.aliases.v11.0/9606.protein.aliases.v11.0.txt.gz', oD = strdb_file_folder)
+            downloadAbsentFile('https://stringdb-static.org/download/protein.links.v11.0/9606.protein.links.v11.0.txt.gz', oD = strdb_file_folder)
+            downloadAbsentFile('https://stringdb-static.org/download/protein.info.v11.0/9606.protein.info.v11.0.txt.gz', oD=strdb_file_folder)
          }
      } else if(NCBI_TAXO == 10090){
         strdb_file_folder <- paste(APP_DIR_redirect,"/genomes_info/mmu/",sep="")
-        if(!file.exists(paste(strdb_file_folder,"10090__protein_aliases_tf.tsv.gz", sep=""))){
-            print("FILE DOES NOT EXIST")
-            print(paste(strdb_file_folder,"10090__protein_aliases_tf.tsv.gz"))
-            downloadAbsentFile('http://string.uzh.ch/permanent/string/10/protein_aliases/10090__protein_aliases_tf.tsv.gz', oD = strdb_file_folder)
-            downloadAbsentFile('http://string.uzh.ch/permanent/string/10/protein_links/10090__protein_links.tsv.gz', oD = strdb_file_folder)
-            downloadAbsentFile('http://string.uzh.ch/permanent/string/10/proteins/10090__proteins.tsv.gz', oD=strdb_file_folder)
+        if(!file.exists(paste(strdb_file_folder,"10090.protein.aliases.v11.0.txt.gz", sep="/"))){
+            cat("FILE DOES NOT EXIST", file=stderr())
+            downloadAbsentFile('https://stringdb-static.org/download/protein.aliases.v11.0/10090.protein.aliases.v11.0.txt.gz', oD = strdb_file_folder)
+            downloadAbsentFile('https://stringdb-static.org/download/protein.links.v11.0/10090.protein.links.v11.0.txt.gz', oD = strdb_file_folder)
+            downloadAbsentFile('https://stringdb-static.org/download/protein.info.v11.0/10090.protein.info.v11.0.txt.gz', oD=strdb_file_folder)
          }
      } else{
         stop("Add necessary organism information.")
