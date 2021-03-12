@@ -471,7 +471,8 @@ function(request) {
                           span(uiOutput('textWithHTML')),
                           headerPanel(""),
                           switchInput(inputId = "runEnrichment", label = "Analyze"),
-                          style="background: #E8E8E8")
+                          style="background: #E8E8E8")#,
+                          #label=paste("Should the process finish and images not show, simply turn the toggle 'OFF' and then 'ON' to view results.")
                       ),
                       fluidRow(
                         box(

@@ -364,7 +364,8 @@ function(input, output, session) {
       # if sim data used or user chooses metadata
       print("Metadata toggle")
       metadata_input(TRUE)
-      
+      sra_input(FALSE)
+
       # Check format of metadata file
       if (!(any(grepl(
         "ID", colnames(sra_metadata_df), ignore.case = TRUE
@@ -404,6 +405,7 @@ function(input, output, session) {
     } else{
       print("SraRunTable toggle")
       sra_input(TRUE)
+      metadata_input(FALSE)
       
       # Check format of SraRunTable file
       if (!(any(grepl(
@@ -641,7 +643,7 @@ function(input, output, session) {
       system(command, intern = TRUE)
       
       # Return true for 'future' command
-      TRUE
+      #TRUE
     }
   
   # Plot HISAT2 alignment
@@ -692,7 +694,7 @@ function(input, output, session) {
       system(command, intern = TRUE)
       
       # Return true for 'future' command - to show results immediately
-      TRUE
+      #TRUE
     }
   
   # Plot Bowtie2 alignment
@@ -782,6 +784,8 @@ function(input, output, session) {
       paste(local_results_folder(),
             "/timeor/results/preprocess/fastqc/",
             sep = "")
+    
+    # Quality control (QC) check
     if (length(list.dirs(results_folder_qc)) == 1) {
       print("Calling QC script")
       qualityControl(results_folder_qc)
@@ -816,6 +820,7 @@ function(input, output, session) {
     #Move .fastq files into folders for processing
     fastq_dir <-
       paste(local_results_folder(), "/timeor/data/fastq/", sep = "")
+    
     if (length(list.dirs(fastq_dir)) == 1) {
       print("Calling script to organize .fastq files")
       fastq_files_into_folders()
@@ -849,6 +854,7 @@ function(input, output, session) {
       paste(local_results_folder(),
             "/timeor/results/preprocess/alignment/hisat2/",
             sep = "")
+    # Reactive values must be assigned to another variable for future to work
     local_dir <- local_results_folder()
     seq <- input$sequencing
     
@@ -859,9 +865,10 @@ function(input, output, session) {
       pattern = "bam"
     )) == 0) {
       print("Calling align HISAT2")
-      future({
-        alignHISAT2(results_folder_HISAT2, local_dir, seq)
-      }) %...>% alignHdone()
+      #future({
+      alignHISAT2(results_folder_HISAT2, local_dir, seq)
+      #}) %...>% 
+      alignHdone(TRUE)
     } else{
       print("Already aligned using HISAT2")
       alignHdone(TRUE)
@@ -928,9 +935,10 @@ function(input, output, session) {
       pattern = "bam"
     )) == 0) {
       print("Calling align Bowtie2")
-      future({
-        alignBowtie2(results_folder_Bowtie2, local_dir, seq)
-      }) %...>% alignBdone()
+      #future({
+      alignBowtie2(results_folder_Bowtie2, local_dir, seq)
+      #}) %...>% 
+      alignBdone(TRUE)
     } else{
       print("Already aligned using Bowtie2")
       alignBdone(TRUE)

@@ -100,9 +100,9 @@ for dir in $INPUT_DIR/*/*
                    ((i = i + 1))
 
                     # If number of processors reached, add wait to form a batch that will finish, and then process the next batch
-                    if (( ${i}%${num_files}==0 )); then # had been NUM_COMMANDS
-                        echo "wait" >> $COMMAND_SCRIPT
-                    fi 
+                    # if (( ${i}%${num_files}==0 )); then # had been NUM_COMMANDS
+                    #     echo "wait" >> $COMMAND_SCRIPT
+                    # fi 
                     fileName=$(echo `basename $fastq`) # get filename from .fq.gz
                     replicateFolder=$(echo `basename $(dirname $fastq)`)
                     sampleFolder=$(echo `basename $(dirname $(dirname $fastq))`)
@@ -116,7 +116,7 @@ for dir in $INPUT_DIR/*/*
                     # Writing Bowtie2 command to a file, followed by .bam creation and sorting
                     echo "Adding ${fileName} to run_Bowtie2.txt script"
                     echo " "                    
-                    echo "(bowtie2 -p ${NUM_PROCESSORS} -x $genome -U $fastq --un-gz $folderName/out_un.sam.gz --al-gz $folderName/out_al.sam.gz --met-file $folderName/out_met-file.tsv -S $folderName/out.sam 2> $folderName/summaryfile.txt; samtools view -bS $folderName/out.sam > $folderName/out.bam; rm -rf $folderName/out.sam; samtools sort $folderName/out.bam -o $folderName/out.sorted.bam; rm -rf $folderName/out.bam) &" >> $COMMAND_SCRIPT  
+                    echo "bowtie2 -p ${NUM_PROCESSORS} -x $genome -U $fastq -S $folderName/out.sam 2> $folderName/summaryfile.txt; samtools view -bS $folderName/out.sam > $folderName/out.bam; rm -rf $folderName/out.sam; samtools sort $folderName/out.bam -o $folderName/out.sorted.bam; rm -rf $folderName/out.bam" >> $COMMAND_SCRIPT  
 
                     echo "Outputting results to $folderName"
            done
@@ -132,9 +132,9 @@ for dir in $INPUT_DIR/*/*
                     ((i = i + 1))
 
                     # if number of processors reached, add wait to form a batch that will finish, and then process the next batch
-                    if (( ${i}%${num_files}==0 )); then # had been NUM_COMMANDS
-                        echo "wait" >> $COMMAND_SCRIPT
-                    fi 
+                    # if (( ${i}%${num_files}==0 )); then # had been NUM_COMMANDS
+                    #     echo "wait" >> $COMMAND_SCRIPT
+                    # fi 
 
                     # Generating the Bowtie2 command for the next R1 and R2
                     fileName=$(echo `basename $R1`) # get filename from .fq.gz
@@ -153,14 +153,14 @@ for dir in $INPUT_DIR/*/*
                     # Writing Bowtie2 command to a file, followed by .bam creation and sorting
                     echo "Adding ${fileName} to run_Bowtie2.txt script"
                     echo " "
-                    echo "(bowtie2 -p ${NUM_PROCESSORS} -x $genome -1 $R1 -2 $R2 --un-conc-gz $folderName/out_unconc.sam.gz --al-conc-gz $folderName/out_al-conc.sam.gz --met-file $folderName/out_met-file.tsv -S $folderName/out.sam 2> $folderName/summaryfile.txt; samtools view -bS $folderName/out.sam > $folderName/out.bam; rm -rf $folderName/out.sam; samtools sort $folderName/out.bam -o $folderName/out.sorted.bam; rm -rf $folderName/out.bam) &" >> $COMMAND_SCRIPT  
+                    echo "bowtie2 -p ${NUM_PROCESSORS} -x $genome -1 $R1 -2 $R2 -S $folderName/out.sam 2> $folderName/summaryfile.txt; samtools view -bS $folderName/out.sam > $folderName/out.bam; rm -rf $folderName/out.sam; samtools sort $folderName/out.bam -o $folderName/out.sorted.bam; rm -rf $folderName/out.bam" >> $COMMAND_SCRIPT  
 
 
             done
        fi
     fi
 done
-echo "wait" >> $COMMAND_SCRIPT
+#echo "wait" >> $COMMAND_SCRIPT
 
 # Running command_script (.txt file saved in $RESULTS/_DIR)
 echo $COMMAND_SCRIPT
