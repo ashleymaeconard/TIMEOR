@@ -163,4 +163,4 @@ done
 #echo "wait" >> $COMMAND_SCRIPT
 
 # Running command_script (.txt file saved in $RESULTS/_DIR)
-echo $COMMAND_SCRIPT
+bash $COMMAND_SCRIPT
