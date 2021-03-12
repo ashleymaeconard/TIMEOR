@@ -118,7 +118,7 @@ save_stringdb_network_n_table <- function(s_t, IO){
 
 main <- function(){
     
-    APP_DIR_redirect <- "~/Desktop/"
+    APP_DIR_redirect <- "/srv/"
     # Getting alias files if needed
     if(NCBI_TAXO == 7227){
         strdb_file_folder <- paste(APP_DIR_redirect,"/genomes_info/dme/",sep="")

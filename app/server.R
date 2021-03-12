@@ -400,7 +400,7 @@ function(input, output, session) {
         return(metadata_df())
       }
       
-      # If SraRunTable used
+    # If SraRunTable used
     } else{
       print("SraRunTable toggle")
       sra_input(TRUE)
@@ -527,10 +527,11 @@ function(input, output, session) {
           } else if (sra_input()) {
             paste0(
               "<p> <br>",
-              "Raw data will be retrieved, quality checked, and aligned. 
+              "Raw are being retrieved, quality checked, and aligned. 
               Choose the alignment method to then generate the read count matrix (below).",
               "</p>"
             )
+            
           } else{
             shinyalert(
               "Please follow 'Search and Retrieve' steps 4 and 5).",
@@ -736,6 +737,17 @@ function(input, output, session) {
     TRUE
   }
   
+  # print_first_tab_running <- function(){
+  #   output$dataProcessType <- renderText({
+  #             paste0(
+  #               "<p> <br>",
+  #               "Raw are being retrieved, quality checked, and aligned. 
+  #               Choose the alignment method to then generate the read count matrix (below).",
+  #               "</p>"
+  #           )})
+  #   TRUE
+  # }
+          
   # If raw data are to be processed, get .fastq files
   observeEvent(run_process_raw(), {
     req(sra_input())
@@ -745,6 +757,8 @@ function(input, output, session) {
     folder_fastQ <-
       paste(local_results_folder(), "/timeor/data/fastq/", sep = "")
     if (length(list.files(folder_fastQ, pattern = ".fastq")) == 0) {
+     # write("!!!! HERE !!!!", stderr())
+     # print_first_tab_running()
       print("Calling fastq-dump")
       getfastQFiles(folder_fastQ)
     } else{
@@ -1986,6 +2000,7 @@ function(input, output, session) {
         sep = ""
       )
     pv_multi_png <-
+      #Sys.glob(file.path(pv_multi_folder,"/", input$organism, "*.png"))
       Sys.glob(file.path(pv_multi_folder, "/*pathview.multi*png")) # get Pathview multi output png
     print("pv_multi_png")
     print(pv_multi_png)
@@ -2210,7 +2225,7 @@ function(input, output, session) {
       )
     command_top_tfs <-
       paste("Rscript",
-            avg_prof_script,
+            top_tfs_script,
             res_folder,
             input$organism,
             3,

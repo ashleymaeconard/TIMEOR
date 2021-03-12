@@ -100,8 +100,9 @@ plotPathway <- function(gl, exper, pathwayName, subdi, num_g_clust){
     
     if(!length(pathwayID)){
         print(paste("Pathway ID is empty for", pathwayName, sep=" "))
+        return(FALSE) # return true for pathway ID
     } else {
-
+        
         # Generate www folder within each cluster subdir for png rendering in R Shiny
         wwwsvg_subdirec <- file.path(subdi, "www") 
         if (!dir.exists(wwwsvg_subdirec)){
@@ -110,19 +111,17 @@ plotPathway <- function(gl, exper, pathwayName, subdi, num_g_clust){
             cat(wwwsvg_subdirec, "www/ subdirectory for *.png multi-timepoint pathway plot exists.")
         }
 
-        # Plotting pathway (no significance limit because searching based on pvalue thresholded clusterProfiler GO terms)
-        pathview(gene.data = gl,
+        # Plotting pathway (no significance limit because searching based on pvalue thresholded clusterProfiler GO terms)        
+        setwd(wwwsvg_subdirec)
+        out <- pathview(gene.data = gl,
                             pathway.id = paste(ORGANISM,pathwayID[,1],sep=""),
                             species = ORGANISM, 
                             out.suffix = paste(num_g_clust,"_pathview",sep=""),
-                            kegg.native=TRUE, 
-                            kegg.dir=wwwsvg_subdirec)
-        
-        # Moving multiple timepoint automatic output from Pathview to correct output folder 
-        pathview_higlighted_genes_file_name <- paste(paste(ORGANISM,pathwayID[,1],sep=""),paste(num_g_clust,"pathview.multi.png",sep="_"),sep=".")
-        file.copy(paste(getwd(),pathview_higlighted_genes_file_name,sep="/" ),  
-                  paste(wwwsvg_subdirec, pathview_higlighted_genes_file_name, sep="/"))
-        file.remove(paste(getwd(),pathview_higlighted_genes_file_name,sep="/" ))
+                            kegg.native=TRUE)
+        pathview_highlighted_genes_file_name <- paste(paste(ORGANISM,pathwayID[,1],sep=""),paste(num_g_clust,"pathview.multi.png",sep="_"),sep=".")
+        pathview_all_genes_file_name <- paste(ORGANISM,pathwayID[,1],".png",sep="")
+        pathview_xml_file_name <- paste(ORGANISM,pathwayID[,1],".xml",sep="")
+        return(TRUE) # return true for pathway ID
     }
 }
 
@@ -177,8 +176,6 @@ generate_plots <- function(egoo, gl, ex, type_enrich, outdir, num_gene_cluster){
         plt_cnet_cir <- cnetplot(egoo, foldChange=gl, circular = TRUE, categorySize="pvalue", colorEdge = TRUE)
         plt_concept <- plot_grid(plt_cnet, plt_cnet_cir, ncol=2)
         print(plt_concept)
-        dev.off()
-        dev.off()
         dev.off()
 
         # Plotting clusterProfiler phylogeny plot (if there is more than 1 enriched GO term)
