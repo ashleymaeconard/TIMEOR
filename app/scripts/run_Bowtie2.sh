@@ -53,7 +53,7 @@ echo "Number of input files: " $num_files
 #    fi
 #fi
 
-NUM_PROCESSORS=1
+NUM_PROCESSORS=4
 NUM_COMMANDS=1
 
 # Checking to see if results/bowtie2/ directory exists
