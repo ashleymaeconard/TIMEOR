@@ -106,7 +106,7 @@ function(input, output, session) {
               
               This will guide you through the 'Process Raw Data' tab demo.
               
-              This website is free and open for everyone.",
+              This website is free and open for everyone!",
             type = "info"
             )
 
@@ -529,7 +529,7 @@ function(input, output, session) {
           } else if (sra_input()) {
             paste0(
               "<p> <br>",
-              "Raw are being retrieved, quality checked, and aligned. 
+              "Raw are being retrieved, quality checked, and aligned. Green checks will appear on left.
               Choose the alignment method to then generate the read count matrix (below).",
               "</p>"
             )
@@ -718,16 +718,15 @@ function(input, output, session) {
   
   # Run HTSeq
   genCountMatrix <- function(align_folder, htseq_folder) {
-    print("aaRunning command to generate count matrix from chosen alignment method")
+    write("Running command to generate count matrix from chosen alignment method", stderr())
     print(align_folder)
-    print(organism_ad())
+    organism_ad(input$organism)
     
     # Count matrices created for each sample
     script <- paste(app_dir, "scripts/run_HTSeq.sh", sep = "/")
     command <- paste(script, align_folder, organism_ad(), app_dir)
     
     system(command, intern = TRUE)
-    
     
     # All count matrices merged for all samples
     script2 <-
@@ -736,7 +735,7 @@ function(input, output, session) {
     system(command2, intern = TRUE)
     
     # Return true for 'future' command - to return results immediately
-    TRUE
+    #TRUE
   }
   
   # print_first_tab_running <- function(){
@@ -750,11 +749,21 @@ function(input, output, session) {
   #   TRUE
   # }
           
+  # observeEvent(input$run_adaptive_defaults, {
+  #   req(real_demo_data())
+    
+  #     }
+
   # If raw data are to be processed, get .fastq files
   observeEvent(run_process_raw(), {
     req(sra_input())
     req(input$run_adaptive_defaults)
-    
+    shinyalert("Raw are being...",
+              "retrieved, quality checked, and aligned. Green checks will appear on left.
+              Choose the alignment method to then generate the read count matrix (below).",
+
+                type = "info"
+              )
     # Checking for .fastq files
     folder_fastQ <-
       paste(local_results_folder(), "/timeor/data/fastq/", sep = "")
@@ -864,13 +873,13 @@ function(input, output, session) {
       recursive = "TRUE",
       pattern = "bam"
     )) == 0) {
-      print("Calling align HISAT2")
+      write("Calling align HISAT2", stderr())
       #future({
       alignHISAT2(results_folder_HISAT2, local_dir, seq)
       #}) %...>% 
       alignHdone(TRUE)
     } else{
-      print("Already aligned using HISAT2")
+      write("Already aligned using HISAT2", stderr())
       alignHdone(TRUE)
     }
     
@@ -881,12 +890,12 @@ function(input, output, session) {
             "/HISAT2_plot_alignment.svg",
             sep = "")
     if (!file.exists(align_file)) {
-      print("Calling plot HISAT2 alignments")
+      write("Calling plot HISAT2 alignments", stderr())
       future({
         plotAlignHISAT2(results_folder_HISAT2, seq)
       }) %...>% plotAlignH()
     } else{
-      print("Already plotted HISAT2 alignments")
+      write("Already plotted HISAT2 alignments", stderr())
       plotAlignH(TRUE)
     }
     
@@ -934,13 +943,13 @@ function(input, output, session) {
       recursive = "TRUE",
       pattern = "bam"
     )) == 0) {
-      print("Calling align Bowtie2")
+      write("Calling align Bowtie2", stderr())
       #future({
       alignBowtie2(results_folder_Bowtie2, local_dir, seq)
       #}) %...>% 
       alignBdone(TRUE)
     } else{
-      print("Already aligned using Bowtie2")
+      write("Already aligned using Bowtie2", stderr())
       alignBdone(TRUE)
     }
     
@@ -956,7 +965,7 @@ function(input, output, session) {
         plotAlignBowtie2(results_folder_Bowtie2, seq)
       }) %...>% plotAlignB()
     } else{
-      print("Already plotted Bowtie2 alignments")
+      write("Already plotted Bowtie2 alignments", stderr())
       plotAlignB(TRUE)
     }
     
@@ -1016,20 +1025,33 @@ function(input, output, session) {
   # Checking to run HTSeq only once 'Generate Count Matrix' button is enabled
   observeEvent(input$runGenCountMat, {
     req(input$runGenCountMat)
-    shinyalert("Quick start:",
-                  "You completed the 'Process Raw Data' tab demo.
-                  
-                  TIMEOR accepts 2 input types: 
-                  (1) raw .fastq files
-                  (2) read count matrix. 
-              
-                  For (2) in 'Example Data' (side-bar) under
+    if(real_demo_data()){ # if using demo data for preprocessing tab
+      shinyalert("Quick start:",
+                    "You completed the 'Process Raw Data' tab demo.
+                    
+                    TIMEOR accepts 2 input types: 
+                    (1) raw .fastq files
+                    (2) read count matrix. 
+                
+                    For (2) in 'Example Data' (side-bar) under
 
-                  'Load count matrix' click 'Metadata & read count file' button. 
-                  
-                  This will guide you through the rest of the full method demo.",
-                  type = "info"
-                )
+                    'Load count matrix' click 'Metadata & read count file' button. 
+                    
+                    This will guide you through the rest of the full method demo.",
+                    type = "info"
+                  )
+      }else{
+        shinyalert("Quick start:",
+                    "You completed the 'Process Raw Data' tab.
+                    
+                    TIMEOR is producing the merged read count 
+                    matrix. When it is finished, you will see 
+                    the green check. Then proceed to the next 
+                    tab 'Process Count Matrix'.",
+
+                    type = "info"
+                  )
+      }
 
     # 'Generate count matrix' button must be pressed
     results_folder_alignment <-
@@ -1051,12 +1073,13 @@ function(input, output, session) {
       recursive = "TRUE",
       pattern = "htseq"
     )) == 0) {
-      print("Calling count matrix script")
-      future({
-        genCountMatrix(results_folder_alignment, results_folder_htseq)
-      }) %...>% countMatDone()
+      write("Calling count matrix script", stderr())
+      #future({
+      genCountMatrix(results_folder_alignment, results_folder_htseq)
+      #}) %...>% 
+      countMatDone(TRUE)
     } else{
-      print("Already created a count matrix")
+      write("Already created a count matrix", stderr())
       countMatDone(TRUE)
     }
     
@@ -1095,6 +1118,24 @@ function(input, output, session) {
           row.names = "ID"
         )
       )
+    } else if(countMatDone()){
+      write("here we go!",stderr())
+      countMatrix_filepath(paste(
+        local_results_folder(),
+        "/timeor/results/preprocess/count_matrix/htseq/merged_htseq.csv",
+        sep = ""
+      ))
+      write("countMatrix:", stderr())
+      write(countMatrix_filepath(), stderr())
+      countMatrix_df(
+        read.table(
+          file = countMatrix_filepath(),
+          sep = input$sep,
+          header = input$header,
+          dec = ",",
+          row.names = "ID"
+        )
+      )
     } else{
       print("else - not using simulation")
       req(input$count_mat)
@@ -1110,19 +1151,19 @@ function(input, output, session) {
           header = input$header,
           dec = ","
         )
-      if (!(any(grepl("ID", colnames(count_df))))) {
-        shinyalert(
-          "Please check Count Matrix.",
-          "1) Make sure 1st column is unique identifiers (IDs), and says 'ID'.
-           2) Make sure metadata sample names match other column names",
-          type = "error"
-        )
-        
-        # Make ID the rownames and remove the column ID. Save df to reactive countMatrix_df
-      } else{
-        rownames(count_df) <- count_df$ID
-        countMatrix_df(count_df[, !(names(count_df) %in% "ID")])
-      }
+        if (!(any(grepl("ID", colnames(count_df))))) {
+          shinyalert(
+            "Please check Count Matrix.",
+            "1) Make sure 1st column is unique identifiers (IDs), and says 'ID'.
+            2) Make sure metadata sample names match other column names",
+            type = "error"
+          )
+          
+          # Make ID the rownames and remove the column ID. Save df to reactive countMatrix_df
+        } else{
+          rownames(count_df) <- count_df$ID
+          countMatrix_df(count_df[, !(names(count_df) %in% "ID")])
+        }
     }
     if (is.null(countMatrix_df())) {
       return()

@@ -51,12 +51,12 @@ add_to_info_table <- function(gene_inters, str_db, pr_table, pval){
         #print(paste("gene_id_A",gene_inters))
         
         # Fetching the Pubmed articles that support each interaction and adds that in a new column "pubmed_ids"
-        pubmed_arti_list <- as.list(str_db$get_pubmed_interaction(gene_id_A, gene_id_B))
+        #pubmed_arti_list <- as.list(str_db$get_pubmed_interaction(gene_id_A, gene_id_B))
         if(length(pubmed_arti_list!=0)){
-            gene_inters[row, "pubmed_ids"] <- toString(list(pubmed_arti_list))
+            gene_inters[row, "pubmed_ids"] <- "NA"#toString(list(pubmed_arti_list))
             #print(paste("pubmed_ids",gene_inters))
         } else{
-            gene_inters[row, "pubmed_ids"] <- toString(list("NA"))
+            gene_inters[row, "pubmed_ids"] <- "NA" #toString(list("NA"))
             #print(paste("pubmed_ids NA",gene_inters))
         } 
     }

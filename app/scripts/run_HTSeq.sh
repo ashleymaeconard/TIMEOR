@@ -49,7 +49,7 @@ echo "Number of input files: " $num_files
 #    fi
 #fi
 
-NUM_PROCESSORS=1
+NUM_PROCESSORS=4
 NUM_COMMANDS=1
 
 if [ -d "$RESULTS_DIR" ]; then
@@ -68,7 +68,7 @@ if [ -f ${COMMAND_SCRIPT} ]; then
 fi
 
 # Getting genome    
-genome_HTSeq=${APP_DIR}"/../genomes_info/$ORGANISM/genes.gtf"
+genome_HTSeq="/srv/genomes_info/$ORGANISM/genes.gtf"
 
 # Setting the counter for the number of prcesses to run in a batch
 START=0
@@ -90,9 +90,9 @@ for dir in $INPUT_DIR/*/*
                 ((i = i + 1))
 
                 # If number of processors reached, add wait to form a batch that will finish, and then process the next batch
-                if (( ${i}%${num_files}==0 )); then # was NUM_PROCESSORS
-                    echo "wait" >> $COMMAND_SCRIPT
-                fi 
+                # if (( ${i}%${num_files}==0 )); then # was NUM_PROCESSORS
+                #     echo "wait" >> $COMMAND_SCRIPT
+                # fi 
                 fileName=$(echo `basename $fastq`) # get filename from out.sorted.bam                                
                 replicateFolder=$(echo `basename $(dirname $fastq)`)
                 sampleFolder=$(echo `basename $(dirname $(dirname $fastq))`)
@@ -109,11 +109,11 @@ for dir in $INPUT_DIR/*/*
                 # write HTSeq command to a file, followed by .bam creation and sorting
                 echo "Adding ${fileName} to run_HTSeq.txt script"
                 echo " "                    
-                echo "(htseq-count -f bam -r pos -i gene_id $input_folderName/*out.sorted.bam $genome_HTSeq > $folderName/htseq_counts) &">> $COMMAND_SCRIPT
+                echo "htseq-count -f bam -r pos -i gene_id $input_folderName/*out.sorted.bam $genome_HTSeq > $folderName/htseq_counts">> $COMMAND_SCRIPT
         done
     fi
 done
-echo "wait" >> $COMMAND_SCRIPT
+#echo "wait" >> $COMMAND_SCRIPT
 
 # run command_script (.txt file saved in $RESULTS_DIR)
 bash $COMMAND_SCRIPT

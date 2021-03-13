@@ -428,8 +428,8 @@ just split. There are 20 steps.
 
 11.  Wait to view any enriched gene ontology (GO) terms (Molecular
     Function, Biological Process, or Cellular Component), pathway,
-    network, and/or motif analysis. **NOTE** you may download the
-    interactive motif results for viewing.
+    network, and/or motif analysis. **NOTE** You may download the
+    interactive motif results for viewing. **NOTE** Should the process finish and images not show, simply turn the toggle "OFF" and then "ON" to view results.
 
 12.  Toggle the “Analyze” button to “OFF” to choose another gene set, and
     repeat steps 9-12.
