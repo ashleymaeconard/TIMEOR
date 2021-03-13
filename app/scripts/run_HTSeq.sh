@@ -49,7 +49,7 @@ echo "Number of input files: " $num_files
 #    fi
 #fi
 
-NUM_PROCESSORS=4
+NUM_PROCESSORS=6
 NUM_COMMANDS=1
 
 if [ -d "$RESULTS_DIR" ]; then

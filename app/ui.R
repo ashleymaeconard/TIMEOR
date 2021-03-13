@@ -26,6 +26,15 @@ function(request) {
   
   # TIMEOR UI page
   fluidPage(
+    tags$head(HTML("\n<!-- Global site tag (gtag.js) - Google Analytics -->
+                  <script async src=\"https://www.googletagmanager.com/gtag/js?id=G-D4Z8R0914Q\"></script>
+                  <script>
+                    window.dataLayer = window.dataLayer || [];
+                    function gtag(){dataLayer.push(arguments);}
+                    gtag('js', new Date());
+
+                    gtag('config', 'G-D4Z8R0914Q');
+                  </script>")),
     tags$head(tags$script(HTML("Shiny.addCustomMessageHandler ('print',function (message) {
               $('#'+message.selector).html(message.html);
               console.log(message);});"))),

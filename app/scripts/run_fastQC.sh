@@ -21,7 +21,7 @@ num_files=$(echo `ls -1q ${1}/*.fastq* | wc -l`)
 #else
 #	NUM_PROCESSORS=$num_files
 #fi
-NUM_PROCESSORS=4
+NUM_PROCESSORS=6
 
 # Checking to see if output directory exists
 mkdir -p $2

@@ -53,7 +53,7 @@ echo "Number of input .fastq files: " $num_files
 #    fi
 #fi
 
-NUM_PROCESSORS=4 # -p flag for hisat2
+NUM_PROCESSORS=6 # -p flag for hisat2
 NUM_COMMANDS=1 # number of hisat2 commands
 
 # Checking to see if results/HISAT2/ directory exists
