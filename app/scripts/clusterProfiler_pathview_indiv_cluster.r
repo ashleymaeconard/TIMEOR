@@ -93,14 +93,16 @@ mapNameToPathwayID <- function(organism, enriched_name) { # function alterned fr
 
 plotPathway <- function(gl, exper, pathwayName, subdi, num_g_clust){
     print("Assessing pathway enrichment.")
+
     # Getting pathway ID
     pathwayID <- mapNameToPathwayID(ORGANISM,pathwayName)
     print(paste("Fetched pathway ID:", pathwayID, sep=" "))
     
     if(!length(pathwayID)){
         print(paste("Pathway ID is empty for", pathwayName, sep=" "))
+        return(FALSE) # return true for pathway ID
     } else {
-
+        
         # Generate www folder within each cluster subdir for png rendering in R Shiny
         wwwsvg_subdirec <- file.path(subdi, "www") 
         if (!dir.exists(wwwsvg_subdirec)){
@@ -109,24 +111,17 @@ plotPathway <- function(gl, exper, pathwayName, subdi, num_g_clust){
             cat(wwwsvg_subdirec, "www/ subdirectory for *.png multi-timepoint pathway plot exists.")
         }
 
-        # Plotting pathway (no significance limit because searching based on pvalue thresholded clusterProfiler GO terms)
-        pathview(gene.data = gl,
+        # Plotting pathway (no significance limit because searching based on pvalue thresholded clusterProfiler GO terms)        
+        setwd(wwwsvg_subdirec)
+        out <- pathview(gene.data = gl,
                             pathway.id = paste(ORGANISM,pathwayID[,1],sep=""),
                             species = ORGANISM, 
-                            out.suffix = paste(num_g_clust,"_pathview",sep="") )
-        
-        # Moving automatic output from Pathview to correct output folder 
-        pathview_higlighted_genes_file_name <- paste(paste(ORGANISM,pathwayID[,1],sep=""),paste(num_g_clust,"pathview.multi.png",sep="_"),sep=".")
-        file.rename(paste(getwd(),pathview_higlighted_genes_file_name,sep="/" ),  
-                    paste(wwwsvg_subdirec, pathview_higlighted_genes_file_name, sep="/"))
-
+                            out.suffix = paste(num_g_clust,"_pathview",sep=""),
+                            kegg.native=TRUE)
+        pathview_highlighted_genes_file_name <- paste(paste(ORGANISM,pathwayID[,1],sep=""),paste(num_g_clust,"pathview.multi.png",sep="_"),sep=".")
         pathview_all_genes_file_name <- paste(ORGANISM,pathwayID[,1],".png",sep="")
-        file.rename(paste(getwd(),pathview_all_genes_file_name,sep="/" ),  
-                    paste(subdi, pathview_all_genes_file_name, sep="/"))
-
         pathview_xml_file_name <- paste(ORGANISM,pathwayID[,1],".xml",sep="")
-        file.rename(paste(getwd(),pathview_xml_file_name,sep="/" ),  
-                    paste(subdi, pathview_xml_file_name, sep="/"))
+        return(TRUE) # return true for pathway ID
     }
 }
 

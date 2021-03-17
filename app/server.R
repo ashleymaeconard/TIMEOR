@@ -41,7 +41,7 @@ source(paste(app_dir, "/global.R", sep = ""))
 function(input, output, session) {
   # Setting all reactive values
   # Data input
-  local_results_folder  = reactiveVal(tempdir()) # tempdir() # e.g. "/ltmp/aconard/tmp/"
+  local_results_folder  = reactiveVal(tempdir()) # tempdir()
   sim_demo_data         = reactiveVal(FALSE) # use simulated (demo) data
   real_demo_data        = reactiveVal(FALSE) # use real (demo) data
   user_input_data       = reactiveVal(FALSE) # user inputs data
@@ -52,7 +52,7 @@ function(input, output, session) {
   norm_corr_countMatrix_filepath = reactiveVal() # normalized and corrected count matrix filepath
   sra_input             = reactiveVal(FALSE) # if sra_input = T, user input raw data
   metadata_input        = reactiveVal(FALSE) # if metadata_input = T, user input count matrix
-  
+
   # Adaptive defaults
   organism_ad           = reactiveVal()
   sequencing_ad         = reactiveVal()
@@ -71,9 +71,7 @@ function(input, output, session) {
   fastqOrgDone          = reactiveVal(FALSE)
   alignHdone            = reactiveVal(FALSE)
   plotAlignH            = reactiveVal(FALSE)
-  run_Bowtie            = reactive({
-    list(qcDone(), alignHdone())
-  })
+  run_Bowtie            = reactive({list(qcDone(), alignHdone())})
   alignBdone            = reactiveVal(FALSE)
   plotAlignB            = reactiveVal(FALSE)
   whichAligner          = reactiveVal('hisat2')
@@ -106,7 +104,9 @@ function(input, output, session) {
 
               'Load raw data' click 'SraRunTable & .fastq files' button.
               
-              This will guide you through the 'Process Raw Data' tab demo.",
+              This will guide you through the 'Process Raw Data' tab demo.
+              
+              This website is free and open for everyone!",
             type = "info"
             )
 
@@ -364,7 +364,8 @@ function(input, output, session) {
       # if sim data used or user chooses metadata
       print("Metadata toggle")
       metadata_input(TRUE)
-      
+      sra_input(FALSE)
+
       # Check format of metadata file
       if (!(any(grepl(
         "ID", colnames(sra_metadata_df), ignore.case = TRUE
@@ -400,10 +401,11 @@ function(input, output, session) {
         return(metadata_df())
       }
       
-      # If SraRunTable used
+    # If SraRunTable used
     } else{
       print("SraRunTable toggle")
       sra_input(TRUE)
+      metadata_input(FALSE)
       
       # Check format of SraRunTable file
       if (!(any(grepl(
@@ -527,10 +529,11 @@ function(input, output, session) {
           } else if (sra_input()) {
             paste0(
               "<p> <br>",
-              "Raw data will be retrieved, quality checked, and aligned. 
+              "Raw are being retrieved, quality checked, and aligned. Green checks will appear on left.
               Choose the alignment method to then generate the read count matrix (below).",
               "</p>"
             )
+            
           } else{
             shinyalert(
               "Please follow 'Search and Retrieve' steps 4 and 5).",
@@ -551,6 +554,7 @@ function(input, output, session) {
   
   # Get FastQ files
   getfastQFiles <- function(folder, updateProgress = NULL) {
+
     print("Running command to get .fastq files")
     
     script <-
@@ -561,15 +565,17 @@ function(input, output, session) {
             sep = "")
     command <- paste(script, folder, accessionList)
     system(command, intern = TRUE)
+    ## returning too soon
     showNotification("All .fastq files saved in personal analysis session folder.")
     
     retrieveDone(TRUE)
   }
   
   # Performing quality control
-  qualityControl <-
-    function(qc_results_folder, updateProgress = NULL) {
-      print("Running command perform QC")
+  qualityControl <- function(qc_results_folder, updateProgress = NULL) {
+      req(retrieveDone())
+      
+      print("Running command to perform QC.")
       
       script <-  paste(app_dir, "/scripts/run_fastQC.sh", sep = "")
       fastQDir <-
@@ -637,7 +643,7 @@ function(input, output, session) {
       system(command, intern = TRUE)
       
       # Return true for 'future' command
-      TRUE
+      #TRUE
     }
   
   # Plot HISAT2 alignment
@@ -688,7 +694,7 @@ function(input, output, session) {
       system(command, intern = TRUE)
       
       # Return true for 'future' command - to show results immediately
-      TRUE
+      #TRUE
     }
   
   # Plot Bowtie2 alignment
@@ -712,16 +718,15 @@ function(input, output, session) {
   
   # Run HTSeq
   genCountMatrix <- function(align_folder, htseq_folder) {
-    print("aaRunning command to generate count matrix from chosen alignment method")
+    write("Running command to generate count matrix from chosen alignment method", stderr())
     print(align_folder)
-    print(organism_ad())
+    organism_ad(input$organism)
     
     # Count matrices created for each sample
     script <- paste(app_dir, "scripts/run_HTSeq.sh", sep = "/")
     command <- paste(script, align_folder, organism_ad(), app_dir)
     
     system(command, intern = TRUE)
-    
     
     # All count matrices merged for all samples
     script2 <-
@@ -730,18 +735,41 @@ function(input, output, session) {
     system(command2, intern = TRUE)
     
     # Return true for 'future' command - to return results immediately
-    TRUE
+    #TRUE
   }
   
+  # print_first_tab_running <- function(){
+  #   output$dataProcessType <- renderText({
+  #             paste0(
+  #               "<p> <br>",
+  #               "Raw are being retrieved, quality checked, and aligned. 
+  #               Choose the alignment method to then generate the read count matrix (below).",
+  #               "</p>"
+  #           )})
+  #   TRUE
+  # }
+          
+  # observeEvent(input$run_adaptive_defaults, {
+  #   req(real_demo_data())
+    
+  #     }
+
   # If raw data are to be processed, get .fastq files
   observeEvent(run_process_raw(), {
     req(sra_input())
     req(input$run_adaptive_defaults)
-    
+    shinyalert("Raw are being...",
+              "retrieved, quality checked, and aligned. Green checks will appear on left.
+              Choose the alignment method to then generate the read count matrix (below).",
+
+                type = "info"
+              )
     # Checking for .fastq files
     folder_fastQ <-
       paste(local_results_folder(), "/timeor/data/fastq/", sep = "")
     if (length(list.files(folder_fastQ, pattern = ".fastq")) == 0) {
+     # write("!!!! HERE !!!!", stderr())
+     # print_first_tab_running()
       print("Calling fastq-dump")
       getfastQFiles(folder_fastQ)
     } else{
@@ -765,6 +793,8 @@ function(input, output, session) {
       paste(local_results_folder(),
             "/timeor/results/preprocess/fastqc/",
             sep = "")
+    
+    # Quality control (QC) check
     if (length(list.dirs(results_folder_qc)) == 1) {
       print("Calling QC script")
       qualityControl(results_folder_qc)
@@ -799,6 +829,7 @@ function(input, output, session) {
     #Move .fastq files into folders for processing
     fastq_dir <-
       paste(local_results_folder(), "/timeor/data/fastq/", sep = "")
+    
     if (length(list.dirs(fastq_dir)) == 1) {
       print("Calling script to organize .fastq files")
       fastq_files_into_folders()
@@ -832,6 +863,7 @@ function(input, output, session) {
       paste(local_results_folder(),
             "/timeor/results/preprocess/alignment/hisat2/",
             sep = "")
+    # Reactive values must be assigned to another variable for future to work
     local_dir <- local_results_folder()
     seq <- input$sequencing
     
@@ -841,12 +873,13 @@ function(input, output, session) {
       recursive = "TRUE",
       pattern = "bam"
     )) == 0) {
-      print("Calling align HISAT2")
-      future({
-        alignHISAT2(results_folder_HISAT2, local_dir, seq)
-      }) %...>% alignHdone()
+      write("Calling align HISAT2", stderr())
+      #future({
+      alignHISAT2(results_folder_HISAT2, local_dir, seq)
+      #}) %...>% 
+      alignHdone(TRUE)
     } else{
-      print("Already aligned using HISAT2")
+      write("Already aligned using HISAT2", stderr())
       alignHdone(TRUE)
     }
     
@@ -857,12 +890,12 @@ function(input, output, session) {
             "/HISAT2_plot_alignment.svg",
             sep = "")
     if (!file.exists(align_file)) {
-      print("Calling plot HISAT2 alignments")
+      write("Calling plot HISAT2 alignments", stderr())
       future({
         plotAlignHISAT2(results_folder_HISAT2, seq)
       }) %...>% plotAlignH()
     } else{
-      print("Already plotted HISAT2 alignments")
+      write("Already plotted HISAT2 alignments", stderr())
       plotAlignH(TRUE)
     }
     
@@ -910,12 +943,13 @@ function(input, output, session) {
       recursive = "TRUE",
       pattern = "bam"
     )) == 0) {
-      print("Calling align Bowtie2")
-      future({
-        alignBowtie2(results_folder_Bowtie2, local_dir, seq)
-      }) %...>% alignBdone()
+      write("Calling align Bowtie2", stderr())
+      #future({
+      alignBowtie2(results_folder_Bowtie2, local_dir, seq)
+      #}) %...>% 
+      alignBdone(TRUE)
     } else{
-      print("Already aligned using Bowtie2")
+      write("Already aligned using Bowtie2", stderr())
       alignBdone(TRUE)
     }
     
@@ -931,7 +965,7 @@ function(input, output, session) {
         plotAlignBowtie2(results_folder_Bowtie2, seq)
       }) %...>% plotAlignB()
     } else{
-      print("Already plotted Bowtie2 alignments")
+      write("Already plotted Bowtie2 alignments", stderr())
       plotAlignB(TRUE)
     }
     
@@ -991,20 +1025,33 @@ function(input, output, session) {
   # Checking to run HTSeq only once 'Generate Count Matrix' button is enabled
   observeEvent(input$runGenCountMat, {
     req(input$runGenCountMat)
-    shinyalert("Quick start:",
-                  "You completed the 'Process Raw Data' tab demo.
-                  
-                  TIMEOR accepts 2 input types: 
-                  (1) raw .fastq files
-                  (2) read count matrix. 
-              
-                  For (2) in 'Example Data' (side-bar) under
+    if(real_demo_data()){ # if using demo data for preprocessing tab
+      shinyalert("Quick start:",
+                    "You completed the 'Process Raw Data' tab demo.
+                    
+                    TIMEOR accepts 2 input types: 
+                    (1) raw .fastq files
+                    (2) read count matrix. 
+                
+                    For (2) in 'Example Data' (side-bar) under
 
-                  'Load count matrix' click 'Metadata & read count file' button. 
-                  
-                  This will guide you through the rest of the full method demo.",
-                  type = "info"
-                )
+                    'Load count matrix' click 'Metadata & read count file' button. 
+                    
+                    This will guide you through the rest of the full method demo.",
+                    type = "info"
+                  )
+      }else{
+        shinyalert("Quick start:",
+                    "You completed the 'Process Raw Data' tab.
+                    
+                    TIMEOR is producing the merged read count 
+                    matrix. When it is finished, you will see 
+                    the green check. Then proceed to the next 
+                    tab 'Process Count Matrix'.",
+
+                    type = "info"
+                  )
+      }
 
     # 'Generate count matrix' button must be pressed
     results_folder_alignment <-
@@ -1026,12 +1073,13 @@ function(input, output, session) {
       recursive = "TRUE",
       pattern = "htseq"
     )) == 0) {
-      print("Calling count matrix script")
-      future({
-        genCountMatrix(results_folder_alignment, results_folder_htseq)
-      }) %...>% countMatDone()
+      write("Calling count matrix script", stderr())
+      #future({
+      genCountMatrix(results_folder_alignment, results_folder_htseq)
+      #}) %...>% 
+      countMatDone(TRUE)
     } else{
-      print("Already created a count matrix")
+      write("Already created a count matrix", stderr())
       countMatDone(TRUE)
     }
     
@@ -1070,6 +1118,24 @@ function(input, output, session) {
           row.names = "ID"
         )
       )
+    } else if(countMatDone()){
+      write("here we go!",stderr())
+      countMatrix_filepath(paste(
+        local_results_folder(),
+        "/timeor/results/preprocess/count_matrix/htseq/merged_htseq.csv",
+        sep = ""
+      ))
+      write("countMatrix:", stderr())
+      write(countMatrix_filepath(), stderr())
+      countMatrix_df(
+        read.table(
+          file = countMatrix_filepath(),
+          sep = input$sep,
+          header = input$header,
+          dec = ",",
+          row.names = "ID"
+        )
+      )
     } else{
       print("else - not using simulation")
       req(input$count_mat)
@@ -1085,19 +1151,19 @@ function(input, output, session) {
           header = input$header,
           dec = ","
         )
-      if (!(any(grepl("ID", colnames(count_df))))) {
-        shinyalert(
-          "Please check Count Matrix.",
-          "1) Make sure 1st column is unique identifiers (IDs), and says 'ID'.
-           2) Make sure metadata sample names match other column names",
-          type = "error"
-        )
-        
-        # Make ID the rownames and remove the column ID. Save df to reactive countMatrix_df
-      } else{
-        rownames(count_df) <- count_df$ID
-        countMatrix_df(count_df[, !(names(count_df) %in% "ID")])
-      }
+        if (!(any(grepl("ID", colnames(count_df))))) {
+          shinyalert(
+            "Please check Count Matrix.",
+            "1) Make sure 1st column is unique identifiers (IDs), and says 'ID'.
+            2) Make sure metadata sample names match other column names",
+            type = "error"
+          )
+          
+          # Make ID the rownames and remove the column ID. Save df to reactive countMatrix_df
+        } else{
+          rownames(count_df) <- count_df$ID
+          countMatrix_df(count_df[, !(names(count_df) %in% "ID")])
+        }
     }
     if (is.null(countMatrix_df())) {
       return()
@@ -1587,9 +1653,10 @@ function(input, output, session) {
     req(input$renderVen)
     shinyalert(
       "Completed Primary Analysis",
-      "NOTE: demo chose 'ImpulseDE2' output and 
-      'automatic' gene trajectory clustering. 
-      On new data the user can choose these.
+      "Output from 'ImpulseDE2' and 'automatic'
+      gene trajectory clustering shown. 
+
+      On new data the user can change these.
       
       Proceed to Secondary Analysis (side-bar). 
       
@@ -1825,7 +1892,7 @@ function(input, output, session) {
         p_value
       )
     print(command_GO_path)
-    system(command_GO_path, intern = TRUE)
+    system(command_GO_path, intern = FALSE)
     
     # Network script calls
     stringdb_script <-
@@ -1850,17 +1917,16 @@ function(input, output, session) {
     meme_prep_script <-
       paste(app_dir, "/scripts/meme_prep_indiv_cluster.py", sep = "")
     reformatted_gtf <-
-      paste(app_dir,
-            "/../genomes_info/dme/reformatted_genes_gtf.csv",
+      paste("/srv/genomes_info/dme/reformatted_genes_gtf.csv",
             sep = "")
-    dm6_fa <- paste(app_dir, "/../genomes_info/dme/dm6.fa", sep = "")
+    genome_fa <- paste("/srv/genomes_info/",animal,"/genome_bowtie2/genome.fa", sep = "")
     command_meme_prep <-
       paste(
         "python",
         meme_prep_script,
         reformatted_gtf,
         currentClust_dir,
-        dm6_fa,
+        genome_fa,
         0,
         animal,
         sep = " "
@@ -1983,6 +2049,7 @@ function(input, output, session) {
         sep = ""
       )
     pv_multi_png <-
+      #Sys.glob(file.path(pv_multi_folder,"/", input$organism, "*.png"))
       Sys.glob(file.path(pv_multi_folder, "/*pathview.multi*png")) # get Pathview multi output png
     print("pv_multi_png")
     print(pv_multi_png)
@@ -2169,7 +2236,7 @@ function(input, output, session) {
         local_results_folder(),
         "/timeor/results/analysis/",
         analysis_folder_name(),
-        "_results/factor_binding/observed_putative_tfs_n_encode.csv",
+        "_results/factor_binding/observed_predicted_tfs_n_encode.csv",
         sep = ""
       )
     
@@ -2195,7 +2262,7 @@ function(input, output, session) {
   
   # Get the top transcription factors
   getTopTfs <- function() {
-    avg_prof_script <-
+    top_tfs_script <-
       paste(app_dir, "/scripts/get_top_tfs.r", sep = "")
     res_folder <-
       paste(
@@ -2205,17 +2272,18 @@ function(input, output, session) {
         "_results/",
         sep = ""
       )
-    command_avg_prof <-
+    command_top_tfs <-
       paste("Rscript",
-            avg_prof_script,
+            top_tfs_script,
             res_folder,
             input$organism,
             3,
             4,
             40,
             app_dir,
+            "high",
             sep = " ")
-    system(command_avg_prof, intern = TRUE)
+    system(command_top_tfs, intern = TRUE)
   }
   
   # Rcistarget interactive results download
@@ -2571,8 +2639,8 @@ function(input, output, session) {
         "_results/temporal_relations/",
         sep = ""
       )
-    tf_temp_file <-
-      Sys.glob(file.path(tf_temp_folder, "/TF_temp_rel.csv"))
+    tf_temp_file <- 
+      file.path(tf_temp_folder, "/TF_temp_rel.csv")
     
     # Run get_tf_relations.r if needed
     if (!file.exists(tf_temp_file)) {
@@ -2616,7 +2684,7 @@ function(input, output, session) {
     }
     
     command_tf_rel <-
-      paste(tf_rel_script, res_folder, ncbi_id, app_dir, sep = " ")
+      paste(tf_rel_script, res_folder, ncbi_id, app_dir, input$trans_time, sep = " ")
     system(command_tf_rel, intern = TRUE)
   }
   
@@ -2704,17 +2772,17 @@ function(input, output, session) {
   
   # Download zipped results folder
   output$downloadResultsFolder <- downloadHandler(
+    
+    # Download simulated or real data used
     filename = function() {
-      paste("timeor", "zip", sep = ".")
+      paste("timeor", "tar", "gz", sep = ".")
     },
     content = function(folderName) {
-      print(paste0(
-        "Local results folder: ",
-        local_results_folder(),
-        "/timeor/"
-      ))
+      command <- paste("tar -czvf ", local_results_folder(),"/timeor.tar.gz ",local_results_folder(),"/timeor", sep = "")
+      cat(command)
+      system(paste("tar --usage", "> /tmp/file_output.txt",  sep=" "))# , intern = TRUE)
+      system(command)
       file.copy(paste(local_results_folder(), "/timeor.tar.gz", sep = ""), folderName)},
-      #tar(folderName, paste(local_results_folder(), "/timeor/", sep = ""))}
-      contentType = "application/zip"
+      contentType = "application/octet-stream"
   )
 }

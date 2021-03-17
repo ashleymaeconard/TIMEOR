@@ -31,13 +31,11 @@ run_DESeq2 <- function(METDATA, COUNTDATA, OUTPUTDIR, CONDITION, BATCH_EFFECT, T
     library(ORG_DB, character.only = TRUE) # organism database library
     
     # Set database to work with
-    gene_ID_database <- toTable(ORG_DB)
+    #gene_ID_database <- toTable(ORG_DB)
     if(ORGANISM=="dme"){
         gene_ID_database_name <- "flybase"
     } else if(ORGANISM!="dme"){
         gene_ID_database_name <- "NA"
-    } else{
-        stop("Please enter dme (Drosophila melanogaster), hsa (Homo sapiens), or mmu (Mus musculus)")
     }
 
     # Create or set output directory
@@ -174,37 +172,37 @@ run_DESeq2 <- function(METDATA, COUNTDATA, OUTPUTDIR, CONDITION, BATCH_EFFECT, T
     
     # Performing apeglm shrinkage transformation
     # Resource: https://rdrr.io/bioc/DESeq2/man/lfcShrink.html
-    resApe_no_padj <- lfcShrink(dds, type="apeglm")
-    resApe <- resApe_no_padj[which(resApe_no_padj$padj < PVAL_THRESH),]
+    #resApe_no_padj <- lfcShrink(res, type="apeglm")
+    #resApe <- resApe_no_padj[which(resApe_no_padj$padj < PVAL_THRESH),]
 
     # Saving MA plots before and after shrinkage
     pdf(paste(FULL_OUTDIR,paste('ma_plot_noShrinkage_padj',toString(PVAL_THRESH),'.pdf',sep=""),sep="/"))
     plotMA(res, ylim=c(-4,4), cex=.8)
     abline(h=c(-1,1), col="dodgerblue", lwd=2)
     dev.off()
-    pdf(paste(FULL_OUTDIR,paste('ma_plot_apeShrinkage_padj',toString(PVAL_THRESH),'.pdf',sep=""), sep="/"))
-    plotMA(resApe, ylim=c(-4,4), cex=.8)
-    abline(h=c(-1,1), col="dodgerblue", lwd=2)
-    dev.off()
+    #pdf(paste(FULL_OUTDIR,paste('ma_plot_apeShrinkage_padj',toString(PVAL_THRESH),'.pdf',sep=""), sep="/"))
+    #plotMA(resApe, ylim=c(-4,4), cex=.8)
+    #abline(h=c(-1,1), col="dodgerblue", lwd=2)
+    #dev.off()
 
     # Adding gene symbol and placing it in the front for no and apeglm shrinkage matricies
     ids.type  <- gene_ID_database_name
     ids <- rownames(res)
-    idsN <- rownames(resApe)
+    #idsN <- rownames(resApe)
     
     res['gene_id'] <- rownames(res)
     res$gene_name <- as.vector(get.symbolIDsDm(ids,ids.type))
     res_sym_front <- as.data.frame(res) %>% dplyr::select(gene_name, gene_id, everything())    
     
-    resApe['gene_id'] <- rownames(resApe)
-    resApe$gene_name <- as.vector(get.symbolIDsDm(idsN,ids.type))
-    resN_sym_front <- as.data.frame(resApe) %>% dplyr::select(gene_name, gene_id, everything())    
+    #resApe['gene_id'] <- rownames(resApe)
+    #resApe$gene_name <- as.vector(get.symbolIDsDm(idsN,ids.type))
+    #resN_sym_front <- as.data.frame(resApe) %>% dplyr::select(gene_name, gene_id, everything())    
 
     # Creating clustermap inputs for no and apeglm shrinkage
     betasTC <- coef(dds)
     colnames(betasTC)
     topGenes <- which(res_sym_front$padj < PVAL_THRESH, arr.ind = FALSE) # get indicies for all results
-    topGenesN <- which(resN_sym_front$padj < PVAL_THRESH, arr.ind = FALSE) # get indicies for all results
+    #topGenesN <- which(resN_sym_front$padj < PVAL_THRESH, arr.ind = FALSE) # get indicies for all results
     
     # Generating clustermap no shrinkage matrix (NOTE 1,2,3 removed the batch effect columns)
     batch_cols <- seq(1,length(unique(metaData$time))-1)
@@ -213,8 +211,8 @@ run_DESeq2 <- function(METDATA, COUNTDATA, OUTPUTDIR, CONDITION, BATCH_EFFECT, T
     write(batch_cols, stderr())
     
     # Generating clustermap apeglm shrinkage matrix (NOTE 1,2,3 removed the batch effect columns)
-    batch_cols <- seq(1,length(unique(metaData$time)))
-    matN <- betasTC[topGenesN, -batch_cols]
+    #batch_cols <- seq(1,length(unique(metaData$time)))
+    #matN <- betasTC[topGenesN, -batch_cols]
 
     # Adding gene symbol and placing it in the front for clustermap input matricies (no shrinkage)
     df_mat <- as.data.frame(mat)
@@ -229,23 +227,23 @@ run_DESeq2 <- function(METDATA, COUNTDATA, OUTPUTDIR, CONDITION, BATCH_EFFECT, T
     }
 
     # Adding gene symbol and placing it in the front for clustermap input matricies (apeglm shrinkage)
-    df_matN <- as.data.frame(matN)
-    idsMN <- rownames(df_matN)
-    df_matN['gene_id'] <- idsMN
-    df_matN$gene_name <- as.vector(get.symbolIDsDm(idsMN,ids.type))
-    df_matN_sym_front <- as.data.frame(df_matN) %>% dplyr::select(gene_name, gene_id, everything()) 
+    # df_matN <- as.data.frame(matN)
+    # idsMN <- rownames(df_matN)
+    # df_matN['gene_id'] <- idsMN
+    # df_matN$gene_name <- as.vector(get.symbolIDsDm(idsMN,ids.type))
+    # df_matN_sym_front <- as.data.frame(df_matN) %>% dplyr::select(gene_name, gene_id, everything()) 
 
-    # Check if NA in gene_name, copy gene_id in its place
-    if (NA %in% df_matN_sym_front$gene_name){
-        df_matN_sym_front$gene_name <- ifelse(is.na(df_mat_sym_front$gene_name), df_mat_sym_front$gene_id, df_mat_sym_front$gene_name)
-    }
+    # # Check if NA in gene_name, copy gene_id in its place
+    # if (NA %in% df_matN_sym_front$gene_name){
+    #     df_matN_sym_front$gene_name <- ifelse(is.na(df_mat_sym_front$gene_name), df_mat_sym_front$gene_id, df_mat_sym_front$gene_name)
+    # }
 
     # Saving sorted (by padj) results
     resSort <- res_sym_front[order(res_sym_front$padj),]
-    resSortApeShr <- resN_sym_front[order(resN_sym_front$padj),]
+    #resSortApeShr <- resN_sym_front[order(resN_sym_front$padj),]
     
     write.csv(as.data.frame(resSort), file=paste(FULL_OUTDIR,paste("deseq2_output_noShrinkage_padj",toString(PVAL_THRESH),'.csv',sep=""), sep="/"), row.names=FALSE, quote=FALSE)
-    write.csv(as.data.frame(resSortApeShr), file=paste(FULL_OUTDIR,paste("deseq2_output_ApeShrinkage_padj",toString(PVAL_THRESH),'.csv',sep=""), sep="/"), row.names=FALSE, quote=FALSE)
+    #write.csv(as.data.frame(resSortApeShr), file=paste(FULL_OUTDIR,paste("deseq2_output_ApeShrinkage_padj",toString(PVAL_THRESH),'.csv',sep=""), sep="/"), row.names=FALSE, quote=FALSE)
     write.csv(na.omit(df_mat_sym_front),paste(FULL_OUTDIR,paste('deseq2_noShrinkage_clustermapInput_padj',toString(PVAL_THRESH),'.csv',sep=""),sep='/'), row.names=FALSE, quote=FALSE) # clustermap input
-    write.csv(na.omit(df_matN_sym_front),paste(FULL_OUTDIR,paste('deseq2_ApeShrinkage_clustermapInput_padj',toString(PVAL_THRESH),'.csv',sep=""),sep='/'), row.names=FALSE, quote=FALSE) # clustermap input
+    #write.csv(na.omit(df_matN_sym_front),paste(FULL_OUTDIR,paste('deseq2_ApeShrinkage_clustermapInput_padj',toString(PVAL_THRESH),'.csv',sep=""),sep='/'), row.names=FALSE, quote=FALSE) # clustermap input
 }  

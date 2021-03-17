@@ -20,7 +20,7 @@ num_files=$(echo `ls -1q ${1}/*.fastq* | wc -l`)
 #else
 #	NUM_PROCESSORS=$num_files
 #fi
-NUM_PROCESSORS=1
+NUM_PROCESSORS=6
 
 # Checking to see if output directory exists
 mkdir -p $2
@@ -30,16 +30,16 @@ declare -a arr
 for file in ${1}/*.fastq*; do arr=(${arr[@]} "$file"); done
 echo "FastQC on $num_files files: ${arr[@]}"
 echo ${2}/run_fastQC.txt
-echo "time parallel -j $NUM_PROCESSORS fastqc {1} --outdir=${2} ::: ${arr[@]}" > ${2}/run_fastQC.txt
+echo "time parallel -j $NUM_PROCESSORS /FastQC/./fastqc {1} --outdir=${2} ::: ${arr[@]}" > ${2}/run_fastQC.txt
 
 # Summarize all FastQC results with MultiQC
-echo "eval '$(conda shell.bash hook)'" >> ${2}/run_fastQC.txt
-echo "conda deactivate" >> ${2}/run_fastQC.txt
-echo "conda activate timeor_py38" >> ${2}/run_fastQC.txt
+#echo "eval '$(conda shell.bash hook)'" >> ${2}/run_fastQC.txt
+#echo "conda deactivate" >> ${2}/run_fastQC.txt
+#echo "conda activate timeor_py38" >> ${2}/run_fastQC.txt
 echo "cd ${2}" >> ${2}/run_fastQC.txt
 echo "multiqc ." >> ${2}/run_fastQC.txt
-echo "conda deactivate" >> ${2}/run_fastQC.txt
-echo "conda activate timeor_conda_env" >> ${2}/run_fastQC.txt
-echo "wait" >> $COMMAND_SCRIPT
+#echo "conda deactivate" >> ${2}/run_fastQC.txt
+#echo "conda activate timeor_conda_env" >> ${2}/run_fastQC.txt
+#echo "wait" >> $COMMAND_SCRIPT
 # Run command script
 bash ${2}/run_fastQC.txt

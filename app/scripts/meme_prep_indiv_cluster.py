@@ -29,9 +29,9 @@ import pandas as pd
 if GENOME =="dme":
     list_chroms = ["2L", "2R", "3L", "3R", "4", "X", "Y"]
 elif GENOME == "mmu":
-    sys.exit("Need to add mouse chroms")
+    list_chroms = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "X", "Y"]
 elif GENOME == "hsa":
-    sys.exit("Need to add human chroms")
+    list_chroms = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "X", "Y"]
 else:
     sys.exit("ERROR: must input genome types.")
 
@@ -102,7 +102,7 @@ def main(argv):
             gene_seqs_out_file = outdir_meme_input+geneClusterID[-1].split(".",1)[0]+"_DNAseqs.fasta"                
         
         # Calling bedtools to produce fasta file of DNA sequences for a given list of genes
-        subprocess.call(["bedtools", "getfasta", "-fi", CHROMS, "-bed", bed_file_loc, "-name", "-fo",gene_seqs_out_file])
+        subprocess.call(["/bedtools2/bin/./bedtools", "getfasta", "-fi", CHROMS, "-bed", bed_file_loc, "-name", "-fo",gene_seqs_out_file])
         
 if __name__ == "__main__": # in Python 3 we need not use this, instead just main() but this is more universal.
     main(sys.argv[1:])

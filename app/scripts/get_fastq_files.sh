@@ -16,9 +16,9 @@ OUTPUT_DIR=$1
 SRA_LIST=$2
 
 # Defining timestamp function
-timestamp() {
-	date +"%Y-%m-%d_%H-%M-%S"
-}
+# timestamp() {
+# 	date +"%Y-%m-%d_%H-%M-%S"
+# }
 
 COMMAND_SCRIPT=${OUTPUT_DIR}"/run_get_fastq_files.txt" 
 
@@ -36,7 +36,7 @@ done < ${2}
 # Getting number of fastq files
 num_files=${#accessionList[@]}
 
-NUM_PROCESSORS=1
+NUM_PROCESSORS=4
 # Determining how many processors
 #if [[ $num_files -gt  10 ]]; then
 #	NUM_PROCESSORS=10
@@ -49,8 +49,10 @@ mkdir -p ${OUTPUT_DIR}
 
 # Getting raw .fastq files from NCBI GEO
 #echo "Starting to download "${accessionList[@]}" at $(timestamp)".
-echo "(time parallel -j ${NUM_PROCESSORS} --bar fastq-dump {1} --split-files -O ${OUTPUT_DIR} --gzip ::: ${accessionList[@]}) &" >> $COMMAND_SCRIPT  
+echo "time parallel -j ${NUM_PROCESSORS} --bar /sratoolkit.2.10.9-ubuntu64/bin/./fastq-dump {1} --split-files -O ${OUTPUT_DIR} --gzip ::: ${accessionList[@]}" >> $COMMAND_SCRIPT  
 #echo "Finished data download at $(timestamp)"
+
+#time parallel -j ${NUM_PROCESSORS} --bar /sratoolkit.2.10.9-ubuntu64/bin/./fastq-dump {1} --split-files -O ${OUTPUT_DIR} --gzip ::: ${accessionList[@]}
 
 # Run command script
 bash ${COMMAND_SCRIPT}

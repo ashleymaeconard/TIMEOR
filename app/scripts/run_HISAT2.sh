@@ -52,8 +52,8 @@ echo "Number of input .fastq files: " $num_files
 #    fi
 #fi
 
-NUM_PROCESSORS=1
-NUM_COMMANDS=1
+NUM_PROCESSORS=6 # -p flag for hisat2
+NUM_COMMANDS=1 # number of hisat2 commands
 
 # Checking to see if results/HISAT2/ directory exists
 #if [ -d "$RESULTS_DIR/hisat2/" ]; then
@@ -74,7 +74,7 @@ if [ -f ${COMMAND_SCRIPT} ]; then
 fi
     
 # Getting genome
-genome=$APP_DIR"/../genomes_info/${ORGANISM}/genome_hisat2/genome"
+genome="/srv/genomes_info/${ORGANISM}/genome_hisat2/genome"
                           
 START=0
 i=$START
@@ -100,9 +100,9 @@ for dir in $INPUT_DIR/*/*
                    ((i = i + 1))
 
                     # If number of processors reached, add wait to form a batch that will finish, and then process the next batch
-                    if (( ${i}%${num_files}==0 )); then # had been NUM_COMMANDS
-                        echo "wait" >> $COMMAND_SCRIPT
-                    fi 
+                    # if (( ${i}%${num_files}==0 )); then # had been NUM_COMMANDS
+                    #     echo "wait" >> $COMMAND_SCRIPT
+                    # fi 
 
                     # Generating the HISAT2 command
                     fileName=$(echo `basename $fastq`) # get filename from .fq.gz
@@ -118,7 +118,8 @@ for dir in $INPUT_DIR/*/*
                     # Writing HISAT2 command to a file, followed by .bam creation and sorting
                     echo "Adding ${fileName} to run_HISAT2.txt script"
                     echo " "                    
-                    echo "(hisat2 -p ${NUM_PROCESSORS} --dta -x $genome -U $fastq -t --un-gz $folderName/out_unalign.gz --al-gz $folderName/out_al_atleastonce.gz --known-splicesite-infile /data/compbio/aconard/BDGP6/splicesites.txt --novel-splicesite-outfile $folderName/novel_splicesite --summary-file $folderName/summaryfile.txt --met-file $folderName/met-file.txt -S $folderName/out.sam 2> $folderName/alignmentsummary.txt; samtools sort -O sam -T $folderName/out.sorted -o $folderName/out.sorted.sam $folderName/out.sam; samtools view -S -b $folderName/out.sorted.sam > $folderName/out.sorted.bam; rm -rf $folderName/out.sam $folderName/out.sorted.sam) &">> $COMMAND_SCRIPT
+                    #echo "hisat2 -p ${NUM_PROCESSORS} --dta -x $genome -U $fastq -t --un-gz $folderName/out_unalign.gz --al-gz $folderName/out_al_atleastonce.gz --novel-splicesite-outfile $folderName/novel_splicesite --summary-file $folderName/summaryfile.txt --met-file $folderName/met-file.txt -S $folderName/out.sam 2> $folderName/alignmentsummary.txt; samtools sort -O sam -T $folderName/out.sorted -o $folderName/out.sorted.sam $folderName/out.sam; samtools view -S -b $folderName/out.sorted.sam > $folderName/out.sorted.bam; rm -rf $folderName/out.sam $folderName/out.sorted.sam">> $COMMAND_SCRIPT
+                    echo "/hisat2-0f01dc6397a/./hisat2 -p ${NUM_PROCESSORS} --dta -x $genome -U $fastq -t --novel-splicesite-outfile $folderName/novel_splicesite --summary-file $folderName/summaryfile.txt -S $folderName/out.sam 2> $folderName/alignmentsummary.txt; samtools sort -O sam -T $folderName/out.sorted -o $folderName/out.sorted.sam $folderName/out.sam; samtools view -S -b $folderName/out.sorted.sam > $folderName/out.sorted.bam; rm -rf $folderName/out.sam $folderName/out.sorted.sam">> $COMMAND_SCRIPT
                     echo "Outputting results to $folderName"
            done
         
@@ -133,9 +134,9 @@ for dir in $INPUT_DIR/*/*
                     ((i = i + 1))
 
                     # If number of processors reached, add wait to form a batch that will finish, and then process the next batch
-                    if (( ${i}%${num_files}==0 )); then # had been NUM_COMMANDS
-                        echo "wait" >> $COMMAND_SCRIPT
-                    fi 
+                    # if (( ${i}%${num_files}==0 )); then # had been NUM_COMMANDS
+                    #     echo "wait" >> $COMMAND_SCRIPT
+                    # fi 
 
                     # Generating the HISAT2 command for R1 and R2
                     fileName=$(echo `basename $R1`) # get filename from .fq.gz
@@ -154,13 +155,14 @@ for dir in $INPUT_DIR/*/*
                     # Writing HISAT2 command to a file, followed by .bam creation and sorting
                     echo "Adding ${fileName} to run_HISAT2.txt script"
                     echo " "
-                    echo "(hisat2 -p ${NUM_PROCESSORS} --dta -x $genome -1 $R1 -2 $R2 -t --un-conc-gz $folderName/out_unconc.gz --al-conc-gz $folderName/out_al_conc_atleastonce.gz --known-splicesite-infile $APP_DIR/genomes_info/dm6/splicesites.txt --novel-splicesite-outfile $folderName/novel_splicesite --summary-file $folderName/summaryfile.txt --met-file $folderName/met-file.txt -S $folderName/out.sam 2> $folderName/alignmentsummary.txt; samtools sort -O sam -T $folderName/out.sorted -o $folderName/out.sorted.sam $folderName/out.sam; samtools view -S -b $folderName/out.sorted.sam > $folderName/out.sorted.bam; rm -rf $folderName/out.sam $folderName/out.sorted.sam) &">> $COMMAND_SCRIPT            
+                    #echo "hisat2 -p ${NUM_PROCESSORS} --dta -x $genome -1 $R1 -2 $R2 -t --un-conc-gz $folderName/out_unconc.gz --al-conc-gz $folderName/out_al_conc_atleastonce.gz --novel-splicesite-outfile $folderName/novel_splicesite --summary-file $folderName/summaryfile.txt --met-file $folderName/met-file.txt -S $folderName/out.sam 2> $folderName/alignmentsummary.txt; samtools sort -O sam -T $folderName/out.sorted -o $folderName/out.sorted.sam $folderName/out.sam; samtools view -S -b $folderName/out.sorted.sam > $folderName/out.sorted.bam; rm -rf $folderName/out.sam $folderName/out.sorted.sam">> $COMMAND_SCRIPT            
+                    echo "/hisat2-0f01dc6397a/./hisat2 -p ${NUM_PROCESSORS} --dta -x $genome -1 $R1 -2 $R2 -t --novel-splicesite-outfile $folderName/novel_splicesite --summary-file $folderName/summaryfile.txt -S $folderName/out.sam 2> $folderName/alignmentsummary.txt; samtools sort -O sam -T $folderName/out.sorted -o $folderName/out.sorted.sam $folderName/out.sam; samtools view -S -b $folderName/out.sorted.sam > $folderName/out.sorted.bam; rm -rf $folderName/out.sam $folderName/out.sorted.sam">> $COMMAND_SCRIPT            
                     echo "Outputting results to $folderName"
             done
        fi
     fi
 done
-echo "wait" >> $COMMAND_SCRIPT
+#echo "wait" >> $COMMAND_SCRIPT
 
 # Running command_script (.txt file saved in $RESULTS_DIR)
 bash ${COMMAND_SCRIPT}

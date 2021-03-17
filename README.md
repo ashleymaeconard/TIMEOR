@@ -114,7 +114,7 @@ Website
 =======
 
 ### Computational Biology Core at Brown Univeristy and DRSC/TRiP Functional Genomics Resources at Harvard Medical School Partnership
-TIMEOR is available online at https://timeor.brown.edu.
+TIMEOR is available online at https://timeor.brown.edu. This website is free and open to everyone!
 
 Installation
 ============
@@ -140,6 +140,8 @@ After cloning the TIMEOR repo from GitHub
 Note, if TIMEOR is running on a remote machine, you may access the website through the ssh gateway. For example on port 8888, `ssh -L 8888:127.0.0.1:8888 USERNAME@SERVER -t host=SERVER -L 8888:127.0.0.1:3681`.
 
 ### Docker
+
+Either with Docker Hub type `$docker pull ashleymaeconard/timeor:latest` or build it with the following commands:
 
 1. Install Docker (version 20.10.0 recommended)
 2. Building Docker image in TIMEOR directory:
@@ -426,8 +428,8 @@ just split. There are 20 steps.
 
 11.  Wait to view any enriched gene ontology (GO) terms (Molecular
     Function, Biological Process, or Cellular Component), pathway,
-    network, and/or motif analysis. **NOTE** you may download the
-    interactive motif results for viewing.
+    network, and/or motif analysis. **NOTE** You may download the
+    interactive motif results for viewing. **NOTE** Should the process finish and images not show, simply turn the toggle "OFF" and then "ON" to view results.
 
 12.  Toggle the “Analyze” button to “OFF” to choose another gene set, and
     repeat steps 9-12.

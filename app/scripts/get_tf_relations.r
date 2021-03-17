@@ -74,7 +74,6 @@ get_tfs_cur_flip <- function(sdb_info_tbl, c_flips, tf_n_exp){
 
     # Adding to subset of TF interactions to characterize in this time window
     subset_interactions <- tf_n_exp[tf_n_exp$A_gene_name %in% list_tfs & tf_n_exp$B_gene_name %in% list_tfs,]
-    
     return(list(tfs=subset_tfs, inters=subset_interactions))
 }
 
@@ -281,6 +280,9 @@ fill_df_tg_temp_rel <- function(stringdb_in_gene_table, tf_net_exp, df_cl_flips,
         }
     }
     print(paste(tup,sep=" "))
+    #print("df_tf_temp_rel")
+    #print(df_tf_temp_rel)
+    #stop("blah")
     return(distinct(df_tf_temp_rel))
 }
 
@@ -472,7 +474,7 @@ main <- function(){
         df_clust_flips <- find_flips(df_clust_lev_traj)
 
         # Getting observed_predicted_tfs_n_encode
-        obs_n_put <- fread(paste(dirname(dir_tf_rn),"factor_binding","observed_putative_tfs_n_encode.csv",sep="/"), sep=",", select=c("cluster","observed_TFs","top_TF_1"))
+        obs_n_put <- fread(paste(dirname(dir_tf_rn),"factor_binding","observed_predicted_tfs_n_encode.csv",sep="/"), sep=",", select=c("cluster","observed_TFs","top_TF_1"))
         
         # Creating tuples of timepoints of size window 
         list_tup_windows <- get_windows(all_timepoint_names[2:length(all_timepoint_names)], WIN) # from 2 because first column of observed_putative_tfs_n_encode.csv is gene name
@@ -496,8 +498,28 @@ main <- function(){
         df_tf_temp_relations <- fill_df_tg_temp_rel(stringdb_input_gene_table, tf_network_exp, df_clust_flips, list_tup_windows, WIN)
         print("df tf temp relations")
         print(df_tf_temp_relations)
-        fwrite(df_tf_temp_relations, file = paste(dir_tf_rn, "TF_tel_rel.csv", sep="/"))
+        fwrite(df_tf_temp_relations, file = paste(dir_tf_rn, "TF_temp_rel.csv", sep="/"))
 
+        print("all_timepoint_names")
+        print(all_timepoint_names)
+
+        print("df_clust_lev_traj")
+        print(df_clust_lev_traj)
+
+        print("obs_n_put")
+        print(obs_n_put)
+
+        print("list_tup_windows")
+        print(list_tup_windows)
+
+        print("stringdb input gene table")
+        print(stringdb_input_gene_table)
+
+        print("tf network")
+        print(tf_network_exp)
+
+        print("df tf temp relations")
+        print(df_tf_temp_relations)
     }
 }
 

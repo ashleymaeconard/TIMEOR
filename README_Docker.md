@@ -1,6 +1,9 @@
-# Follow these steps to build TIMEOR Docker image
+# Follow these steps to build and/or run TIMEOR Docker image
 ## Ashley Mae Conard
 #### Last Mod. Aug. 9, 2020
+
+### Assuming you have Docker Hub, to pull down Docker image:
+`$docker pull ashleymaeconard/timeor:latest`
 
 ### Assuming you have Docker installed (version 20.10.0 recommended), to build Docker image:
 

@@ -3,7 +3,6 @@
 # Ashley Conard
 # Last Mod. 7/17/2019
 # Purpose: Merges all HTSeq files into one table of genes by conditions
-#          Assumes structure of .../project/results/hisat2_htseq/SAMPLE_NAME/REPLICATE/htseq_counts
 
 # Importing libraries
 import sys, os, csv, glob
@@ -39,16 +38,16 @@ def main(argv):
             
             # Creating initial dataframe
             if first:
-                merged_htseq_df = pd.read_csv(file_loc,  sep='\t', names=["gene_id", col_name]) # creating merged_htseq_df
-                merged_htseq_df = merged_htseq_df[~merged_htseq_df.gene_id.str.contains("_")]
+                merged_htseq_df = pd.read_csv(file_loc,  sep='\t', names=["ID", col_name]) # creating merged_htseq_df
+                merged_htseq_df = merged_htseq_df[~merged_htseq_df.ID.str.contains("_")]
                 first=0
                 len_df = len(merged_htseq_df.index) # checking size of dataframe
                 print("Size: ", len_df)
                 
             # Adding to merged dataframe
             else:
-                df = pd.read_csv(file_loc,  sep='\t', names=["gene_id", col_name])
-                merged_htseq_df = pd.merge(merged_htseq_df, df, on='gene_id')
+                df = pd.read_csv(file_loc,  sep='\t', names=["ID", col_name])
+                merged_htseq_df = pd.merge(merged_htseq_df, df, on='ID')
                 print("Size of df to merge: ", df.shape[0])
                 print("Adding rep. Size: ", merged_htseq_df.shape[0])
     
@@ -58,7 +57,7 @@ def main(argv):
     
     merged_htseq_df = merged_htseq_df.reindex(sorted(merged_htseq_df.columns), axis=1)
     cols = list(merged_htseq_df)
-    cols.insert(0, cols.pop(cols.index('gene_id')))
+    cols.insert(0, cols.pop(cols.index('ID')))
     merged_htseq_df = merged_htseq_df.ix[:, cols]
     
     merged_htseq_df.to_csv(OUTPUT_DIR+"/merged_htseq.csv", index=False)

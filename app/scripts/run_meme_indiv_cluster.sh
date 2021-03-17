@@ -26,7 +26,7 @@ for i in $INPUT_DIR
         # Setting output directory
        OUTPUT_DIR=$(dirname "${geneList}")
        # -objfun classic --revcomp
-       (meme $geneList -dna -nmotifs 3 -maxsize 150000 -mod anr -oc $OUTPUT_DIR/ ) &	
+       (/usr/local/meme/bin/./meme $geneList -dna -nmotifs 3 -maxsize 150000 -maxw 20 -mod anr -oc $OUTPUT_DIR/ ) &	
 
    done
    
