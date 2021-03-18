@@ -1,4 +1,3 @@
-#!/bin/bash
 # run_HTSeq.sh
 # Ashley Mae Conard
 # Last Mod. 7/11/2019

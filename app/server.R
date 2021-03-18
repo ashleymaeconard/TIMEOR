@@ -2284,6 +2284,19 @@ function(input, output, session) {
             "high",
             sep = " ")
     system(command_top_tfs, intern = TRUE)
+
+    command_top_tfs_motif_sim <-
+      paste("Rscript",
+            top_tfs_script,
+            res_folder,
+            input$organism,
+            3,
+            4,
+            40,
+            app_dir,
+            "low",
+            sep = " ")
+    system(command_top_tfs_motif_sim, intern = TRUE)
   }
   
   # Rcistarget interactive results download
