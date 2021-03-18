@@ -261,9 +261,15 @@ main <- function(){
         # Creating observed TF list to fill across all clusters
         obs_g_l <- c()
 
-        # Creating factor_binding folder
+        # Creating factor_binding folder (for motif by homology)
         dir_tf_rn <- paste(IN_OUTPUT, "factor_binding", sep="/")
         dir.create(dir_tf_rn, showWarnings=FALSE)
+
+        # Create a subfolder for motif by similarity results
+        if(CONF=="low"){
+            dir_tf_rn <- paste(IN_OUTPUT, "factor_binding", "motif_similarity", sep="/")
+            dir.create(dir_tf_rn, showWarnings=FALSE)
+        }
         
         # Finding the cluster directories for each experiment (in list_exp)
         dir_clusts <- paste(IN_OUTPUT, "clusters", sep="/")
