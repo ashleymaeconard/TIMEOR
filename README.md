@@ -120,7 +120,7 @@ Installation
 ============
 
 After cloning the TIMEOR repo from GitHub
-(<a href="https://github.com/ashleymaeconard/TIMEOR.git" class="uri">https://github.com/ashleymaeconard/TIMEOR.git</a>)
+(<a href="https://github.com/ashleymaeconard/TIMEOR.git" class="uri">https://github.com/ashleymaeconard/TIMEOR.git</a>), visit [this Google Drive folder](https://drive.google.com/drive/folders/1KEnpCOU0dQU5p1tnEy3o9l02NE0uYnpm?usp=sharing) to download the genome information for drosophila, mouse, and human. Place this folder at the same directory level as the app folder. 
 
 ### Conda Environment
 
