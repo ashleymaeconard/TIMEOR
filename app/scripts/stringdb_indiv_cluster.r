@@ -32,13 +32,10 @@ library(dplyr)
 library(stringr)
 
 add_to_info_table <- function(gene_inters, str_db, pr_table, pval){
-    #print(paste("gene_intersection 1",gene_inters))
-
     # Creating new columns "A_gene_name" and "B_gene_name"
     gene_inters[,"A_gene_name"] <- NA
     gene_inters[,"B_gene_name"] <- NA
-    gene_inters[,"pval_PPI_enrich"] <- pval
-    gene_inters[,"pubmed_ids"] <- NA
+    
     gene_inters <- gene_inters %>% select("B_gene_name", everything()) # moving "B" column to the front of gene_inters df
     gene_inters <- gene_inters %>% select("A_gene_name", everything()) # moving "A" column to the front of gene_inters df
     
@@ -51,29 +48,16 @@ add_to_info_table <- function(gene_inters, str_db, pr_table, pval){
         gene_id_A <- gene_inters[row, "from"]
         gene_inters[row, "A_gene_name"] <- pr_table$preferred_name[pr_table$protein_external_id == gene_id_A]
         #print(paste("gene_id_A",gene_inters))
-        
-        # Fetching the Pubmed articles that support each interaction and adds that in a new column "pubmed_ids"
-        gene_inters[row, "pubmed_ids"] <- toString(list("NA")) # speaking with STINGdb creator for alternative
-        #pubmed_arti_list <- as.list(str_db$get_pubmed_interaction(gene_id_A, gene_id_B))
-        #if(length(pubmed_arti_list!=0)){
-        #    gene_inters[row, "pubmed_ids"] <- toString(list(pubmed_arti_list))
-        #    #print(paste("pubmed_ids",gene_inters))
-        #} else{
-        #    gene_inters[row, "pubmed_ids"] <- toString(list("NA"))
-        #    #print(paste("pubmed_ids NA",gene_inters))
-        #} 
     }
     return(gene_inters)
 }
 
-create_network_n_info_tables <- function(st_db, df1, gl, outdir, prot_tab){ 
+create_network_n_info_tables <- function(st_db, df1, gl, outdir, prot_tab, det_links){ 
     # Mapping input genes to stringdb network
+    
     genes_mapped <- st_db$map(df1, "gene", removeUnmappedRows = TRUE)
     hits <- genes_mapped$STRING_id    
-    print("hits")
-    print(hits)
-    print("st_db")
-    print(st_db)
+
     # Plotting and saving network
     www_subdir <- file.path(outdir, "www") 
     if (!dir.exists(www_subdir)){
@@ -84,7 +68,7 @@ create_network_n_info_tables <- function(st_db, df1, gl, outdir, prot_tab){
     pdf(paste(outdir, "stringdb_network.pdf", sep="/"))
     st_db$plot_network(hits)
     dev.off()
-    
+
     # Save png of network to visualize in TIMEOR
     st_db$get_png(hits, file=paste(www_subdir,"stringdb_network.png",sep="/"))
 
@@ -93,28 +77,50 @@ create_network_n_info_tables <- function(st_db, df1, gl, outdir, prot_tab){
     for(i in gl){
         gene_list_ids <- append(gene_list_ids, st_db$mp(i))
     }
+    
+    # Fetching and saving experimental network interactions   
+    interacting_genes <- st_db$get_interactions(gene_list_ids)
+    uniq_gene_interactions <- data.frame(unique(interacting_genes))
+    gene_interactions_n_types <- data.frame(from=character(),
+                 to=character(), 
+                 neighborhood=integer(),
+                 fusion=integer(),
+                 cooccurrence=integer(),
+                 coexpression=integer(),
+                 experimental=integer(),
+                 database=integer(),
+                 textmining=integer(),
+                 combined_score=integer(),
+                 stringsAsFactors=FALSE) 
 
-    # Fetching and saving network interactions and Pubmed information    
-    gene_interactions <- st_db$get_interactions(gene_list_ids)
+    for(u in rownames(uniq_gene_interactions)){
+        gene_A <- uniq_gene_interactions[u, 1]
+        gene_B <- uniq_gene_interactions[u, 2]
 
+        row_to_add = det_links %>% filter(protein1==gene_A & protein2==gene_B & experimental > 0)
+        print("row_to_add")
+        print(row_to_add)
+        if(nrow(row_to_add)!=0){
+            gene_interactions_n_types[nrow(gene_interactions_n_types) + 1,] = 
+                det_links %>% filter(protein1==gene_A & protein2==gene_B & experimental > 0)
+            gene_interactions_n_types[nrow(gene_interactions_n_types),]$from <- gene_A
+            gene_interactions_n_types[nrow(gene_interactions_n_types),]$to <- gene_B
+        }
+    }
     # Fetching enrichment p-value
     pvalEnrich <- st_db$get_ppi_enrichment(gene_list_ids)$enrichment
     
     # Adding stringdb, protein id table, and enrichment p-value to table (in that order)
-    info_table <- add_to_info_table(gene_interactions, st_db, prot_tab, pvalEnrich)
+    info_table <- add_to_info_table(gene_interactions_n_types, st_db, prot_tab, pvalEnrich)
     
     return(info_table)
 }
 
 save_stringdb_network_n_table <- function(s_t, IO){
-    s_t$pubmed_ids <-gsub('c','',s_t$pubmed_ids)
-    s_t$pubmed_ids <-gsub('\\(','',s_t$pubmed_ids) 
-    s_t$pubmed_ids <-gsub(')','',s_t$pubmed_ids)
-    s_t$pubmed_ids <-gsub('list','',s_t$pubmed_ids)
-    s_t$pubmed_ids <-gsub('"','',s_t$pubmed_ids)
     write.table(s_t, paste(IO, "stringdb_info_table.tsv", sep="/"), row.names=FALSE, sep="\t")
     print(paste("Saved STRINGdb network and info_tables to", IO, sep=" "))
 }
+
 
 main <- function(){
     
@@ -122,7 +128,8 @@ main <- function(){
     # Getting alias files if needed
     if(NCBI_TAXO == 7227){
         strdb_file_folder <- paste(APP_DIR_redirect,"/genomes_info/dme/",sep="")
-        
+        detailed_links <- read.table(paste(strdb_file_folder, "7227.protein.links.detailed.v11.0.txt", sep="/"), header = TRUE, sep = " ")
+
         if(!file.exists(paste(strdb_file_folder,"7227.protein.aliases.v11.0.txt.gz", sep="/"))){   
             cat("FILE DOES NOT EXIST", file=stderr())
             downloadAbsentFile('https://stringdb-static.org/download/protein.aliases.v11.0/7227.protein.aliases.v11.0.txt.gz', oD = strdb_file_folder)
@@ -131,6 +138,8 @@ main <- function(){
         }
      } else if(NCBI_TAXO == 9606){
         strdb_file_folder <- paste(APP_DIR_redirect,"/genomes_info/hsa/",sep="")
+        detailed_links <- read.table(paste(strdb_file_folder, "9606.protein.links.detailed.v11.0.txt", sep="/"), header = TRUE, sep = " ")
+
         if(!file.exists(paste(strdb_file_folder,"9606.protein.aliases.v11.0.txt.gz", sep="/"))){
             cat("FILE DOES NOT EXIST", file=stderr())
             downloadAbsentFile('https://stringdb-static.org/download/protein.aliases.v11.0/9606.protein.aliases.v11.0.txt.gz', oD = strdb_file_folder)
@@ -139,6 +148,8 @@ main <- function(){
          }
      } else if(NCBI_TAXO == 10090){
         strdb_file_folder <- paste(APP_DIR_redirect,"/genomes_info/mmu/",sep="")
+        detailed_links <- read.table(paste(strdb_file_folder, "10090.protein.links.detailed.v11.0.txt", sep="/"), header = TRUE, sep = " ")
+
         if(!file.exists(paste(strdb_file_folder,"10090.protein.aliases.v11.0.txt.gz", sep="/"))){
             cat("FILE DOES NOT EXIST", file=stderr())
             downloadAbsentFile('https://stringdb-static.org/download/protein.aliases.v11.0/10090.protein.aliases.v11.0.txt.gz', oD = strdb_file_folder)
@@ -193,7 +204,7 @@ main <- function(){
     print(protein_ID_table)
 
     # Creating STRINGdb network and info. tables then save
-    string_table <- create_network_n_info_tables(string_db, df, gene_list, IN_OUTPUT, protein_ID_table)
+    string_table <- create_network_n_info_tables(string_db, df, gene_list, IN_OUTPUT, protein_ID_table, detailed_links)
     save_stringdb_network_n_table(string_table, IN_OUTPUT)
     print("save_stringdb_network_n_table")
 }
