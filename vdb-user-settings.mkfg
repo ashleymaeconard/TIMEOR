@@ -1,0 +1,12 @@
+## auto-generated configuration file - DO NOT EDIT ##
+
+/LIBS/GUID = "99db785b-8585-4656-8e2b-86ce100572a8"
+/config/default = "false"
+/repository/remote/disabled = "false"
+/repository/user/ad/public/apps/file/volumes/flatAd = "."
+/repository/user/ad/public/apps/refseq/volumes/refseqAd = "."
+/repository/user/ad/public/apps/sra/volumes/sraAd = "."
+/repository/user/ad/public/apps/sraPileup/volumes/ad = "."
+/repository/user/ad/public/apps/sraRealign/volumes/ad = "."
+/repository/user/ad/public/root = "."
+/repository/user/default-path = "/home/shiny/ncbi"
