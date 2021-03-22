@@ -167,6 +167,8 @@ Run TIMEOR
 Then simply follow the prompts. Fill out the **grey** boxes to begin
 interacting with each stage and tab. 
 
+**NOTE** While processing, stay on that page. No need to push buttons multiple times. For each new analysis, refresh or exit and revisit website.
+
 #### Input file types:
 
   \* **SraRunTable from GEO** follow instructions in TIMEOR first tab
@@ -188,7 +190,9 @@ interacting with each stage and tab.
 ## Run TIMEOR from Raw Data: Starting from .fastq Time-Series RNA-seq
 This tutorial uses a subset of real data used in the TIMEOR publication to
 take the user through TIMEOR's "Process Raw Data" tab. You will first see this pop-up. Please read.
-There are 4 steps.
+There are 4 steps. In this tutorial we will process these data [(here)](https://github.com/ashleymaeconard/TIMEOR/tree/master/demos/real_data_subset/timeor/data), which you can download and process again. 
+
+**NOTE** While processing, stay on that page. No need to push buttons multiple times. For each new analysis, refresh or exit and revisit website. 
 
 <p>
      
@@ -288,9 +292,11 @@ There are 4 steps.
 
 ## Run TIMEOR Using Simulated Data: Starting from Read Count Matrix
 
-This tutorial uses simulaated data and takes the user through TIMEOR’s full
-functionality beginning from a read count matrix (genes x sample/time). **NOTE**: figures with two panels are the same page,
-just split. There are 20 steps.
+This tutorial uses simulated data and takes the user through TIMEOR’s full
+functionality beginning from a read count matrix (genes x sample/time). **NOTE** figures with two panels are the same page,
+just split. There are 20 steps. In this tutorial we will process these data [(here)](https://github.com/ashleymaeconard/TIMEOR/tree/master/demos/simulated_data/timeor/data), which you can download and process again. 
+
+**NOTE** While processing, stay on that page. No need to push buttons multiple times. For each new analysis, refresh or exit and revisit website.
 
 **The user can begin this tutorial before *or* after following ["Run TIMEOR from Raw Data: Starting from .fastq Time-Series RNA-seq"](#run-timeor-from-raw-data-starting-from-fastq-time-series-rna-seq).**
 
