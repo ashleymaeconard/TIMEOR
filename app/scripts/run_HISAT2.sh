@@ -1,3 +1,4 @@
+#!/bin/bash
 # run_HISAT2.sh
 # Ashley Mae Conard
 # Last Mod. 7/11/2019

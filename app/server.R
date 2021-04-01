@@ -2791,7 +2791,7 @@ function(input, output, session) {
       paste("timeor", "tar", "gz", sep = ".")
     },
     content = function(folderName) {
-      command <- paste("tar -czvf ", local_results_folder(),"/timeor.tar.gz ",local_results_folder(),"/timeor", sep = "")
+      command <- paste("tar -czvf ", local_results_folder(),"/timeor.tar.gz ",local_results_folder(),"/timeor/results", sep = "")
       cat(command)
       system(paste("tar --usage", "> /tmp/file_output.txt",  sep=" "))# , intern = TRUE)
       system(command)
