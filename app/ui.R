@@ -12,6 +12,7 @@ library(shinyalert)
 library(shinyWidgets)
 library(shinycssloaders)
 library(knitr)
+options(shiny.sanitize.errors = FALSE)
 
 # Displaying TIMEOR logo
 title <-

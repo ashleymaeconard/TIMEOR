@@ -25,6 +25,7 @@ library(vegan)
 library(promises)
 library(future)
 plan(multiprocess)
+options(shiny.sanitize.errors = FALSE)
 
 # Set app dir
 app_dir <- getwd()
@@ -841,8 +842,7 @@ function(input, output, session) {
     # Show checkmark for quality control finished
     output$textCheckMark_qc <- renderText({
       req(qcDone())
-      session$sendCustomMessage(type = 'print',
-                                message = list(selector = 'textCheckMark_qc', html = "✓"))
+      session$sendCustomMessage(type = 'print', message = list(selector = 'textCheckMark_qc', html = "✓"))
       return("✓")
     })
   })
@@ -1391,7 +1391,8 @@ function(input, output, session) {
         countMatrix_filepath(),
         path_to_output,
         analysis_folder_name(),
-        adj_p_analysis_folder()
+        adj_p_analysis_folder(),
+        input$organism
       )
     print(command)
     system(command, intern = TRUE)
@@ -1418,7 +1419,8 @@ function(input, output, session) {
         norm_corr_countMatrix_filepath(),
         path_to_output,
         analysis_folder_name(),
-        adj_p_analysis_folder()
+        adj_p_analysis_folder(),
+        input$organism 
       )
     print(command)
     system(command, intern = TRUE)

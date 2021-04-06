@@ -6,11 +6,11 @@
 # Input arguments
 args = commandArgs(trailingOnly=TRUE)
 if (length(args)==0) {
-  stop("Type:next_MaSigPro.r /FULL/PATH/TO/METDATA_FILE/ /FULL/PATH/TO/COUNT_MATRIX_FILE/ (normalized and corrected) /FULL/PATH/TO/OUTPUTDIR/ RESULT_FOLDER_NAME (e.g. insulin_stim) PVAL_THRESH", call.=FALSE)
-} else if (length(args) == 5) {
+  stop("Type:next_MaSigPro.r /FULL/PATH/TO/METDATA_FILE/ /FULL/PATH/TO/COUNT_MATRIX_FILE/ (normalized and corrected) /FULL/PATH/TO/OUTPUTDIR/ RESULT_FOLDER_NAME (e.g. insulin_stim) PVAL_THRESH ORGANISM", call.=FALSE)
+} else if (length(args) == 6) {
     cat("Passed in:", args,"\n")
 } else{
-    stop("Pass in 5 arguments. Type:next_MaSigPro.r /FULL/PATH/TO/METDATA_FILE/ /FULL/PATH/TO/COUNT_MATRIX_FILE/ (normalized and corrected) /FULL/PATH/TO/OUTPUTDIR/ RESULT_FOLDER_NAME (e.g. insulin_stim) PVAL_THRESH")
+    stop("Pass in 6 arguments. Type:next_MaSigPro.r /FULL/PATH/TO/METDATA_FILE/ /FULL/PATH/TO/COUNT_MATRIX_FILE/ (normalized and corrected) /FULL/PATH/TO/OUTPUTDIR/ RESULT_FOLDER_NAME (e.g. insulin_stim) PVAL_THRESH ORGANISM")
 }
 
 METADATA <- args[1] 
@@ -18,16 +18,32 @@ COUNTDATA <- args[2]
 OUTDIR <- args[3]
 RES_FOLDER <- args[4]
 PVAL_THRESH <- as.numeric(args[5])
+ORGANISM <- args[6]
 
 # Import libraries
 library(maSigPro)
 library(MASS)
-require(org.Dm.eg.db)
 library(dplyr)
 library(tidyverse)
 library(tibble)
 library(data.table)
-source("./scripts/geneID_converter.r", local=TRUE)
+
+# Assigning organism library
+if(ORGANISM=="dme"){
+    ORG_DB="org.Dm.eg.db"
+    source("./scripts/geneID_converter.r", local=TRUE)
+} else if(ORGANISM=="hsa"){
+    require(biomaRt)
+    ORG_DB="org.Hs.eg.db"
+    mart <- useDataset("hsapiens_gene_ensembl", useMart("ensembl"))
+}else if(ORGANISM=="mmu"){
+    require(biomaRt)
+    ORG_DB="org.Mm.eg.db"
+    mart <- useDataset("mmusculus_gene_ensembl", useMart("ensembl"))
+} else{
+    stop("Please enter dme (Drosophila melanogaster), hsa (Homo sapiens), or mmu (Mus musculus)")
+}
+library(ORG_DB, character.only = TRUE) # organism database library
 
 # Import metaData
 metaData <- read.csv(file=METADATA,row.names=1)
@@ -70,13 +86,14 @@ write("fit", stderr())
 # Finding significant differences
 tstep <- T.fit(fit, step.method = "backward", alfa = as.numeric(PVAL_THRESH))
 write("tstep", stderr())
+
 # Obtaining lists of significant genes
 sigs <- get.siggenes(tstep, rsq = 0.6, vars = "each")
 
 # Get number of DEGs
 gene_names <- as.list(sigs$summary['independ'])
 write("Number of differentially expressed genes: ", stderr())
-#write(length(gene_names[[1]]), stderr())
+write(length(gene_names[[1]]), stderr())
 
 # Creating temporary dataframe
 fit_select <- as.data.frame(fit$SELEC)
@@ -124,20 +141,32 @@ tmp_clustmap_zs <-as.data.frame(t(apply(de_expr_df, 1, scale)))
 colnames(tmp_clustmap_zs) <- samp_names
 #write(tmp_clustmap_zs, stderr())
 
-# Set database to work with
-gene_ID_database <- toTable(org.Dm.egFLYBASE)
-gene_ID_database_name <- "flybase"
+# Get gene IDS to convert
+gene_id_list <- sub('\\.[0-9]*$', '', rownames(tmp_clustmap_zs))
 
-# Add gene name to resulting dataframe
-ids.type  <- gene_ID_database_name
-ids <- rownames(tmp_clustmap_zs)
-res <- as.vector(get.symbolIDsDm(ids,ids.type))
+if(ORGANISM=="dme"){
+  # Set database to work with
+  gene_ID_database <- toTable(org.Dm.egFLYBASE)
+  gene_ID_database_name <- "flybase"
 
-tmp_clustmap_zs['gene_name'] <- res
-tmp_clustmap_zs$gene_id <- rownames(tmp_clustmap_zs)
-#write(head(tmp_clustmap_zs), stderr())
+  # Add gene name to resulting dataframe
+  ids.type  <- gene_ID_database_name
+  ids <- gene_id_list
+  res <- as.vector(get.symbolIDsDm(ids,ids.type))
+  tmp_clustmap_zs['gene_name'] <- res
+  tmp_clustmap_zs$gene_id <- rownames(tmp_clustmap_zs)
+  clustermap_zscore <- tmp_clustmap_zs %>% dplyr::select(gene_name, gene_id, everything())
 
-clustermap_zscore <- tmp_clustmap_zs %>% dplyr::select(gene_name, gene_id, everything())
+} else if(ORGANISM=="hsa" || ORGANISM=="mmu"){
+  bm_ids <- getBM(attributes = c('ensembl_gene_id', 'external_gene_name'), filters = 'ensembl_gene_id', values = gene_id_list, mart = mart)
+  gene_tmp_clustmap_zs <- merge(tmp_clustmap_zs, bm_ids, by.x=0, by.y="ensembl_gene_id")
+  gene_id_name_clustmap_zs <- gene_tmp_clustmap_zs %>% plyr::rename(c(Row.names = "gene_id", external_gene_name = "gene_name"))
+  clustermap_zscore <- gene_id_name_clustmap_zs %>% dplyr::select(gene_name, gene_id, everything())
+ 
+} else{
+    stop("Please enter dme (Drosophila melanogaster), hsa (Homo sapiens), or mmu (Mus musculus)")
+}
+
 # Check if NA in gene_name, copy gene_id in its place
 if (NA %in% clustermap_zscore$gene_name){
   clustermap_zscore$gene_name <- ifelse(is.na(clustermap_zscore$gene_name), clustermap_zscore$gene_id, clustermap_zscore$gene_name)
@@ -155,4 +184,3 @@ if (!dir.exists(FULL_OUTDIR)){
 outputLoc <- paste("NextMaSigPro results are here: ", FULL_OUTDIR)
 write(outputLoc, stderr())
 write.csv(clustermap_zscore,paste(FULL_OUTDIR,paste('nextMaSigPro_clustermapInput_padj',toString(PVAL_THRESH),'.csv',sep=""),sep='/'), row.names=FALSE, quote=FALSE)
-
