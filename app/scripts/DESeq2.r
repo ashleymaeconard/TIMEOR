@@ -99,7 +99,7 @@ run_DESeq2 <- function(METDATA, COUNTDATA, OUTPUTDIR, CONDITION, BATCH_EFFECT, T
     print(ids_to_keep)
     col.num <- which(colnames(countData1) %in% ids_to_keep)
     countData <- countData1[,col.num]
-    #countData <- countData[ , order(names(countData))]
+    countData <- countData1[,rownames(metaData)] #countData[ , order(names(countData))]
     print(head(countData))
 
     # Check that all row names for metaData match column names for countData
