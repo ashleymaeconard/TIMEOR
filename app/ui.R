@@ -90,6 +90,13 @@ function(request) {
             icon = icon("download"),
             downloadButton("downloadResultsFolder", "Download results", style =
                              "width:90%;color:#444")
+          ),
+          menuItem(
+            "Download Log File",
+            tabName = "logFile",
+            icon = icon("download"),
+            downloadButton("downloadLogFile", "Download log file", style =
+                             "width:90%;color:#444")
           )
         )
       ),
@@ -110,47 +117,8 @@ function(request) {
           tabItem(tabName = "pre-process",
                   tabsetPanel(
                     tabPanel(
-                      "Process Raw Data",
+                      "Set Input and Defaults, Process Raw Data",
                       fluidRow(
-                        box(
-                          
-                          # Search and retrieve text within upper leftmost app body within Process Raw Data Tab
-                          titlePanel(h3("Search and Retrieve")),
-                          width = 6,
-                          h4(
-                            "Processing your own data? Jump to step 4 to load your metadata file, answer 6 questions on the right panel, then proceed to the 'Process Count Matrix' tab."
-                          ),
-                          tags$hr(), # horizontal line 
-                          h4(
-                            "1. Go to ",
-                            tags$a(href = "https://www.ncbi.nlm.nih.gov/sra", "GEO", target = "_blank"),
-                            "to search for a time series RNA-seq dataset."
-                          ),
-                          h4("2. Click on \"SRA Run Selector\" on bottom right."),
-                          h4(
-                            "3. Download data (all or selected replicates) by clicking on \"Metadata\" under \"Select\"."
-                          ),
-                          h4(
-                            "4. Set input file type to either the resulting \"SraRunTable.txt\" or a pre-made metadata file."
-                          ),
-                          switchInput(
-                            inputId = "sra_or_meta",
-                            label = "Input file",
-                            onLabel = "Metadata",
-                            offLabel = "SraRunTable"
-                          ),
-                          h4("5. Upload input file. Note: SraRunTables are automatically converted to metadata files."),
-                          fileInput(
-                            "metadataFile",
-                            label = NULL,
-                            accept = c(
-                              "text/csv",
-                              "text/comma-separated-values,text/plain",
-                              ".txt"
-                            )
-                          ),
-                          DT::dataTableOutput("metadataTable"),
-                          style="background: #E8E8E8"),
                         box(style="background: #E8E8E8",
                           
                           # Determine adaptive default parameters text within upper rightmost app body within Process Raw Data Tab
@@ -174,7 +142,8 @@ function(request) {
                             choices = c(
                               "Select a sequencing type" = "NA",
                               "Paired-end" = "pe",
-                              "Single-end" = "se"
+                              "Single-end" = "se",
+                              "Not applicable" = "matrix"
                             )
                           ),
                           h4("3. What type of experiment?"),
@@ -216,15 +185,56 @@ function(request) {
                             label = NULL,
                             selected = "1",
                             choices = c("1", "2", "3", "4", "5", "6", "7")
+                          )
+                        ),
+                        box(
+                          
+                          # Search and retrieve text within upper leftmost app body within Process Raw Data Tab
+                          titlePanel(h3("Input Data")),
+                          width = 6,
+                          h4(
+                            "Processing your own data? TIMEOR accepts read count tables. After answering 6 questions (left panel), jump to steps 4 and 5 to load your metadata file and press 'Run'."
                           ),
+                          tags$hr(), # horizontal line 
+                          h4(
+                            "1. If processing raw data, GEO data is available by going to ",
+                            tags$a(href = "https://www.ncbi.nlm.nih.gov/sra", "GEO", target = "_blank"),
+                            "to search for a time series RNA-seq dataset."
+                          ),
+                          h4("2. Click on \"SRA Run Selector\" on bottom right."),
+                          h4(
+                            "3. Download data (all or selected replicates) by clicking on \"Metadata\" under \"Select\"."
+                          ),
+                          h4(
+                            "4. Set input file type to either the resulting \"SraRunTable.txt\" or a pre-made metadata file."
+                          ),
+                          switchInput(
+                            inputId = "sra_or_meta",
+                            label = "Input file",
+                            onLabel = "Metadata",
+                            offLabel = "SraRunTable"
+                          ),
+                          h4("5. Upload input file. Note: SraRunTables are automatically converted to metadata files. Ensure resulting metadata file matches TIMEOR specifications in tutorial. Download results folder to change file as needed."),
+                          fileInput(
+                            "metadataFile",
+                            label = NULL,
+                            accept = c(
+                              "text/csv",
+                              "text/comma-separated-values,text/plain",
+                              ".txt"
+                            )
+                          ),
+                          DT::dataTableOutput("metadataTable"),
                           actionButton("run_adaptive_defaults", label = "Run"),
                           htmlOutput("dataProcessType"), tags$head(tags$style("#dataProcessType{color: #377BB5;
                                  font-size: 18px;text-align: center; font-weight: bold}")
-                          )
-                        )
+                          ),
+                          style="background: #E8E8E8")
                       ),
                       tags$hr(style = "border-color: black;"), # horizontal line 
-                      
+                      fluidRow(height=50, 
+                              box(width=12, h3("Process Raw Data"), "Fields below are filled if raw data are processed. With a 10GB upload limit, it is advised that larger datasets be processed locally using Docker. For ready-to-use image type '$docker pull ashleymaeconard/timeor:latest' in the console.",style="background: #E8E8E8")),
+
                       # Process, quality control, and alignment quality text within lower leftmost text in app body within Process Raw Data Tab
                       fluidRow(
                         box(

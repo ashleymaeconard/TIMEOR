@@ -6,11 +6,11 @@
 # Checking input arguments
 args = commandArgs(trailingOnly=TRUE)
 if (length(args)==0) {
-  stop("Type:ImpulseDE2.r /FULL/PATH/TO/METDATA_FILE/ /FULL/PATH/TO/COUNT_MATRIX_FILE/ (not normalized and corrected) /FULL/PATH/TO/OUTPUTDIR/ RES_FOLDER (e.g. insulin_stim) PVAL_THRESH ORGANISM", call.=FALSE)
+    write("Type:ImpulseDE2.r /FULL/PATH/TO/METDATA_FILE/ /FULL/PATH/TO/COUNT_MATRIX_FILE/ (not normalized and corrected) /FULL/PATH/TO/OUTPUTDIR/ RES_FOLDER (e.g. insulin_stim) PVAL_THRESH ORGANISM", call.=FALSE, , stderr())
 } else if (length(args) == 6) {
     cat("Passed in:", args,"\n")
 } else{
-    stop("Pass in 6 arguments. Type:ImpulseDE2.r /FULL/PATH/TO/METDATA_FILE/ /FULL/PATH/TO/COUNT_MATRIX_FILE/ (not normalized and corrected) /FULL/PATH/TO/OUTPUTDIR/ RES_FOLDER (e.g. insulin_stim) PVAL_THRESH ORGANISM")
+    write("Pass in 6 arguments. Type:ImpulseDE2.r /FULL/PATH/TO/METDATA_FILE/ /FULL/PATH/TO/COUNT_MATRIX_FILE/ (not normalized and corrected) /FULL/PATH/TO/OUTPUTDIR/ RES_FOLDER (e.g. insulin_stim) PVAL_THRESH ORGANISM", stderr())
 }
 
 # Input arguments
@@ -47,16 +47,18 @@ library(zoo)
 # Assigning organism library
 if(ORGANISM=="dme"){
     ORG_DB="org.Dm.eg.db"
-} else if(ORGANISM=="hsa"){
+} else if(ORGANISM=="hse"){
+    ORGANISM="hsa"
     require(biomaRt)
     ORG_DB="org.Hs.eg.db"
     mart <- useDataset("hsapiens_gene_ensembl", useMart("ensembl"))
-}else if(ORGANISM=="mmu"){
+}else if(ORGANISM=="mus"){
+    ORGANISM="mmu"
     require(biomaRt)
     ORG_DB="org.Mm.eg.db"
     mart <- useDataset("mmusculus_gene_ensembl", useMart("ensembl"))
 } else{
-    stop("Please enter dme (Drosophila melanogaster), hsa (Homo sapiens), or mmu (Mus musculus)")
+    write("Please enter dme (Drosophila melanogaster), hsa (Homo sapiens), or mmu (Mus musculus)", stderr())
 }
 library(ORG_DB, character.only = TRUE) # organism database library
 
@@ -106,7 +108,7 @@ if(ORGANISM=="dme"){
   df_IDE2_filtpadj_sym_front<- df_IDE2_filtpadj_sym[ , !(names(df_IDE2_filtpadj_sym) %in% to_drop)]
   
 } else{
-    stop("Please enter dme (Drosophila melanogaster), hsa (Homo sapiens), or mmu (Mus musculus)")
+    write("Please enter dme (Drosophila melanogaster), hsa (Homo sapiens), or mmu (Mus musculus)", stderr())
 }
 
 # Create heatmap object
@@ -135,7 +137,7 @@ if(ORGANISM=="dme"){
   traj_df4_tmp2 <- traj_df4_tmp%>%plyr::rename(c(external_gene_name="gene_name")) 
 
 } else{
-    stop("Please enter dme (Drosophila melanogaster), hsa (Homo sapiens), or mmu (Mus musculus)")
+    write("Please enter dme (Drosophila melanogaster), hsa (Homo sapiens), or mmu (Mus musculus)", stderr())
 }
 
 traj_df3 <- traj_df4_tmp2 %>% dplyr::select(gene_id, gene_name, everything()) # move names to front

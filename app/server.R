@@ -31,7 +31,7 @@ options(shiny.sanitize.errors = FALSE)
 app_dir <- getwd()
 
 # Set maximum file size upload to app
-options(shiny.maxRequestSize = 1000 * 1024 ^ 2)
+options(shiny.maxRequestSize = 10000 * 1024 ^ 2)
 
 source(paste(app_dir, "/scripts/clustermap_function.r", sep = ""))
 source(paste(app_dir, "/scripts/DESeq2.r", sep = ""))
@@ -98,14 +98,14 @@ function(input, output, session) {
   shinyalert("Welcome, it's about time!
               Quick start:",
               "TIMEOR accepts 2 input types: 
-              (1) raw .fastq files
+              (1) raw .fastq files,
               (2) read count matrix. 
               
               For (1) in 'Example Data' (side-bar) under
 
               'Load raw data' click 'SraRunTable & .fastq files' button.
               
-              This will guide you through the 'Process Raw Data' tab demo.
+              This will guide you through the 'Set Inputs and Defaults, Process Raw Data' tab demo.
               
               This website is free and open for everyone!",
             type = "info"
@@ -514,7 +514,7 @@ function(input, output, session) {
         (input$experiment == "NA")) {
       shinyalert(
         "Please answer questions.",
-        "Please load data and then select the organism, sequencing and experiment type.",
+        "Please select at least the organism, sequencing, and experiment type, then load metadata or SraRunTable.txt.",
         type = "error"
       )
     } else{
@@ -1027,10 +1027,10 @@ function(input, output, session) {
     req(input$runGenCountMat)
     if(real_demo_data()){ # if using demo data for preprocessing tab
       shinyalert("Quick start:",
-                    "You completed the 'Process Raw Data' tab demo.
+                    "You completed the 'Set Inputs and Defaults, Process Raw Data' tab demo.
                     
                     TIMEOR accepts 2 input types: 
-                    (1) raw .fastq files
+                    (1) raw .fastq files,
                     (2) read count matrix. 
                 
                     For (2) in 'Example Data' (side-bar) under
@@ -1042,7 +1042,7 @@ function(input, output, session) {
                   )
       }else{
         shinyalert("Quick start:",
-                    "You completed the 'Process Raw Data' tab.
+                    "You completed the 'Set Inputs and Defaults, Process Raw Data' tab.
                     
                     TIMEOR is producing the merged read count 
                     matrix. When it is finished, you will see 
@@ -1213,9 +1213,9 @@ function(input, output, session) {
   output$pcaScatBefore <- renderPlotly({
     req(data_count_matrix())
     dataSubset <- data_count_matrix() %>%
-      dplyr::select(-starts_with("FlyBaseID"))
+      dplyr::select(-starts_with("ID"))
     p <-
-      autoplotly(prcomp(dataSubset), data = data_count_matrix(), frame = FALSE)
+      autoplotly(prcomp(dataSubset), data = data_count_matrix(), label = TRUE, frame = FALSE, label.show.legend = FALSE)
     p
   })
   
@@ -1228,27 +1228,29 @@ function(input, output, session) {
   })
   
   # Rendering correlation plot
-  output$correlationBefore <- renderPlotly({
-    req(data_count_matrix())
-    req(input$correMethodBefore)
-    val <- input$correMethodBefore
-    if (input$correMethodBefore == "Spearman") {
-      val <- "spearman"
-    } else {
-      val <- "pearson"
-    }
-    p <- heatmaply(
-      cor(df_count_matrix(), method = c(val)),
-      xlab = "Experiments",
-      ylab = "Experiments",
-      main = paste(
-        input$correMethodBefore,
-        "Correlation Between Experiments"
-      ),
-      margins = c(40, 40),
-      limits = c(-1, 1),
-      scale_fill_gradient_fun = ggplot2::scale_fill_gradient2(low = "blue", high = "red")
-    )
+  observeEvent(input$correMethodBefore, {
+    output$correlationBefore <- renderPlotly({
+      req(data_count_matrix())
+      req(input$correMethodBefore)
+      val <- input$correMethodBefore
+      if (input$correMethodBefore == "Spearman") {
+        val <- "spearman"
+      } else {
+        val <- "pearson"
+      }
+      p <- heatmaply(
+        cor(df_count_matrix(), method = c(val)),
+        xlab = "Experiments",
+        ylab = "Experiments",
+        main = paste(
+          input$correMethodBefore,
+          "Correlation Between Experiments"
+        ),
+        margins = c(40, 40),
+        limits = c(-1, 1),
+        scale_fill_gradient_fun = ggplot2::scale_fill_gradient2(low = "blue", high = "red")
+      )
+    })
   })
   
   #################### Pre-Process Stage ##################
@@ -1314,7 +1316,6 @@ function(input, output, session) {
     req(outputCorrectedData())
     dataSubset <- correctedData %>%
       dplyr::select(-starts_with("ID"))
-    print("p")
     p <-
       autoplotly(prcomp(dataSubset), data = correctedData, frame = FALSE)
     p
@@ -1334,27 +1335,28 @@ function(input, output, session) {
   })
   
   # Output correlation plot after normalization and correction
-  output$correlationAfter <- renderPlotly({
-    req(input$runCorrection)
-    req(input$correMethodAfter)
-    req(outputCorrectedData())
-    val <- input$correMethodAfter
-    if (input$correMethodBefore == "Spearman") {
-      val <- "spearman"
-    } else {
-      val <- "pearson"
-    }
-    p <- heatmaply(
-      cor(correctedData, method = c(val)),
-      xlab = "Experiments",
-      ylab = "Experiments",
-      main = paste(input$correMethodAfter, "Correlation Between Experiments"),
-      margins = c(40, 40),
-      limits = c(-1, 1),
-      scale_fill_gradient_fun = ggplot2::scale_fill_gradient2(low = "blue", high = "red")
-    )
+  observeEvent(input$correMethodAfter, {
+    output$correlationAfter <- renderPlotly({
+      req(input$runCorrection)
+      req(input$correMethodAfter)
+      req(outputCorrectedData())
+      val <- input$correMethodAfter
+      if (input$correMethodBefore == "Spearman") {
+        val <- "spearman"
+      } else {
+        val <- "pearson"
+      }
+      p <- heatmaply(
+        cor(correctedData, method = c(val)),
+        xlab = "Experiments",
+        ylab = "Experiments",
+        main = paste(input$correMethodAfter, "Correlation Between Experiments"),
+        margins = c(40, 40),
+        limits = c(-1, 1),
+        scale_fill_gradient_fun = ggplot2::scale_fill_gradient2(low = "blue", high = "red")
+      )
+    })
   })
-  
   #################### Primary Analysis ##################
   
   output$deParameters <- renderText({
@@ -1481,7 +1483,7 @@ function(input, output, session) {
     runNextMaSigPro()
     print("Run DESeq2")
     runDESeq2()
-    print("Completed running of ImpulseDE2, NextMaSigPro, and DESeq2.")
+    print("Completed running of ImpulseDE2, next MaSigPro, and DESeq2.")
   }
   
   # Run differential expression (DE) method(s) depending on user input
@@ -1608,8 +1610,23 @@ function(input, output, session) {
         "_results/www/",
         sep = ""
       )
+    
+    # Identify if method(s) returned no differentially expressed genes
+    if(!file.exists(impulseDE2File())){
+      impulseDE2File("empty")
+    } 
+    if(!file.exists(nextMaSigProFile())){
+      nextMaSigProFile("empty")
+    }
+    if(!file.exists(deSeqFile())){
+      deSeqFile("empty")
+    }
+
+    # Script
     script <-
       paste("Rscript ", app_dir, "/scripts/venns_intervene.r", sep = "")
+    
+    # Command
     command <-
       paste(
         script,
@@ -2798,6 +2815,19 @@ function(input, output, session) {
       system(paste("tar --usage", "> /tmp/file_output.txt",  sep=" "))# , intern = TRUE)
       system(command)
       file.copy(paste(local_results_folder(), "/timeor.tar.gz", sep = ""), folderName)},
+      contentType = "application/octet-stream"
+  )
+
+  output$downloadLogFile <- downloadHandler(
+    filename = function() {
+      paste("timeor_logs", "tar", "gz", sep=".")
+    },
+    content = function(folderName) {
+      command <- paste("tar -czvf", paste(local_results_folder(),"/timeor_logs.tar.gz", sep=""),"/var/log/shiny-server/", sep = " ")
+      cat(command)
+      system(paste("tar --usage", "> /tmp/file_output.txt",  sep=" "))# , intern = TRUE)
+      system(command)
+      file.copy(paste(local_results_folder(), "/timeor_logs.tar.gz", sep = ""), folderName)},
       contentType = "application/octet-stream"
   )
 }

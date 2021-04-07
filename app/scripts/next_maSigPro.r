@@ -6,11 +6,11 @@
 # Input arguments
 args = commandArgs(trailingOnly=TRUE)
 if (length(args)==0) {
-  stop("Type:next_MaSigPro.r /FULL/PATH/TO/METDATA_FILE/ /FULL/PATH/TO/COUNT_MATRIX_FILE/ (normalized and corrected) /FULL/PATH/TO/OUTPUTDIR/ RESULT_FOLDER_NAME (e.g. insulin_stim) PVAL_THRESH ORGANISM", call.=FALSE)
+    write("Type:next_MaSigPro.r /FULL/PATH/TO/METDATA_FILE/ /FULL/PATH/TO/COUNT_MATRIX_FILE/ (normalized and corrected) /FULL/PATH/TO/OUTPUTDIR/ RESULT_FOLDER_NAME (e.g. insulin_stim) PVAL_THRESH ORGANISM", call.=FALSE, stderr())
 } else if (length(args) == 6) {
     cat("Passed in:", args,"\n")
 } else{
-    stop("Pass in 6 arguments. Type:next_MaSigPro.r /FULL/PATH/TO/METDATA_FILE/ /FULL/PATH/TO/COUNT_MATRIX_FILE/ (normalized and corrected) /FULL/PATH/TO/OUTPUTDIR/ RESULT_FOLDER_NAME (e.g. insulin_stim) PVAL_THRESH ORGANISM")
+    write("Pass in 6 arguments. Type:next_MaSigPro.r /FULL/PATH/TO/METDATA_FILE/ /FULL/PATH/TO/COUNT_MATRIX_FILE/ (normalized and corrected) /FULL/PATH/TO/OUTPUTDIR/ RESULT_FOLDER_NAME (e.g. insulin_stim) PVAL_THRESH ORGANISM", stderr())
 }
 
 METADATA <- args[1] 
@@ -32,16 +32,18 @@ library(data.table)
 if(ORGANISM=="dme"){
     ORG_DB="org.Dm.eg.db"
     source("./scripts/geneID_converter.r", local=TRUE)
-} else if(ORGANISM=="hsa"){
+} else if(ORGANISM=="hse"){
+    ORGANISM="hsa"
     require(biomaRt)
     ORG_DB="org.Hs.eg.db"
     mart <- useDataset("hsapiens_gene_ensembl", useMart("ensembl"))
-}else if(ORGANISM=="mmu"){
+}else if(ORGANISM=="mus"){
+    ORGANISM="mmu"
     require(biomaRt)
     ORG_DB="org.Mm.eg.db"
     mart <- useDataset("mmusculus_gene_ensembl", useMart("ensembl"))
 } else{
-    stop("Please enter dme (Drosophila melanogaster), hsa (Homo sapiens), or mmu (Mus musculus)")
+    write("Please enter dme (Drosophila melanogaster), hsa (Homo sapiens), or mmu (Mus musculus)", stderr())
 }
 library(ORG_DB, character.only = TRUE) # organism database library
 
@@ -164,7 +166,7 @@ if(ORGANISM=="dme"){
   clustermap_zscore <- gene_id_name_clustmap_zs %>% dplyr::select(gene_name, gene_id, everything())
  
 } else{
-    stop("Please enter dme (Drosophila melanogaster), hsa (Homo sapiens), or mmu (Mus musculus)")
+    write("Please enter dme (Drosophila melanogaster), hsa (Homo sapiens), or mmu (Mus musculus)", stderr())
 }
 
 # Check if NA in gene_name, copy gene_id in its place

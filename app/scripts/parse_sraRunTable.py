@@ -98,6 +98,7 @@ def create_metadata_and_accession():
     # Save SRA accession list and metadata files.
     sraRunTable_df.Run.to_csv(DIR+"/timeor/data/SraAccList.csv", index=False)
     sraRunTable_df.to_csv(DIR+"/timeor/data/metadata.csv", index=False)
+    sraRunTable_df.to_csv(DIR+"/timeor/results/metadata.csv", index=False)
     print("Saved metadata file and SRA accession list here:",DIR+"/timeor/data/SraAccList.csv")
     return(sraRunTable_df)
 

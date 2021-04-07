@@ -22,16 +22,18 @@ run_DESeq2 <- function(METDATA, COUNTDATA, OUTPUTDIR, CONDITION, BATCH_EFFECT, T
         ORG_DB="org.Dm.eg.db"
         source("./scripts/geneID_converter.r", local=TRUE)
         ids.type  <- "flybase"
-    } else if(ORGANISM=="hsa"){
+    } else if(ORGANISM=="hse"){
+        ORGANISM="hsa"
         require(biomaRt)
         ORG_DB="org.Hs.eg.db"
         mart <- useDataset("hsapiens_gene_ensembl", useMart("ensembl"))
-    }else if(ORGANISM=="mmu"){
+    }else if(ORGANISM=="mus"){
+        ORGANISM="mmu"
         require(biomaRt)
         ORG_DB="org.Mm.eg.db"
         mart <- useDataset("mmusculus_gene_ensembl", useMart("ensembl"))
     } else{
-        stop("Please enter dme (Drosophila melanogaster), hsa (Homo sapiens), or mmu (Mus musculus)")
+        write("Please enter dme (Drosophila melanogaster), hsa (Homo sapiens), or mmu (Mus musculus)", stderr())
     }
     library(ORG_DB, character.only = TRUE) # organism database library
 
@@ -177,19 +179,17 @@ run_DESeq2 <- function(METDATA, COUNTDATA, OUTPUTDIR, CONDITION, BATCH_EFFECT, T
     ids <- rownames(res)
     
     if(ORGANISM=="dme"){
-        print("HEREEEEE")
         res['gene_id'] <- rownames(res)
         res$gene_name <- as.vector(get.symbolIDsDm(ids,ids.type))
         res_sym_front <- as.data.frame(res) %>% dplyr::select(gene_name, gene_id, everything())    
 
     } else if(ORGANISM=="hsa" || ORGANISM=="mmu"){
-        print("2HEREEEEE")
         bm_ids <- getBM(attributes = c('ensembl_gene_id', 'external_gene_name'), filters = 'ensembl_gene_id', values = ids, mart = mart)
         res_df <- merge(as.data.frame(res), bm_ids, by.x=0, by.y="ensembl_gene_id")
         res_df_tmp <- res_df %>% plyr::rename(c(Row.names = "gene_id", external_gene_name = "gene_name"))
         res_sym_front <- res_df_tmp %>% dplyr::select(gene_name, gene_id, everything())
     } else{
-        stop("Please enter dme (Drosophila melanogaster), hsa (Homo sapiens), or mmu (Mus musculus)")
+        write("Please enter dme (Drosophila melanogaster), hsa (Homo sapiens), or mmu (Mus musculus)", stderr())
     }
 
     # Creating clustermap inputs for no shrinkage
@@ -209,18 +209,16 @@ run_DESeq2 <- function(METDATA, COUNTDATA, OUTPUTDIR, CONDITION, BATCH_EFFECT, T
     df_mat['gene_id'] <- idsM
     
     if(ORGANISM=="dme"){
-        print("what?")
         df_mat$gene_name <- as.vector(get.symbolIDsDm(idsM,ids.type))
         df_mat_sym_front <- as.data.frame(df_mat) %>% dplyr::select(gene_name, gene_id, everything()) 
     
     } else if(ORGANISM=="hsa" || ORGANISM=="mmu"){
-        print("what?/??")
         bm_ids <- getBM(attributes = c('ensembl_gene_id', 'external_gene_name'), filters = 'ensembl_gene_id', values = ids, mart = mart)
         df_mat_tmp <- merge(data.frame(df_mat),data.frame(bm_ids), by.x="gene_id", by.y="ensembl_gene_id")
         df_mat_gene_name_tmp <- df_mat_tmp%>%plyr::rename(c(external_gene_name ="gene_name"))
         df_mat_sym_front <- as.data.frame(df_mat_gene_name_tmp) %>% dplyr::select(gene_name, gene_id, everything())
     } else{
-        stop("Please enter dme (Drosophila melanogaster), hsa (Homo sapiens), or mmu (Mus musculus)")
+        write("Please enter dme (Drosophila melanogaster), hsa (Homo sapiens), or mmu (Mus musculus)", stderr())
     }
 
     # Check if NA in gene_name, copy gene_id in its place
