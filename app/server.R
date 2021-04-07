@@ -1209,20 +1209,43 @@ function(input, output, session) {
     p
   })
   
+  what <- function(){
+    #write("HEREEE", stderr())
+    #dump("t.example.1", file = "/src_copy/dumpdata.txt")
+    #write(transpose(data_count_matrix()), stderr())
+    #dataSubset <- data_count_matrix() %>%
+    #dplyr::select(-starts_with("ID"))
+    #cat(dataSubset, sep='',file=stderr())
+    #cat(sprintf(...), sep='', file=stderr()
+    #write(head(transpose(dataSubset)), stderr())
+
+    write("2HEREEE", stderr())
+    count
+    #t_d <- transpose(data_count_matrix())
+    #ldf = lapply(as.list(1:dim(t_d)[1]), function(x) t_d[x[1],])
+    #write(typeof(ldf), stderr())
+    #write(class(ldf), stderr())
+    #to_save <- reactiveValuesToList(ldf)
+    #saveRDS(to_save, file = "/src_copy/saved.rds")
+    #cat(file=stderr(), "drawing histogram with", ldf, "bins", "\n")
+
+  }
+  
   # PCA Scatter Before
   output$pcaScatBefore <- renderPlotly({
     req(data_count_matrix())
+    #what()
     dataSubset <- data_count_matrix() %>%
       dplyr::select(-starts_with("ID"))
     p <-
-      autoplotly(prcomp(dataSubset), data = data_count_matrix(), label = TRUE, frame = FALSE, label.show.legend = FALSE)
+      autoplotly(prcomp(t(dataSubset)), data = t(data_count_matrix()), label = TRUE, frame = FALSE, label.show.legend = FALSE)
     p
   })
   
   # PCA loadings bar plot before normalization
   output$pcaBarBefore <- renderPlot({
     req(data_count_matrix())
-    fviz_eig(prcomp(data_count_matrix()),
+    fviz_eig(prcomp(t(data_count_matrix())),
              addlabels = TRUE,
              ylim = c(0, 100))
   })
@@ -1260,8 +1283,6 @@ function(input, output, session) {
   outputNormalizedData <- reactive({
     req(!is.null(countMatrix_df()))
     req(input$runCorrection)
-    print("outputNoralizedData")
-    
     shinyalert(
       "Completed Pre-processing",
       "Proceed to Primary Analysis (side-bar). 
@@ -1284,7 +1305,7 @@ function(input, output, session) {
   outputCorrectedData <- reactive({
     req(outputNormalizedData())
     req(input$runCorrection)
-    
+
     # Saving corrected read count matrix
     correctedData <<-
       as.data.frame(reconstructData(harmanCorrection(normData, metadata_df()), this = "corrected"))
@@ -1317,7 +1338,7 @@ function(input, output, session) {
     dataSubset <- correctedData %>%
       dplyr::select(-starts_with("ID"))
     p <-
-      autoplotly(prcomp(dataSubset), data = correctedData, label = TRUE, frame = FALSE, label.show.legend = FALSE)
+      autoplotly(prcomp(t(dataSubset)), data = t(correctedData), label = TRUE, frame = FALSE, label.show.legend = FALSE)
     p
   })
   
@@ -1326,7 +1347,7 @@ function(input, output, session) {
     req(input$runCorrection)
     req(outputCorrectedData())
     fviz_eig(
-      prcomp(correctedData),
+      prcomp(t(correctedData)),
       title = "",
       addlabels = TRUE,
       ylim = c(0, 100)
@@ -1637,6 +1658,8 @@ function(input, output, session) {
         past_study_name,
         output_dir
       )
+    write("Venn diagram command:",stderr())
+    write(command,stderr())
     system(command, intern = TRUE)
   }
   
