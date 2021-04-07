@@ -1209,32 +1209,30 @@ function(input, output, session) {
     p
   })
   
-  what <- function(){
-    #write("HEREEE", stderr())
+  test_cat <- function(){
+    write("HEREEE", stderr())
     #dump("t.example.1", file = "/src_copy/dumpdata.txt")
-    #write(transpose(data_count_matrix()), stderr())
-    #dataSubset <- data_count_matrix() %>%
-    #dplyr::select(-starts_with("ID"))
-    #cat(dataSubset, sep='',file=stderr())
-    #cat(sprintf(...), sep='', file=stderr()
-    #write(head(transpose(dataSubset)), stderr())
+    
+    write(transpose(data_count_matrix()), stderr())
+    dataSubset <- data_count_matrix() %>%
+    dplyr::select(-starts_with("ID"))
+    
+    cat(dataSubset, sep='',file=stderr())
 
-    write("2HEREEE", stderr())
-    count
-    #t_d <- transpose(data_count_matrix())
-    #ldf = lapply(as.list(1:dim(t_d)[1]), function(x) t_d[x[1],])
-    #write(typeof(ldf), stderr())
-    #write(class(ldf), stderr())
-    #to_save <- reactiveValuesToList(ldf)
-    #saveRDS(to_save, file = "/src_copy/saved.rds")
-    #cat(file=stderr(), "drawing histogram with", ldf, "bins", "\n")
+    t_d <- transpose(data_count_matrix())
+    ldf = lapply(as.list(1:dim(t_d)[1]), function(x) t_d[x[1],])
+    write(typeof(ldf), stderr())
+    write(class(ldf), stderr())
+    to_save <- reactiveValuesToList(ldf)
+    saveRDS(to_save, file = "/src_copy/saved.rds")
+    cat(file=stderr(), "drawing histogram with", ldf, "bins", "\n")
 
   }
   
   # PCA Scatter Before
   output$pcaScatBefore <- renderPlotly({
     req(data_count_matrix())
-    #what()
+    #test_cat()
     dataSubset <- data_count_matrix() %>%
       dplyr::select(-starts_with("ID"))
     p <-
@@ -1633,15 +1631,9 @@ function(input, output, session) {
       )
     
     # Identify if method(s) returned no differentially expressed genes
-    if(!file.exists(impulseDE2File())){
-      impulseDE2File("empty")
-    } 
-    if(!file.exists(nextMaSigProFile())){
-      nextMaSigProFile("empty")
-    }
-    if(!file.exists(deSeqFile())){
-      deSeqFile("empty")
-    }
+    imp_val <- impulseDE2File()
+    n_val <- nextMaSigProFile()
+    de_val <- deSeqFile()
 
     # Script
     script <-
@@ -1651,9 +1643,9 @@ function(input, output, session) {
     command <-
       paste(
         script,
-        impulseDE2File(),
-        deSeqFile(),
-        nextMaSigProFile(),
+        imp_val,
+        de_val,
+        n_val,
         path_to_prev_study,
         past_study_name,
         output_dir
@@ -1719,13 +1711,18 @@ function(input, output, session) {
     req(!is.null(adj_p_analysis_folder()))
     req(input$runDE)
     
-    
     if (input$whichMethodInput == "ImpulseDE2") {
-      deResult <<- read.csv(impulseDE2_out_file(), header = TRUE)
+        tryCatch(deResult <<- read.csv(impulseDE2_out_file(), header = TRUE),
+          error = function(e) stop("ImpulseDE2 did not find differentially expressed genes.")
+        )
     } else if (input$whichMethodInput == "NextMaSigPro") {
-      deResult <<- read.csv(nextMaSigProFile(), sep = ",", header = TRUE)
+        tryCatch(deResult <<- read.csv(nextMaSigProFile(), sep = ",", header = TRUE),
+          error = function(e) stop("Next maSigPro did not find differentially expressed genes.")
+        )
     } else{
-      deResult <<- read.csv(deSeq_out_file(), sep = ",", header = TRUE)
+        tryCatch(deResult <<- read.csv(deSeq_out_file(), sep = ",", header = TRUE), 
+          error = function(e) stop("DESeq2 did not find differentially expressed genes.")
+        )
     }
     deResult
   }, options = (list(
@@ -1751,11 +1748,20 @@ function(input, output, session) {
       
       # Determine which method (from bottom left of Primary Analysis) to display (on bottom right of Primary Analysis)
       if (input$whichMethodInput == "ImpulseDE2") {
-        clustermap <<- impulseDE2File()
+        tryCatch(clustermap <<- impulseDE2File(),
+          error = function(e) stop("ImpulseDE2 did not find differentially expressed genes.")
+        )
+        
       } else if (input$whichMethodInput == "NextMaSigPro") {
-        clustermap <<- nextMaSigProFile()
+        tryCatch(clustermap <<- nextMaSigProFile(),
+          error = function(e) stop("Next maSigPro did not find differentially expressed genes.")
+        )
+        
       } else if (input$whichMethodInput == "DESeq2") {
-        clustermap <<- deSeqFile()
+        tryCatch(clustermap <<- deSeqFile(),
+          error = function(e) stop("DESeq2 did not find differentially expressed genes.")
+        )
+        
       }
       
       # Setting parameters to call TIMEOR's clustermap script
