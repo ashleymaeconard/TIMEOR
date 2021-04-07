@@ -348,11 +348,11 @@ function(request) {
                       
                       # Show raw read count matrix principal component analysis (PCA)
                       fluidRow(
-                        box(titlePanel(h3("Principal Component Analysis")), height=600,
+                        box(titlePanel(h3("Gene Principal Component Analysis")), height=600,
                             withSpinner(plotlyOutput("pcaScatBefore"))),
                         
                         # Show raw read count matrix replicate (i.e. sample) correlations
-                        box(titlePanel(h3("Replicate Correlations")), height=600,
+                        box(titlePanel(h3("Replicate and Experiment Correlations")), height=600,
                           selectInput(
                             "correMethodBefore",
                             label = "Correlation Methods",
@@ -392,7 +392,7 @@ function(request) {
                           style="background: #E8E8E8"),
                         
                         # Show normalized and corrected read count matrix PCA
-                        box(titlePanel(h3("Principal Component Analysis")), 
+                        box(titlePanel(h3("Gene Principal Component Analysis")), 
                             withSpinner(plotlyOutput("pcaScatAfter")))
                       ),
                       fluidRow(
@@ -402,7 +402,7 @@ function(request) {
                             withSpinner(plotOutput("pcaBarAfter"))),
                         
                         # Show normalized and corrected replicate (i.e. sample) correlations
-                        box(titlePanel(h3("Replicate Correlations")), height=600,
+                        box(titlePanel(h3("Replicate and Experiment Correlations")), height=600,
                           selectInput(
                             "correMethodAfter",
                             label = "Correlation Methods",

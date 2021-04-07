@@ -1317,7 +1317,7 @@ function(input, output, session) {
     dataSubset <- correctedData %>%
       dplyr::select(-starts_with("ID"))
     p <-
-      autoplotly(prcomp(dataSubset), data = correctedData, frame = FALSE)
+      autoplotly(prcomp(dataSubset), data = correctedData, label = TRUE, frame = FALSE, label.show.legend = FALSE)
     p
   })
   
@@ -1341,7 +1341,7 @@ function(input, output, session) {
       req(input$correMethodAfter)
       req(outputCorrectedData())
       val <- input$correMethodAfter
-      if (input$correMethodBefore == "Spearman") {
+      if (input$correMethodAfter == "Spearman") {
         val <- "spearman"
       } else {
         val <- "pearson"
