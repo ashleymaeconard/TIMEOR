@@ -58,20 +58,22 @@ if(ORGANISM=="dme"){
     motifRankings <- importRankings(paste(APP_DIR_redirect,"/genomes_info/dme/dm6-5kb-upstream-full-tx-11species.mc8nr.feather",sep="/"))
     TFS_FILE <- "/genomes_info/dme/tfs_all.txt"
 
-} else if(ORGANISM=="hsa"){
+} else if(ORGANISM=="hse"){
+    ORGANISM = "hsa"
     data("motifAnnotations_hgnc")
     ENCODE_ORG = "Homo sapiens"
     motifRankings <- importRankings(paste(APP_DIR_redirect,"/genomes_info/hsa/hg38__refseq-r80__10kb_up_and_down_tss.mc9nr.feather",sep="/"))
     TFS_FILE <- "/genomes_info/hsa/tfs_all.txt"
 
-} else if(ORGANISM=="mmu"){
+} else if(ORGANISM=="mus"){
+    ORGANISM = "mmu"
     data("motifAnnotations_mgi")
     ENCODE_ORG = "Mus musculus"
     motifRankings <- importRankings(paste(APP_DIR_redirect,"/genomes_info/mmu/mm10__refseq-r80__10kb_up_and_down_tss.mc9nr.feather",sep="/"))
     TFS_FILE <- "/genomes_info/mmu/tfs_all.txt"
 
 } else{
-    stop("Please enter dme (Drosophila melanogaster), hsa (Homo sapiens), or mmu (Mus musculus)")
+    stop("Please enter dme (Drosophila melanogaster), hse (Homo sapiens), or mus (Mus musculus)")
 }
 
 # LOADING REST OF PACKAGES

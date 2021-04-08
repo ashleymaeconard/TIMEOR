@@ -67,6 +67,14 @@ if [ -f ${COMMAND_SCRIPT} ]; then
 	rm -rf ${COMMAND_SCRIPT}
 fi
 
+if [ "$ORGANISM" == "hse" ]; then
+    ORGANISM="hsa"
+fi
+
+if [ "$ORGANISM" == "mus" ]; then
+    ORGANISM="mmu"
+fi
+
 # Getting genome    
 genome_HTSeq="/srv/genomes_info/$ORGANISM/genes.gtf"
 

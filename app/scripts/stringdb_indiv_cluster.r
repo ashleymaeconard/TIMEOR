@@ -68,7 +68,7 @@ create_network_n_info_tables <- function(st_db, df1, gl, outdir, prot_tab, det_l
     pdf(paste(outdir, "stringdb_network.pdf", sep="/"))
     st_db$plot_network(hits)
     dev.off()
-
+    
     # Save png of network to visualize in TIMEOR
     st_db$get_png(hits, file=paste(www_subdir,"stringdb_network.png",sep="/"))
 

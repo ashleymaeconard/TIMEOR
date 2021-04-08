@@ -74,6 +74,14 @@ if [ -f ${COMMAND_SCRIPT} ]; then
 	rm -rf ${COMMAND_SCRIPT}
 fi
     
+if [ "$ORGANISM" == "hse" ]; then
+    ORGANISM="hsa"
+fi
+
+if [ "$ORGANISM" == "mus" ]; then
+    ORGANISM="mmu"
+fi
+
 # Getting genome
 genome="/srv/genomes_info/${ORGANISM}/genome_hisat2/genome"
                           

@@ -28,12 +28,12 @@ import pandas as pd
 # Choosing chromosome numbers:
 if GENOME =="dme":
     list_chroms = ["2L", "2R", "3L", "3R", "4", "X", "Y"]
-elif GENOME == "mmu":
+elif GENOME == "mus":
     list_chroms = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "X", "Y"]
-elif GENOME == "hsa":
+elif GENOME == "hse":
     list_chroms = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "X", "Y"]
 else:
-    sys.exit("ERROR: must input genome types.")
+    sys.exit("ERROR: must input genome type mus, hse, or dme.")
 
 def main(argv):
     # Processing .gtf file into usable format
