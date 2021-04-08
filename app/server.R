@@ -1,6 +1,6 @@
 # server.R
 # Ashley Mae Conard
-# Last Mod. 6 June 2020
+# Last Mod. 6 April 2021
 
 library(shiny)
 library(shinydashboard)
@@ -1729,10 +1729,15 @@ function(input, output, session) {
     pageLength = 5, scrollX = TRUE
   )))
   
+  observeEvent(input$numClusts, {
+    
+  })
+
   # Output clustermap
   output$deClustering <-
     output$deClustering1 <-
-    output$deClustering2 <- output$deClustering3 <- renderPlotly({
+    output$deClustering2 <- 
+    output$deClustering3 <- renderPlotly({
       # Requirements
       req(analysis_folder_name())
       req(adj_p_analysis_folder())
