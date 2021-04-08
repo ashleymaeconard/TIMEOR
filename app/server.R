@@ -1730,7 +1730,22 @@ function(input, output, session) {
   )))
   
   observeEvent(input$numClusts, {
-    
+    # Remove cluster subfolders that are left over
+    write("HERE", stderr())
+    # cluster_dir <- paste(local_results_folder(), "timeor/results/analysis", paste(input$resultsFolder,"results", sep="_"), "clusters",sep="/")
+    # dirs <- list.dirs(path = cluster_dir)
+    # write(dirs, stderr())
+    # dirs <- dirs[2:length(dirs)]
+    # write(dirs, stderr())
+    # for(d in dirs){
+    #     if(!grepl("heatmaply", d, fixed = TRUE)){
+    #         #if(strtoi(basename(d), base = 0L) > strtoi(opti_num_clust, base = 0L)){
+    #       unlink(d, recursive=TRUE)
+    #       write("unlinked", stderr())
+    #       write(dirs, stderr())
+    #       #}
+    #     }
+    # }
   })
 
   # Output clustermap
@@ -1795,9 +1810,8 @@ function(input, output, session) {
         numClusters(),
         distance,
         clusterMethod
-      )
-      
-    })
+      )  
+  })
   
   #################### Secondary Analysis ##################
   ######################## Enrichment ######################

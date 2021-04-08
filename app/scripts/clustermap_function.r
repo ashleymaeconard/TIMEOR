@@ -234,11 +234,22 @@ produceClusterMap <- function(RESULTS_DIR, HEATMAP_INPUT_FILE, LIST_EXP, CT, USE
     cluster_details <- find_plot_num_clusters(x_m, experiment, opti_num_clust, CHOOSE_NUM_CLUST)
     cat("\nTotal number of genes: ", dim(x_m),"\n")
       
+    # Remove cluster subfolders that are left over
+    dirs <- list.dirs(path = out_subdir)
+    dirs <- dirs[2:length(dirs)]
+    for(d in dirs){
+        if(!grepl("heatmaply", d, fixed = TRUE)){
+            if(strtoi(basename(d), base = 0L) > strtoi(opti_num_clust, base = 0L)){
+                unlink(d, recursive=TRUE)
+            }
+        }
+    }
+    
     # Saving clusters to output files
     for(i in 1:opti_num_clust){ 
       
       # Create output dir for each experiment
-      outdir_cluster <- (paste(RESULTS_DIR,paste(experiment,"_results", sep=""), 'clusters',i,sep="/")) 
+      outdir_cluster <- (paste(RESULTS_DIR,paste(experiment,"_results", sep=""), 'clusters',i, sep="/")) 
       if (!dir.exists(outdir_cluster)){
         dir.create(outdir_cluster)
         cat("\nCreated:", outdir_cluster, opti_num_clust)
@@ -258,17 +269,6 @@ produceClusterMap <- function(RESULTS_DIR, HEATMAP_INPUT_FILE, LIST_EXP, CT, USE
       # Print statement highlights to user that all genes have been accounted for in a cluster. 
       cat("\n","Cluster" , i, "has (dim of matrix) genes", dim(cluster_details$clus[[i]])) 
     }
-
-    # Remove cluster subfolders that are left over
-    dirs <- list.dirs(path = out_subdir)
-    dirs <- dirs[2:length(dirs)]
-    #     for(d in dirs){
-    #         if(!grepl("heatmaply", d, fixed = TRUE)){
-    #             if(strtoi(basename(d), base = 0L) > strtoi(opti_num_clust, base = 0L)){
-    #                 unlink(d, recursive=TRUE)
-    #             }
-    #         }
-    #     }
 
     # Plotting interactive clustermaps (heatmaply)
     if (CT){
