@@ -287,7 +287,7 @@ produceClusterMap <- function(RESULTS_DIR, HEATMAP_INPUT_FILE, LIST_EXP, CT, USE
     cat("\nGene distance methd: ", DIST_METHOD)
     cat("\nCluster distance method: ", hclust_heatmaply_method)
 
-    # Getting colors of dendrogram to map to cluster folder labels (positive integers)
+    # Example to test colors
     #data <- read.csv("/tmp/Rtmpy18Cj8/timeor/results/analysis/blah4_results/impulsede2/impulsede2_clustermapInput_padj0.05.csv")
     #rownames(data) <- data$gene_name
     #data$gene_name <- NULL
@@ -305,6 +305,7 @@ produceClusterMap <- function(RESULTS_DIR, HEATMAP_INPUT_FILE, LIST_EXP, CT, USE
     #colors <- get_leaves_branches_col(dend)
     #colors_uniq <- rev(unique(colors))
 
+    # Getting colors of dendrogram to map to cluster folder labels (positive integers)
     rainbow = c("#73A5D4", "#7CAF6F", "#DE8E9F", "#ffb90f", "#ff7256", "#0000FF", "#8b2323", "#FB0F2E", 
                 "#ff7256", "#8b8378", "#FF33DC", "#9932cc",  "#deb887", "#7fffd4", "#00cdcd") 
     rainbow_subset <- rainbow[1:opti_num_clust]
