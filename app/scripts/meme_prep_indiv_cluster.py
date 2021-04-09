@@ -28,9 +28,9 @@ import pandas as pd
 # Choosing chromosome numbers:
 if GENOME =="dme":
     list_chroms = ["2L", "2R", "3L", "3R", "4", "X", "Y"]
-elif GENOME == "mus":
+elif GENOME == "mmu":
     list_chroms = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "X", "Y"]
-elif GENOME == "hse":
+elif GENOME == "hsa":
     list_chroms = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "X", "Y"]
 else:
     sys.exit("ERROR: must input genome type mus, hse, or dme.")

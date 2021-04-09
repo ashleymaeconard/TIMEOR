@@ -1730,22 +1730,41 @@ function(input, output, session) {
   )))
   
   observeEvent(input$numClusts, {
+    write("NUMCLUST", stderr())
     # Remove cluster subfolders that are left over
-    write("HERE", stderr())
-    # cluster_dir <- paste(local_results_folder(), "timeor/results/analysis", paste(input$resultsFolder,"results", sep="_"), "clusters",sep="/")
-    # dirs <- list.dirs(path = cluster_dir)
-    # write(dirs, stderr())
-    # dirs <- dirs[2:length(dirs)]
-    # write(dirs, stderr())
-    # for(d in dirs){
-    #     if(!grepl("heatmaply", d, fixed = TRUE)){
-    #         #if(strtoi(basename(d), base = 0L) > strtoi(opti_num_clust, base = 0L)){
-    #       unlink(d, recursive=TRUE)
-    #       write("unlinked", stderr())
-    #       write(dirs, stderr())
-    #       #}
-    #     }
-    # }
+    
+    clust_dir <- paste(local_results_folder(), "timeor/results/analysis",paste(analysis_folder_name(),"results", sep="_"), "clusters",sep="/")
+    cat(clust_dir, file=stderr())
+    dirs <- list.dirs(path = clust_dir)
+    dirs <- dirs[2:length(dirs)]
+    for(d in dirs){
+        cat(d, file=stderr())
+        if(!grepl("heatmaply", d, fixed = TRUE)){
+          #if(strtoi(basename(d), base = 0L) > strtoi(opti_num_clust, base = 0L)){
+          unlink(d, recursive=TRUE)
+          write("unlinked", stderr())
+          #}
+        }
+    }
+  })
+
+  observeEvent(input$whichMethodInput, {
+    write("whichMethodInput", stderr())
+    # Remove cluster subfolders that are left over
+    
+    clust_dir <- paste(local_results_folder(), "timeor/results/analysis",paste(analysis_folder_name(),"results", sep="_"), "clusters",sep="/")
+    cat(clust_dir, file=stderr())
+    dirs <- list.dirs(path = clust_dir)
+    dirs <- dirs[2:length(dirs)]
+    for(d in dirs){
+        cat(d, file=stderr())
+        if(!grepl("heatmaply", d, fixed = TRUE)){
+          #if(strtoi(basename(d), base = 0L) > strtoi(opti_num_clust, base = 0L)){
+          unlink(d, recursive=TRUE)
+          write("unlinked", stderr())
+          #}
+        }
+    }
   })
 
   # Output clustermap
@@ -1764,7 +1783,6 @@ function(input, output, session) {
         paste(local_results_folder(),
               "/timeor/results/analysis/",
               sep = "")
-      desired_output_name <- input$resultsFolder
       
       # Determine which method (from bottom left of Primary Analysis) to display (on bottom right of Primary Analysis)
       if (input$whichMethodInput == "ImpulseDE2") {
@@ -1810,8 +1828,9 @@ function(input, output, session) {
         numClusters(),
         distance,
         clusterMethod
-      )  
-  })
+      )
+      
+    })
   
   #################### Secondary Analysis ##################
   ######################## Enrichment ######################
@@ -1970,8 +1989,10 @@ function(input, output, session) {
     if (animal == "dme") {
       ncbi_id = 7227
     } else if (animal == "hse") {
+      animal = "hsa"
       ncbi_id = 9606
     } else{
+      animal = "mmu"
       ncbi_id = 10090
     }
     command_stringdb <-

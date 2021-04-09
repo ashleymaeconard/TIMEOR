@@ -26,6 +26,7 @@ if (!require("RColorBrewer")) {
 if (!require("vegan")) {
   install.packages("vegan")
   library(vegan)}
+library(RColorBrewer)
 
 # Parameters
 produceClusterMap <- function(RESULTS_DIR, HEATMAP_INPUT_FILE, LIST_EXP, CT, USER_CHOOSE_CLUST_NUMBER, DIST_METHOD, HCLUSTER_METHOD){
@@ -70,7 +71,7 @@ produceClusterMap <- function(RESULTS_DIR, HEATMAP_INPUT_FILE, LIST_EXP, CT, USE
       colnames(d1)[1] = "gene_id"
       colnames(d1)[2] = "gene_name"
       
-      # If some gene names are NA, insert the FlybaseID
+      # If some gene names are NA, insert the ID
       if(length(d1$gene_name[is.na(d1)]) != 0){ # check if there are any NA in gene_name
         # Make sure gene_id and gene_name columns are of type chr 
         d1 %>% mutate_if(is.factor, as.character) -> d1
@@ -156,21 +157,21 @@ produceClusterMap <- function(RESULTS_DIR, HEATMAP_INPUT_FILE, LIST_EXP, CT, USE
       # Get distance between all genes in a
       d = dist(a)
     
-    # Cluster with gene and cluster level parameters
-    hr <- hclust(d, method = HCLUSTER_METHOD)
-    
-    # Assign each gene to cluster. Specifically, mycl is a vector of integers which assigns each point (i.e. gene) to a cluster.
-    mycl <- cutree(hr, NUM_DESIRED_CLUSTERS)
-    
-    # Partition all genes into their assigned cluster defined by mycl.
-    clusters <- lapply(unique(mycl), function(grp){
-      a[which(mycl==grp),]
-    })
+      # Cluster with gene and cluster level parameters
+      hr <- hclust(d, method = HCLUSTER_METHOD)
+      
+      # Assign each gene to cluster. Specifically, mycl is a vector of integers which assigns each point (i.e. gene) to a cluster.
+      mycl <- cutree(hr, NUM_DESIRED_CLUSTERS)
+      
+      # Partition all genes into their assigned cluster defined by mycl.
+      clusters <- lapply(unique(mycl), function(grp){
+        a[which(mycl==grp),]
+      })
 
-    clust_details = list(clus=clusters,ordering=hr)
-     
-    # Return clusters of genes
-    return(clust_details) 
+      clust_details = list(clus=clusters,ordering=hr, cuttree=mycl)
+      
+      # Return clusters of genes
+      return(clust_details) 
   }  
   
   # Create or set output directory
@@ -216,7 +217,7 @@ produceClusterMap <- function(RESULTS_DIR, HEATMAP_INPUT_FILE, LIST_EXP, CT, USE
     
     # Add gene_name (i.e. gene symbol) to input matrix
     x <- convertInput(HEATMAP_INPUT_FILE, gene_ID_database_name)           
-    x_m <- data.frame(x[,-1])# remove Flybase ID column
+    x_m <- data.frame(x[,-1])# remove ID column
     #x_m <- data.frame(x[,-1], row.names=x[,1])
     
     # Find optimal number of clusters from mode of 3 clustering methods
@@ -228,28 +229,30 @@ produceClusterMap <- function(RESULTS_DIR, HEATMAP_INPUT_FILE, LIST_EXP, CT, USE
       cat("User chose number of clusters to be: ",USER_CHOOSE_CLUST_NUMBER)
       opti_num_clust=USER_CHOOSE_CLUST_NUMBER
     }
+    
+    # Remove cluster subfolders that are left over
+    # dirs <- list.dirs(path = out_subdir)
+    # dirs <- dirs[2:length(dirs)]
+    # for(d in dirs){
+    #     if(!grepl("heatmaply", d, fixed = TRUE)){
+    #       #if(strtoi(basename(d), base = 0L) > strtoi(opti_num_clust, base = 0L)){
+    #       unlink(d, recursive=TRUE)
+    #       write("unlinked", stderr())
+    #       #}
+    #     }
+    # }
+
     cat("opti", head(opti_num_clust))
     # Use opti_num_clust to get actual clusters
     CHOOSE_NUM_CLUST = 0 
     cluster_details <- find_plot_num_clusters(x_m, experiment, opti_num_clust, CHOOSE_NUM_CLUST)
     cat("\nTotal number of genes: ", dim(x_m),"\n")
-      
-    # Remove cluster subfolders that are left over
-    dirs <- list.dirs(path = out_subdir)
-    dirs <- dirs[2:length(dirs)]
-    for(d in dirs){
-        if(!grepl("heatmaply", d, fixed = TRUE)){
-            if(strtoi(basename(d), base = 0L) > strtoi(opti_num_clust, base = 0L)){
-                unlink(d, recursive=TRUE)
-            }
-        }
-    }
-    
+
     # Saving clusters to output files
     for(i in 1:opti_num_clust){ 
       
       # Create output dir for each experiment
-      outdir_cluster <- (paste(RESULTS_DIR,paste(experiment,"_results", sep=""), 'clusters',i, sep="/")) 
+      outdir_cluster <- (paste(RESULTS_DIR,paste(experiment,"_results", sep=""), 'clusters',i,sep="/")) 
       if (!dir.exists(outdir_cluster)){
         dir.create(outdir_cluster)
         cat("\nCreated:", outdir_cluster, opti_num_clust)
@@ -285,10 +288,30 @@ produceClusterMap <- function(RESULTS_DIR, HEATMAP_INPUT_FILE, LIST_EXP, CT, USE
     cat("\nCluster distance method: ", hclust_heatmaply_method)
 
     # Getting colors of dendrogram to map to cluster folder labels (positive integers)
+    #data <- read.csv("/tmp/Rtmpy18Cj8/timeor/results/analysis/blah4_results/impulsede2/impulsede2_clustermapInput_padj0.05.csv")
+    #rownames(data) <- data$gene_name
+    #data$gene_name <- NULL
+    #d = dist(data)
+    #rainbow = c("bluefrombefore", "greenfrombefore", "redfrombefore", "darkgoldenrod1", "darkorange", "blue", "brown4", "FB0F2E",
+    #           "coral1", "antiquewhite4","somethingpink","darkgoldenrod","darkorchid","aquamarine")
+    #hr <- hclust(d, method = 'complete')
+    #dend <- as.dendrogram(hr)
+    #clusters <- opti_num_clust
+    #dend <- color_branches(dend, k = clusters, col = colors[1:clusters])  
+    #mycl <- cutree(dend, clusters)
+    #dend1 <- color_branches(dend, k=opti_num_clust)
+    #col_branches <- get_leaves_branches_col(dend1)
+    #uniq_col <- unique(col_branches)
+    #colors <- get_leaves_branches_col(dend)
+    #colors_uniq <- rev(unique(colors))
+
+    rainbow = c("#73A5D4", "#7CAF6F", "#DE8E9F", "#ffb90f", "#ff7256", "#0000FF", "#8b2323", "#FB0F2E", 
+                "#ff7256", "#8b8378", "#FF33DC", "#9932cc",  "#deb887", "#7fffd4", "#00cdcd") 
+    rainbow_subset <- rainbow[1:opti_num_clust]
     dend <- as.dendrogram(cluster_details$ordering)
-    dend <- color_branches(dend, opti_num_clust)
-    colors <- get_leaves_branches_col(dend)
-    colors_uniq <- rev(unique(colors))
+    c <- cluster_details$cuttree
+    dend1 <- color_branches(dend, k=opti_num_clust, col= rainbow[1:opti_num_clust])
+    dend2 <- set(dend1, "branches_k_color", value=unique(rainbow_subset[c][order.dendrogram(dend)]), k=opti_num_clust)
     
     # Create or replace cluster_color_to_number_map file
     cluster_num_n_colors <- paste(dirname(outdir_cluster),'cluster_color_to_number_map.txt', sep="/")
@@ -296,11 +319,11 @@ produceClusterMap <- function(RESULTS_DIR, HEATMAP_INPUT_FILE, LIST_EXP, CT, USE
     if(file.exists(cluster_num_n_colors)){
         file.remove(cluster_num_n_colors)
     }
-    write.table(colors_uniq, cluster_num_n_colors, append=T, col.names=F, row.names=F, quote=F, sep=",")
-      
-    p <- heatmaply(x_m, Rowv=dend, dist_method = DIST_METHOD, hclust_method = hclust_heatmaply_method, xlab = "Stages", ylab = "Genes", 
-                  main = title, seriate="none",
-                  dendrogram = "row", k_row = opti_num_clust, margins = c(40, 130), 
+    write.table(rainbow_subset, cluster_num_n_colors, append=T, col.names=F, row.names=F, quote=F, sep=",")
+
+    p <- heatmaply(as.matrix(x_m), dendrogram="row", Rowv=dend2, dist_method = DIST_METHOD, 
+                  hclust_method = hclust_heatmaply_method, xlab = "Stages", ylab = "Genes", 
+                  main = title, seriate="none", margins = c(40, 130), 
                   scale_fill_gradient_fun = color_scheme)
     htmlwidgets::saveWidget(p, outdir_withfile)    
   }
