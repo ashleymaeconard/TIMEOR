@@ -2005,7 +2005,8 @@ function(input, output, session) {
     meme_prep_script <-
       paste(app_dir, "/scripts/meme_prep_indiv_cluster.py", sep = "")
     reformatted_gtf <-
-      paste("/srv/genomes_info/dme/reformatted_genes_gtf.csv",
+      paste("/srv/genomes_info/", animal
+      "/reformatted_genes_gtf.csv",
             sep = "")
     genome_fa <- paste("/srv/genomes_info/",animal,"/genome_bowtie2/genome.fa", sep = "")
     command_meme_prep <-

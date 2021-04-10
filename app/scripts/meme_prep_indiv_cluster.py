@@ -63,7 +63,7 @@ def main(argv):
         counter=0
         for g in gene_list:# gene in gene_list's gene_name, id, chrom, start, end
             gene_info_from_gtf = df1_genes_gtf.loc[df1_genes_gtf['gene_name']==g, ["gene_name","gene_id","chrom",'start_chrom','end_chrom']]
-            if gene_info_from_gtf.empty: # no gene_name in dm6/3 (BDGP6/5) gtf file
+            if gene_info_from_gtf.empty: # no gene_name in gtf file
                 counter+=1
             elif TSS_only: # if you should only look around TSS (+-1KB from start of gene)
                 gene_info_1 = gene_info_from_gtf.to_string(index=False)
