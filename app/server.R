@@ -1690,7 +1690,7 @@ function(input, output, session) {
       "Output from 'ImpulseDE2' and 'automatic'
       gene trajectory clustering shown. 
 
-      On new data the user can change these.
+      On user input data the user can change these.
       
       Proceed to Secondary Analysis (side-bar). 
       
@@ -1988,12 +1988,15 @@ function(input, output, session) {
             sep = "")
     if (animal == "dme") {
       ncbi_id = 7227
+      refomatted_gtf = "reformatted_genes_gtf.csv"
     } else if (animal == "hse") {
       animal = "hsa"
       ncbi_id = 9606
+      refomatted_gtf = "reformatted_genes_gtf_chr.csv"
     } else{
       animal = "mmu"
       ncbi_id = 10090
+      refomatted_gtf = "reformatted_genes_gtf_chr.csv"
     }
     command_stringdb <-
       paste(stringdb_script, currentClust_dir, ncbi_id, app_dir)
@@ -2005,9 +2008,7 @@ function(input, output, session) {
     meme_prep_script <-
       paste(app_dir, "/scripts/meme_prep_indiv_cluster.py", sep = "")
     reformatted_gtf <-
-      paste("/srv/genomes_info/", animal
-      "/reformatted_genes_gtf.csv",
-            sep = "")
+      paste("/srv/genomes_info", animal, refomatted_gtf, sep = "/")
     genome_fa <- paste("/srv/genomes_info/",animal,"/genome_bowtie2/genome.fa", sep = "")
     command_meme_prep <-
       paste(

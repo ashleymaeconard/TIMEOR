@@ -190,7 +190,7 @@ function(request) {
                         box(
                           
                           # Search and retrieve text within upper leftmost app body within Process Raw Data Tab
-                          titlePanel(h3("Input Data Details")),
+                          titlePanel(h3("Input Data Description")),
                           width = 6,
                           h4(
                             "Processing your own data? TIMEOR accepts read count tables. After answering 6 questions (left panel), jump to steps 4 and 5 to load your metadata file and press 'Run'."
