@@ -469,7 +469,8 @@ function(request) {
                         choices = c(
                           "automatic", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"
                         )
-                      ),
+                      ), 
+                      actionButton("setClusters", label = "Fix cluster number"),
                       withSpinner(plotlyOutput("deClustering"))
                       )
                   )),
@@ -486,7 +487,7 @@ function(request) {
                           titlePanel(h3("Gene Expression Trajectory Clusters")),
                           selectInput(
                             "inputNumClust",
-                            label = paste("Clusters are labeled in ascending order from 1 for top-most cluster. Select a gene trajectory cluster to analyze:", sep = ""),
+                            "Clusters are labeled by positive integers, and the cluster color is visible by toggling the button below. Select a gene trajectory cluster to then analyze on right:",
                             selected = "NA",
                             choices = c(
                               "NA" = "NA", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"
@@ -499,6 +500,7 @@ function(request) {
                           span(uiOutput('textWithHTML')),
                           headerPanel(""),
                           switchInput(inputId = "runEnrichment", label = "Analyze"),
+                          "NOTE: Enrichment analysis does NOT need to be done to proceed to next tab (Factor Binding). Should the process finish and images not show, simply turn the toggle 'OFF' and then 'ON' to view any results.",
                           style="background: #E8E8E8")#,
                           #label=paste("Should the process finish and images not show, simply turn the toggle 'OFF' and then 'ON' to view results.")
                       ),

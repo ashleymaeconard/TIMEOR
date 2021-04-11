@@ -112,6 +112,10 @@ create_network_n_info_tables <- function(st_db, df1, gl, outdir, prot_tab, det_l
     
     # Adding stringdb, protein id table, and enrichment p-value to table (in that order)
     info_table <- add_to_info_table(gene_interactions_n_types, st_db, prot_tab, pvalEnrich)
+    write(" ", stderr())
+    write("PVALLLLL ENRICH", stderr())
+    write(" ", stderr())
+    write(pvalEnrich, stderr())
     
     return(info_table)
 }

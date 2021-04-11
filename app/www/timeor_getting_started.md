@@ -14,7 +14,7 @@ output:
 
 ## Important Points to Remember
 
-- <span style="color:red">We strongly encourage the user to input a read count matrix when possible</span>, as the input filesize limit is 10GB.
+- <span style="color:red">We strongly encourage the user to input a read count matrix when possible</span>, as the input file size limit is 10GB.
 - For larger dataset processing, the user is encouraged to use our ready-to-use Docker image. Read steps [here](). If that is not possible, please feel free to contact us for specific space requirements. **We are happy to help**. 
 - <span style="color:red">While TIMEOR analysis is running, simply make sure to revisit the page at least once an hour.</span>
 - Please click each button just once.
@@ -28,7 +28,7 @@ output:
   - In this case, simply perform the analysis **separately**:
       - control v.s. case 1
       - control v.s. case 2
-- <span style="color:red"> Thank you for using TIMEOR! Please help us improve to better assist you. Please contact us with questions, ideas, and suggestions. When contacting us with questions, please note the *time*, and if possible *a screenshot*.</span>
+- <span style="color:red"> Thank you for using TIMEOR! Please help us improve to better assist you. Please contact us with questions, ideas, and suggestions. If an error occurs, please download the log file (far left) to check. When contacting us with questions, please send the *time*, the log file, and if possible *a screenshot* so we know where in TIMEOR you are.</span>
 
 ## Two ways to input data:
 
@@ -66,6 +66,8 @@ interacting with each stage and tab.
 - Make sure there are an equal number of replicates for each sample.
 - Label control as “control”.
 - Have time point data in order where control or time point 1 is at the top and the last time point is at the bottom.
+- have unique IDs follow these formats:
+  - NAMETIME_REPLICATE_TIME 
 
 ## Input Data: Read Count Matrix
 - Pre-filter out any rows you are not interested to process (such as low count genes across all samples).

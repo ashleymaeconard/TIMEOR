@@ -1822,6 +1822,59 @@ function(input, output, session) {
       
     })
   
+  observeEvent(input$setClusters, {
+    # Prepare MEME data for either MEME or to move past Enrichement tab
+    condition <- paste(analysis_folder_name(), "results", sep = "_")
+    clust_dir <- paste(local_results_folder(), "timeor/results/analysis",condition, "clusters/",sep="/")
+    animal <- input$organism
+    
+    if (animal == "dme") {
+      ncbi_id = 7227
+      refomatted_gtf = "reformatted_genes_gtf.csv"
+    } else if (animal == "hse") {
+      animal = "hsa"
+      ncbi_id = 9606
+      refomatted_gtf = "reformatted_genes_gtf_chr.csv"
+    } else{
+      animal = "mmu"
+      ncbi_id = 10090
+      refomatted_gtf = "reformatted_genes_gtf_chr.csv"
+    }
+
+    # Find cluster directories
+    dirs <- list.dirs(path = clust_dir, recursive = FALSE)
+    dirs <- dirs[1:length(dirs)]
+    
+    # Iterate through all clusters to get gene sequence
+    for(c in dirs){
+        if(!grepl("heatmaply", c, fixed = TRUE)){
+          write(paste("Cluster ", c, sep=""), stderr())
+          if(length(list.files(path=paste(c,"MEME/",sep="/"), pattern="DNAseq"))==0){# if meme prep has not been run
+            write(paste("Run MEME_prep script on: ", c, sep=""), stderr())
+            write(" ", stderr())
+            meme_prep_script <-
+              paste(app_dir, "/scripts/meme_prep_indiv_cluster.py", sep = "")
+            reformatted_gtf <-
+              paste("/srv/genomes_info", animal, refomatted_gtf, sep = "/")
+            genome_fa <- paste("/srv/genomes_info/",animal,"/genome_bowtie2/genome.fa", sep = "")
+            command_meme_prep <-
+              paste(
+                "python",
+                meme_prep_script,
+                reformatted_gtf,
+                c,
+                genome_fa,
+                0,
+                animal,
+                sep = " "
+              )
+            write("MEME prep", stderr())
+            write(command_meme_prep, stderr())
+            system(command_meme_prep, intern = TRUE)
+          }
+        }
+    }
+  })
   #################### Secondary Analysis ##################
   ######################## Enrichment ######################
   
@@ -1923,8 +1976,11 @@ function(input, output, session) {
     print(motif_file)
     print(length(motif_file))
     
+    meme_has_run_file <- 
+      Sys.glob(file.path(motif_folder, "/meme.txt"))
+
     # Run Enrichment if new individual cluster
-    if (length(motif_file) == 0) {
+    if (length(meme_has_run_file) == 0) {
       run_secondary_enrichment()
     }
   })
@@ -1967,6 +2023,7 @@ function(input, output, session) {
         animal,
         p_value
       )
+      
     print(command_GO_path)
     system(command_GO_path, intern = FALSE)
     
@@ -1993,26 +2050,7 @@ function(input, output, session) {
     print(command_stringdb)
     system(command_stringdb, intern = TRUE)
     
-    # De novo motif search script calls
-    # preparing MEME data
-    meme_prep_script <-
-      paste(app_dir, "/scripts/meme_prep_indiv_cluster.py", sep = "")
-    reformatted_gtf <-
-      paste("/srv/genomes_info", animal, refomatted_gtf, sep = "/")
-    genome_fa <- paste("/srv/genomes_info/",animal,"/genome_bowtie2/genome.fa", sep = "")
-    command_meme_prep <-
-      paste(
-        "python",
-        meme_prep_script,
-        reformatted_gtf,
-        currentClust_dir,
-        genome_fa,
-        0,
-        animal,
-        sep = " "
-      )
-    system(command_meme_prep, intern = TRUE)
-    # running MEME
+    # De novo motif search script calls: running MEME
     meme_script <-
       paste(app_dir, "/scripts/run_meme_indiv_cluster.sh", sep = "")
     command_meme <- paste(meme_script, currentClust_dir)

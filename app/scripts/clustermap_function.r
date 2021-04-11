@@ -305,6 +305,25 @@ produceClusterMap <- function(RESULTS_DIR, HEATMAP_INPUT_FILE, LIST_EXP, CT, USE
     #colors <- get_leaves_branches_col(dend)
     #colors_uniq <- rev(unique(colors))
 
+    # preparing MEME data
+    # meme_prep_script <-
+    #   paste(app_dir, "/scripts/meme_prep_indiv_cluster.py", sep = "")
+    # reformatted_gtf <-
+    #   paste("/srv/genomes_info", animal, refomatted_gtf, sep = "/")
+    # genome_fa <- paste("/srv/genomes_info/",animal,"/genome_bowtie2/genome.fa", sep = "")
+    # command_meme_prep <-
+    #   paste(
+    #     "python",
+    #     meme_prep_script,
+    #     reformatted_gtf,
+    #     currentClust_dir,
+    #     genome_fa,
+    #     0,
+    #     animal,
+    #     sep = " "
+    #   )
+    # system(command_meme_prep, intern = TRUE)
+
     # Getting colors of dendrogram to map to cluster folder labels (positive integers)
     rainbow = c("#73A5D4", "#7CAF6F", "#DE8E9F", "#ffb90f", "#ff7256", "#0000FF", "#8b2323", "#FB0F2E", 
                 "#ff7256", "#8b8378", "#FF33DC", "#9932cc",  "#deb887", "#7fffd4", "#00cdcd") 
