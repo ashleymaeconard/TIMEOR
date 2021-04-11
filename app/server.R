@@ -1848,7 +1848,7 @@ function(input, output, session) {
     # Iterate through all clusters to get gene sequence
     for(c in dirs){
         if(!grepl("heatmaply", c, fixed = TRUE)){
-          write(paste("Cluster ", c, sep=""), stderr())
+          write(paste("Cluster: ", c, sep=""), stderr())
           if(length(list.files(path=paste(c,"MEME/",sep="/"), pattern="DNAseq"))==0){# if meme prep has not been run
             write(paste("Run MEME_prep script on: ", c, sep=""), stderr())
             write(" ", stderr())

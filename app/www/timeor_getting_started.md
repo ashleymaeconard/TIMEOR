@@ -68,6 +68,7 @@ interacting with each stage and tab.
 - Have time point data in order where control or time point 1 is at the top and the last time point is at the bottom.
 - have unique IDs follow these formats:
   - NAMETIME_REPLICATE_TIME 
+- Sometimes when using editors such as Excel, odd delimiters specific to the user's machine are added at the end of lines. We advise users to check that these are not present.
 
 ## Input Data: Read Count Matrix
 - Pre-filter out any rows you are not interested to process (such as low count genes across all samples).
@@ -92,6 +93,8 @@ Keep “multiple method comparisons” true to see comparison plots and results 
 
 - Normalization
   - Upper Quartile 
+  - Spearman
+  - Pearson
 - Cluster choice
 - Talk about types of clusters and outputs
 
