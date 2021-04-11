@@ -72,14 +72,17 @@ function(request) {
           menuItem(
             "Example Data",
             tabName = "exampleData",
+            startExpanded = TRUE,
             icon = icon("table"),
             menuItem(
               "Load raw data",
+              startExpanded = TRUE,
               actionButton("runReal", "SraRunTable & .fastq files", style =
                              "margin: 6px 5px 6px 0px; width:90%")
             ),
             menuItem(
               "Load count matrix",
+              startExpanded = TRUE,
               actionButton("runSim", "Metadata & read count file", style =
                              "margin: 6px 5px 6px 0px; width:90%")
             )
@@ -112,10 +115,15 @@ function(request) {
         tabItems(
           
 #################### Pre-Process Stage ##################
-##################### Process Raw Data ##################
-          
+##################### Getting Started ###################
           tabItem(tabName = "pre-process",
                   tabsetPanel(
+                    tabPanel( "Getting Started",
+                    fluidRow(box(width=12,
+                    titlePanel( 
+                    tags$iframe(src="./timeor_getting_started.html", width='100%', height='1000px',frameborder=0,scrolling='auto')
+                    )))),
+##################### Process Raw Data ##################
                     tabPanel(
                       "Set Input and Defaults, Process Raw Data",
                       fluidRow(

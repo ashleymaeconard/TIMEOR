@@ -1730,9 +1730,7 @@ function(input, output, session) {
   )))
   
   observeEvent(input$numClusts, {
-    write("NUMCLUST", stderr())
     # Remove cluster subfolders that are left over
-    
     clust_dir <- paste(local_results_folder(), "timeor/results/analysis",paste(analysis_folder_name(),"results", sep="_"), "clusters",sep="/")
     cat(clust_dir, file=stderr())
     dirs <- list.dirs(path = clust_dir)
@@ -1740,18 +1738,13 @@ function(input, output, session) {
     for(d in dirs){
         cat(d, file=stderr())
         if(!grepl("heatmaply", d, fixed = TRUE)){
-          #if(strtoi(basename(d), base = 0L) > strtoi(opti_num_clust, base = 0L)){
           unlink(d, recursive=TRUE)
-          write("unlinked", stderr())
-          #}
         }
     }
   })
 
   observeEvent(input$whichMethodInput, {
-    write("whichMethodInput", stderr())
     # Remove cluster subfolders that are left over
-    
     clust_dir <- paste(local_results_folder(), "timeor/results/analysis",paste(analysis_folder_name(),"results", sep="_"), "clusters",sep="/")
     cat(clust_dir, file=stderr())
     dirs <- list.dirs(path = clust_dir)
@@ -1759,10 +1752,7 @@ function(input, output, session) {
     for(d in dirs){
         cat(d, file=stderr())
         if(!grepl("heatmaply", d, fixed = TRUE)){
-          #if(strtoi(basename(d), base = 0L) > strtoi(opti_num_clust, base = 0L)){
           unlink(d, recursive=TRUE)
-          write("unlinked", stderr())
-          #}
         }
     }
   })

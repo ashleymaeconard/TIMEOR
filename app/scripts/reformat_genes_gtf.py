@@ -18,7 +18,7 @@ import os, math, re, glob
 import pandas as pd
 
 # Importing arguments
-GENES_GTF_DM6 = sys.argv[1] # e.g. "/data/compbio/aconard/BDGP6/genes.gtf"
+GENES_GTF = sys.argv[1] # e.g. "/data/compbio/aconard/BDGP6/genes.gtf"
 OUTPUT_DIR = sys.argv[2]
 
 # Splitting allInfo in genes.gtf file 
@@ -30,13 +30,13 @@ def create_cols(row, sw):
 
 # Reformatting genes.gtf file
 def process_genes_gtf(genes_gtf):
-    # Importing dm6 (BDGP6) genes.gtf file 
+    # Importing genes.gtf file 
     df_genes_gtf = pd.read_csv(genes_gtf, sep="\t",usecols=[0,2,3,4,8], names=['chrom','type_prot', 'start_chrom', 'end_chrom', 'allInfo'], engine='python')
 
     # Parsing GTF for relevant information (gene_name, gene_biotype, ..., tss_id)
     df_genes_gtf['allInfo'] = df_genes_gtf['allInfo'].map(lambda x: str(x)[:-1])
     df_genes_gtf.columns.str.replace(' ', '')
-    list_cols =["gene_name", "gene_biotype", "gene_id", "transcript_name", "transcript_id", "tss_id"] # gene_biotype = gene_type, NO TSS_ID
+    list_cols =["gene_name", "gene_biotype", "gene_id"] #, "transcript_name", "transcript_id", "tss_id"] # gene_biotype = gene_type, NO TSS_ID
     print("Example of 'allInfo' column in df_genes_gtf['allInfo'] that I will parse into these columns: \n\n", 
         list_cols,"\n\n", df_genes_gtf["allInfo"][0])
 
@@ -50,12 +50,12 @@ def process_genes_gtf(genes_gtf):
     df_genes_gtf = df_genes_gtf.drop(columns=['allInfo'])
     df_genes_gtf = df_genes_gtf.drop_duplicates(subset="gene_id")
     df_genes_gtf = df_genes_gtf.reset_index()
-    print("Number of unique genes based on FlyBase ID from ", GENES_GTF_DM6,": ", len(df_genes_gtf))
+    print("Number of unique genes based on FlyBase ID from ", GENES_GTF,": ", len(df_genes_gtf))
     return(df_genes_gtf)
 
 def main(argv):
     # Processing .gtf file into usable format
-    df1_genes_gtf = process_genes_gtf(GENES_GTF_DM6)
+    df1_genes_gtf = process_genes_gtf(GENES_GTF)
     df1_genes_gtf.to_csv(OUTPUT_DIR+"/reformatted_genes_gtf.csv", index=False)
 
 if __name__ == "__main__": # in Python 3 we need not use this, instead just main() but this is more universal.
