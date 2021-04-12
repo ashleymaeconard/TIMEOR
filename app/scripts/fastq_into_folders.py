@@ -29,11 +29,11 @@ def create_subfolders(metadata_df):
 
 def move_fastqs(DIR, samps, reps):
     fastq_star = (DIR+"/*"+reps+"*")
-    fastq_file = os.path.basename(glob.glob(fastq_star)[0])
-    fastq_move_from = (DIR+"/"+fastq_file)
-    fastq_move_to = (DIR+"/"+samps+"/"+reps+"/"+fastq_file)
-    
-    os.rename(fastq_move_from, fastq_move_to)
+    for i in glob.glob(fastq_star):
+        fastq_file = os.path.basename(i)
+        fastq_move_from = (DIR+"/"+fastq_file)
+        fastq_move_to = (DIR+"/"+samps+"/"+reps+"/"+fastq_file)
+        os.rename(fastq_move_from, fastq_move_to)
 
 def main(argv):
     # Reading in metadata file

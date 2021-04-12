@@ -47,20 +47,22 @@ interacting with each stage and tab.
 
 #### Input file types:
 
-  \* **SraRunTable from GEO** follow instructions in TIMEOR first tab
-    (“Process Raw Data”)
+  - \* **SraRunTable from GEO** requires at least these columns (which will be reordered to produce the metadata file).
+    - *treatment, time, Run, replicate, batch*
+        - *treatment*: one word describing experiment
+        - *time*: numerical values e.g. (0, 20, 40)
+        - *replicate*: one word description of replicate
 
-   \*\* **metadata file** requires at least these columns.
-    -   *ID, condition, time, batch*
+  - \*\* **metadata file** requires *at least* these columns.
+    -   *ID, condition, time, replicate*
         -   *ID*: a unique identifier (ID) for the user
             (e.g. case1min\_rep1)
         -   *condition*: one word description (e.g. case, control)
         -   *time*: numerical values e.g. (0, 20, 40)
-        -   *batch*: string description of batch (e.g. b1, b2, b3)
+        -   *replicate*: one word description of replicate (e.g. b1, b2, b3)
 
-  \*\*\* **count matrix** : rows should be unique gene identifiers
-    (e.g. Flybase, Ensembl or Entrez IDs) and columns should be the IDs
-    from metadata file.
+  - \*\*\* **count matrix**  requires Ensembl or Flybase unique gene identifiers, and columns should be the IDs
+    from metadata file, and in the same order as metadata file.
 
 ## Input Data: Metadata File
 - Make sure there are an equal number of replicates for each sample.
@@ -69,17 +71,22 @@ interacting with each stage and tab.
 - have unique IDs follow these formats:
   - NAMETIME_REPLICATE_TIME 
 - Sometimes when using editors such as Excel, odd delimiters specific to the user's machine are added at the end of lines. We advise users to check that these are not present.
+- Please upload .csv files.
 
 ## Input Data: Read Count Matrix
 - Pre-filter out any rows you are not interested to process (such as low count genes across all samples).
 - Gene ID column should be named “ID” and populated with Ensembl IDs.
 - Make sure columns are in the same order as the rows of metadata file.
+- Please upload .csv files. 
 
 ## Inputs Data, SraRunTable
+- Please upload the SraRunTable.txt, which has comma delimiters.
+- Please remove as many unneeded colums as you can. Some dataset SraRunTables have odd delimiters that are difficult to parse.
 - Make sure that the resulting metadata file meets the requirements for the input metadata file.
+- For paired-end reads, the pairs must have "_NUM" to distinguish them (e.g. SRRXXX_1.fastq.gz, SRRXXX_2.fastq.gz).
 
 ## Input Data, .fastq Files
-- compressed fastq files?
+- The .fastq files are downloaded as .fastq.gz.
 
 ## Suggestions for How to Answer Six "Determine Adaptive Default Methods" Questions
 "Please select at least the organism, sequencing, and experiment type, then load metadata or SraRunTable.txt.",

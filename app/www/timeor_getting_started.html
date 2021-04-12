@@ -744,7 +744,7 @@ summary {
 <div id="important-points-to-remember" class="section level2">
 <h2>Important Points to Remember</h2>
 <ul>
-<li><span style="color:red">We strongly encourage the user to input a read count matrix when possible</span>, as the input filesize limit is 10GB.</li>
+<li><span style="color:red">We strongly encourage the user to input a read count matrix when possible</span>, as the input file size limit is 10GB.</li>
 <li>For larger dataset processing, the user is encouraged to use our ready-to-use Docker image. Read steps <a href>here</a>. If that is not possible, please feel free to contact us for specific space requirements. <strong>We are happy to help</strong>.</li>
 <li><span style="color:red">While TIMEOR analysis is running, simply make sure to revisit the page at least once an hour.</span></li>
 <li>Please click each button just once.</li>
@@ -766,7 +766,7 @@ summary {
 <li>control v.s. case 2</li>
 </ul></li>
 </ul></li>
-<li><span style="color:red"> Thank you for using TIMEOR! Please help us improve to better assist you. Please contact us with questions, ideas, and suggestions. When contacting us with questions, please note the <em>time</em>, and if possible <em>a screenshot</em>.</span></li>
+<li><span style="color:red"> Thank you for using TIMEOR! Please help us improve to better assist you. Please contact us with questions, ideas, and suggestions. If an error occurs, please download the log file (far left) to check. When contacting us with questions, please send the <em>time</em>, the log file, and if possible <em>a screenshot</em> so we know where in TIMEOR you are.</span></li>
 </ul>
 </div>
 <div id="two-ways-to-input-data" class="section level2">
@@ -778,9 +778,28 @@ summary {
 <p>Then simply follow the prompts. Fill out the <strong>grey</strong> boxes to begin interacting with each stage and tab.</p>
 <div id="input-file-types" class="section level4">
 <h4>Input file types:</h4>
-<p>* <strong>SraRunTable from GEO</strong> follow instructions in TIMEOR first tab (“Process Raw Data”)</p>
-<p>** <strong>metadata file</strong> requires at least these columns. - <em>ID, condition, time, batch</em> - <em>ID</em>: a unique identifier (ID) for the user (e.g. case1min_rep1) - <em>condition</em>: one word description (e.g. case, control) - <em>time</em>: numerical values e.g. (0, 20, 40) - <em>batch</em>: string description of batch (e.g. b1, b2, b3)</p>
-<p>*** <strong>count matrix</strong> : rows should be unique gene identifiers (e.g. Flybase, Ensembl or Entrez IDs) and columns should be the IDs from metadata file.</p>
+<ul>
+<li>* <strong>SraRunTable from GEO</strong> requires at least these columns (which will be reordered to produce the metadata file).
+<ul>
+<li><em>treatment, time, Run, replicate, batch</em>
+<ul>
+<li><em>treatment</em>: one word describing experiment</li>
+<li><em>time</em>: numerical values e.g. (0, 20, 40)</li>
+<li><em>replicate</em>: one word description of replicate</li>
+</ul></li>
+</ul></li>
+<li>** <strong>metadata file</strong> requires <em>at least</em> these columns.
+<ul>
+<li><em>ID, condition, time, replicate</em>
+<ul>
+<li><em>ID</em>: a unique identifier (ID) for the user (e.g. case1min_rep1)</li>
+<li><em>condition</em>: one word description (e.g. case, control)</li>
+<li><em>time</em>: numerical values e.g. (0, 20, 40)</li>
+<li><em>replicate</em>: one word description of replicate (e.g. b1, b2, b3)</li>
+</ul></li>
+</ul></li>
+<li>*** <strong>count matrix</strong> requires Ensembl or Flybase unique gene identifiers, and columns should be the IDs from metadata file, and in the same order as metadata file.</li>
+</ul>
 </div>
 </div>
 <div id="input-data-metadata-file" class="section level2">
@@ -789,6 +808,12 @@ summary {
 <li>Make sure there are an equal number of replicates for each sample.</li>
 <li>Label control as “control”.</li>
 <li>Have time point data in order where control or time point 1 is at the top and the last time point is at the bottom.</li>
+<li>have unique IDs follow these formats:
+<ul>
+<li>NAMETIME_REPLICATE_TIME</li>
+</ul></li>
+<li>Sometimes when using editors such as Excel, odd delimiters specific to the user’s machine are added at the end of lines. We advise users to check that these are not present.</li>
+<li>Please upload .csv files.</li>
 </ul>
 </div>
 <div id="input-data-read-count-matrix" class="section level2">
@@ -797,18 +822,22 @@ summary {
 <li>Pre-filter out any rows you are not interested to process (such as low count genes across all samples).</li>
 <li>Gene ID column should be named “ID” and populated with Ensembl IDs.</li>
 <li>Make sure columns are in the same order as the rows of metadata file.</li>
+<li>Please upload .csv files.</li>
 </ul>
 </div>
 <div id="inputs-data-sraruntable" class="section level2">
 <h2>Inputs Data, SraRunTable</h2>
 <ul>
+<li>Please upload the SraRunTable.txt, which has comma delimiters.</li>
+<li>Please remove as many unneeded colums as you can. Some dataset SraRunTables have odd delimiters that are difficult to parse.</li>
 <li>Make sure that the resulting metadata file meets the requirements for the input metadata file.</li>
+<li>For paired-end reads, the pairs must have &quot;_NUM&quot; to distinguish them (e.g. SRRXXX_1.fastq.gz, SRRXXX_2.fastq.gz).</li>
 </ul>
 </div>
 <div id="input-data-.fastq-files" class="section level2">
 <h2>Input Data, .fastq Files</h2>
 <ul>
-<li>compressed fastq files?</li>
+<li>The .fastq files are downloaded as .fastq.gz.</li>
 </ul>
 </div>
 <div id="suggestions-for-how-to-answer-six-determine-adaptive-default-methods-questions" class="section level2">
@@ -826,6 +855,8 @@ summary {
 <li>Normalization
 <ul>
 <li>Upper Quartile</li>
+<li>Spearman</li>
+<li>Pearson</li>
 </ul></li>
 <li>Cluster choice</li>
 <li>Talk about types of clusters and outputs</li>

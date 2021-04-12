@@ -36,7 +36,7 @@ done < ${2}
 # Getting number of fastq files
 num_files=${#accessionList[@]}
 
-NUM_PROCESSORS=4
+NUM_PROCESSORS=6
 # Determining how many processors
 #if [[ $num_files -gt  10 ]]; then
 #	NUM_PROCESSORS=10

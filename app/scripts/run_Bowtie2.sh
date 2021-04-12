@@ -133,7 +133,7 @@ for dir in $INPUT_DIR/*/*
         else
             echo "Initiating paired-end RNA-seq data processing.";
             # Iterating through only the R1 replicates
-            for R1 in ${dir}/*R1*
+            for R1 in ${dir}/*_1*
                 do
                     echo "Getting paired .fastq for $R1"
                     # Iterating through each R1 to determine when to add 'wait' to script
@@ -153,7 +153,7 @@ for dir in $INPUT_DIR/*/*
                     folderName=${RESULTS_DIR}${fileParent}"/"${fName}
 
                     # Getting 2nd read pair
-                    R2=${R1//R1/R2}
+                    R2=${R1//_1/_2}
 
                     # Outputting directory for Bowtie2/sample_name
                     mkdir -p ${folderName}
