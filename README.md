@@ -7,7 +7,7 @@
 Motivation
 ==========
 
-It's about time! [Click here](https://www.youtube.com/watch?v=bBodWvGPD6g&t=8s) for a quick video demonstration of the TIMEOR application, and [click here](https://www.youtube.com/watch?v=-BV9B3L1ymg) for a video guide through the tutorial below.
+It's about time! [Click here](https://www.youtube.com/watch?v=bBodWvGPD6g&t=8s) for a quick video demonstration of the TIMEOR application, and [click here](https://www.youtube.com/watch?v=-BV9B3L1ymg) for a video guide through the tutorial below. Note that there have been recent additions to TIMEOR to make the experience flow more efficiently. While these videos do not reflect these additions, yet the steps and process are still the same. Enjoy!
 
 Analyzing time series differential gene expression and other multi-omics
 data is computationally laborious and full of complex choices for the
@@ -40,13 +40,11 @@ The web server is **completely free**, and is **accessible** at https://timeor.b
 
 Quick Start: 3 Steps
 =======
- TIMEOR accepts 2 input types: (1) raw .fastq files and SraRunTable [(e.g. here)](https://github.com/ashleymaeconard/TIMEOR/blob/master/demos/real_data_subset/timeor/data/SraRunTable.csv) or a (2) RNA-seq time-series read count matrix [(e.g. here)](https://github.com/ashleymaeconard/TIMEOR/blob/master/demos/simulated_data/timeor/data/countMatrix.csv) and metadata file [(e.g. here)](https://github.com/ashleymaeconard/TIMEOR/blob/master/demos/simulated_data/timeor/data/metadata.csv).
-
+TIMEOR accepts 2 input types: (1) raw .fastq files and SraRunTable [(e.g. here)](https://github.com/ashleymaeconard/TIMEOR/blob/master/demos/real_data_subset/timeor/data/SraRunTable.csv) or a (2) RNA-seq time-series read count matrix [(e.g. here)](https://github.com/ashleymaeconard/TIMEOR/blob/master/demos/simulated_data/timeor/data/countMatrix.csv) and metadata file [(e.g. here)](https://github.com/ashleymaeconard/TIMEOR/blob/master/demos/simulated_data/timeor/data/metadata.csv).
 
 1. Visit https://timeor.brown.edu.
-2. For (1) in 'Example Data' (side-bar) under 'Load raw data' click the 'SraRunTable & .fastq files' button. This will guide you through the 'Process Raw Data' tab demo. **Follow pop-ups and fill in grey boxes**. See [Run TIMEOR](#run-timeor-from-raw-data-starting-from-fastq-time-series-rna-seq) below for walk-through.
-3. Next, for (2) in 'Example Data' (side-bar) under 'Load count matrix' click the 'Metadata & read count file' button. This will guide you through the rest of the full method demo. **Follow pop-ups and fill in grey boxes**. See [Run TIMEOR](#run-timeor-using-simulated-data-starting-from-read-count-matrix) below for full application walk-through.
-
+2. For (1) in 'Example Data' (side-bar) under 'Load raw data' click the 'SraRunTable & .fastq files' button. This will guide you through the 'Set Input and Defaults, Process Raw Data' tab demo. **Follow pop-ups and fill in grey boxes**. See [Run TIMEOR](#run-timeor-from-raw-data-starting-from-.fastq-time-series-rna-seq) for walk-through.
+3. Next, for (2) in 'Example Data' (side-bar) under 'Load count matrix' click the 'Metadata & read count file' button. This will guide you through the rest of the full method demo. **Follow pop-ups and fill in grey boxes**. See [Run TIMEOR](#run-timeor-using-simulated-data-starting-from-read-count-matrix) for full application walk-through.
 
 Paper and Citation
 =======
@@ -119,93 +117,122 @@ TIMEOR is available online at https://timeor.brown.edu. This website is free and
 Installation
 ============
 
-After cloning the TIMEOR repo from GitHub
-(<a href="https://github.com/ashleymaeconard/TIMEOR.git" class="uri">https://github.com/ashleymaeconard/TIMEOR.git</a>), visit [this Google Drive folder](https://drive.google.com/drive/folders/1KEnpCOU0dQU5p1tnEy3o9l02NE0uYnpm?usp=sharing) to download the genome information for drosophila, mouse, and human. Place this folder at the same directory level as the app folder. 
+To run TIMEOR scripts individually, the users may use Docker and Docker Hub. First, the TIMEOR repository must be cloned (<a href="https://github.com/ashleymaeconard/TIMEOR.git" class="uri">https://github.com/ashleymaeconard/TIMEOR.git</a>). To use Docker, it must be installed (version 20.10.0 recommended).
 
-### Conda Environment
+### Docker Hub and Docker:
 
-1. Install Anaconda2/Miniconda2 (version 4.8.3). 
-2. Type `$eval "$(/PATH/TO/<CONDA_DIR>/bin/conda shell.bash hook)"`
-3. Locate packages.yml in /TIMEOR/
-4. Type `$conda env create -f packages.yml`
-5. Type `$conda activate timeor_conda_env`
-6. Type `$R`
-7. In R
-    1. Type `>library(shiny)`
-    2. Type `>runApp("app/", launch.browser=F)`
-    3. Go to browser URL from R output
-        (e.g. <a href="http://127.0.0.1:3681" class="uri">http://127.0.0.1:3681</a>
-        )
+  1.	Download organism genome folder (genomes_info).
+          * The user is welcome to gather only the organism of interest. For example, for Drosophila melanogaster simply download `/genomes_info/dme/`
+              * Mouse is `/genomes_info/mmu/`
+              * Human is `/genomes_info/hsa/`
+          * Link `/genomes_info/`: https://drive.google.com/drive/folders/1KEnpCOU0dQU5p1tnEy3o9l02NE0uYnpm?usp=sharing
+  2.	Choose directory location for genomes_info (e.g. `/Users/USERNAME/Desktop/test_folder/genomes_info/`)
+  3.	Run TIMEOR via Docker
+          * On command line type 
+              * `$ docker pull ashleymaeconard/timeor:latest` 
+              * `$ docker images`
+              * `$ docker run -v /Users/USERNAME/Desktop/test_folder/:/src_copy -p 3838:3838 <IMAGE_ID>`
+  4.	Add `/genomes_info/` folder to Docker container
+          * In another command line window
+              * `$ docker container ls`
+              * `$ docker exec -it <CONTAINER_NAME> /bin/bash/`
+              * `# chmod -R 777 /src_copy/genomes_info/`
+              * `# mv /src_copy/genomes_info/ /srv/`
+  
+### Or, build Docker image 
 
-Note, if TIMEOR is running on a remote machine, you may access the website through the ssh gateway. For example on port 8888, `ssh -L 8888:127.0.0.1:8888 USERNAME@SERVER -t host=SERVER -L 8888:127.0.0.1:3681`.
-
-### Docker
-
-Either with Docker Hub type `$docker pull ashleymaeconard/timeor:latest` or build it with the following commands:
-
-1. Install Docker (version 20.10.0 recommended)
-2. Building Docker image in TIMEOR directory:
-    1. `$docker build -t timeor_env .`
-3. Running Docker:
-    1. `$docker run -p 3838:3838 timeor_env`
-    2. Shiny server will be running on port 3838. Thus, in a browser visit `localhost:3838`.
+NOTE: This could take a while. Please follow these commands:
+  
+  1.	`$ cd /PATH/TO/TIMEOR/`
+  2.	Build Docker image in TIMEOR directory:
+          * `$ docker build -t timeor_env .`
+  3.	Follow instructions above from "3. Run TIMEOR via Docker"
 
 Run TIMEOR
 ===================
 
-### Two ways to input data:
+## Two ways to input data:
 
 1.   Import **SraRunTable from GEO**\* where TIMEOR will process raw data
     through retrieving .fastq files, quality control, alignment, and
-    read count matrix creation. Read [this section](#run-timeor-from-raw-data-starting-from-fastq-time-series-rna-seq) below.
+    read count matrix creation. Read first tab of TIMEOR (Getting Started) for information about 
+    this input specification. Read [this section](https://timeor.brown.edu/app_direct/timeor/timeor_app_tutorial.html#run-timeor-from-raw-data-starting-from-.fastq-time-series-rna-seq) for information about how to process these data in TIMEOR. **We strongly encourage users to upload a read count matrix**, or process raw .fastq data via TIMEOR's interface locally using Docker ([see 5 steps here](#local-installation)).
 
 2.   Import **metadata file\*\* and count matrix \*\*\*** (skipping raw
     data retrieval, quality control, alignment, and read count matrix
-    creation) and proceeding straight to normalization and correction. 
-    Read [this section](#run-timeor-using-simulated-data-starting-from-read-count-matrix) below.
+    creation) and proceeding straight to normalization and correction. Read first tab of TIMEOR (Getting Started) for information about this input specification. Read [this section](https://timeor.brown.edu/app_direct/timeor/timeor_app_tutorial.html#run-timeor-using-simulated-data-starting-from-read-count-matrix) for information about how to process these data in TIMEOR.
 
 Then simply follow the prompts. Fill out the **grey** boxes to begin
 interacting with each stage and tab. 
 
-**NOTE** While processing, stay on that page. No need to push buttons multiple times. For each new analysis, refresh or exit and revisit website.
-
 #### Input file types:
 
-  \* **SraRunTable from GEO** follow instructions in TIMEOR first tab
-    (“Process Raw Data”)
+      NOTE: see first tab of TIMEOR called Getting Started for specifications.
 
-   \*\* **metadata file** requires at least these columns.
-   
-   -   *ID, condition, time, batch*
-   -   *ID*: a unique identifier (ID) for the user
-            (e.g. case\_1min\_rep1)
-   -   *condition*: one word description ('control' and 'case')
-   -   *time*: numerical values e.g. (0, 20, 40)
-   -   *batch*: string description of batch (e.g. b1, b2, b3)
+  - \* **SraRunTable from GEO** requires at least these columns (which will be reordered to produce the metadata file).
+    - *treatment, time, Run, replicate, batch*
+        - *treatment*: one word describing experiment
+        - *time*: numerical values e.g. (0, 20, 40)
+        - *replicate*: one word description of replicate
 
-  \*\*\* **count matrix** : rows should be unique gene identifiers
-    (e.g. Flybase, Ensembl or Entrez IDs) and columns should be the IDs
-    from metadata file.
+  - \*\* **metadata file** requires *at least* these columns.
+    -   *ID, condition, time, replicate*
+        -   *ID*: a unique identifier (ID) for the user
+            (e.g. case1min\_rep1)
+        -   *condition*: one word description (e.g. case, control)
+        -   *time*: numerical values e.g. (0, 20, 40)
+        -   *replicate*: one word description of replicate (e.g. b1, b2, b3)
 
-## Run TIMEOR from Raw Data: Starting from .fastq Time-Series RNA-seq
-This tutorial uses a subset of real data used in the TIMEOR publication to
-take the user through TIMEOR's "Process Raw Data" tab. You will first see this pop-up. Please read.
-There are 4 steps. In this tutorial we will process these data [(here)](https://github.com/ashleymaeconard/TIMEOR/tree/master/demos/real_data_subset/timeor/data), which you can download and process again. 
+  - \*\*\* **count matrix**  requires Ensembl or Flybase unique gene identifiers, and columns should be the IDs from metadata file, and in the same order as metadata file.
 
-**NOTE** While processing, stay on that page. No need to push buttons multiple times. For each new analysis, refresh or exit and revisit website. 
+Getting Started with TIMEOR 
+=======
+
+Please read through this first page of information to help guide you through TIMEOR.
 
 <p>
      
 </p>
 <center>
-<img src="https://github.com/ashleymaeconard/TIMEOR/blob/master/app/www/T000.png" style="width:95.0%" />
+<img src="https://github.com/ashleymaeconard/TIMEOR/blob/master/app/www/T00000.png" style="width:95.0%" />
 </center>
 <p>
      
 </p>
 
+<p>
+     
+</p>
+<center>
+<img src="https://github.com/ashleymaeconard/TIMEOR/blob/master/app/www/T0000.png" style="width:95.0%" />
+</center>
+<p>
+     
+</p>
+
+Importantly, before beginning the analysis, TIMEOR requires the user to give data details to set the adaptive default methods used downstream. The 'Getting Started' Tab above under section 'Suggestions for How to Answer Six 'Determine Adaptive Default Methods' Questions' [(here)](https://timeor.brown.edu/app_direct/timeor/timeor_getting_started.html#suggestions-for-how-to-answer-six-determine-adaptive-default-methods-questions) provides suggestions for how to answer these. 
+
+**NOTE:** We **stronly recommend** keeping 'Yes' as the answer for Question 5 to compare multiple methods, as this highlights valuable TIMEOR functionality.
+
+<p>
+     
+</p>
+<center>
+<img src="https://github.com/ashleymaeconard/TIMEOR/blob/master/app/www/T000000.png" style="width:95.0%" />
+</center>
+<p>
+     
+</p>
+
+## Run TIMEOR from Raw Data: Starting from .fastq Time-Series RNA-seq
+This tutorial uses a subset of real data used in the TIMEOR publication to
+take the user through TIMEOR's "Process Raw Data" tab. You will first see this pop-up. Please read.
+There are 4 steps.
+
+**NOTE**: When possible we advise the user to start from a read count matrix, as our file size limit is 10GB. For larger datasets, the user can use TIMEOR locally (still through web interface) via Docker, by following the 5 steps [below, and here](#local-installation).
+
 1.  In the far-left side-bar click on “Example Data” and then
-    under “Load raw data” click on "SraRunTable & raw .fastq files".
+    under “Load raw data” click on "SraRunTable & raw .fastq files". This will load the answers to the adaptive default questions (left) and also load input details (right). 
 
 <p>
      
@@ -220,7 +247,6 @@ There are 4 steps. In this tutorial we will process these data [(here)](https://
 2.  Follow the pop-up prompt to explore the default settings to questions 1-6 to set the adaptive 
     default parameters, and then click the "Run" button to begin retrieving the raw data (SRR8843738
     and SRR8843750), performing quality control, and aligning the reads using HISAT2 and Bowtie2.
-
 <p>
      
 </p>
@@ -292,26 +318,14 @@ There are 4 steps. In this tutorial we will process these data [(here)](https://
 
 ## Run TIMEOR Using Simulated Data: Starting from Read Count Matrix
 
-This tutorial uses simulated data and takes the user through TIMEOR’s full
-functionality beginning from a read count matrix (genes x sample/time). **NOTE** figures with two panels are the same page,
-just split. There are 20 steps. In this tutorial we will process these data [(here)](https://github.com/ashleymaeconard/TIMEOR/tree/master/demos/simulated_data/timeor/data), which you can download and process again. 
+This tutorial uses simulaated data and takes the user through TIMEOR’s full
+functionality beginning from a read count matrix (genes x sample/time). **NOTE**: figures with two panels are the same page,
+just split. There are 20 steps.
 
-**NOTE** While processing, stay on that page. No need to push buttons multiple times. For each new analysis, refresh or exit and revisit website.
-
-**The user can begin this tutorial before *or* after following ["Run TIMEOR from Raw Data: Starting from .fastq Time-Series RNA-seq"](#run-timeor-from-raw-data-starting-from-fastq-time-series-rna-seq).**
+**The user can begin this tutorial before *or* after following ["Run TIMEOR from Raw Data: Starting from .fastq Time-Series RNA-seq"](#run-timeor-from-raw-data-starting-from-.fastq-time-series-rna-seq).**
 
 1.  In the far-left side-bar click on “Example Data” and then
     under “Load simulated data” click on "Metadata & read count file".
-
-<p>
-     
-</p>
-<center>
-<img src="https://github.com/ashleymaeconard/TIMEOR/blob/master/app/www/T1.png" style="width:95.0%" />
-</center>
-<p>
-     
-</p>
 
 2.  Follow the pop-up to explore results on the Pre-processing
     tabs "Process Raw Data" and "Process Count Matrix".
@@ -325,6 +339,17 @@ just split. There are 20 steps. In this tutorial we will process these data [(he
 <p>
  
 </p>
+
+<p>
+ 
+</p>
+<center>
+<img src="https://github.com/ashleymaeconard/TIMEOR/blob/master/app/www/T2.5.png" style="width:95.0%" />
+</center>
+<p>
+ 
+</p>
+
 <p>
  
 </p>
@@ -336,7 +361,7 @@ just split. There are 20 steps. In this tutorial we will process these data [(he
 </p>
 
 3.  On the Normalize and Correct Data tab, choose from normalization and
-    correction methods and click “Run” to view result. You have completed pre-processing. Follow pop-up.
+    correction methods and click “Run” to view result. Visit the 'Method and Question Choice Assistance' section of the 'Getting Started' tab ([here](https://timeor.brown.edu/app_direct/timeor/timeor_getting_started.html##method-and-question-choice-assistance)) for suggestions on how to choose the appropriate normalization and correlation settings. You have completed pre-processing. Follow pop-up.
 
 <p>
  
@@ -405,13 +430,13 @@ just split. There are 20 steps. In this tutorial we will process these data [(he
     Results” between ImpulseDE2, Next maSigPro, and DESeq2 on the left,
     and the interactive clustermap with automated clustering will
     display the differentially expressed gene trajectories for the
-    chosen method. You can then toggle under “Cluster Gene Expression Trajectories” to choose the
-    number of clusters desired. 
-    For this demonstration, we chose "ImpulseDE2" differentially expressed gene output. 
-    We also chose "automatic" clustering of gene trajectories. On new data the user can choose these two parameters.
-    **NOTE** ImpulseDE2 is chosen because
+    chosen method. TIMEOR provides an automatic clustering option (shown) which takes the mode between three unsupervised clustering methods (partition around medoids, Silhouette, and Calinski criterion) to automatically return the number of gene trajectory clusters to the user. PDF available on download to see clustering plots. You can then also toggle “Cluster Gene Expression Trajectories” to choose the
+    number of clusters desired. For this demonstration, we chose "ImpulseDE2" differentially expressed gene output. We also chose "automatic" clustering of gene trajectories. On new data the user can choose these two parameters.
+    **NOTE:** ImpulseDE2 is chosen because
     it has the largest differential expressed gene overlap with the
-    previous study and other methods.
+    previous study and other methods. 
+
+8.  Click 'Fix cluster number' to solidify the number of clusters. This button fetches the genomic sequences of each gene to perform motif enrichment per gene trajectory cluster for tab 'Factor Binding' in the Secondary Analysis stage.
 
 <p>
  
@@ -434,11 +459,11 @@ just split. There are 20 steps. In this tutorial we will process these data [(he
 
 11.  Wait to view any enriched gene ontology (GO) terms (Molecular
     Function, Biological Process, or Cellular Component), pathway,
-    network, and/or motif analysis. **NOTE** You may download the
-    interactive motif results for viewing. **NOTE** Should the process finish and images not show, simply turn the toggle "OFF" and then "ON" to view results.
+    network, and/or motif analysis. **NOTE** you may download the
+    interactive motif results for viewing.
 
 12.  Toggle the “Analyze” button to “OFF” to choose another gene set, and
-    repeat steps 9-12.
+    repeat steps 9-12. **NOTE** if no images show simply toggle 'OFF' then 'ON' again to view any results. If no enrichment is found, that box is left blank.
 
 <p>
  
@@ -549,7 +574,7 @@ just split. There are 20 steps. In this tutorial we will process these data [(he
  
 </p>
 
-20. Your results folder can be downloaded on the far-left side-bar under "Download Results Folder". **NOTE** The original simulated data and results can be downloaded [here](https://github.com/ashleymaeconard/TIMEOR/tree/master/demos/simulated_data). 
+20. Your results folder AND a log file can both be downloaded on the far-left side-bar under "Download Results Folder" and "Download Log File". As TIMEOR integrates ~21 methods, the log enables users to see runtime output and messages from TIMEOR and other methods. **NOTE** The original simulated data and results can be downloaded directly [here](https://github.com/ashleymaeconard/TIMEOR/tree/master/demos/simulated_data). 
 
 <p>
  
@@ -560,7 +585,7 @@ just split. There are 20 steps. In this tutorial we will process these data [(he
 <p>
  
 </p>
-
+  
 Details
 =======
 
@@ -594,3 +619,4 @@ The following bigWig files were collected:
 ### Real Data in Publication
 
 The results presented in TIMEOR's publication can be downloaded in TIMEOR's automatically generated folders [here](https://github.com/ashleymaeconard/TIMEOR/tree/master/demos/real_data_full).
+
