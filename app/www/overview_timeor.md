@@ -7,10 +7,10 @@ output:
 Overview
 ========
 
-The [TIMEOR software (web, Conda, and Docker)](https://github.com/ashleymaeconard/TIMEOR) gives users a flexible and intuitive web platform with which to
+The [TIMEOR software (web and Docker)](https://github.com/ashleymaeconard/TIMEOR) gives users a flexible and intuitive web platform with which to
 upload their time-series RNA-seq data and protein-DNA data, and step through the entire temporal differential gene
-expression and gene dynamics analysis pipeline to generate gene regulatory networks. The application is organized into three
-separate stages: Pre-processing, Primary Analysis, and Secondary Analysis. [Click here](https://www.youtube.com/watch?v=bBodWvGPD6g&t=8s) for a quick video demonstration of the TIMEOR webserver, and [click here](https://www.youtube.com/watch?v=-BV9B3L1ymg) for a video guide through the webserver tutorial (next tab).
+expression and gene dynamics analysis pipeline to generate a transcription factor gene regulatory network that is user guided. The application is organized into three
+separate stages: Pre-processing, Primary Analysis, and Secondary Analysis. [Click here](https://www.youtube.com/watch?v=bBodWvGPD6g&t=8s) for a quick video demonstration of the TIMEOR webserver, and [click here](https://www.youtube.com/watch?v=-BV9B3L1ymg) for a video guide through the webserver tutorial (next tab). Note that there have been recent additions to TIMEOR to make the experience flow more efficiently. While these videos do not reflect these additions, yet the steps and process are still the very same. Enjoy!
 
 <p>
  

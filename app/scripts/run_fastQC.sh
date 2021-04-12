@@ -1,3 +1,4 @@
+#!/bin/bash
 # run_fastQC.sh
 # Ashley Mae Conard
 # Last Mod. 10/15/2019

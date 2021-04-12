@@ -34,9 +34,11 @@ ADJ_PVAL <- as.double(args[5]) # recommend 0.05
 # Assigning organism library
 if(ORGANISM=="dme"){
     ORG_DB="org.Dm.eg.db"
-} else if(ORGANISM=="hsa"){
+} else if(ORGANISM=="hse"){
+    ORGANISM = "hsa"
     ORG_DB="org.Hs.eg.db"
-}else if(ORGANISM=="mmu"){
+}else if(ORGANISM=="mus"){
+    ORGANISM = "mmu"
     ORG_DB="org.Mm.eg.db"
 } else{
     stop("Please enter dme (Drosophila melanogaster), hsa (Homo sapiens), or mmu (Mus musculus)")

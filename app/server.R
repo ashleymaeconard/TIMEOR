@@ -1,6 +1,6 @@
 # server.R
 # Ashley Mae Conard
-# Last Mod. 6 June 2020
+# Last Mod. 6 April 2021
 
 library(shiny)
 library(shinydashboard)
@@ -25,12 +25,13 @@ library(vegan)
 library(promises)
 library(future)
 plan(multiprocess)
+options(shiny.sanitize.errors = FALSE)
 
 # Set app dir
 app_dir <- getwd()
 
 # Set maximum file size upload to app
-options(shiny.maxRequestSize = 1000 * 1024 ^ 2)
+options(shiny.maxRequestSize = 10000 * 1024 ^ 2)
 
 source(paste(app_dir, "/scripts/clustermap_function.r", sep = ""))
 source(paste(app_dir, "/scripts/DESeq2.r", sep = ""))
@@ -97,14 +98,14 @@ function(input, output, session) {
   shinyalert("Welcome, it's about time!
               Quick start:",
               "TIMEOR accepts 2 input types: 
-              (1) raw .fastq files
+              (1) raw .fastq files,
               (2) read count matrix. 
               
               For (1) in 'Example Data' (side-bar) under
 
               'Load raw data' click 'SraRunTable & .fastq files' button.
               
-              This will guide you through the 'Process Raw Data' tab demo.
+              This will guide you through the 'Set Inputs and Defaults, Process Raw Data' tab demo.
               
               This website is free and open for everyone!",
             type = "info"
@@ -513,7 +514,7 @@ function(input, output, session) {
         (input$experiment == "NA")) {
       shinyalert(
         "Please answer questions.",
-        "Please load data and then select the organism, sequencing and experiment type.",
+        "Please select at least the organism, sequencing, and experiment type, then load metadata or SraRunTable.txt.",
         type = "error"
       )
     } else{
@@ -841,8 +842,7 @@ function(input, output, session) {
     # Show checkmark for quality control finished
     output$textCheckMark_qc <- renderText({
       req(qcDone())
-      session$sendCustomMessage(type = 'print',
-                                message = list(selector = 'textCheckMark_qc', html = "✓"))
+      session$sendCustomMessage(type = 'print', message = list(selector = 'textCheckMark_qc', html = "✓"))
       return("✓")
     })
   })
@@ -1027,10 +1027,10 @@ function(input, output, session) {
     req(input$runGenCountMat)
     if(real_demo_data()){ # if using demo data for preprocessing tab
       shinyalert("Quick start:",
-                    "You completed the 'Process Raw Data' tab demo.
+                    "You completed the 'Set Inputs and Defaults, Process Raw Data' tab demo.
                     
                     TIMEOR accepts 2 input types: 
-                    (1) raw .fastq files
+                    (1) raw .fastq files,
                     (2) read count matrix. 
                 
                     For (2) in 'Example Data' (side-bar) under
@@ -1042,7 +1042,7 @@ function(input, output, session) {
                   )
       }else{
         shinyalert("Quick start:",
-                    "You completed the 'Process Raw Data' tab.
+                    "You completed the 'Set Inputs and Defaults, Process Raw Data' tab.
                     
                     TIMEOR is producing the merged read count 
                     matrix. When it is finished, you will see 
@@ -1209,46 +1209,69 @@ function(input, output, session) {
     p
   })
   
+  test_cat <- function(){
+    write("HEREEE", stderr())
+    #dump("t.example.1", file = "/src_copy/dumpdata.txt")
+    
+    write(transpose(data_count_matrix()), stderr())
+    dataSubset <- data_count_matrix() %>%
+    dplyr::select(-starts_with("ID"))
+    
+    cat(dataSubset, sep='',file=stderr())
+
+    t_d <- transpose(data_count_matrix())
+    ldf = lapply(as.list(1:dim(t_d)[1]), function(x) t_d[x[1],])
+    write(typeof(ldf), stderr())
+    write(class(ldf), stderr())
+    to_save <- reactiveValuesToList(ldf)
+    saveRDS(to_save, file = "/src_copy/saved.rds")
+    cat(file=stderr(), "drawing histogram with", ldf, "bins", "\n")
+
+  }
+  
   # PCA Scatter Before
   output$pcaScatBefore <- renderPlotly({
     req(data_count_matrix())
+    #test_cat()
     dataSubset <- data_count_matrix() %>%
-      dplyr::select(-starts_with("FlyBaseID"))
+      dplyr::select(-starts_with("ID"))
     p <-
-      autoplotly(prcomp(dataSubset), data = data_count_matrix(), frame = FALSE)
+      autoplotly(prcomp(t(dataSubset)), data = t(data_count_matrix()), label = TRUE, frame = FALSE, label.show.legend = FALSE)
     p
   })
   
   # PCA loadings bar plot before normalization
   output$pcaBarBefore <- renderPlot({
     req(data_count_matrix())
-    fviz_eig(prcomp(data_count_matrix()),
+    fviz_eig(prcomp(t(data_count_matrix())),
              addlabels = TRUE,
              ylim = c(0, 100))
   })
   
   # Rendering correlation plot
-  output$correlationBefore <- renderPlotly({
-    req(data_count_matrix())
-    req(input$correMethodBefore)
-    val <- input$correMethodBefore
-    if (input$correMethodBefore == "Spearman") {
-      val <- "spearman"
-    } else {
-      val <- "pearson"
-    }
-    p <- heatmaply(
-      cor(df_count_matrix(), method = c(val)),
-      xlab = "Experiments",
-      ylab = "Experiments",
-      main = paste(
-        input$correMethodBefore,
-        "Correlation Between Experiments"
-      ),
-      margins = c(40, 40),
-      limits = c(-1, 1),
-      scale_fill_gradient_fun = ggplot2::scale_fill_gradient2(low = "blue", high = "red")
-    )
+  observeEvent(input$correMethodBefore, {
+    output$correlationBefore <- renderPlotly({
+      req(data_count_matrix())
+      req(input$correMethodBefore)
+      val <- input$correMethodBefore
+      if (input$correMethodBefore == "Spearman") {
+        val <- "spearman"
+      } else {
+        val <- "pearson"
+      }
+      p <- heatmaply(
+        cor(df_count_matrix(), method = c(val)),
+        xlab = "Experiments",
+        ylab = "Experiments",
+        main = paste(
+          input$correMethodBefore,
+          "Correlation Between Experiments"
+        ),
+        margins = c(40, 40),
+        limits = c(-1, 1),
+        scale_fill_gradient_fun = ggplot2::scale_fill_gradient2(low = "blue", high = "red")
+      )
+    })
   })
   
   #################### Pre-Process Stage ##################
@@ -1258,8 +1281,6 @@ function(input, output, session) {
   outputNormalizedData <- reactive({
     req(!is.null(countMatrix_df()))
     req(input$runCorrection)
-    print("outputNoralizedData")
-    
     shinyalert(
       "Completed Pre-processing",
       "Proceed to Primary Analysis (side-bar). 
@@ -1282,7 +1303,7 @@ function(input, output, session) {
   outputCorrectedData <- reactive({
     req(outputNormalizedData())
     req(input$runCorrection)
-    
+
     # Saving corrected read count matrix
     correctedData <<-
       as.data.frame(reconstructData(harmanCorrection(normData, metadata_df()), this = "corrected"))
@@ -1314,9 +1335,8 @@ function(input, output, session) {
     req(outputCorrectedData())
     dataSubset <- correctedData %>%
       dplyr::select(-starts_with("ID"))
-    print("p")
     p <-
-      autoplotly(prcomp(dataSubset), data = correctedData, frame = FALSE)
+      autoplotly(prcomp(t(dataSubset)), data = t(correctedData), label = TRUE, frame = FALSE, label.show.legend = FALSE)
     p
   })
   
@@ -1325,7 +1345,7 @@ function(input, output, session) {
     req(input$runCorrection)
     req(outputCorrectedData())
     fviz_eig(
-      prcomp(correctedData),
+      prcomp(t(correctedData)),
       title = "",
       addlabels = TRUE,
       ylim = c(0, 100)
@@ -1334,27 +1354,28 @@ function(input, output, session) {
   })
   
   # Output correlation plot after normalization and correction
-  output$correlationAfter <- renderPlotly({
-    req(input$runCorrection)
-    req(input$correMethodAfter)
-    req(outputCorrectedData())
-    val <- input$correMethodAfter
-    if (input$correMethodBefore == "Spearman") {
-      val <- "spearman"
-    } else {
-      val <- "pearson"
-    }
-    p <- heatmaply(
-      cor(correctedData, method = c(val)),
-      xlab = "Experiments",
-      ylab = "Experiments",
-      main = paste(input$correMethodAfter, "Correlation Between Experiments"),
-      margins = c(40, 40),
-      limits = c(-1, 1),
-      scale_fill_gradient_fun = ggplot2::scale_fill_gradient2(low = "blue", high = "red")
-    )
+  observeEvent(input$correMethodAfter, {
+    output$correlationAfter <- renderPlotly({
+      req(input$runCorrection)
+      req(input$correMethodAfter)
+      req(outputCorrectedData())
+      val <- input$correMethodAfter
+      if (input$correMethodAfter == "Spearman") {
+        val <- "spearman"
+      } else {
+        val <- "pearson"
+      }
+      p <- heatmaply(
+        cor(correctedData, method = c(val)),
+        xlab = "Experiments",
+        ylab = "Experiments",
+        main = paste(input$correMethodAfter, "Correlation Between Experiments"),
+        margins = c(40, 40),
+        limits = c(-1, 1),
+        scale_fill_gradient_fun = ggplot2::scale_fill_gradient2(low = "blue", high = "red")
+      )
+    })
   })
-  
   #################### Primary Analysis ##################
   
   output$deParameters <- renderText({
@@ -1391,7 +1412,8 @@ function(input, output, session) {
         countMatrix_filepath(),
         path_to_output,
         analysis_folder_name(),
-        adj_p_analysis_folder()
+        adj_p_analysis_folder(),
+        input$organism
       )
     print(command)
     system(command, intern = TRUE)
@@ -1418,7 +1440,8 @@ function(input, output, session) {
         norm_corr_countMatrix_filepath(),
         path_to_output,
         analysis_folder_name(),
-        adj_p_analysis_folder()
+        adj_p_analysis_folder(),
+        input$organism 
       )
     print(command)
     system(command, intern = TRUE)
@@ -1479,7 +1502,7 @@ function(input, output, session) {
     runNextMaSigPro()
     print("Run DESeq2")
     runDESeq2()
-    print("Completed running of ImpulseDE2, NextMaSigPro, and DESeq2.")
+    print("Completed running of ImpulseDE2, next MaSigPro, and DESeq2.")
   }
   
   # Run differential expression (DE) method(s) depending on user input
@@ -1606,18 +1629,29 @@ function(input, output, session) {
         "_results/www/",
         sep = ""
       )
+    
+    # Identify if method(s) returned no differentially expressed genes
+    imp_val <- impulseDE2File()
+    n_val <- nextMaSigProFile()
+    de_val <- deSeqFile()
+
+    # Script
     script <-
       paste("Rscript ", app_dir, "/scripts/venns_intervene.r", sep = "")
+    
+    # Command
     command <-
       paste(
         script,
-        impulseDE2File(),
-        deSeqFile(),
-        nextMaSigProFile(),
+        imp_val,
+        de_val,
+        n_val,
         path_to_prev_study,
         past_study_name,
         output_dir
       )
+    write("Venn diagram command:",stderr())
+    write(command,stderr())
     system(command, intern = TRUE)
   }
   
@@ -1656,7 +1690,7 @@ function(input, output, session) {
       "Output from 'ImpulseDE2' and 'automatic'
       gene trajectory clustering shown. 
 
-      On new data the user can change these.
+      On user input data the user can change these.
       
       Proceed to Secondary Analysis (side-bar). 
       
@@ -1677,23 +1711,57 @@ function(input, output, session) {
     req(!is.null(adj_p_analysis_folder()))
     req(input$runDE)
     
-    
     if (input$whichMethodInput == "ImpulseDE2") {
-      deResult <<- read.csv(impulseDE2_out_file(), header = TRUE)
+        tryCatch(deResult <<- read.csv(impulseDE2_out_file(), header = TRUE),
+          error = function(e) stop("ImpulseDE2 did not find differentially expressed genes.")
+        )
     } else if (input$whichMethodInput == "NextMaSigPro") {
-      deResult <<- read.csv(nextMaSigProFile(), sep = ",", header = TRUE)
+        tryCatch(deResult <<- read.csv(nextMaSigProFile(), sep = ",", header = TRUE),
+          error = function(e) stop("Next maSigPro did not find differentially expressed genes.")
+        )
     } else{
-      deResult <<- read.csv(deSeq_out_file(), sep = ",", header = TRUE)
+        tryCatch(deResult <<- read.csv(deSeq_out_file(), sep = ",", header = TRUE), 
+          error = function(e) stop("DESeq2 did not find differentially expressed genes.")
+        )
     }
     deResult
   }, options = (list(
     pageLength = 5, scrollX = TRUE
   )))
   
+  observeEvent(input$numClusts, {
+    # Remove cluster subfolders that are left over
+    clust_dir <- paste(local_results_folder(), "timeor/results/analysis",paste(analysis_folder_name(),"results", sep="_"), "clusters",sep="/")
+    cat(clust_dir, file=stderr())
+    dirs <- list.dirs(path = clust_dir)
+    dirs <- dirs[2:length(dirs)]
+    for(d in dirs){
+        cat(d, file=stderr())
+        if(!grepl("heatmaply", d, fixed = TRUE)){
+          unlink(d, recursive=TRUE)
+        }
+    }
+  })
+
+  observeEvent(input$whichMethodInput, {
+    # Remove cluster subfolders that are left over
+    clust_dir <- paste(local_results_folder(), "timeor/results/analysis",paste(analysis_folder_name(),"results", sep="_"), "clusters",sep="/")
+    cat(clust_dir, file=stderr())
+    dirs <- list.dirs(path = clust_dir)
+    dirs <- dirs[2:length(dirs)]
+    for(d in dirs){
+        cat(d, file=stderr())
+        if(!grepl("heatmaply", d, fixed = TRUE)){
+          unlink(d, recursive=TRUE)
+        }
+    }
+  })
+
   # Output clustermap
   output$deClustering <-
     output$deClustering1 <-
-    output$deClustering2 <- output$deClustering3 <- renderPlotly({
+    output$deClustering2 <- 
+    output$deClustering3 <- renderPlotly({
       # Requirements
       req(analysis_folder_name())
       req(adj_p_analysis_folder())
@@ -1705,15 +1773,23 @@ function(input, output, session) {
         paste(local_results_folder(),
               "/timeor/results/analysis/",
               sep = "")
-      desired_output_name <- input$resultsFolder
       
       # Determine which method (from bottom left of Primary Analysis) to display (on bottom right of Primary Analysis)
       if (input$whichMethodInput == "ImpulseDE2") {
-        clustermap <<- impulseDE2File()
+        tryCatch(clustermap <<- impulseDE2File(),
+          error = function(e) stop("ImpulseDE2 did not find differentially expressed genes.")
+        )
+        
       } else if (input$whichMethodInput == "NextMaSigPro") {
-        clustermap <<- nextMaSigProFile()
+        tryCatch(clustermap <<- nextMaSigProFile(),
+          error = function(e) stop("Next maSigPro did not find differentially expressed genes.")
+        )
+        
       } else if (input$whichMethodInput == "DESeq2") {
-        clustermap <<- deSeqFile()
+        tryCatch(clustermap <<- deSeqFile(),
+          error = function(e) stop("DESeq2 did not find differentially expressed genes.")
+        )
+        
       }
       
       # Setting parameters to call TIMEOR's clustermap script
@@ -1746,6 +1822,59 @@ function(input, output, session) {
       
     })
   
+  observeEvent(input$setClusters, {
+    # Prepare MEME data for either MEME or to move past Enrichement tab
+    condition <- paste(analysis_folder_name(), "results", sep = "_")
+    clust_dir <- paste(local_results_folder(), "timeor/results/analysis",condition, "clusters/",sep="/")
+    animal <- input$organism
+    
+    if (animal == "dme") {
+      ncbi_id = 7227
+      refomatted_gtf = "reformatted_genes_gtf.csv"
+    } else if (animal == "hse") {
+      animal = "hsa"
+      ncbi_id = 9606
+      refomatted_gtf = "reformatted_genes_gtf_chr.csv"
+    } else{
+      animal = "mmu"
+      ncbi_id = 10090
+      refomatted_gtf = "reformatted_genes_gtf_chr.csv"
+    }
+
+    # Find cluster directories
+    dirs <- list.dirs(path = clust_dir, recursive = FALSE)
+    dirs <- dirs[1:length(dirs)]
+    
+    # Iterate through all clusters to get gene sequence
+    for(c in dirs){
+        if(!grepl("heatmaply", c, fixed = TRUE)){
+          write(paste("Cluster: ", c, sep=""), stderr())
+          if(length(list.files(path=paste(c,"MEME/",sep="/"), pattern="DNAseq"))==0){# if meme prep has not been run
+            write(paste("Run MEME_prep script on: ", c, sep=""), stderr())
+            write(" ", stderr())
+            meme_prep_script <-
+              paste(app_dir, "/scripts/meme_prep_indiv_cluster.py", sep = "")
+            reformatted_gtf <-
+              paste("/srv/genomes_info", animal, refomatted_gtf, sep = "/")
+            genome_fa <- paste("/srv/genomes_info/",animal,"/genome_bowtie2/genome.fa", sep = "")
+            command_meme_prep <-
+              paste(
+                "python",
+                meme_prep_script,
+                reformatted_gtf,
+                c,
+                genome_fa,
+                0,
+                animal,
+                sep = " "
+              )
+            write("MEME prep", stderr())
+            write(command_meme_prep, stderr())
+            system(command_meme_prep, intern = TRUE)
+          }
+        }
+    }
+  })
   #################### Secondary Analysis ##################
   ######################## Enrichment ######################
   
@@ -1847,8 +1976,11 @@ function(input, output, session) {
     print(motif_file)
     print(length(motif_file))
     
+    meme_has_run_file <- 
+      Sys.glob(file.path(motif_folder, "/meme.txt"))
+
     # Run Enrichment if new individual cluster
-    if (length(motif_file) == 0) {
+    if (length(meme_has_run_file) == 0) {
       run_secondary_enrichment()
     }
   })
@@ -1891,6 +2023,7 @@ function(input, output, session) {
         animal,
         p_value
       )
+      
     print(command_GO_path)
     system(command_GO_path, intern = FALSE)
     
@@ -1902,37 +2035,22 @@ function(input, output, session) {
             sep = "")
     if (animal == "dme") {
       ncbi_id = 7227
+      refomatted_gtf = "reformatted_genes_gtf.csv"
     } else if (animal == "hse") {
+      animal = "hsa"
       ncbi_id = 9606
+      refomatted_gtf = "reformatted_genes_gtf_chr.csv"
     } else{
+      animal = "mmu"
       ncbi_id = 10090
+      refomatted_gtf = "reformatted_genes_gtf_chr.csv"
     }
     command_stringdb <-
       paste(stringdb_script, currentClust_dir, ncbi_id, app_dir)
     print(command_stringdb)
     system(command_stringdb, intern = TRUE)
     
-    # De novo motif search script calls
-    # preparing MEME data
-    meme_prep_script <-
-      paste(app_dir, "/scripts/meme_prep_indiv_cluster.py", sep = "")
-    reformatted_gtf <-
-      paste("/srv/genomes_info/dme/reformatted_genes_gtf.csv",
-            sep = "")
-    genome_fa <- paste("/srv/genomes_info/",animal,"/genome_bowtie2/genome.fa", sep = "")
-    command_meme_prep <-
-      paste(
-        "python",
-        meme_prep_script,
-        reformatted_gtf,
-        currentClust_dir,
-        genome_fa,
-        0,
-        animal,
-        sep = " "
-      )
-    system(command_meme_prep, intern = TRUE)
-    # running MEME
+    # De novo motif search script calls: running MEME
     meme_script <-
       paste(app_dir, "/scripts/run_meme_indiv_cluster.sh", sep = "")
     command_meme <- paste(meme_script, currentClust_dir)
@@ -2284,6 +2402,19 @@ function(input, output, session) {
             "high",
             sep = " ")
     system(command_top_tfs, intern = TRUE)
+
+    command_top_tfs_motif_sim <-
+      paste("Rscript",
+            top_tfs_script,
+            res_folder,
+            input$organism,
+            3,
+            4,
+            40,
+            app_dir,
+            "low",
+            sep = " ")
+    system(command_top_tfs_motif_sim, intern = TRUE)
   }
   
   # Rcistarget interactive results download
@@ -2778,11 +2909,24 @@ function(input, output, session) {
       paste("timeor", "tar", "gz", sep = ".")
     },
     content = function(folderName) {
-      command <- paste("tar -czvf ", local_results_folder(),"/timeor.tar.gz ",local_results_folder(),"/timeor", sep = "")
+      command <- paste("tar -czvf ", local_results_folder(),"/timeor.tar.gz ",local_results_folder(),"/timeor/results", sep = "")
       cat(command)
       system(paste("tar --usage", "> /tmp/file_output.txt",  sep=" "))# , intern = TRUE)
       system(command)
       file.copy(paste(local_results_folder(), "/timeor.tar.gz", sep = ""), folderName)},
+      contentType = "application/octet-stream"
+  )
+
+  output$downloadLogFile <- downloadHandler(
+    filename = function() {
+      paste("timeor_logs", "tar", "gz", sep=".")
+    },
+    content = function(folderName) {
+      command <- paste("tar -czvf", paste(local_results_folder(),"/timeor_logs.tar.gz", sep=""),"/var/log/shiny-server/", sep = " ")
+      cat(command)
+      system(paste("tar --usage", "> /tmp/file_output.txt",  sep=" "))# , intern = TRUE)
+      system(command)
+      file.copy(paste(local_results_folder(), "/timeor_logs.tar.gz", sep = ""), folderName)},
       contentType = "application/octet-stream"
   )
 }

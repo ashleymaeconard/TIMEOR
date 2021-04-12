@@ -12,6 +12,7 @@ library(shinyalert)
 library(shinyWidgets)
 library(shinycssloaders)
 library(knitr)
+options(shiny.sanitize.errors = FALSE)
 
 # Displaying TIMEOR logo
 title <-
@@ -71,14 +72,17 @@ function(request) {
           menuItem(
             "Example Data",
             tabName = "exampleData",
+            startExpanded = TRUE,
             icon = icon("table"),
             menuItem(
               "Load raw data",
+              startExpanded = TRUE,
               actionButton("runReal", "SraRunTable & .fastq files", style =
                              "margin: 6px 5px 6px 0px; width:90%")
             ),
             menuItem(
               "Load count matrix",
+              startExpanded = TRUE,
               actionButton("runSim", "Metadata & read count file", style =
                              "margin: 6px 5px 6px 0px; width:90%")
             )
@@ -88,6 +92,13 @@ function(request) {
             tabName = "resultsFolder",
             icon = icon("download"),
             downloadButton("downloadResultsFolder", "Download results", style =
+                             "width:90%;color:#444")
+          ),
+          menuItem(
+            "Download Log File",
+            tabName = "logFile",
+            icon = icon("download"),
+            downloadButton("downloadLogFile", "Download log file", style =
                              "width:90%;color:#444")
           )
         )
@@ -104,52 +115,18 @@ function(request) {
         tabItems(
           
 #################### Pre-Process Stage ##################
-##################### Process Raw Data ##################
-          
+##################### Getting Started ###################
           tabItem(tabName = "pre-process",
                   tabsetPanel(
+                    tabPanel( "Getting Started",
+                    fluidRow(box(width=12,
+                    titlePanel( 
+                    tags$iframe(src="./timeor_getting_started.html", width='100%', height='1000px',frameborder=0,scrolling='auto')
+                    )))),
+##################### Process Raw Data ##################
                     tabPanel(
-                      "Process Raw Data",
+                      "Set Input and Defaults, Process Raw Data",
                       fluidRow(
-                        box(
-                          
-                          # Search and retrieve text within upper leftmost app body within Process Raw Data Tab
-                          titlePanel(h3("Search and Retrieve")),
-                          width = 6,
-                          h4(
-                            "Processing your own data? Jump to step 4 to load your metadata file, answer 6 questions on the right panel, then proceed to the 'Process Count Matrix' tab."
-                          ),
-                          tags$hr(), # horizontal line 
-                          h4(
-                            "1. Go to ",
-                            tags$a(href = "https://www.ncbi.nlm.nih.gov/sra", "GEO", target = "_blank"),
-                            "to search for a time series RNA-seq dataset."
-                          ),
-                          h4("2. Click on \"SRA Run Selector\" on bottom right."),
-                          h4(
-                            "3. Download data (all or selected replicates) by clicking on \"Metadata\" under \"Select\"."
-                          ),
-                          h4(
-                            "4. Set input file type to either the resulting \"SraRunTable.txt\" or a pre-made metadata file."
-                          ),
-                          switchInput(
-                            inputId = "sra_or_meta",
-                            label = "Input file",
-                            onLabel = "Metadata",
-                            offLabel = "SraRunTable"
-                          ),
-                          h4("5. Upload input file. Note: SraRunTables are automatically converted to metadata files."),
-                          fileInput(
-                            "metadataFile",
-                            label = NULL,
-                            accept = c(
-                              "text/csv",
-                              "text/comma-separated-values,text/plain",
-                              ".txt"
-                            )
-                          ),
-                          DT::dataTableOutput("metadataTable"),
-                          style="background: #E8E8E8"),
                         box(style="background: #E8E8E8",
                           
                           # Determine adaptive default parameters text within upper rightmost app body within Process Raw Data Tab
@@ -173,7 +150,8 @@ function(request) {
                             choices = c(
                               "Select a sequencing type" = "NA",
                               "Paired-end" = "pe",
-                              "Single-end" = "se"
+                              "Single-end" = "se",
+                              "Not applicable" = "matrix"
                             )
                           ),
                           h4("3. What type of experiment?"),
@@ -187,7 +165,7 @@ function(request) {
                               "Just case or control" = "jc"
                             )
                           ),
-                          h4("4. What type of time series?"),
+                          h4("4. What type of time-series?"),
                           selectInput(
                             "timeSeries",
                             label = NULL,
@@ -215,15 +193,56 @@ function(request) {
                             label = NULL,
                             selected = "1",
                             choices = c("1", "2", "3", "4", "5", "6", "7")
+                          )
+                        ),
+                        box(
+                          
+                          # Search and retrieve text within upper leftmost app body within Process Raw Data Tab
+                          titlePanel(h3("Input Data Description")),
+                          width = 6,
+                          h4(
+                            "Processing your own data? TIMEOR accepts read count tables. After answering 6 questions (left panel), jump to steps 4 and 5 to load your metadata file and press 'Run'."
                           ),
+                          tags$hr(), # horizontal line 
+                          h4(
+                            "1. If processing raw data, GEO data is available by going to ",
+                            tags$a(href = "https://www.ncbi.nlm.nih.gov/sra", "GEO", target = "_blank"),
+                            "to search for a time-series RNA-seq dataset."
+                          ),
+                          h4("2. Click on \"SRA Run Selector\" on bottom right."),
+                          h4(
+                            "3. Download data (all or selected replicates) by clicking on \"Metadata\" under \"Select\"."
+                          ),
+                          h4(
+                            "4. Set input file type to either the resulting \"SraRunTable.txt\" or a pre-made metadata file."
+                          ),
+                          switchInput(
+                            inputId = "sra_or_meta",
+                            label = "Input file",
+                            onLabel = "Metadata",
+                            offLabel = "SraRunTable"
+                          ),
+                          h4("5. Upload input file. Note: SraRunTables are automatically converted to metadata files. Ensure resulting metadata file matches TIMEOR specifications in tutorial. Download results folder to change file as needed, and reupload (keeping SraRunTable selected)."),
+                          fileInput(
+                            "metadataFile",
+                            label = NULL,
+                            accept = c(
+                              "text/csv",
+                              "text/comma-separated-values,text/plain",
+                              ".txt"
+                            )
+                          ),
+                          DT::dataTableOutput("metadataTable"),
                           actionButton("run_adaptive_defaults", label = "Run"),
                           htmlOutput("dataProcessType"), tags$head(tags$style("#dataProcessType{color: #377BB5;
                                  font-size: 18px;text-align: center; font-weight: bold}")
-                          )
-                        )
+                          ),
+                          style="background: #E8E8E8")
                       ),
                       tags$hr(style = "border-color: black;"), # horizontal line 
-                      
+                      fluidRow(height=50, 
+                              box(width=12, h3("Process Raw Data"), "Fields below are filled if raw data are processed. With a 10GB upload limit, it is advised that larger datasets be processed locally using Docker. Follow 5 steps ",tags$a(href = "https://timeor.brown.edu/app_direct/timeor/timeor_app_tutorial.html#local-installation", "here", target = "_blank"),". This information is also available by visiting 'Tutorials' in the side-bar, under the Web Server tab, and scrolling down to the bottom under 'Local Installation'.",style="background: #E8E8E8")),
+
                       # Process, quality control, and alignment quality text within lower leftmost text in app body within Process Raw Data Tab
                       fluidRow(
                         box(
@@ -341,7 +360,7 @@ function(request) {
                             withSpinner(plotlyOutput("pcaScatBefore"))),
                         
                         # Show raw read count matrix replicate (i.e. sample) correlations
-                        box(titlePanel(h3("Replicate Correlations")), height=600,
+                        box(titlePanel(h3("Replicate and Experiment Correlations")), height=600,
                           selectInput(
                             "correMethodBefore",
                             label = "Correlation Methods",
@@ -367,6 +386,7 @@ function(request) {
                         
                         # Normalization and correction method user options
                         box(titlePanel(h3("Choose a Normalization and Correction Method")),
+                          "See ", tags$a(href = "https://timeor.brown.edu/app_direct/timeor/timeor_getting_started.html##method-and-question-choice-assistance", "here", target = "_blank")," under 'Method and Question Choice Assistance' for suggestions on how to choose the normalization method.",
                           selectInput(
                             "normMethods",
                             label = "Normalization Methods",
@@ -374,7 +394,7 @@ function(request) {
                           ),
                           selectInput(
                             "corrMethods",
-                            label = "Correction Methods",
+                            label = "Correction Method",
                             choices = c("Harman")
                           ),
                           actionButton("runCorrection", label = "Run"),
@@ -391,7 +411,8 @@ function(request) {
                             withSpinner(plotOutput("pcaBarAfter"))),
                         
                         # Show normalized and corrected replicate (i.e. sample) correlations
-                        box(titlePanel(h3("Replicate Correlations")), height=600,
+                        box(titlePanel(h3("Replicate and Experiment Correlations")), height=600,
+                        "See ", tags$a(href = "https://timeor.brown.edu/app_direct/timeor/timeor_getting_started.html##method-and-question-choice-assistance", "here", target = "_blank")," under 'Method and Question Choice Assistance' for suggestions on how to choose the correlation method.",
                           selectInput(
                             "correMethodAfter",
                             label = "Correlation Methods",
@@ -450,7 +471,8 @@ function(request) {
                         choices = c(
                           "automatic", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"
                         )
-                      ),
+                      ), 
+                      actionButton("setClusters", label = "Fix cluster number"),
                       withSpinner(plotlyOutput("deClustering"))
                       )
                   )),
@@ -467,7 +489,7 @@ function(request) {
                           titlePanel(h3("Gene Expression Trajectory Clusters")),
                           selectInput(
                             "inputNumClust",
-                            label = paste("Clusters are labeled in ascending order from 1 for top-most cluster. Select a gene trajectory cluster to analyze:", sep = ""),
+                            "Clusters are labeled by positive integers, and the cluster color is visible by toggling the button below. Select a gene trajectory cluster to then analyze on right:",
                             selected = "NA",
                             choices = c(
                               "NA" = "NA", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"
@@ -480,6 +502,7 @@ function(request) {
                           span(uiOutput('textWithHTML')),
                           headerPanel(""),
                           switchInput(inputId = "runEnrichment", label = "Analyze"),
+                          "NOTE: Enrichment analysis does NOT need to be done to proceed to next tab (Factor Binding). Should the process finish and images not show, simply turn the toggle 'OFF' and then 'ON' to view any results.",
                           style="background: #E8E8E8")#,
                           #label=paste("Should the process finish and images not show, simply turn the toggle 'OFF' and then 'ON' to view results.")
                       ),
@@ -651,7 +674,7 @@ function(request) {
                       fluidRow(
                             column(
                           6,
-                          box(width = "auto", height = "500", titlePanel(h3("Transcription Factor Network")),
+                          box(width = "auto", height = "550", titlePanel(h3("Transcription Factor Network")),
                            column(9,
                                    height = "500",
                                    fluidRow(column(12,
@@ -674,7 +697,8 @@ function(request) {
                           ),
                             column(
                           6,
-                          box(width = "auto", height = "500", titlePanel(h3("Temporal Relations Between Observed and Predicted Transcription Factors"), "For edge_type 'a' is activation, 'r' is repression."),
+                          box(width = "auto", height = "550", titlePanel(h3("Temporal Relations Between Observed and Predicted Transcription Factors"), "For edge_type 'a' is activation, 'r' is repression."),
+                          "See last bullet point", tags$a(href = "https://timeor.brown.edu/app_direct/timeor/timeor_getting_started.html##method-and-question-choice-assistance", "here", target = "_blank")," under 'Method and Question Choice Assistance' for suggestions on how to interpret the gene regulatory network information.",
                           fluidRow(
                            column(9,
                                     height = "500",

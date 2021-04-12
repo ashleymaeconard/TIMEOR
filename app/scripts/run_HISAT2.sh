@@ -1,3 +1,4 @@
+#!/bin/bash
 # run_HISAT2.sh
 # Ashley Mae Conard
 # Last Mod. 7/11/2019
@@ -73,6 +74,14 @@ if [ -f ${COMMAND_SCRIPT} ]; then
 	rm -rf ${COMMAND_SCRIPT}
 fi
     
+if [ "$ORGANISM" == "hse" ]; then
+    ORGANISM="hsa"
+fi
+
+if [ "$ORGANISM" == "mus" ]; then
+    ORGANISM="mmu"
+fi
+
 # Getting genome
 genome="/srv/genomes_info/${ORGANISM}/genome_hisat2/genome"
                           
@@ -127,7 +136,7 @@ for dir in $INPUT_DIR/*/*
         else
             echo "Initiating paired-end RNA-seq data processing.";
             # Iterating through only the R1 replicates
-            for R1 in ${dir}/*R1*
+            for R1 in ${dir}/*_1*
                 do
                     echo "Getting paired .fastq for $R1"
                     # Iterating through each R1 to determine when to add 'wait' to script
@@ -140,14 +149,14 @@ for dir in $INPUT_DIR/*/*
 
                     # Generating the HISAT2 command for R1 and R2
                     fileName=$(echo `basename $R1`) # get filename from .fq.gz
-                    replicateFolder=$(echo `basename $(dirname $fastq)`)
-                    sampleFolder=$(echo `basename $(dirname $(dirname $fastq))`)
+                    replicateFolder=$(echo `basename $(dirname $R1)`)
+                    sampleFolder=$(echo `basename $(dirname $(dirname $R1))`)
                     
                     # Creating folder for all HISAT2 outputs per fastq
                     folderName=${RESULTS_DIR}/${sampleFolder}/${replicateFolder}
 
                     # Getting 2nd read pair
-                    R2=${R1//R1/R2}
+                    R2=${R1//_1/_2}
 
                     # Outputting directory for HISAT2/sample_name
                     mkdir -p ${folderName}

@@ -9,6 +9,7 @@
 #      Table 4: Top TFs highlighted in each database/method via Rcistarget, and the mode, percent_concordance, and encode numbers where applicable
 #      Table 5: All clusters top TFs and accession numbers (where applicable)
 # References: https://yulab-smu.github.io/clusterProfiler-book/chapter12.html          
+# e.g. #Rscript ~/Documents/LL_labs/TIMEOR/TIMEOR/app/scripts/get_top_tfs.r ~/Desktop/timeor_tests/timeor_build10/timeor/results/analysis/test_results/ dme 3 4 40 ~/Documents/LL_labs/TIMEOR/TIMEOR/app/ high
 
 # CHECKING ARGUMENTS 
 args = commandArgs(trailingOnly=TRUE)
@@ -57,20 +58,22 @@ if(ORGANISM=="dme"){
     motifRankings <- importRankings(paste(APP_DIR_redirect,"/genomes_info/dme/dm6-5kb-upstream-full-tx-11species.mc8nr.feather",sep="/"))
     TFS_FILE <- "/genomes_info/dme/tfs_all.txt"
 
-} else if(ORGANISM=="hsa"){
+} else if(ORGANISM=="hse"){
+    ORGANISM = "hsa"
     data("motifAnnotations_hgnc")
     ENCODE_ORG = "Homo sapiens"
     motifRankings <- importRankings(paste(APP_DIR_redirect,"/genomes_info/hsa/hg38__refseq-r80__10kb_up_and_down_tss.mc9nr.feather",sep="/"))
     TFS_FILE <- "/genomes_info/hsa/tfs_all.txt"
 
-} else if(ORGANISM=="mmu"){
+} else if(ORGANISM=="mus"){
+    ORGANISM = "mmu"
     data("motifAnnotations_mgi")
     ENCODE_ORG = "Mus musculus"
     motifRankings <- importRankings(paste(APP_DIR_redirect,"/genomes_info/mmu/mm10__refseq-r80__10kb_up_and_down_tss.mc9nr.feather",sep="/"))
     TFS_FILE <- "/genomes_info/mmu/tfs_all.txt"
 
 } else{
-    stop("Please enter dme (Drosophila melanogaster), hsa (Homo sapiens), or mmu (Mus musculus)")
+    stop("Please enter dme (Drosophila melanogaster), hse (Homo sapiens), or mus (Mus musculus)")
 }
 
 # LOADING REST OF PACKAGES
@@ -83,15 +86,15 @@ library(stringr)
 library(dplyr)
 library(purrr)
 
-find_perturbed_tfs <- function(geneLi, all_clust_top_X_tfs, geneClustNum, tfs_tfas, perturbed_tfs_list){
+find_observed_tfs <- function(geneLi, all_clust_top_X_tfs, geneClustNum, tfs_tfas, observed_tfs_list){
     
-    # Filling all_clust_top_X_tfs dataframe perturbed_TFs column for geneClustNum cluster with a list of all perturbed TFs 
+    # Filling all_clust_top_X_tfs dataframe observed_TFs column for geneClustNum cluster with a list of all observed TFs 
     for(i in 1:length(geneLi$cluster)){
-        if(any(tfs_tfas$HGNC_symbol==geneLi$cluster[i])){ # check if perturbed gene is a TF 
-            perturbed_tfs_list <- union(perturbed_tfs_list, geneLi$cluster[i])
+        if(any(tfs_tfas$Symbol==geneLi$cluster[i])){ # check if observed gene is a TF 
+            observed_tfs_list <- union(observed_tfs_list, geneLi$cluster[i])
         }
     }
-    all_clust_top_X_tfs$observed_TFs[geneClustNum] <- list(perturbed_tfs_list)
+    all_clust_top_X_tfs$observed_TFs[geneClustNum] <- list(observed_tfs_list)
     all_clust_top_X_tfs$cluster <- seq.int(nrow(all_clust_top_X_tfs))
     return(all_clust_top_X_tfs)
 }
@@ -101,9 +104,6 @@ report_n_collect_encode_results <- function(top_X_tf_per_db_cleaned, OUTDIR){
     # Gathering ENCODE numbers if exist
     top_X_tf_per_db_cleaned$encode_accession_num <- "NA"
     for(gene in 1:nrow(top_X_tf_per_db_cleaned)){
-        
-        #write("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! HERE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", stderr())
-        #cat("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! HERE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", file=stderr())
 
         query_res <- queryEncodeGeneric(organism=ENCODE_ORG, assay="ChIP-seq", file_format="bigWig", target=top_X_tf_per_db_cleaned$mode_TF[gene], fuzzy=T) 
         top_X_tf_per_db_cleaned$encode_accession_num[gene] <- list(unique(query_res$accession))
@@ -241,7 +241,6 @@ run_rcistarget <- function(geneL, motifR, OUTDIR){
 main <- function(){
     
     # Getting all transcription factors for input organism
-    APP_DIR_redirect = "/srv/"
     is_tf  <- fread(paste(APP_DIR_redirect, TFS_FILE, sep="/"), sep="\t", select=c("Symbol"))
     # if(ORGANISM=="dme"){
     #     is_tf  <- fread(paste(APP_DIR_redirect, TFS_FILE, sep="/"), sep=",", select=c("Symbol"))
@@ -261,27 +260,34 @@ main <- function(){
         stop("Please pass in a named results folder (e.g. test_results)")
     }else{
         
-        # Creating perturbed TF list to fill across all clusters
-        pert_g_l <- c()
+        # Creating observed TF list to fill across all clusters
+        obs_g_l <- c()
 
-        # Creating factor_binding folder
+        # Creating factor_binding folder (for motif by homology)
         dir_tf_rn <- paste(IN_OUTPUT, "factor_binding", sep="/")
         dir.create(dir_tf_rn, showWarnings=FALSE)
+
+        # Create a subfolder for motif by similarity results
+        if(CONF=="low"){
+            dir_tf_rn <- paste(IN_OUTPUT, "factor_binding", "motif_similarity", sep="/")
+            dir.create(dir_tf_rn, showWarnings=FALSE)
+        }
         
         # Finding the cluster directories for each experiment (in list_exp)
         dir_clusts <- paste(IN_OUTPUT, "clusters", sep="/")
         
         # Finding only filenames that are *geneList*.csv or *geneName*.csv to get list of genes to calc. enrichment
         filenames <- Sys.glob(file.path(dir_clusts, "/*/", "*geneList*.csv"))
-        
-        # Create Table 5: All clusters top perturbed and putative TFs with encode accession numbers (where applicable)
+        print(filenames)
+
+        # Create Table 5: All clusters top observed and putative TFs with encode accession numbers (where applicable)
         x <- 1:TOP_X
         col_names <- c("observed_TFs")
         col_names <- union(col_names, paste("top_TF",x, sep="_"))
         col_names <- union(col_names, paste("ENCODE_accession_num_TF",x,sep="_"))
         all_clusters_top_X_tfs <- data.frame(lapply(data.frame(matrix(ncol = (TOP_X*2)+1, nrow = length(filenames))), as.character),stringsAsFactors=FALSE) # length(filenames) is number of clusters
         colnames(all_clusters_top_X_tfs) <- col_names
-        print(filenames)
+        print(all_clusters_top_X_tfs)
         
         # For all gene clusters within each experiment
         for(dir_file in filenames){
@@ -310,7 +316,7 @@ main <- function(){
             is.na(top_X_n_encode) <- top_X_n_encode == "motif"
             fwrite(top_X_n_encode, file = paste(OUTPUT_DIR, "top_tfs/top_TFs_per_method_n_encode_nums.csv", sep="/"))
 
-            # Filling Table 5: All clusters top perturbed and putative TFs with encode accession numbers (where applicable)
+            # Filling Table 5: All clusters top observed and putative TFs with encode accession numbers (where applicable)
             for(i in 1:nrow(top_X_n_encode)){
                 
                 # Only add those top TFs that pass the percent concordance threshold set by the user
@@ -326,13 +332,13 @@ main <- function(){
                 }
             }
            
-            # Adding perturbed genes to Table 5: All clusters top perturbed and putative TFs with encode accession numbers (where applicable)
-            all_clusters_top_X_tfs <- find_perturbed_tfs(geneLists, all_clusters_top_X_tfs, as.integer(geneNumClust), is_tf, pert_g_l)
+            # Adding observed genes to Table 5: All clusters top observed and putative TFs with encode accession numbers (where applicable)
+            all_clusters_top_X_tfs <- find_observed_tfs(geneLists, all_clusters_top_X_tfs, as.integer(geneNumClust), is_tf, obs_g_l)
             print(all_clusters_top_X_tfs)
         }
 
-        # Saving Table 5: All clusters top perturbed and putative TFs with encode accession numbers (where applicable)
-        print("Saving Table 5: All clusters top perturbed and putative TFs with encode accession numbers (where applicable)")
+        # Saving Table 5: All clusters top observed and putative TFs with encode accession numbers (where applicable)
+        print("Saving Table 5: All clusters top observed and putative TFs with encode accession numbers (where applicable)")
         is.na(all_clusters_top_X_tfs) <- all_clusters_top_X_tfs == "NULL"
         fwrite(all_clusters_top_X_tfs, file = paste(dir_tf_rn, "observed_predicted_tfs_n_encode.csv", sep="/"))
     }

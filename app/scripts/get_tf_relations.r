@@ -78,20 +78,29 @@ get_tfs_cur_flip <- function(sdb_info_tbl, c_flips, tf_n_exp){
 }
 
 # Filling in the temporal relations table
-fill_df_tg_temp_rel <- function(stringdb_in_gene_table, tf_net_exp, df_cl_flips, t_windows, WIN){
+fill_df_tg_temp_rel <- function(stringdb_in_gene_table, tf_net_exp, df_cl_flips, t_windows, WIN, timep_1){
     
     # Initialize df_tf_temp_rel
-    colu_names <- c("cluster", "regulator", "regulated", "regulation_type", "edge_type")
+    colu_names <- c("timepoint", "regulator", "regulated", "regulation_type", "edge_type", "cluster_regulator", "cluster_regulated")
     df_tf_temp_rel <- data.frame(matrix(ncol = length(colu_names), nrow = 0))
     colnames(df_tf_temp_rel) <- colu_names
     
     # For each time window
+    window_w_tp_1 = 1
     for(wi in seq(1,length(t_windows),WIN)){ # iterate in window chunks
         tup = t_windows[wi:(wi+(WIN-1))]
+        if(window_w_tp_1){ # if first window
+            tmp_cur_fli <- timep_1
+            tmp_cur_fli <- rbind(tmp_cur_fli, df_cl_flips[df_cl_flips$regTime %in% tup[2],])
+            #tmp_cur_fli[nrow(tmp_cur_fli), + 1] <- df_cl_flips[df_cl_flips$regTime %in% tup[2],]
+            window_w_tp_1 = 0
+        } else {
+            tmp_cur_fli <- df_cl_flips[df_cl_flips$regTime %in% tup[2],]
+        }
         print("Window: ")
         print(paste(tup,sep=" "))
-        print(df_cl_flips$regTime)
-        tmp_cur_fli <- df_cl_flips[df_cl_flips$regTime %in% tup,]
+        print("tmp_cur_fli")
+        print(tmp_cur_fli)
         
         # If regulation change from at least one timepoint to another 
         if(dim(tmp_cur_fli)[1]>1){ # no change between timepoints or only 1 TF (i.e. not interaction possible)
@@ -114,25 +123,41 @@ fill_df_tg_temp_rel <- function(stringdb_in_gene_table, tf_net_exp, df_cl_flips,
                 clust_TF_A <- as.numeric(window$tfs[window$tfs$gene==TF_A,"cluster_number"])
                 clust_TF_B <- as.numeric(window$tfs[window$tfs$gene==TF_B,"cluster_number"])
 
-                time_TF_A <- strtoi(gsub("[^0-9.-]", "", curr_flips[curr_flips$cluster==floor(clust_TF_A), "regTime"]))
-                time_TF_B <- strtoi(gsub("[^0-9.-]", "", curr_flips[curr_flips$cluster==floor(clust_TF_B), "regTime"]))
+                # Characterize first opportunity to interact within window
+                time_TF_A <- strtoi(gsub("[^0-9.-]", "", curr_flips[curr_flips$cluster==floor(clust_TF_A), "regTime"]))[1]
+                time_TF_B <- strtoi(gsub("[^0-9.-]", "", curr_flips[curr_flips$cluster==floor(clust_TF_B), "regTime"]))[1]
 
-                type_TF_A <- curr_flips[curr_flips$cluster==floor(clust_TF_A), "regType"]
-                type_TF_B <- curr_flips[curr_flips$cluster==floor(clust_TF_B), "regType"]
+                type_TF_A <- as.character(curr_flips[curr_flips$cluster==floor(clust_TF_A), "regType"])
+                type_TF_B <- as.character(curr_flips[curr_flips$cluster==floor(clust_TF_B), "regType"])
+
+                if(length(type_TF_A)>1){
+                    print("_______TF_A_______")
+                    type_TF_A <- as.character(curr_flips[curr_flips$cluster==floor(clust_TF_A), "regType"][-1])
+                    print(type_TF_A)
+                }
+
+                if(length(type_TF_B)>1){
+                    print("_______TF_B_______")
+                    type_TF_B <- as.character(curr_flips[curr_flips$cluster==floor(clust_TF_B), "regType"][-1])
+                    print(type_TF_B)
+                }                
 
                 print("TF_A, cluster, time and reg. type")
-                print(TF_A)
-                print(clust_TF_A)
-                print(time_TF_A)
-                print(type_TF_A)
+                print(TF_A) # usp
+                print(clust_TF_A) #1
+                print(time_TF_A) # 1 2 
+                print("a__type_TF_A___")
+                print(type_TF_A) # r r
+                print(curr_flips)
                 
                 print("TF_B, cluster, time and reg. type")
                 print(TF_B)
                 print(clust_TF_B)
                 print(time_TF_B)
+                print("a__type_TF_B___")
                 print(type_TF_B)
                 
-                
+                #for(time_point_A in time_TF_A){ # if multiple timepoints in window
                 #### TF_A changes at same time TF_B (==)
                 if(time_TF_A == time_TF_B){
                 
@@ -146,14 +171,20 @@ fill_df_tg_temp_rel <- function(stringdb_in_gene_table, tf_net_exp, df_cl_flips,
                         if(nrow(inter_tf_A_tf_B)!=0){
                             print("equal, obs_obs_known_int") 
                             print(inter_tf_A_tf_B)
-                            df_tf_temp_rel[nrow(df_tf_temp_rel) + 1,] = c(floor(clust_TF_B), TF_A, TF_B, type_TF_B, "obs_obs_known_int")
-                            df_tf_temp_rel[nrow(df_tf_temp_rel) + 1,] = c(floor(clust_TF_A), TF_B, TF_A, type_TF_A, "obs_obs_known_int")
+                            df_tf_temp_rel[nrow(df_tf_temp_rel) + 1,] = c(time_TF_B, TF_A, TF_B, "obs_obs_known_int", as.character(type_TF_B), floor(clust_TF_A), floor(clust_TF_B))
+                            df_tf_temp_rel[nrow(df_tf_temp_rel) + 1,] = c(time_TF_A, TF_B, TF_A, "obs_obs_known_int", as.character(type_TF_A), floor(clust_TF_B), floor(clust_TF_A))
                             
                         # T2: no interact: obs_A - -> obs_B, obs_B - -> obs_A
                         } else{
                             print("equal, no interaction")
-                            df_tf_temp_rel[nrow(df_tf_temp_rel) + 1,] = c(floor(clust_TF_B), TF_A, TF_B, type_TF_B, "obs_obs_pred_int")
-                            df_tf_temp_rel[nrow(df_tf_temp_rel) + 1,] = c(floor(clust_TF_A), TF_B, TF_A, type_TF_A, "obs_obs_pred_int")
+                            print(time_TF_B)
+                            print(TF_A)
+                            print(TF_B)
+                            print(type_TF_B)
+                            print(floor(clust_TF_A))
+                            print(floor(clust_TF_B))
+                            df_tf_temp_rel[nrow(df_tf_temp_rel) + 1,] = c(time_TF_B, TF_A, TF_B, "obs_obs_pred_int", as.character(type_TF_B), floor(clust_TF_A), floor(clust_TF_B))
+                            df_tf_temp_rel[nrow(df_tf_temp_rel) + 1,] = c(time_TF_A, TF_B, TF_A, "obs_obs_pred_int", as.character(type_TF_A), floor(clust_TF_B), floor(clust_TF_A))
                         }
                     
                     # If one TF predicted
@@ -165,11 +196,11 @@ fill_df_tg_temp_rel <- function(stringdb_in_gene_table, tf_net_exp, df_cl_flips,
                             
                             # If TF_A is pred
                             if(clust_TF_A%%1!=0 & clust_TF_B%%1==0){
-                                df_tf_temp_rel[nrow(df_tf_temp_rel) + 1,] = c(floor(clust_TF_B), TF_A, TF_B, type_TF_B, "pred_obs_known_int")
+                                df_tf_temp_rel[nrow(df_tf_temp_rel) + 1,] = c(time_TF_B, TF_A, TF_B, "pred_obs_known_int", as.character(type_TF_B), floor(clust_TF_A), floor(clust_TF_B))
                             
                             # If TF_B is pred
                             } else if(clust_TF_A%%1==0 & clust_TF_B%%1!=0){
-                                df_tf_temp_rel[nrow(df_tf_temp_rel) + 1,] = c(floor(clust_TF_A), TF_B, TF_A, type_TF_A, "pred_obs_known_int")
+                                df_tf_temp_rel[nrow(df_tf_temp_rel) + 1,] = c(time_TF_A, TF_B, TF_A, "pred_obs_known_int", as.character(type_TF_A), floor(clust_TF_B), floor(clust_TF_A))
                             }
                                 
                         # T4: no interact: pred - -> obs
@@ -178,11 +209,11 @@ fill_df_tg_temp_rel <- function(stringdb_in_gene_table, tf_net_exp, df_cl_flips,
                             
                             # If TF_A is pred
                             if(clust_TF_A%%1!=0 & clust_TF_B%%1==0){
-                                df_tf_temp_rel[nrow(df_tf_temp_rel) + 1,] = c(floor(clust_TF_B), TF_A, TF_B, type_TF_B, "pred_obs_pred_int")
+                                df_tf_temp_rel[nrow(df_tf_temp_rel) + 1,] = c(time_TF_B, TF_A, TF_B, "pred_obs_pred_int", as.character(type_TF_B), floor(clust_TF_A), floor(clust_TF_B))
                             
                             # If TF_B is pred
                             } else if(clust_TF_A%%1==0 & clust_TF_B%%1!=0){
-                                df_tf_temp_rel[nrow(df_tf_temp_rel) + 1,] = c(floor(clust_TF_A), TF_B, TF_A, type_TF_A, "pred_obs_pred_int")
+                                df_tf_temp_rel[nrow(df_tf_temp_rel) + 1,] = c(time_TF_A, TF_B, TF_A, "pred_obs_pred_int", as.character(type_TF_A), floor(clust_TF_B), floor(clust_TF_A))
                             }
                         }
                     }
@@ -202,12 +233,12 @@ fill_df_tg_temp_rel <- function(stringdb_in_gene_table, tf_net_exp, df_cl_flips,
                         if(nrow(inter_tf_A_tf_B)!=0){
                             print("TF_B -> TF_A interaction")
                             print(inter_tf_A_tf_B)
-                            df_tf_temp_rel[nrow(df_tf_temp_rel) + 1,] = c(floor(clust_TF_A), TF_B, TF_A, type_TF_A, "obs_obs_known_int")
+                            df_tf_temp_rel[nrow(df_tf_temp_rel) + 1,] = c(time_TF_A, TF_B, TF_A, "obs_obs_known_int", as.character(type_TF_A), floor(clust_TF_B), floor(clust_TF_A))
                             
                         # T2: no interact: obs - -> obs
                         } else{
                             print("TF_B -> TF_A no interaction")   
-                            df_tf_temp_rel[nrow(df_tf_temp_rel) + 1,] = c(floor(clust_TF_A), TF_B, TF_A, type_TF_A, "obs_obs_pred_int")
+                            df_tf_temp_rel[nrow(df_tf_temp_rel) + 1,] = c(time_TF_A, TF_B, TF_A, "obs_obs_pred_int", as.character(type_TF_A), floor(clust_TF_B), floor(clust_TF_A))
                         }
                     
                     # If one TF predicted
@@ -217,7 +248,7 @@ fill_df_tg_temp_rel <- function(stringdb_in_gene_table, tf_net_exp, df_cl_flips,
                             
                             # If TF_B is pred
                             if(clust_TF_A%%1==0 & clust_TF_B%%1!=0){
-                                df_tf_temp_rel[nrow(df_tf_temp_rel) + 1,] = c(floor(clust_TF_A), TF_B, TF_A, type_TF_A, "pred_obs_known_int")
+                                df_tf_temp_rel[nrow(df_tf_temp_rel) + 1,] = c(time_TF_A, TF_B, TF_A, "pred_obs_known_int", as.character(type_TF_A), floor(clust_TF_B), floor(clust_TF_A))
                             }
                             
                         # T4: no interact: pred - -> obs
@@ -226,7 +257,7 @@ fill_df_tg_temp_rel <- function(stringdb_in_gene_table, tf_net_exp, df_cl_flips,
                             
                             # If TF_B is pred
                             if(clust_TF_A%%1==0 & clust_TF_B%%1!=0){
-                                df_tf_temp_rel[nrow(df_tf_temp_rel) + 1,] = c(floor(clust_TF_A), TF_B, TF_A, type_TF_A, "pred_obs_pred_int")
+                                df_tf_temp_rel[nrow(df_tf_temp_rel) + 1,] = c(time_TF_A, TF_B, TF_A, "pred_obs_pred_int", as.character(type_TF_A), floor(clust_TF_B), floor(clust_TF_A))
                             }  
                         }
                     }
@@ -245,12 +276,18 @@ fill_df_tg_temp_rel <- function(stringdb_in_gene_table, tf_net_exp, df_cl_flips,
                         if(nrow(inter_tf_A_tf_B)!=0){
                             print("TF_A -> TF_B interaction")
                             print(inter_tf_A_tf_B)
-                            df_tf_temp_rel[nrow(df_tf_temp_rel) + 1,] = c(floor(clust_TF_B), TF_A, TF_B, type_TF_B, "obs_obs_known_int")
+                            df_tf_temp_rel[nrow(df_tf_temp_rel) + 1,] = c(time_TF_B, TF_A, TF_B, "obs_obs_known_int", as.character(type_TF_B), floor(clust_TF_A), floor(clust_TF_B))
                             
                         # T2: no interact: obs - -> obs
                         } else{
                             print("TF_A -> TF_B no interaction")
-                            df_tf_temp_rel[nrow(df_tf_temp_rel) + 1,] = c(floor(clust_TF_B), TF_A, TF_B, type_TF_B, "obs_obs_pred_int")
+                            print(time_TF_B)
+                            print(TF_A)
+                            print(TF_B)
+                            print(type_TF_B)
+                            print(floor(clust_TF_A))
+                            print(floor(clust_TF_B))
+                            df_tf_temp_rel[nrow(df_tf_temp_rel) + 1,] = c(time_TF_B, TF_A, TF_B, "obs_obs_pred_int", as.character(type_TF_B), floor(clust_TF_A), floor(clust_TF_B))
                         }
                     
                     # If one TF predicted
@@ -262,7 +299,7 @@ fill_df_tg_temp_rel <- function(stringdb_in_gene_table, tf_net_exp, df_cl_flips,
                             
                             # If TF_A is pred
                             if(clust_TF_A%%1!=0 & clust_TF_B%%1==0){
-                                df_tf_temp_rel[nrow(df_tf_temp_rel) + 1,] = c(floor(clust_TF_B), TF_A, TF_B, type_TF_B, "pred_obs_known_int")
+                                df_tf_temp_rel[nrow(df_tf_temp_rel) + 1,] = c(time_TF_B, TF_A, TF_B, "pred_obs_known_int", as.character(type_TF_B), floor(clust_TF_A), floor(clust_TF_B))
                             }
                             
                         # T4: no interact: pred - -> obs
@@ -271,7 +308,7 @@ fill_df_tg_temp_rel <- function(stringdb_in_gene_table, tf_net_exp, df_cl_flips,
                             
                             # If TF_A is pred
                             if(clust_TF_A%%1!=0 & clust_TF_B%%1==0){
-                                df_tf_temp_rel[nrow(df_tf_temp_rel) + 1,] = c(floor(clust_TF_B), TF_A, TF_B, type_TF_B, "pred_obs_pred_int")
+                                df_tf_temp_rel[nrow(df_tf_temp_rel) + 1,] = c(time_TF_B, TF_A, TF_B, "pred_obs_pred_int", as.character(type_TF_B), floor(clust_TF_A), floor(clust_TF_B))
                             }
                         }
                     }
@@ -279,29 +316,26 @@ fill_df_tg_temp_rel <- function(stringdb_in_gene_table, tf_net_exp, df_cl_flips,
             }         
         }
     }
-    print(paste(tup,sep=" "))
-    #print("df_tf_temp_rel")
-    #print(df_tf_temp_rel)
-    #stop("blah")
-    return(distinct(df_tf_temp_rel))
+    return(distinct(df_tf_temp_rel[order(df_tf_temp_rel$timepoint),]))
 }
+#df_tf_temp_relations <- fill_df_tg_temp_rel(stringdb_input_gene_table, tf_network_exp, flips$df, list_tup_windows, WIN, flips$tp_1)
 
 # Finding all flips between up and down regulation across clusters
 find_flips <- function(df_c_lev_traj){
     
     # Create transition dataframe of regulation change: i.e. cluster by tuples list (action_time, regulation_type)
-    df_transitions = data.frame(matrix(ncol=2, nrow=nrow(df_c_lev_traj)))
-    colnames(df_transitions) <- c("cluster", "actT_regType")
-    
-    # For each cluster
+    df_transitions <- data.frame(cluster = numeric(0), regType = character(0), regTime = character(0), stringsAsFactors = FALSE) # matrix(ncol=3, nrow=nrow(df_c_lev_traj)
+
+    # Go through each row of df of expression value (z-score or log fold change) changes
     for(r in 1:nrow(df_c_lev_traj)){
-        df_transitions$cluster[r] <- df_c_lev_traj$cluster[r]
+        #df_transitions$cluster[r] <- df_c_lev_traj$cluster[r]
         skip_gene_name = 1 # skip first column with gene name
         tp_1 = 1 # first timepoint
         
+        # Go through timepoints in df of expression value (z-score or log fold change) changes
         for(c in names(df_c_lev_traj)){
             if(skip_gene_name){
-                skip_gene_name = 0
+                skip_gene_name = 0 # skip "cluster" column name
                 next
             } else{
                 val <- df_c_lev_traj[[c]][r] # get mean expression value for that cluster and timepoint
@@ -317,35 +351,41 @@ find_flips <- function(df_c_lev_traj){
                     tp_1 = 0 # no longer first timepoint
                 } else { # if not first timepoint
                     # If first regulation change
-                    if(is.na(df_transitions$actT_regType[r])){
-                        if(tmp <= 0 && val > 0){ # detect upregulation
-                            tmp = 1 # current state change to upregulated
-                            df_transitions$actT_regType[r] <-  paste("a", c, sep=";")
-                        } else if(tmp >= 0 && val < 0){# detect downregulation
-                            tmp = -1 # current state change to downregulated
-                            df_transitions$actT_regType[r] <- paste("r", c, sep=";")
-                        } else{
-                            next
-                        }
-                    # Append second regulation change
-                    } else{ 
-                        if(tmp <= 0 && val > 0){ # detect upregulation
-                            tmp = 1 # current state change to upregulated
-                            next_reg_change = paste("a", c, sep=";")
-                            df_transitions$actT_regType[r] <-  list(append(df_transitions$actT_regType[r], next_reg_change))
-                        } else if(tmp >= 0 && val < 0){# detect downregulation
-                            tmp = -1 # current state change to downregulated
-                            next_reg_change = paste("r", c, sep=";")
-                            df_transitions$actT_regType[r] <- list(append(df_transitions$actT_regType[r], next_reg_change))
-                        }else{
-                            next
-                        }
+                    #if(is.na(df_transitions$regType[r])){
+                    if(tmp <= 0 && val > 0){ # detect upregulation
+                        tmp = 1 # current state change to upregulated
+                        #rbind(baskets.df, c(7, 4))
+                        df_transitions[nrow(df_transitions) + 1,]$cluster = r # rbind(df_transitions, c(r, "a", c))
+                        df_transitions[nrow(df_transitions),]$regType = "a"
+                        df_transitions[nrow(df_transitions),]$regTime = c
+                    } else if(tmp >= 0 && val < 0){# detect downregulation
+                        tmp = -1 # current state change to downregulated
+                        df_transitions[nrow(df_transitions) + 1,]$cluster = r #rbind(df_transitions, c(r, "r", c))
+                        df_transitions[nrow(df_transitions),]$regType = "r"
+                        df_transitions[nrow(df_transitions),]$regTime = c
+                    } else{
+                        next
                     }
+                    # Append second regulation change
+                    #} else{ 
+                    #     if(tmp <= 0 && val > 0){ # detect upregulation
+                    #         tmp = 1 # current state change to upregulated
+                    #         next_reg_change = paste("a", c, sep=";")
+                    #         df_transitions$actT_regType[r] <-  list(append(df_transitions$actT_regType[r], next_reg_change))
+                    #     } else if(tmp >= 0 && val < 0){# detect downregulation
+                    #         tmp = -1 # current state change to downregulated
+                    #         next_reg_change = paste("r", c, sep=";")
+                    #         df_transitions$actT_regType[r] <- list(append(df_transitions$actT_regType[r], next_reg_change))
+                    #     }else{
+                    #         next
+                    #     }
+                    # }
                 }
             }
         }  
     }
-    
+    row.names(df_transitions) <- NULL
+
     # Initializing list of first timepoint regulation types. If one is different (e.g. all are downregulated except one, propose that 'one' is initiating the cascade
     # Get frequency of up and downregulation for each cluster at 1st timepoint
     df_frq_reg_type_tp1 <- as.data.frame(table(sign(df_c_lev_traj[,2])))
@@ -364,15 +404,14 @@ find_flips <- function(df_c_lev_traj){
         for(t in 1:length(df_frq_reg_type_tp1)){
             if(sign(df_c_lev_traj[t,2]) == reg_sign){
                 clust_tp1 <- df_c_lev_traj[t,1]
-                df_tp1 <-data.frame("cluster"=clust_tp1, "actT_regType"=paste(reg_type_tp1, names(df_c_lev_traj)[2],sep=";"))
+                df_tp1 <-data.frame("cluster"=clust_tp1, "regType"=reg_type_tp1, "regTime"= names(df_c_lev_traj)[2])
             }
         }
     }
 
     df_transitions <- rbind(df_transitions, df_tp1)
-    df_trans <- df_transitions %>% separate(actT_regType, c("regType", "regTime"))
   
-    return(df_trans)
+    return(list(df=df_transitions, tp_1=df_tp1))
 }
 
 # Finding cluster level mean expression to determine overall expression changes of each cluster
@@ -442,16 +481,11 @@ main <- function(){
     exp <- basename(IN_OUTPUT)
     print(paste("Results folder name: ",exp, sep=" "))
     
-    # Iterating through all experiments in list_exp
+    # Checking that results folder is passed in
     if(!grepl("_results", exp, fixed=T)){
         stop("Please pass in a named results folder (e.g. test_results)")
     }else{
-    
-#     # Getting all the experiment types 
-#     list_exp = (list.dirs(path = IN_OUTPUT, recursive = FALSE, full.names=FALSE))   
-    
-#     # For all experiments in list_exp
-#     for(exp in list_exp){    
+
         # Getting tf_reg_network folder
         dir_tf_rn <- paste(IN_OUTPUT, "temporal_relations", sep="/")
         dir.create(file.path(IN_OUTPUT, "temporal_relations"), showWarnings = FALSE)
@@ -465,13 +499,13 @@ main <- function(){
         print(filenames)
         
         # Getting the number of timepoints
-        all_timepoint_names <- names(read.table(filenames[1], sep=",", stringsAsFactors=FALSE, header=TRUE))
-
+        all_timepoint_names <- names(read.table(filenames[1], sep=",", stringsAsFactors=FALSE, header=TRUE))#[-1]
+        
         # Getting cluster level trajectories
         df_clust_lev_traj <- get_cluster_level_mean_traj(filenames, all_timepoint_names)
         
         # Finding flips across each cluster (note 'flip' is a cluster-wide mean log2 fold change)
-        df_clust_flips <- find_flips(df_clust_lev_traj)
+        flips <- find_flips(df_clust_lev_traj) # flips$df, flips$tp_1  
 
         # Getting observed_predicted_tfs_n_encode
         obs_n_put <- fread(paste(dirname(dir_tf_rn),"factor_binding","observed_predicted_tfs_n_encode.csv",sep="/"), sep=",", select=c("cluster","observed_TFs","top_TF_1"))
@@ -484,42 +518,50 @@ main <- function(){
         fwrite(stringdb_input_gene_table, file = paste(dir_tf_rn, "string_db_input.csv", sep="/"))
         print("stringdb input gene table")
         print(stringdb_input_gene_table)
-
-        # Calling stringdb output 
-        system(paste("Rscript", paste(APP_DIR, "/scripts/stringdb_top_tfs.r", sep="/"), IN_OUTPUT, NCBI_TAXO, "1", APP_DIR))
         
-        # Filtering stringdb output to keep only experiments and experiments_transferred
-        tf_network <- fread(paste(dirname(dir_tf_rn),"temporal_relations","stringdb_info_table.tsv",sep="/"), sep="\t", select=c("A_gene_name","B_gene_name", "experiments", "experiments_transferred"))
-        tf_network_exp <- tf_network[tf_network$experiments>0 | tf_network$experiments_transferred>0 ]
-        print("tf network")
-        print(tf_network_exp)
+        # Check that there are observed TFs in the input data
+        if("FALSE" %in% (grepl(".5", stringdb_input_gene_table$cluster_number))==FALSE){
+            colu_names <- c("timepoint", "regulator", "regulated", "regulation_type", "edge_type", "cluster_regulator", "cluster_regulated")
+            df_tf_temp_rel <- data.frame(matrix(ncol = length(colu_names), nrow = 0))
+            colnames(df_tf_temp_rel) <- colu_names
+            df_tf_temp_rel[nrow(df_tf_temp_rel)+1, ] <- c("NA", "NA", "NA", "NA", "NA", "NA", "NA")
+            fwrite(df_tf_temp_rel, file = paste(dir_tf_rn, "TF_temp_rel.csv", sep="/"))
+            
+        } else{
 
-        # Creating TF temporal relationship dataframe
-        df_tf_temp_relations <- fill_df_tg_temp_rel(stringdb_input_gene_table, tf_network_exp, df_clust_flips, list_tup_windows, WIN)
-        print("df tf temp relations")
-        print(df_tf_temp_relations)
-        fwrite(df_tf_temp_relations, file = paste(dir_tf_rn, "TF_temp_rel.csv", sep="/"))
+            # Calling stringdb to return experimentally determined gene-gene interactions 
+            system(paste("Rscript", paste(APP_DIR, "/scripts/stringdb_top_tfs.r", sep="/"), IN_OUTPUT, NCBI_TAXO, "1", APP_DIR))
+            tf_network_exp <- fread(paste(dirname(dir_tf_rn),"temporal_relations","stringdb_info_table.tsv",sep="/"), sep="\t", select=c("A_gene_name","B_gene_name", "experimental"))
+            print("tf network")
+            print(tf_network_exp)
 
-        print("all_timepoint_names")
-        print(all_timepoint_names)
+            # Creating TF temporal relationship dataframe
+            df_tf_temp_relations <- fill_df_tg_temp_rel(stringdb_input_gene_table, tf_network_exp, flips$df, list_tup_windows, WIN, flips$tp_1)
+            print("df tf temp relations")
+            print(df_tf_temp_relations)
+            fwrite(df_tf_temp_relations, file = paste(dir_tf_rn, "TF_temp_rel.csv", sep="/"))
 
-        print("df_clust_lev_traj")
-        print(df_clust_lev_traj)
+            print("all_timepoint_names")
+            print(all_timepoint_names)
 
-        print("obs_n_put")
-        print(obs_n_put)
+            print("df_clust_lev_traj")
+            print(df_clust_lev_traj)
 
-        print("list_tup_windows")
-        print(list_tup_windows)
+            print("obs_n_put")
+            print(obs_n_put)
 
-        print("stringdb input gene table")
-        print(stringdb_input_gene_table)
+            print("list_tup_windows")
+            print(list_tup_windows)
 
-        print("tf network")
-        print(tf_network_exp)
+            print("stringdb input gene table")
+            print(stringdb_input_gene_table)
 
-        print("df tf temp relations")
-        print(df_tf_temp_relations)
+            print("tf network")
+            print(tf_network_exp)
+
+            print("df tf temp relations")
+            print(df_tf_temp_relations)
+        }
     }
 }
 

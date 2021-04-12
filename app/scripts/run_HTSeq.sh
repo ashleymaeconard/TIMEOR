@@ -1,3 +1,4 @@
+#!/bin/bash
 # run_HTSeq.sh
 # Ashley Mae Conard
 # Last Mod. 7/11/2019
@@ -64,6 +65,14 @@ COMMAND_SCRIPT=${RESULTS_DIR}"/run_HTSeq.txt"
 if [ -f ${COMMAND_SCRIPT} ]; then
 	echo -e "REPLACING ${COMMAND_SCRIPT}\n"
 	rm -rf ${COMMAND_SCRIPT}
+fi
+
+if [ "$ORGANISM" == "hse" ]; then
+    ORGANISM="hsa"
+fi
+
+if [ "$ORGANISM" == "mus" ]; then
+    ORGANISM="mmu"
 fi
 
 # Getting genome    

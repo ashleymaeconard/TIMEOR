@@ -13,7 +13,6 @@
 # Importing libraries
 library("DESeq2") # make sure 1.22
 library(dplyr)
-source("./scripts/geneID_converter.r", local=TRUE)
 library(data.table)
 
 run_DESeq2 <- function(METDATA, COUNTDATA, OUTPUTDIR, CONDITION, BATCH_EFFECT, TC, PVAL_THRESH, CONTROL, ORGANISM){
@@ -21,22 +20,22 @@ run_DESeq2 <- function(METDATA, COUNTDATA, OUTPUTDIR, CONDITION, BATCH_EFFECT, T
     # Assigning organism library
     if(ORGANISM=="dme"){
         ORG_DB="org.Dm.eg.db"
-    } else if(ORGANISM=="hsa"){
+        source("./scripts/geneID_converter.r", local=TRUE)
+        ids.type  <- "flybase"
+    } else if(ORGANISM=="hse"){
+        ORGANISM="hsa"
+        require(biomaRt)
         ORG_DB="org.Hs.eg.db"
-    }else if(ORGANISM=="mmu"){
-        ORG_DB="org.Mm.eg.db" 
+        mart <- useDataset("hsapiens_gene_ensembl", useMart("ensembl"))
+    }else if(ORGANISM=="mus"){
+        ORGANISM="mmu"
+        require(biomaRt)
+        ORG_DB="org.Mm.eg.db"
+        mart <- useDataset("mmusculus_gene_ensembl", useMart("ensembl"))
     } else{
-        stop("Please enter dme (Drosophila melanogaster), hsa (Homo sapiens), or mmu (Mus musculus)")
+        write("Please enter dme (Drosophila melanogaster), hsa (Homo sapiens), or mmu (Mus musculus)", stderr())
     }
     library(ORG_DB, character.only = TRUE) # organism database library
-    
-    # Set database to work with
-    #gene_ID_database <- toTable(ORG_DB)
-    if(ORGANISM=="dme"){
-        gene_ID_database_name <- "flybase"
-    } else if(ORGANISM!="dme"){
-        gene_ID_database_name <- "NA"
-    }
 
     # Create or set output directory
     CONDIT_DIR <- paste(CONDITION,"results",sep="_")
@@ -70,7 +69,7 @@ run_DESeq2 <- function(METDATA, COUNTDATA, OUTPUTDIR, CONDITION, BATCH_EFFECT, T
     metaData$time <- as.factor(metaData$time) # use factor for Time (which is all integers)
     metaData$condition <- as.factor(metaData$condition)
     metaData$batch <- as.factor(metaData$batch)
-    metaData <- metaData[ order(row.names(metaData)), ]
+    #metaData <- metaData[ order(row.names(metaData)), ]
     
     # Checking to see if case vs. control or just case or control
     if (dim(table(metaData$condition)) == 1){ 
@@ -83,11 +82,11 @@ run_DESeq2 <- function(METDATA, COUNTDATA, OUTPUTDIR, CONDITION, BATCH_EFFECT, T
     }
     print(head(metaData))
 
-    # Make sure all Flybase ID names are unique
+    # Make sure all gene ID names are unique
     n_occur <- data.frame(table(countData1[col_name]))
     non_unique = n_occur[n_occur$Freq > 1,]
     if(length(non_unique) == 0){
-        print("ERROR - COL. NAMES (FLYBASE) NOT ALL UNIQUE")
+        print("ERROR - GENE ID COL. NAMES NOT ALL UNIQUE")
         print(nrow(countData1))
         print(non_unique)
         print(countData1[countData1[col_name] %in% n_occur$Var1[n_occur$Freq > 1],])
@@ -102,7 +101,7 @@ run_DESeq2 <- function(METDATA, COUNTDATA, OUTPUTDIR, CONDITION, BATCH_EFFECT, T
     print(ids_to_keep)
     col.num <- which(colnames(countData1) %in% ids_to_keep)
     countData <- countData1[,col.num]
-    countData <- countData[ , order(names(countData))]
+    countData <- countData1[,rownames(metaData)] #countData[ , order(names(countData))]
     print(head(countData))
 
     # Check that all row names for metaData match column names for countData
@@ -169,81 +168,67 @@ run_DESeq2 <- function(METDATA, COUNTDATA, OUTPUTDIR, CONDITION, BATCH_EFFECT, T
     # Filtering based on adjusted p-value (i.e. padj)
     res_no_padj <- results(dds)
     res <- res_no_padj[which(res_no_padj$padj < PVAL_THRESH),]
-    
-    # Performing apeglm shrinkage transformation
-    # Resource: https://rdrr.io/bioc/DESeq2/man/lfcShrink.html
-    #resApe_no_padj <- lfcShrink(res, type="apeglm")
-    #resApe <- resApe_no_padj[which(resApe_no_padj$padj < PVAL_THRESH),]
 
     # Saving MA plots before and after shrinkage
     pdf(paste(FULL_OUTDIR,paste('ma_plot_noShrinkage_padj',toString(PVAL_THRESH),'.pdf',sep=""),sep="/"))
     plotMA(res, ylim=c(-4,4), cex=.8)
     abline(h=c(-1,1), col="dodgerblue", lwd=2)
     dev.off()
-    #pdf(paste(FULL_OUTDIR,paste('ma_plot_apeShrinkage_padj',toString(PVAL_THRESH),'.pdf',sep=""), sep="/"))
-    #plotMA(resApe, ylim=c(-4,4), cex=.8)
-    #abline(h=c(-1,1), col="dodgerblue", lwd=2)
-    #dev.off()
 
-    # Adding gene symbol and placing it in the front for no and apeglm shrinkage matricies
-    ids.type  <- gene_ID_database_name
+    # Adding gene symbol and placing it in the front for no shrinkage matricies
     ids <- rownames(res)
-    #idsN <- rownames(resApe)
     
-    res['gene_id'] <- rownames(res)
-    res$gene_name <- as.vector(get.symbolIDsDm(ids,ids.type))
-    res_sym_front <- as.data.frame(res) %>% dplyr::select(gene_name, gene_id, everything())    
-    
-    #resApe['gene_id'] <- rownames(resApe)
-    #resApe$gene_name <- as.vector(get.symbolIDsDm(idsN,ids.type))
-    #resN_sym_front <- as.data.frame(resApe) %>% dplyr::select(gene_name, gene_id, everything())    
+    if(ORGANISM=="dme"){
+        res['gene_id'] <- rownames(res)
+        res$gene_name <- as.vector(get.symbolIDsDm(ids,ids.type))
+        res_sym_front <- as.data.frame(res) %>% dplyr::select(gene_name, gene_id, everything())    
 
-    # Creating clustermap inputs for no and apeglm shrinkage
+    } else if(ORGANISM=="hsa" || ORGANISM=="mmu"){
+        bm_ids <- getBM(attributes = c('ensembl_gene_id', 'external_gene_name'), filters = 'ensembl_gene_id', values = ids, mart = mart)
+        res_df <- merge(as.data.frame(res), bm_ids, by.x=0, by.y="ensembl_gene_id")
+        res_df_tmp <- res_df %>% plyr::rename(c(Row.names = "gene_id", external_gene_name = "gene_name"))
+        res_sym_front <- res_df_tmp %>% dplyr::select(gene_name, gene_id, everything())
+    } else{
+        write("Please enter dme (Drosophila melanogaster), hsa (Homo sapiens), or mmu (Mus musculus)", stderr())
+    }
+
+    # Creating clustermap inputs for no shrinkage
     betasTC <- coef(dds)
-    colnames(betasTC)
+    colnames(betasTC) 
     topGenes <- which(res_sym_front$padj < PVAL_THRESH, arr.ind = FALSE) # get indicies for all results
-    #topGenesN <- which(resN_sym_front$padj < PVAL_THRESH, arr.ind = FALSE) # get indicies for all results
     
     # Generating clustermap no shrinkage matrix (NOTE 1,2,3 removed the batch effect columns)
-    batch_cols <- seq(1,length(unique(metaData$time))-1)
-    mat <- betasTC[topGenes, -(batch_cols)]
-    write("batch_cols", stderr())
-    write(batch_cols, stderr())
-    
-    # Generating clustermap apeglm shrinkage matrix (NOTE 1,2,3 removed the batch effect columns)
-    #batch_cols <- seq(1,length(unique(metaData$time)))
-    #matN <- betasTC[topGenesN, -batch_cols]
+    #batch_cols <- seq(1,length(unique(metaData$time))-1)
+    mat <- dplyr::select(data.frame(betasTC[topGenes,]),contains("time"))
+    #write("batch_cols", stderr())
+    #write(batch_cols, stderr())
 
     # Adding gene symbol and placing it in the front for clustermap input matricies (no shrinkage)
     df_mat <- as.data.frame(mat)
     idsM <- rownames(df_mat)
     df_mat['gene_id'] <- idsM
-    df_mat$gene_name <- as.vector(get.symbolIDsDm(idsM,ids.type))
-    df_mat_sym_front <- as.data.frame(df_mat) %>% dplyr::select(gene_name, gene_id, everything()) 
     
+    if(ORGANISM=="dme"){
+        df_mat$gene_name <- as.vector(get.symbolIDsDm(idsM,ids.type))
+        df_mat_sym_front <- as.data.frame(df_mat) %>% dplyr::select(gene_name, gene_id, everything()) 
+    
+    } else if(ORGANISM=="hsa" || ORGANISM=="mmu"){
+        bm_ids <- getBM(attributes = c('ensembl_gene_id', 'external_gene_name'), filters = 'ensembl_gene_id', values = ids, mart = mart)
+        df_mat_tmp <- merge(data.frame(df_mat),data.frame(bm_ids), by.x="gene_id", by.y="ensembl_gene_id")
+        df_mat_gene_name_tmp <- df_mat_tmp%>%plyr::rename(c(external_gene_name ="gene_name"))
+        df_mat_sym_front <- as.data.frame(df_mat_gene_name_tmp) %>% dplyr::select(gene_name, gene_id, everything())
+    } else{
+        write("Please enter dme (Drosophila melanogaster), hsa (Homo sapiens), or mmu (Mus musculus)", stderr())
+    }
+
     # Check if NA in gene_name, copy gene_id in its place
     if (NA %in% df_mat_sym_front$gene_name){
         df_mat_sym_front$gene_name <- ifelse(is.na(df_mat_sym_front$gene_name), df_mat_sym_front$gene_id, df_mat_sym_front$gene_name)
     }
 
-    # Adding gene symbol and placing it in the front for clustermap input matricies (apeglm shrinkage)
-    # df_matN <- as.data.frame(matN)
-    # idsMN <- rownames(df_matN)
-    # df_matN['gene_id'] <- idsMN
-    # df_matN$gene_name <- as.vector(get.symbolIDsDm(idsMN,ids.type))
-    # df_matN_sym_front <- as.data.frame(df_matN) %>% dplyr::select(gene_name, gene_id, everything()) 
-
-    # # Check if NA in gene_name, copy gene_id in its place
-    # if (NA %in% df_matN_sym_front$gene_name){
-    #     df_matN_sym_front$gene_name <- ifelse(is.na(df_mat_sym_front$gene_name), df_mat_sym_front$gene_id, df_mat_sym_front$gene_name)
-    # }
-
     # Saving sorted (by padj) results
     resSort <- res_sym_front[order(res_sym_front$padj),]
-    #resSortApeShr <- resN_sym_front[order(resN_sym_front$padj),]
     
     write.csv(as.data.frame(resSort), file=paste(FULL_OUTDIR,paste("deseq2_output_noShrinkage_padj",toString(PVAL_THRESH),'.csv',sep=""), sep="/"), row.names=FALSE, quote=FALSE)
-    #write.csv(as.data.frame(resSortApeShr), file=paste(FULL_OUTDIR,paste("deseq2_output_ApeShrinkage_padj",toString(PVAL_THRESH),'.csv',sep=""), sep="/"), row.names=FALSE, quote=FALSE)
     write.csv(na.omit(df_mat_sym_front),paste(FULL_OUTDIR,paste('deseq2_noShrinkage_clustermapInput_padj',toString(PVAL_THRESH),'.csv',sep=""),sep='/'), row.names=FALSE, quote=FALSE) # clustermap input
-    #write.csv(na.omit(df_matN_sym_front),paste(FULL_OUTDIR,paste('deseq2_ApeShrinkage_clustermapInput_padj',toString(PVAL_THRESH),'.csv',sep=""),sep='/'), row.names=FALSE, quote=FALSE) # clustermap input
 }  

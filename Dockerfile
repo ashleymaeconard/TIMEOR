@@ -1,54 +1,15 @@
-FROM rocker/r-ver:3.6.1
-
-RUN apt-get update && apt-get install -y \
-    libjpeg-dev \
-    sudo \
-    gdebi-core \
-    pandoc \
-    pandoc-citeproc \
-    libcurl4-gnutls-dev \
-    libcairo2-dev \
-    libxt-dev \
-    xtail \
-    libxml2-dev \
-    libssl-dev \
-    wget \
-    python-pip \
-    python2.7 \
-    libbz2-dev \
-    liblzma-dev 
-
-# Download and install shiny server
-RUN wget --no-verbose https://download3.rstudio.org/ubuntu-14.04/x86_64/VERSION -O "version.txt" && \
-    VERSION=$(cat version.txt)  && \
-    wget --no-verbose "https://download3.rstudio.org/ubuntu-14.04/x86_64/shiny-server-$VERSION-amd64.deb" -O ss-latest.deb && \
-    gdebi -n ss-latest.deb && \
-    rm -f version.txt ss-latest.deb && \
-    . /etc/environment 
-    # Run R script and install packages 
-    COPY ./Scripts/R_Ashley.R /root/R_Ashley.R 
-    COPY ./Scripts/R_test.R /root/R_test.R 
-    RUN Rscript /root/R_Ashley.R > /root/install_r_packages.out 2>&1
-    #RUN Rscript /root/R_test.R > /root/test_r_packages.out 2>&1
-
-
-    RUN cp -R /usr/local/lib/R/site-library/shiny/examples/* /srv/shiny-server/ && \
-    chown shiny:shiny /var/lib/shiny-server 
-
-# Run pip installs 
-COPY ./Scripts/pypackage.sh /root/pypackage.sh
-RUN bash -x /root/pypackage.sh 
-
-# Run other software installs 
-COPY ./Scripts/othertools.sh /root/othertools.sh
-RUN bash -x /root/othertools.sh
-
-EXPOSE 3838
-
-COPY shiny-server.sh /usr/bin/shiny-server.sh
+FROM jlaw2677/timeor_most_recent
+RUN wget https://github.com/DaehwanKimLab/hisat2/archive/0f01dc6397a.tar.gz && tar -xvzf 0f01dc6397a.tar.gz && cd hisat2-0f01dc6397a && make
 RUN mkdir -p /srv/demos/
 ADD app /srv/shiny-server/
 ADD demos /srv/demos/
 RUN chown -R shiny:shiny /srv/demos/
-
-CMD ["/usr/bin/shiny-server.sh"]
+RUN apt-get update && apt-get install uuid-runtime
+RUN su - shiny && mkdir -p /home/shiny/.ncbi
+COPY vdb-user-settings.mkfg /home/shiny/.ncbi
+COPY shiny-server_2.sh /usr/bin/shiny-server_2.sh 
+# CMD  head -n 2 /home/shiny/.ncbi/vdb-user-settings.mkfg  > /home/shiny/.ncbi/user-settings.mkfg && \
+# printf '/LIBS/GUID = "%s"\n' `uuidgen` >>  /home/shiny/.ncbi/user-settings.mkfg && \
+# tail -n +4   /home/shiny/.ncbi/vdb-user-settings.mkfg  >>   /home/shiny/.ncbi/user-settings.mkfg && \
+# chmod 600  /home/shiny/.ncbi/user-settings.mkfg  && chown shiny:shiny  /home/shiny/.ncbi/user-settings.mkfg && \
+CMD ["/usr/bin/shiny-server_2.sh"]

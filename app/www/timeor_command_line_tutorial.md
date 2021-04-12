@@ -14,39 +14,43 @@ and have Conda/miniconda 2 (version 4.8.2).
 Installation
 ============
 
-After cloning the TIMEOR repo from GitHub
-(<a href="https://github.com/ashleymaeconard/TIMEOR.git" class="uri">https://github.com/ashleymaeconard/TIMEOR.git</a>)
+To run TIMEOR scripts individually, the users may use Docker and Docker Hub. First, the TIMEOR repository must be cloned (<a href="https://github.com/ashleymaeconard/TIMEOR.git" class="uri">https://github.com/ashleymaeconard/TIMEOR.git</a>). To use Docker, it must be installed (version 20.10.0 recommended).
 
-### Conda Environment
+### Docker Hub and Docker:
 
-1. Install Anaconda2/Miniconda2 (version 4.8.3). 
-2. Type `$eval "$(/PATH/TO/<CONDA_DIR>/bin/conda shell.bash hook)"`
-3. Locate packages.yml in /TIMEOR/
-4. Type `$conda env create -f packages.yml`
-5. Type `$conda activate timeor_conda_env`
-6. Type `$R`
-7. In R
-    1. Type `>library(shiny)`
-    2. Type `>runApp("app/", launch.browser=F)`
-    3. Go to browser URL from R output
-        (e.g. <a href="http://127.0.0.1:3681" class="uri">http://127.0.0.1:3681</a>
-        )
+  1.	Download organism genome folder (genomes_info).
+          * The user is welcome to gather only the organism of interest. For example, for Drosophila melanogaster simply download `/genomes_info/dme/`
+              * Mouse is `/genomes_info/mmu/`
+              * Human is `/genomes_info/hsa/`
+          * Link `/genomes_info/`: https://drive.google.com/drive/folders/1KEnpCOU0dQU5p1tnEy3o9l02NE0uYnpm?usp=sharing
+  2.	Choose directory location for genomes_info (e.g. `/Users/USERNAME/Desktop/test_folder/genomes_info/`)
+  3.	Run TIMEOR via Docker
+          * On command line type 
+              * `$ docker pull ashleymaeconard/timeor:latest` 
+              * `$ docker images`
+              * `$ docker run -v /Users/USERNAME/Desktop/test_folder/:/src_copy -p 3838:3838 <IMAGE_ID>`
+  4.	Add `/genomes_info/` folder to Docker container
+          * In another command line window
+              * `$ docker container ls`
+              * `$ docker exec -it <CONTAINER_NAME> /bin/bash/`
+              * `# chmod -R 777 /src_copy/genomes_info/`
+              * `# mv /src_copy/genomes_info/ /srv/`
+  
+### Or, build Docker image 
 
-Note, if TIMEOR is running on a remote machine, you may access the website through the ssh gateway. For example on port 8888, `ssh -L 8888:127.0.0.1:8888 USERNAME@SERVER -t host=SERVER -L 8888:127.0.0.1:3681`.
+NOTE: This could take a while. Please follow these commands:
+  
+  1.	`$ cd /PATH/TO/TIMEOR/`
+  2.	Build Docker image in TIMEOR directory:
+          * `$ docker build -t timeor_env .`
+  3.	Follow instructions above from "3. Run TIMEOR via Docker"
 
-### Docker
-1. Install Docker (version 20.10.0 recommended)
-2. Building Docker image in TIMEOR directory:
-    1. `$docker build -t timeor_env .`
-3. Running Docker:
-    1. `$docker run -p 3838:3838 timeor_env`
-    2. Shiny server will be running on port 3838. Thus, in a browser visit `localhost:3838`.
-
+# Below are *several* of the TIMEOR scripts for users to use. 
 
 Pre-processing
 =========
 
-Get raw .fastq time course RNA-seq
+Get raw .fastq tim-series RNA-seq
 ----------------------------------
 
 If you have your own time course RNA-seq data, go to step 4.

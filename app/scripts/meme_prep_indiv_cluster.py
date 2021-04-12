@@ -29,11 +29,11 @@ import pandas as pd
 if GENOME =="dme":
     list_chroms = ["2L", "2R", "3L", "3R", "4", "X", "Y"]
 elif GENOME == "mmu":
-    list_chroms = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "X", "Y"]
+    list_chroms = ["chr1", "chr2", "chr3", "chr4", "chr5", "chr6", "chr7", "chr8", "chr9", "chr10", "chr11", "chr12", "chr13", "chr14", "chr15", "chr16", "chr17", "chr18", "chr19", "chrX", "chrY"]
 elif GENOME == "hsa":
-    list_chroms = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "X", "Y"]
+    list_chroms = ["chr1", "chr2", "chr3", "chr4", "chr5", "chr6", "chr7", "chr8", "chr9", "chr10", "chr11", "chr12", "chr13", "chr14", "chr15", "chr16", "chr17", "chr18", "chr19", "chr20", "chr21", "chr22", "chrX", "chrY"]
 else:
-    sys.exit("ERROR: must input genome types.")
+    sys.exit("ERROR: must input genome type mus, hse, or dme.")
 
 def main(argv):
     # Processing .gtf file into usable format
@@ -63,7 +63,7 @@ def main(argv):
         counter=0
         for g in gene_list:# gene in gene_list's gene_name, id, chrom, start, end
             gene_info_from_gtf = df1_genes_gtf.loc[df1_genes_gtf['gene_name']==g, ["gene_name","gene_id","chrom",'start_chrom','end_chrom']]
-            if gene_info_from_gtf.empty: # no gene_name in dm6/3 (BDGP6/5) gtf file
+            if gene_info_from_gtf.empty: # no gene_name in gtf file
                 counter+=1
             elif TSS_only: # if you should only look around TSS (+-1KB from start of gene)
                 gene_info_1 = gene_info_from_gtf.to_string(index=False)

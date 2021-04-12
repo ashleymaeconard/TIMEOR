@@ -37,16 +37,31 @@ OUTPUTDIR <- args[6] # output dir
 dir.create(file.path(file.path(dirname(OUTPUTDIR),basename(OUTPUTDIR)))) 
 
 # Load ImpulseDE2 and create gene list
-IDE2_gene_df <- read.table(file = IDE2, sep = ",", header=TRUE)[c("gene_id")]
-write.table(IDE2_gene_df, file=paste(OUTPUTDIR,"ImpulseDE2_gene_list.csv", sep="/"),  quote=FALSE, row.names=FALSE, col.names=FALSE)
+if(file.exists(IDE2)){
+  IDE2_gene_df <- read.table(file = IDE2, sep = ",", header=TRUE)[c("gene_id")]
+  write.table(IDE2_gene_df, file=paste(OUTPUTDIR,"ImpulseDE2_gene_list.csv", sep="/"),  quote=FALSE, row.names=FALSE, col.names=FALSE)
+} else{
+  IDE2_gene_df <- data.frame(gene_id=character())
+  write.table(IDE2_gene_df, file=paste(OUTPUTDIR,"ImpulseDE2_gene_list.csv", sep="/"),  quote=FALSE, row.names=FALSE, col.names=FALSE)
+}
 
 # Load DESeq2 and create gene list
-DES2_gene_df <- read.table(file = DES2, sep = ",", header=TRUE)[c("gene_id")]
-write.table(DES2_gene_df, file=paste(OUTPUTDIR,"DESeq2_gene_list.csv", sep="/"),  quote=FALSE, row.names=FALSE, col.names=FALSE) 
+if(file.exists(DES2)){
+  DES2_gene_df <- read.table(file = DES2, sep = ",", header=TRUE)[c("gene_id")]
+  write.table(DES2_gene_df, file=paste(OUTPUTDIR,"DESeq2_gene_list.csv", sep="/"),  quote=FALSE, row.names=FALSE, col.names=FALSE) 
+} else{
+  DES2_gene_df <- data.frame(gene_id=character())
+  write.table(DES2_gene_df, file=paste(OUTPUTDIR,"DESeq2_gene_list.csv", sep="/"),  quote=FALSE, row.names=FALSE, col.names=FALSE)
+}
 
 # Load NextMaSigPro and create gene list
-NMSP_gene_df <- read.table(file = NMSP, sep = ",", header=TRUE)[c("gene_id")]
-write.table(NMSP_gene_df, file=paste(OUTPUTDIR,"nextMaSigPro_gene_list.csv", sep="/"),  quote=FALSE, row.names=FALSE, col.names=FALSE) 
+if(file.exists(NMSP)){
+  NMSP_gene_df <- read.table(file = NMSP, sep = ",", header=TRUE)[c("gene_id")]
+  write.table(NMSP_gene_df, file=paste(OUTPUTDIR,"nextMaSigPro_gene_list.csv", sep="/"),  quote=FALSE, row.names=FALSE, col.names=FALSE) 
+} else{
+  NMSP_gene_df <- data.frame(gene_id=character())
+  write.table(NMSP_gene_df, file=paste(OUTPUTDIR,"nextMaSigPro_gene_list.csv", sep="/"),  quote=FALSE, row.names=FALSE, col.names=FALSE)
+}
 
 # Check for empty string for previous study
 if (PS == 'NA'){
