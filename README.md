@@ -36,7 +36,7 @@ streamline the process of time series data analysis and assist the user
 to design follow-up experiments**. At any point in the analysis, the user 
 can scroll down and click **“Save your place”** to return to analysis later. 
 TIMEOR is available for *Homo sapiens, Mus musculus,* and *Drosophila melanogaster*.
-The web server is **completely free**, and is **accessible** at https://timeor.brown.edu in **a partnership** between the [Computational Biology Core at Brown University](https://cbc.brown.edu/) and [Harvard Medical School's DRSC TRiP Core Facility](https://fgr.hms.harvard.edu/). It is **also available** through both a Conda environment and Docker.
+The web server is **completely free**, and is **accessible** at https://timeor.brown.edu in **a partnership** between the [Computational Biology Core at Brown University](https://cbc.brown.edu/) and [Harvard Medical School's DRSC TRiP Core Facility](https://fgr.hms.harvard.edu/). It is **also available** through Docker.
 
 Quick Start: 3 Steps
 =======
@@ -56,7 +56,7 @@ Conard, A. M., Goodman, N., Hu, Y., Perrimon, N., Singh, R., Lawrence, C., & Lar
 Overview
 ========
 
-The [TIMEOR software (web, Conda, and Docker)](https://github.com/ashleymaeconard/TIMEOR) gives users a flexible and intuitive web platform with which to
+The [TIMEOR software (web and Docker)](https://github.com/ashleymaeconard/TIMEOR) gives users a flexible and intuitive web platform with which to
 upload their time-series RNA-seq data and protein-DNA data, and step through the entire temporal differential gene
 expression and gene dynamics analysis pipeline to generate gene regulatory networks. The application is organized into three
 separate stages: Pre-processing, Primary Analysis, and Secondary Analysis. [Click here](https://www.youtube.com/watch?v=bBodWvGPD6g&t=8s) for a quick video demonstration of the TIMEOR webserver, and [click here](https://www.youtube.com/watch?v=-BV9B3L1ymg) for a video guide through the webserver tutorial (below in [Run TIMEOR](https://github.com/ashleymaeconard/TIMEOR#run-timeor)).
