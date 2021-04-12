@@ -307,7 +307,9 @@ just split. There are 20 steps.
     number of clusters desired. For this demonstration, we chose "ImpulseDE2" differentially expressed gene output. We also chose "automatic" clustering of gene trajectories. On new data the user can choose these two parameters.
     **NOTE:** ImpulseDE2 is chosen because
     it has the largest differential expressed gene overlap with the
-    previous study and other methods.
+    previous study and other methods. 
+
+8.  Click 'Fix cluster number' to solidify the number of clusters. This button fetches the genomic sequences of each gene to perform motif enrichment per gene trajectory cluster for tab 'Factor Binding' in the Secondary Analysis stage.
 
 <p>
  
