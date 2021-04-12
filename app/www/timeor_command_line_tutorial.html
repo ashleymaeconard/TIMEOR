@@ -735,37 +735,55 @@ summary {
 <p>TIMEOR’s web-interface can be run online at <a href="https://timeor.brown.edu" class="uri">https://timeor.brown.edu</a>, and through <a href="https://github.com/ashleymaeconard/TIMEOR">Conda and Docker</a>. TIMEOR can also be run at the command line, which will be discussed in this tutorial, within the Conda environment provided. To begin, we assume you are using the command line and have Conda/miniconda 2 (version 4.8.2).</p>
 <div id="installation" class="section level1">
 <h1>Installation</h1>
-<p>After cloning the TIMEOR repo from GitHub (<a href="https://github.com/ashleymaeconard/TIMEOR.git" class="uri">https://github.com/ashleymaeconard/TIMEOR.git</a>)</p>
-<div id="conda-environment" class="section level3">
-<h3>Conda Environment</h3>
+<p>To run TIMEOR outside of website (recommended for preprocessing from raw .fastq files), users may use Docker and Docker Hub. First, the TIMEOR repository must be cloned (<a href="https://github.com/ashleymaeconard/TIMEOR.git" class="uri">https://github.com/ashleymaeconard/TIMEOR.git</a>). To use Docker, it must be installed (version 20.10.0 recommended).</p>
+<div id="docker-hub-and-docker" class="section level3">
+<h3>Docker Hub and Docker:</h3>
 <ol style="list-style-type: decimal">
-<li>Install Anaconda2/Miniconda2 (version 4.8.3).</li>
-<li>Type <code>$eval &quot;$(/PATH/TO/&lt;CONDA_DIR&gt;/bin/conda shell.bash hook)&quot;</code></li>
-<li>Locate packages.yml in /TIMEOR/</li>
-<li>Type <code>$conda env create -f packages.yml</code></li>
-<li>Type <code>$conda activate timeor_conda_env</code></li>
-<li>Type <code>$R</code></li>
-<li>In R
-<ol style="list-style-type: decimal">
-<li>Type <code>&gt;library(shiny)</code></li>
-<li>Type <code>&gt;runApp(&quot;app/&quot;, launch.browser=F)</code></li>
-<li>Go to browser URL from R output (e.g. <a href="http://127.0.0.1:3681" class="uri">http://127.0.0.1:3681</a> )</li>
-</ol></li>
-</ol>
-<p>Note, if TIMEOR is running on a remote machine, you may access the website through the ssh gateway. For example on port 8888, <code>ssh -L 8888:127.0.0.1:8888 USERNAME@SERVER -t host=SERVER -L 8888:127.0.0.1:3681</code>.</p>
-</div>
-<div id="docker" class="section level3">
-<h3>Docker</h3>
-<ol style="list-style-type: decimal">
-<li>Building Docker image in TIMEOR directory:
-<ol style="list-style-type: decimal">
-<li><code>docker build -t timeor_env .</code></li>
-</ol></li>
-<li>Running Docker:
-<ol style="list-style-type: decimal">
-<li><code>docker run -p 3838:3838 timeor_env</code></li>
+<li>Download organism genome folder (genomes_info).
+<ul>
+<li>The user is welcome to gather only the organism of interest. For example, for Drosophila melanogaster simply download <code>/genomes_info/dme/</code>
+<ul>
+<li>Mouse is <code>/genomes_info/mmu/</code></li>
+<li>Human is <code>/genomes_info/hsa/</code></li>
+</ul></li>
+<li>Link <code>/genomes_info/</code>: <a href="https://drive.google.com/drive/folders/1KEnpCOU0dQU5p1tnEy3o9l02NE0uYnpm?usp=sharing" class="uri">https://drive.google.com/drive/folders/1KEnpCOU0dQU5p1tnEy3o9l02NE0uYnpm?usp=sharing</a></li>
+</ul></li>
+<li>Choose directory location for genomes_info (e.g. <code>/Users/USERNAME/Desktop/test_folder/genomes_info/</code>)</li>
+<li>Run TIMEOR via Docker
+<ul>
+<li>On command line type
+<ul>
+<li><code>$ docker pull ashleymaeconard/timeor:latest</code></li>
+<li><code>$ docker images</code></li>
+<li><code>$ docker run -v /Users/USERNAME/Desktop/test_folder/:/src_copy -p 3838:3838 &lt;IMAGE_ID&gt;</code></li>
+</ul></li>
+</ul></li>
+<li>Add <code>/genomes_info/</code> folder to Docker container
+<ul>
+<li>In another command line window
+<ul>
+<li><code>$ docker container ls</code></li>
+<li><code>$ docker exec -it &lt;CONTAINER_NAME&gt; /bin/bash/</code></li>
+<li><code># chmod -R 777 /src_copy/genomes_info/</code></li>
+<li><code># mv /src_copy/genomes_info/ /srv/</code></li>
+</ul></li>
+</ul></li>
+<li>Open TIMEOR Application is available by typing:
+<ul>
 <li>Shiny server will be running on port 3838. Thus, in a browser visit <code>localhost:3838</code>.</li>
-</ol></li>
+</ul></li>
+</ol>
+</div>
+<div id="or-build-docker-image" class="section level3">
+<h3>Or, build Docker image</h3>
+<p>NOTE: This could take a while. Please follow these commands:</p>
+<ol style="list-style-type: decimal">
+<li><code>$ cd /PATH/TO/TIMEOR/</code></li>
+<li>Build Docker image in TIMEOR directory:
+<ul>
+<li><code>$ docker build -t timeor_env .</code></li>
+</ul></li>
+<li>Follow instructions above from “3. Run TIMEOR via Docker”</li>
 </ol>
 </div>
 </div>

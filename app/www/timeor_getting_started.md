@@ -17,9 +17,10 @@ output:
 - <span style="color:red">We strongly encourage the user to input a read count matrix when possible</span>, as the input file size limit is 10GB.
 - For larger dataset processing, the user is encouraged to use our ready-to-use Docker image. Read steps [here](). If that is not possible, please feel free to contact us for specific space requirements. **We are happy to help**. 
 - <span style="color:red">While TIMEOR analysis is running, simply make sure to revisit the page at least once an hour.</span>
+- <span style="color:red">We strongly encourage the user to keep '5.Compare multiple method' set to 'Yes' to see TIMEOR's full functionality.
 - Please click each button just once.
 - <span style="color:red"> Once analysis has begun, please proceed through TIMEOR sequentially</span>. **The user can visit previous tabs**, but proceed forward sequentially. Before beginning the analysis, the user can skim through each tab to see what is to come.
-- **TIMEOR supports these types of time-series data**: 
+- **TIMEOR supports these types of time-series data** (note this is asked in Question 3 of "Determine Adaptive Default Methods"): 
   - control at 1st time point vs case (i.e. treatment) at subsequent time points
   - control **or** case over time
 - Please compare one set of time-series experiments at a time.
@@ -28,19 +29,18 @@ output:
   - In this case, simply perform the analysis **separately**:
       - control v.s. case 1
       - control v.s. case 2
-- <span style="color:red"> Thank you for using TIMEOR! Please help us improve to better assist you. Please contact us with questions, ideas, and suggestions. If an error occurs, please download the log file (far left) to check. When contacting us with questions, please send the *time*, the log file, and if possible *a screenshot* so we know where in TIMEOR you are.</span>
+- <span style="color:red"> Thank you for using TIMEOR! Please help us improve to better assist you. Please contact us with questions, ideas, and suggestions. If an error occurs with your data, please download the log file (far left) to check. When contacting us with questions, please send the *time*, the log file, and if possible *a screenshot* so we know where in TIMEOR you are.</span>
 
 ## Two ways to input data:
 
 1.   Import **SraRunTable from GEO**\* where TIMEOR will process raw data
     through retrieving .fastq files, quality control, alignment, and
-    read count matrix creation. Read [this section]() for information about 
-    this input specification. Read [this section](https://timeor.brown.edu/app_direct/timeor/timeor_app_tutorial.html#run-timeor-from-raw-data-starting-from-.fastq-time-series-rna-seq).
+    read count matrix creation. Read first tab of TIMEOR (Getting Started) for information about 
+    this input specification. Read [this section](https://timeor.brown.edu/app_direct/timeor/timeor_app_tutorial.html#run-timeor-from-raw-data-starting-from-.fastq-time-series-rna-seq) for information about how to process these data in TIMEOR. **We strongly encourage users to upload a read count matrix**, or process raw .fastq data via TIMEOR's interface locally using Docker ([see 5 steps here](https://timeor.brown.edu/app_direct/timeor/timeor_app_tutorial.html#local-installation)).
 
 2.   Import **metadata file\*\* and count matrix \*\*\*** (skipping raw
     data retrieval, quality control, alignment, and read count matrix
-    creation) and proceeding straight to normalization and correction. 
-    Read [this section](https://timeor.brown.edu/app_direct/timeor/timeor_app_tutorial.html#run-timeor-using-simulated-data-starting-from-read-count-matrix).
+    creation) and proceeding straight to normalization and correction. Read [this section](https://timeor.brown.edu/app_direct/timeor/timeor_app_tutorial.html#run-timeor-using-simulated-data-starting-from-read-count-matrix) for information about how to process these data in TIMEOR.
 
 Then simply follow the prompts. Fill out the **grey** boxes to begin
 interacting with each stage and tab. 
@@ -64,7 +64,16 @@ interacting with each stage and tab.
   - \*\*\* **count matrix**  requires Ensembl or Flybase unique gene identifiers, and columns should be the IDs
     from metadata file, and in the same order as metadata file.
 
-## Input Data: Metadata File
+## Inputs Detailts: SraRunTable
+- Please upload the SraRunTable.txt, which has comma delimiters.
+- Please remove as many unneeded colums as you can. Some dataset SraRunTables have odd delimiters that are difficult to parse.
+- Make sure that the resulting metadata file meets the requirements for the input metadata file [(link here)](https://timeor.brown.edu/app_direct/timeor/timeor_getting_started.html#input-data-read-count-matrix).
+- For paired-end reads, the pairs must have "_NUM" to distinguish them (e.g. SRRXXX_1.fastq.gz, SRRXXX_2.fastq.gz).
+
+## Input Data: .fastq Files
+- The .fastq files are downloaded as .fastq.gz.
+
+## Input Details: Metadata File
 - Make sure there are an equal number of replicates for each sample.
 - Label control as “control”.
 - Have time point data in order where control or time point 1 is at the top and the last time point is at the bottom.
@@ -79,22 +88,14 @@ interacting with each stage and tab.
 - Make sure columns are in the same order as the rows of metadata file.
 - Please upload .csv files. 
 
-## Inputs Data, SraRunTable
-- Please upload the SraRunTable.txt, which has comma delimiters.
-- Please remove as many unneeded colums as you can. Some dataset SraRunTables have odd delimiters that are difficult to parse.
-- Make sure that the resulting metadata file meets the requirements for the input metadata file.
-- For paired-end reads, the pairs must have "_NUM" to distinguish them (e.g. SRRXXX_1.fastq.gz, SRRXXX_2.fastq.gz).
-
-## Input Data, .fastq Files
-- The .fastq files are downloaded as .fastq.gz.
-
 ## Suggestions for How to Answer Six "Determine Adaptive Default Methods" Questions
-"Please select at least the organism, sequencing, and experiment type, then load metadata or SraRunTable.txt.",
-"Not applicable" = "matrix"
-Keep “multiple method comparisons” true to see comparison plots and results to show TIMEOR’s full functionality
+- Please select at least the organism, sequencing, and experiment type, then load metadata or SraRunTable.txt.
+- Not applicable =  matrix
+- <span style="color:red">We strongly encourage the user to keep '5.Compare multiple method' set to 'Yes' to see TIMEOR's full functionality.
 
 ## Method and question choice assistance
-- Types of time-series
+- Question 3 of "Determine Adaptive Default Methods" asks: "What type of experiment"? There are two options - "case vs. control", and "just case or control" types of time-series that TIMEOR supports [(see this section)](https://timeor.brown.edu/app_direct/timeor/timeor_getting_started.html#important-points-to-remember).
+- Question 4 of "Determine Adaptive Default Methods" asks: "What type of time series"
 - Comparing multiple methods for differential expression
   - Note that there is not a fold change cut-off, only an adjusted p-value cutoff. This allows the user to view significant differences in expression while the fold change might be smaller. This is useful to observe changes for genes including non-coding genes and genes involved in dosage compensation. 
 

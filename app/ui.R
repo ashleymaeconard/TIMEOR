@@ -165,7 +165,7 @@ function(request) {
                               "Just case or control" = "jc"
                             )
                           ),
-                          h4("4. What type of time series?"),
+                          h4("4. What type of time-series?"),
                           selectInput(
                             "timeSeries",
                             label = NULL,

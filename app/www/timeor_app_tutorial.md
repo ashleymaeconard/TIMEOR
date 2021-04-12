@@ -24,41 +24,47 @@ TIMEOR is available online at https://timeor.brown.edu.
 Run TIMEOR
 ===================
 
-### Two ways to input data:
+## Two ways to input data:
 
 1.   Import **SraRunTable from GEO**\* where TIMEOR will process raw data
     through retrieving .fastq files, quality control, alignment, and
-    read count matrix creation. Read [this section](#run-timeor-from-raw-data-starting-from-.fastq-time-series-rna-seq) below.
+    read count matrix creation. Read first tab of TIMEOR (Getting Started) for information about 
+    this input specification. Read [this section](https://timeor.brown.edu/app_direct/timeor/timeor_app_tutorial.html#run-timeor-from-raw-data-starting-from-.fastq-time-series-rna-seq) for information about how to process these data in TIMEOR. **We strongly encourage users to upload a read count matrix**, or process raw .fastq data via TIMEOR's interface locally using Docker ([see 5 steps here](#local-installation)).
 
 2.   Import **metadata file\*\* and count matrix \*\*\*** (skipping raw
     data retrieval, quality control, alignment, and read count matrix
-    creation) and proceeding straight to normalization and correction. 
-    Read [this section](#run-timeor-using-simulated-data-starting-from-read-count-matrix) below.
+    creation) and proceeding straight to normalization and correction. Read first tab of TIMEOR (Getting Started) for information about this input specification. Read [this section](https://timeor.brown.edu/app_direct/timeor/timeor_app_tutorial.html#run-timeor-using-simulated-data-starting-from-read-count-matrix) for information about how to process these data in TIMEOR.
 
 Then simply follow the prompts. Fill out the **grey** boxes to begin
 interacting with each stage and tab. 
 
 #### Input file types:
 
-  \* **SraRunTable from GEO** follow instructions in TIMEOR first tab
-    (“Process Raw Data”)
+      NOTE: see first tab of TIMEOR called Getting Started for specifications.
 
-   \*\* **metadata file** requires at least these columns.
-    -   *ID, condition, time, batch*
+  - \* **SraRunTable from GEO** requires at least these columns (which will be reordered to produce the metadata file).
+    - *treatment, time, Run, replicate, batch*
+        - *treatment*: one word describing experiment
+        - *time*: numerical values e.g. (0, 20, 40)
+        - *replicate*: one word description of replicate
+
+  - \*\* **metadata file** requires *at least* these columns.
+    -   *ID, condition, time, replicate*
         -   *ID*: a unique identifier (ID) for the user
-            (e.g. case\_1min\_rep1)
+            (e.g. case1min\_rep1)
         -   *condition*: one word description (e.g. case, control)
         -   *time*: numerical values e.g. (0, 20, 40)
-        -   *batch*: string description of batch (e.g. b1, b2, b3)
+        -   *replicate*: one word description of replicate (e.g. b1, b2, b3)
 
-  \*\*\* **count matrix** : rows should be unique gene identifiers
-    (e.g. Flybase, Ensembl or Entrez IDs) and columns should be the IDs
-    from metadata file.
+  - \*\*\* **count matrix**  requires Ensembl or Flybase unique gene identifiers, and columns should be the IDs
+    from metadata file, and in the same order as metadata file.
 
 ## Run TIMEOR from Raw Data: Starting from .fastq Time-Series RNA-seq
 This tutorial uses a subset of real data used in the TIMEOR publication to
 take the user through TIMEOR's "Process Raw Data" tab. You will first see this pop-up. Please read.
 There are 4 steps.
+
+**NOTE**: When possible we advise the user to start from a read count matrix, as our file size limit is 10GB. For larger datasets, the user can use TIMEOR locally (still through web interface) via Docker, by following the 5 steps [below, here](#local-installation).
 
 <p>
      
@@ -425,6 +431,42 @@ just split. There are 20 steps.
  
 </p>
 
+Local Installation 
+=======
+
+To run TIMEOR outside of website (recommended for preprocessing from raw .fastq files), users may use Docker and Docker Hub. First, the TIMEOR repository must be cloned (<a href="https://github.com/ashleymaeconard/TIMEOR.git" class="uri">https://github.com/ashleymaeconard/TIMEOR.git</a>). To use Docker, it must be installed (version 20.10.0 recommended).
+
+### Docker Hub and Docker:
+
+  1.	Download organism genome folder (genomes_info).
+          * The user is welcome to gather only the organism of interest. For example, for Drosophila melanogaster simply download `/genomes_info/dme/`
+              * Mouse is `/genomes_info/mmu/`
+              * Human is `/genomes_info/hsa/`
+          * Link `/genomes_info/`: https://drive.google.com/drive/folders/1KEnpCOU0dQU5p1tnEy3o9l02NE0uYnpm?usp=sharing
+  2.	Choose directory location for genomes_info (e.g. `/Users/USERNAME/Desktop/test_folder/genomes_info/`)
+  3.	Run TIMEOR via Docker
+          * On command line type 
+              * `$ docker pull ashleymaeconard/timeor:latest` 
+              * `$ docker images`
+              * `$ docker run -v /Users/USERNAME/Desktop/test_folder/:/src_copy -p 3838:3838 <IMAGE_ID>`
+  4.	Add `/genomes_info/` folder to Docker container
+          * In another command line window
+              * `$ docker container ls`
+              * `$ docker exec -it <CONTAINER_NAME> /bin/bash/`
+              * `# chmod -R 777 /src_copy/genomes_info/`
+              * `# mv /src_copy/genomes_info/ /srv/`
+  5.	Open TIMEOR Application is available by typing: 
+          * Shiny server will be running on port 3838. Thus, in a browser visit `localhost:3838`.
+  
+### Or, build Docker image 
+
+NOTE: This could take a while. Please follow these commands:
+  
+  1.	`$ cd /PATH/TO/TIMEOR/`
+  2.	Build Docker image in TIMEOR directory:
+          * `$ docker build -t timeor_env .`
+  3.	Follow instructions above from "3. Run TIMEOR via Docker"
+  
 Details
 =======
 
