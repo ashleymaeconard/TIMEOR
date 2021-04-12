@@ -207,7 +207,7 @@ function(request) {
                           h4(
                             "1. If processing raw data, GEO data is available by going to ",
                             tags$a(href = "https://www.ncbi.nlm.nih.gov/sra", "GEO", target = "_blank"),
-                            "to search for a time series RNA-seq dataset."
+                            "to search for a time-series RNA-seq dataset."
                           ),
                           h4("2. Click on \"SRA Run Selector\" on bottom right."),
                           h4(
@@ -222,7 +222,7 @@ function(request) {
                             onLabel = "Metadata",
                             offLabel = "SraRunTable"
                           ),
-                          h4("5. Upload input file. Note: SraRunTables are automatically converted to metadata files. Ensure resulting metadata file matches TIMEOR specifications in tutorial. Download results folder to change file as needed."),
+                          h4("5. Upload input file. Note: SraRunTables are automatically converted to metadata files. Ensure resulting metadata file matches TIMEOR specifications in tutorial. Download results folder to change file as needed, and reupload (keeping SraRunTable selected)."),
                           fileInput(
                             "metadataFile",
                             label = NULL,
@@ -241,7 +241,7 @@ function(request) {
                       ),
                       tags$hr(style = "border-color: black;"), # horizontal line 
                       fluidRow(height=50, 
-                              box(width=12, h3("Process Raw Data"), "Fields below are filled if raw data are processed. With a 10GB upload limit, it is advised that larger datasets be processed locally using Docker. For ready-to-use image type '$docker pull ashleymaeconard/timeor:latest' in the console.",style="background: #E8E8E8")),
+                              box(width=12, h3("Process Raw Data"), "Fields below are filled if raw data are processed. With a 10GB upload limit, it is advised that larger datasets be processed locally using Docker. Follow 5 steps ",tags$a(href = "https://timeor.brown.edu/app_direct/timeor/timeor_app_tutorial.html#local-installation", "here", target = "_blank"),". This information is also available by visiting 'Tutorials' in the side-bar, under the Web Server tab, and scrolling down to the bottom under 'Local Installation'.",style="background: #E8E8E8")),
 
                       # Process, quality control, and alignment quality text within lower leftmost text in app body within Process Raw Data Tab
                       fluidRow(
@@ -386,6 +386,7 @@ function(request) {
                         
                         # Normalization and correction method user options
                         box(titlePanel(h3("Choose a Normalization and Correction Method")),
+                          "See ", tags$a(href = "https://timeor.brown.edu/app_direct/timeor/timeor_getting_started.html##method-and-question-choice-assistance", "here", target = "_blank")," under 'Method and Question Choice Assistance' for suggestions on how to choose the normalization method.",
                           selectInput(
                             "normMethods",
                             label = "Normalization Methods",
@@ -393,7 +394,7 @@ function(request) {
                           ),
                           selectInput(
                             "corrMethods",
-                            label = "Correction Methods",
+                            label = "Correction Method",
                             choices = c("Harman")
                           ),
                           actionButton("runCorrection", label = "Run"),
@@ -411,6 +412,7 @@ function(request) {
                         
                         # Show normalized and corrected replicate (i.e. sample) correlations
                         box(titlePanel(h3("Replicate and Experiment Correlations")), height=600,
+                        "See ", tags$a(href = "https://timeor.brown.edu/app_direct/timeor/timeor_getting_started.html##method-and-question-choice-assistance", "here", target = "_blank")," under 'Method and Question Choice Assistance' for suggestions on how to choose the correlation method.",
                           selectInput(
                             "correMethodAfter",
                             label = "Correlation Methods",
@@ -672,7 +674,7 @@ function(request) {
                       fluidRow(
                             column(
                           6,
-                          box(width = "auto", height = "500", titlePanel(h3("Transcription Factor Network")),
+                          box(width = "auto", height = "550", titlePanel(h3("Transcription Factor Network")),
                            column(9,
                                    height = "500",
                                    fluidRow(column(12,
@@ -695,7 +697,8 @@ function(request) {
                           ),
                             column(
                           6,
-                          box(width = "auto", height = "500", titlePanel(h3("Temporal Relations Between Observed and Predicted Transcription Factors"), "For edge_type 'a' is activation, 'r' is repression."),
+                          box(width = "auto", height = "550", titlePanel(h3("Temporal Relations Between Observed and Predicted Transcription Factors"), "For edge_type 'a' is activation, 'r' is repression."),
+                          "See last bullet point", tags$a(href = "https://timeor.brown.edu/app_direct/timeor/timeor_getting_started.html##method-and-question-choice-assistance", "here", target = "_blank")," under 'Method and Question Choice Assistance' for suggestions on how to interpret the gene regulatory network information.",
                           fluidRow(
                            column(9,
                                     height = "500",

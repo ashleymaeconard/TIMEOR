@@ -11,7 +11,7 @@ Quick Start: 3 Steps
 
 
 1. Visit https://timeor.brown.edu.
-2. For (1) in 'Example Data' (side-bar) under 'Load raw data' click the 'SraRunTable & .fastq files' button. This will guide you through the 'Process Raw Data' tab demo. **Follow pop-ups and fill in grey boxes**. See [Run TIMEOR](#run-timeor-from-raw-data-starting-from-.fastq-time-series-rna-seq) below for walk-through.
+2. For (1) in 'Example Data' (side-bar) under 'Load raw data' click the 'SraRunTable & .fastq files' button. This will guide you through the 'Set Input and Defaults, Process Raw Data' tab demo. **Follow pop-ups and fill in grey boxes**. See [Run TIMEOR](#run-timeor-from-raw-data-starting-from-.fastq-time-series-rna-seq) below for walk-through.
 3. Next, for (2) in 'Example Data' (side-bar) under 'Load count matrix' click the 'Metadata & read count file' button. This will guide you through the rest of the full method demo. **Follow pop-ups and fill in grey boxes**. See [Run TIMEOR](#run-timeor-using-simulated-data-starting-from-read-count-matrix) below for full application walk-through.
 
 
@@ -56,28 +56,56 @@ interacting with each stage and tab.
         -   *time*: numerical values e.g. (0, 20, 40)
         -   *replicate*: one word description of replicate (e.g. b1, b2, b3)
 
-  - \*\*\* **count matrix**  requires Ensembl or Flybase unique gene identifiers, and columns should be the IDs
-    from metadata file, and in the same order as metadata file.
+  - \*\*\* **count matrix**  requires Ensembl or Flybase unique gene identifiers, and columns should be the IDs from metadata file, and in the same order as metadata file.
+
+Getting Started with TIMEOR 
+=======
+
+Please read through this first page of information to help guide you through TIMEOR.
+
+<p>
+     
+</p>
+<center>
+<img src="T00000.png" style="width:95.0%" />
+</center>
+<p>
+     
+</p>
+
+<p>
+     
+</p>
+<center>
+<img src="T0000.png" style="width:95.0%" />
+</center>
+<p>
+     
+</p>
+
+Importantly, before beginning the analysis, TIMEOR requires the user to give data details to set the adaptive default methods used downstream. The 'Getting Started' Tab above under section 'Suggestions for How to Answer Six 'Determine Adaptive Default Methods' Questions' [(here)](https://timeor.brown.edu/app_direct/timeor/timeor_getting_started.html#suggestions-for-how-to-answer-six-determine-adaptive-default-methods-questions) provides suggestions for how to answer these. 
+
+**NOTE:** We **stronly recommend** keeping 'Yes' as the answer for Question 5 to compare multiple methods, as this highlights valuable TIMEOR functionality.
+
+<p>
+     
+</p>
+<center>
+<img src="T000000.png" style="width:95.0%" />
+</center>
+<p>
+     
+</p>
 
 ## Run TIMEOR from Raw Data: Starting from .fastq Time-Series RNA-seq
 This tutorial uses a subset of real data used in the TIMEOR publication to
 take the user through TIMEOR's "Process Raw Data" tab. You will first see this pop-up. Please read.
 There are 4 steps.
 
-**NOTE**: When possible we advise the user to start from a read count matrix, as our file size limit is 10GB. For larger datasets, the user can use TIMEOR locally (still through web interface) via Docker, by following the 5 steps [below, here](#local-installation).
-
-<p>
-     
-</p>
-<center>
-<img src="T000.png" style="width:95.0%" />
-</center>
-<p>
-     
-</p>
+**NOTE**: When possible we advise the user to start from a read count matrix, as our file size limit is 10GB. For larger datasets, the user can use TIMEOR locally (still through web interface) via Docker, by following the 5 steps [below, and here](#local-installation).
 
 1.  In the far-left side-bar click on “Example Data” and then
-    under “Load raw data” click on "SraRunTable & raw .fastq files".
+    under “Load raw data” click on "SraRunTable & raw .fastq files". This will load the answers to the adaptive default questions (left) and also load input details (right). 
 
 <p>
      
@@ -92,7 +120,6 @@ There are 4 steps.
 2.  Follow the pop-up prompt to explore the default settings to questions 1-6 to set the adaptive 
     default parameters, and then click the "Run" button to begin retrieving the raw data (SRR8843738
     and SRR8843750), performing quality control, and aligning the reads using HISAT2 and Bowtie2.
-
 <p>
      
 </p>
@@ -173,16 +200,6 @@ just split. There are 20 steps.
 1.  In the far-left side-bar click on “Example Data” and then
     under “Load simulated data” click on "Metadata & read count file".
 
-<p>
-     
-</p>
-<center>
-<img src="T1.png" style="width:95.0%" />
-</center>
-<p>
-     
-</p>
-
 2.  Follow the pop-up to explore results on the Pre-processing
     tabs "Process Raw Data" and "Process Count Matrix".
 
@@ -195,6 +212,17 @@ just split. There are 20 steps.
 <p>
  
 </p>
+
+<p>
+ 
+</p>
+<center>
+<img src="T2.5.png" style="width:95.0%" />
+</center>
+<p>
+ 
+</p>
+
 <p>
  
 </p>
@@ -206,7 +234,7 @@ just split. There are 20 steps.
 </p>
 
 3.  On the Normalize and Correct Data tab, choose from normalization and
-    correction methods and click “Run” to view result. You have completed pre-processing. Follow pop-up.
+    correction methods and click “Run” to view result. Visit the 'Method and Question Choice Assistance' section of the 'Getting Started' tab ([here](https://timeor.brown.edu/app_direct/timeor/timeor_getting_started.html##method-and-question-choice-assistance)) for suggestions on how to choose the appropriate normalization and correlation settings. You have completed pre-processing. Follow pop-up.
 
 <p>
  
@@ -275,11 +303,9 @@ just split. There are 20 steps.
     Results” between ImpulseDE2, Next maSigPro, and DESeq2 on the left,
     and the interactive clustermap with automated clustering will
     display the differentially expressed gene trajectories for the
-    chosen method. You can then toggle under “Cluster Gene Expression Trajectories” to choose the
-    number of clusters desired. 
-    For this demonstration, we chose "ImpulseDE2" differentially expressed gene output. 
-    We also chose "automatic" clustering of gene trajectories. On new data the user can choose these two parameters.
-    **NOTE** ImpulseDE2 is chosen because
+    chosen method. TIMEOR provides an automatic clustering option (shown) which takes the mode between three unsupervised clustering methods (partition around medoids, Silhouette, and Calinski criterion) to automatically return the number of gene trajectory clusters to the user. PDF available on download to see clustering plots. You can then also toggle “Cluster Gene Expression Trajectories” to choose the
+    number of clusters desired. For this demonstration, we chose "ImpulseDE2" differentially expressed gene output. We also chose "automatic" clustering of gene trajectories. On new data the user can choose these two parameters.
+    **NOTE:** ImpulseDE2 is chosen because
     it has the largest differential expressed gene overlap with the
     previous study and other methods.
 

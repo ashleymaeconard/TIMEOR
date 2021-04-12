@@ -9,13 +9,13 @@ output:
  TIMEOR accepts 2 input types: (1) raw .fastq files and SraRunTable [(e.g. here)](https://github.com/ashleymaeconard/TIMEOR/blob/master/demos/real_data_subset/timeor/data/SraRunTable.csv) or a (2) RNA-seq time-series read count matrix [(e.g. here)](https://github.com/ashleymaeconard/TIMEOR/blob/master/demos/simulated_data/timeor/data/countMatrix.csv) and metadata file [(e.g. here)](https://github.com/ashleymaeconard/TIMEOR/blob/master/demos/simulated_data/timeor/data/metadata.csv).
 
 1. Visit https://timeor.brown.edu.
-2. For (1) in 'Example Data' (side-bar) under 'Load raw data' click the 'SraRunTable & .fastq files' button. This will guide you through the 'Process Raw Data' tab demo. **Follow pop-ups and fill in grey boxes**. See [Run TIMEOR](#run-timeor-from-raw-data-starting-from-.fastq-time-series-rna-seq) for walk-through.
+2. For (1) in 'Example Data' (side-bar) under 'Load raw data' click the 'SraRunTable & .fastq files' button. This will guide you through the 'Set Input and Defaults, Process Raw Data' tab demo. **Follow pop-ups and fill in grey boxes**. See [Run TIMEOR](#run-timeor-from-raw-data-starting-from-.fastq-time-series-rna-seq) for walk-through.
 3. Next, for (2) in 'Example Data' (side-bar) under 'Load count matrix' click the 'Metadata & read count file' button. This will guide you through the rest of the full method demo. **Follow pop-ups and fill in grey boxes**. See [Run TIMEOR](#run-timeor-using-simulated-data-starting-from-read-count-matrix) for full application walk-through.
 
 ## Important Points to Remember
 
 - <span style="color:red">We strongly encourage the user to input a read count matrix when possible</span>, as the input file size limit is 10GB.
-- For larger dataset processing, the user is encouraged to use our ready-to-use Docker image. Read steps [here](). If that is not possible, please feel free to contact us for specific space requirements. **We are happy to help**. 
+- For larger dataset processing, the user is encouraged to use our ready-to-use Docker image. Read 5 steps [here](https://timeor.brown.edu/app_direct/timeor/timeor_getting_started.html##local-installation). If that is not possible, please feel free to contact us for specific space requirements. **We are happy to help**. 
 - <span style="color:red">While TIMEOR analysis is running, simply make sure to revisit the page at least once an hour.</span>
 - <span style="color:red">We strongly encourage the user to keep '5.Compare multiple methods' set to 'Yes' to see TIMEOR's full functionality.
 - Please click each button just once.
@@ -105,7 +105,7 @@ interacting with each stage and tab.
 
 - Question 5 asks: "Compare multiple methods (alignent and differential expression)?" If this question is left to 'Yes' (which is **strongly** encouraged), TIMEOR will run all methods for the user to determine the best suited method. This is important because in many cases the categorical method DESeq2 which does not consider gene trajectories, still returns a robust set of differentially expressed genes. If this is set to 'No', TIMEOR will run for alignment (if applicable): HISAT2, and for DE: DESeq2 (if distant time points selected in Question 4), or ImpulseDE2 (if close time points selected in Question 4).
 
-- Question 6 asks: "What is the maximum number of time steps over which one gene can influence the transcription of another gene?" This question prompts the user to tell TIMEOR the timespan over which one gene can *directly* influence another. Within this timespan all interactions are considered. It is advised to keep this value small if the time points are spaced out. Said differently, at each time point $t$ for a differentially expressed gene $g$, if Question 6's answer were 2, TIMEOR would be asking, what are potential interactions of $g$ with other TFs across $t+1$ and $t+2$.
+- Question 6 asks: "What is the maximum number of time steps over which one gene can influence the transcription of another gene?" This question prompts the user to tell TIMEOR the window of time over which one gene can *directly* influence another. Within this window all interactions are considered. It is advised to keep this value small if the time points are spaced out. Said differently, at each time point $t$ for a differentially expressed gene $g$, if Question 6's answer were 2, TIMEOR would be asking, what are potential interactions of $g$ with other TFs across $t+1$ and $t+2$.
 
 ## Method and question choice assistance
 
@@ -123,5 +123,5 @@ interacting with each stage and tab.
 
 - "Secondary Analysis: Factor Binding": the user is encouraged to "see each method's predicted transcription factors" and search for protein-DNA data (in .bigWig format) to view the binding profile of that transcription factor across each gene trajectory cluster.
 
-- "Secondary Analysis: Temporal Relations": the user can add additional genes or transcription factors (potentially viewed on Factor Binding tab) to the final gene regulatory network (GRN) within STRINGdb. NOTE: TIMEOR only reports the TF GRN using the "Observed and Top Predicted Transcription Factors" and the user is **encouraged** to view the results from individual methods (on Factor Binding tab) when constructing the final GRN.
+- "Secondary Analysis: Temporal Relations": the user can add additional genes or transcription factors (potentially viewed on Factor Binding tab) to the final gene regulatory network (GRN) within STRINGdb. NOTE: TIMEOR only reports the TF GRN using the observed and top one predicted TFs from the "Observed and Top Predicted Transcription Factors" table. The user is **encouraged** to view the results from individual methods (on Factor Binding tab) when constructing the final GRN, and view Temporal Relations Table to uncover the lead and lag relationships between TFs
 
