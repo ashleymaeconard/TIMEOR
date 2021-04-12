@@ -735,7 +735,7 @@ summary {
 <p>TIMEOR’s web-interface can be run online at <a href="https://timeor.brown.edu" class="uri">https://timeor.brown.edu</a>, and through <a href="https://github.com/ashleymaeconard/TIMEOR">Conda and Docker</a>. TIMEOR can also be run at the command line, which will be discussed in this tutorial, within the Conda environment provided. To begin, we assume you are using the command line and have Conda/miniconda 2 (version 4.8.2).</p>
 <div id="installation" class="section level1">
 <h1>Installation</h1>
-<p>To run TIMEOR outside of website (recommended for preprocessing from raw .fastq files), users may use Docker and Docker Hub. First, the TIMEOR repository must be cloned (<a href="https://github.com/ashleymaeconard/TIMEOR.git" class="uri">https://github.com/ashleymaeconard/TIMEOR.git</a>). To use Docker, it must be installed (version 20.10.0 recommended).</p>
+<p>To run TIMEOR scripts individually, the users may use Docker and Docker Hub. First, the TIMEOR repository must be cloned (<a href="https://github.com/ashleymaeconard/TIMEOR.git" class="uri">https://github.com/ashleymaeconard/TIMEOR.git</a>). To use Docker, it must be installed (version 20.10.0 recommended).</p>
 <div id="docker-hub-and-docker" class="section level3">
 <h3>Docker Hub and Docker:</h3>
 <ol style="list-style-type: decimal">
@@ -768,10 +768,6 @@ summary {
 <li><code># mv /src_copy/genomes_info/ /srv/</code></li>
 </ul></li>
 </ul></li>
-<li>Open TIMEOR Application is available by typing:
-<ul>
-<li>Shiny server will be running on port 3838. Thus, in a browser visit <code>localhost:3838</code>.</li>
-</ul></li>
 </ol>
 </div>
 <div id="or-build-docker-image" class="section level3">
@@ -787,10 +783,13 @@ summary {
 </ol>
 </div>
 </div>
+<div id="below-are-several-of-the-timeor-scripts-for-users-to-use." class="section level1">
+<h1>Below are <em>several</em> of the TIMEOR scripts for users to use.</h1>
+</div>
 <div id="pre-processing" class="section level1">
 <h1>Pre-processing</h1>
-<div id="get-raw-.fastq-time-course-rna-seq" class="section level2">
-<h2>Get raw .fastq time course RNA-seq</h2>
+<div id="get-raw-.fastq-tim-series-rna-seq" class="section level2">
+<h2>Get raw .fastq tim-series RNA-seq</h2>
 <p>If you have your own time course RNA-seq data, go to step 4.</p>
 <ol style="list-style-type: decimal">
 <li>Go to <a href="https://www.ncbi.nlm.nih.gov/geo/">GEO</a>, search for a time course RNA-seq dataset (e.g. SRP190499, Figure 1A).</li>

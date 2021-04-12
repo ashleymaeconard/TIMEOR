@@ -334,7 +334,7 @@ just split. There are 20 steps.
     interactive motif results for viewing.
 
 12.  Toggle the “Analyze” button to “OFF” to choose another gene set, and
-    repeat steps 9-12.
+    repeat steps 9-12. **NOTE** if no images show simply toggle 'OFF' then 'ON' again to view any results. If no enrichment is found, that box is left blank.
 
 <p>
  
@@ -445,7 +445,7 @@ just split. There are 20 steps.
  
 </p>
 
-20. Your results folder can be downloaded on the far-left side-bar under "Download Results Folder". **NOTE** The original simulated data and results can be downloaded [here](https://github.com/ashleymaeconard/TIMEOR/tree/master/demos/simulated_data). 
+20. Your results folder AND a log file can both be downloaded on the far-left side-bar under "Download Results Folder" and "Download Log File". As TIMEOR integrates ~21 methods, the log enables users to see runtime output and messages from TIMEOR and other methods. **NOTE** The original simulated data and results can be downloaded directly [here](https://github.com/ashleymaeconard/TIMEOR/tree/master/demos/simulated_data). 
 
 <p>
  

@@ -45,10 +45,12 @@ NOTE: This could take a while. Please follow these commands:
           * `$ docker build -t timeor_env .`
   3.	Follow instructions above from "3. Run TIMEOR via Docker"
 
+# Below are *several* of the TIMEOR scripts for users to use. 
+
 Pre-processing
 =========
 
-Get raw .fastq time course RNA-seq
+Get raw .fastq tim-series RNA-seq
 ----------------------------------
 
 If you have your own time course RNA-seq data, go to step 4.

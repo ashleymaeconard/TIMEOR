@@ -14,7 +14,7 @@ output:
 
 ## Important Points to Remember
 
-- <span style="color:red">We strongly encourage the user to input a read count matrix when possible</span>, as the input file size limit is 10GB.
+- <span style="color:red">We strongly encourage the user to input a read count matrix (and associated metadata file) when possible</span>, as the input file size limit is 10GB.
 - For larger dataset processing, the user is encouraged to use our ready-to-use Docker image. Read 5 steps [here](https://timeor.brown.edu/app_direct/timeor/timeor_getting_started.html##local-installation). If that is not possible, please feel free to contact us for specific space requirements. **We are happy to help**. 
 - <span style="color:red">While TIMEOR analysis is running, simply make sure to revisit the page at least once an hour.</span>
 - <span style="color:red">We strongly encourage the user to keep '5.Compare multiple methods' set to 'Yes' to see TIMEOR's full functionality.
