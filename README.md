@@ -114,7 +114,7 @@ Website
 ### Computational Biology Core at Brown Univeristy and DRSC/TRiP Functional Genomics Resources at Harvard Medical School Partnership
 TIMEOR is available online at https://timeor.brown.edu. This website is free and open to everyone!
 
-Installation
+Local Installation
 ============
 
 To run TIMEOR scripts individually, the users may use Docker and Docker Hub. First, the TIMEOR repository must be cloned (<a href="https://github.com/ashleymaeconard/TIMEOR.git" class="uri">https://github.com/ashleymaeconard/TIMEOR.git</a>). To use Docker, it must be installed (version 20.10.0 recommended).
