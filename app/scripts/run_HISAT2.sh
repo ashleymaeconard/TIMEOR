@@ -149,8 +149,8 @@ for dir in $INPUT_DIR/*/*
 
                     # Generating the HISAT2 command for R1 and R2
                     fileName=$(echo `basename $R1`) # get filename from .fq.gz
-                    replicateFolder=$(echo `basename $(dirname $fastq)`)
-                    sampleFolder=$(echo `basename $(dirname $(dirname $fastq))`)
+                    replicateFolder=$(echo `basename $(dirname $R1)`)
+                    sampleFolder=$(echo `basename $(dirname $(dirname $R1))`)
                     
                     # Creating folder for all HISAT2 outputs per fastq
                     folderName=${RESULTS_DIR}/${sampleFolder}/${replicateFolder}

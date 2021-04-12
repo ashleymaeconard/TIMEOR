@@ -6,7 +6,7 @@ output:
 ---
 
 ## Quick Start: 3 Steps
- TIMEOR accepts 2 input types: (1) raw .fastq files and SraRunTable [(e.g. here)](https://github.com/ashleymaeconard/TIMEOR/blob/master/demos/real_data_subset/timeor/data/SraRunTable.csv) or a (2) RNA-seq time-series read count matrix [(e.g. here)](https://github.com/ashleymaeconard/TIMEOR/blob/master/demos/simulated_data/timeor/data/countMatrix.csv) and metadata file [(e.g. here)](https://github.com/ashleymaeconard/TIMEOR/blob/master/demos/simulated_data/timeor/data/metadata.csv).
+TIMEOR accepts 2 input types: (1) raw .fastq files and SraRunTable [(e.g. here)](https://github.com/ashleymaeconard/TIMEOR/blob/master/demos/real_data_subset/timeor/data/SraRunTable.csv) or a (2) RNA-seq time-series read count matrix [(e.g. here)](https://github.com/ashleymaeconard/TIMEOR/blob/master/demos/simulated_data/timeor/data/countMatrix.csv) and metadata file [(e.g. here)](https://github.com/ashleymaeconard/TIMEOR/blob/master/demos/simulated_data/timeor/data/metadata.csv).
 
 1. Visit https://timeor.brown.edu.
 2. For (1) in 'Example Data' (side-bar) under 'Load raw data' click the 'SraRunTable & .fastq files' button. This will guide you through the 'Set Input and Defaults, Process Raw Data' tab demo. **Follow pop-ups and fill in grey boxes**. See [Run TIMEOR](#run-timeor-from-raw-data-starting-from-.fastq-time-series-rna-seq) for walk-through.
@@ -29,6 +29,7 @@ output:
   - In this case, simply perform the analysis **separately**:
       - control v.s. case 1
       - control v.s. case 2
+- It is advised to skip past the 'Enrichment' tab if time is limited, as programs such as MEME can take a long time, even though we limited the motif size to maximum 20 basepairs. The user can certainly go back to the 'Enrichment' tab once the rest of the analysis is complete.
 - <span style="color:red"> Thank you for using TIMEOR! Please help us improve to better assist you. Please contact us with questions, ideas, and suggestions. If an error occurs with your data, please download the log file (far left) to check. When contacting us with questions, please send the *time*, the log file, and if possible *a screenshot* so we know where in TIMEOR you are.</span>
 
 ## Two ways to input data:
