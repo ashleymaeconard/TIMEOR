@@ -3,6 +3,7 @@ title: "Web Server"
 output:
   html_document:
     css: github.css
+  pdf_document: default
 ---
 
 Quick Start: 3 Steps
@@ -37,7 +38,7 @@ Run TIMEOR
 
 Then simply follow the prompts. Fill out the **grey** boxes to begin
 interacting with each stage and tab. 
-
+    
 #### Input file types:
 
       NOTE: see first tab of TIMEOR called Getting Started for specifications.
@@ -54,9 +55,10 @@ interacting with each stage and tab.
             (e.g. case1min\_rep1)
         -   *condition*: one word description (e.g. case, control)
         -   *time*: numerical values e.g. (0, 20, 40)
-        -   *replicate*: one word description of replicate (e.g. b1, b2, b3)
+        -   *replicate*: one word description of replicate (e.g. r1, r2, r3)
 
-  - \*\*\* **count matrix**  requires Ensembl or Flybase unique gene identifiers, and columns should be the IDs from metadata file, and in the same order as metadata file.
+  - \*\*\* **count matrix**  requires Ensembl or Flybase unique gene identifiers, and columns should be the IDs
+    from metadata file, and in the same order as metadata file.
 
 Getting Started with TIMEOR 
 =======

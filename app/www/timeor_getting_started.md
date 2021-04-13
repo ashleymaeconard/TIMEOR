@@ -61,7 +61,7 @@ interacting with each stage and tab.
             (e.g. case1min\_rep1)
         -   *condition*: one word description (e.g. case, control)
         -   *time*: numerical values e.g. (0, 20, 40)
-        -   *replicate*: one word description of replicate (e.g. b1, b2, b3)
+        -   *replicate*: one word description of replicate (e.g. r1, r2, r3)
 
   - \*\*\* **count matrix**  requires Ensembl or Flybase unique gene identifiers, and columns should be the IDs
     from metadata file, and in the same order as metadata file.
@@ -74,13 +74,17 @@ interacting with each stage and tab.
 
 ## Input Data: .fastq Files
 - The .fastq files are downloaded as .fastq.gz.
+- Data should at least have two replicates.
 
 ## Input Details: Metadata File
 - Make sure there are an equal number of replicates for each sample.
 - Label control as “control”.
 - Have time point data in order where control or time point 1 is at the top and the last time point is at the bottom.
-- have unique IDs follow these formats:
-  - NAMETIME_REPLICATE_TIME 
+- Have unique IDs that *ideally* follow one of these formats:
+  - NAMETIME.REPLICATE.BATCH
+  - NAMETIME.BATCH.REPLICATE
+  - NAMETIME_REPLICATE_BATCH
+  - NAMETIME_BATCH_REPLICATE
 - Sometimes when using editors such as Excel, odd delimiters specific to the user's machine are added at the end of lines. We advise users to check that these are not present.
 - Please upload .csv files.
 
@@ -89,6 +93,7 @@ interacting with each stage and tab.
 - Gene ID column should be named “ID” and populated with Ensembl IDs.
 - Make sure columns are in the same order as the rows of metadata file.
 - Please upload .csv files. 
+- Data should at least have two replicates.
 
 ## Suggestions for How to Answer Six "Determine Adaptive Default Methods" Questions
 - Overall the user must select at least the organism, sequencing, and experiment type, then load metadata or SraRunTable.txt.
@@ -105,7 +110,7 @@ interacting with each stage and tab.
     * Importantly, it is <span style="color:red">**strongly**</span> advised to compare all three (ImpulseDE2, Next maSigPro, and DESeq2) DE methods' results (<span style="color:red">by keeping 'Yes' for Question 5</span>), especially when there are "close time points and short time-series". Recent studies such as Spies et al. 2019 show that DESeq2 performs well when determining differentially expressed genes when time-series is short. To compare all three these, keep 'Yes' as the answer for Question 5 (below).
     * *Please see our manuscript for more a more robust explanation and a series of citations for further reading.*
 
-- Question 5 asks: "Compare multiple methods (alignent and differential expression)?" If this question is left to 'Yes' (which is **strongly** encouraged), TIMEOR will run all methods for the user to determine the best suited method. This is important because in many cases the categorical method DESeq2 which does not consider gene trajectories, still returns a robust set of differentially expressed genes. If this is set to 'No', TIMEOR will run for alignment (if applicable): HISAT2, and for DE: DESeq2 (if distant time points selected in Question 4), or ImpulseDE2 (if close time points selected in Question 4).
+- Question 5 asks: "Compare multiple methods (alignment and differential expression)?" If this question is left to 'Yes' (which is **strongly** encouraged), TIMEOR will run all methods for the user to determine the best suited method. This is important because in many cases the categorical method DESeq2 which does not consider gene trajectories, still returns a robust set of differentially expressed genes. If this is set to 'No', TIMEOR will run for alignment (if applicable): HISAT2, and for DE: DESeq2 (if distant time points selected in Question 4), or ImpulseDE2 (if close time points selected in Question 4).
 
 - Question 6 asks: "What is the maximum number of time steps over which one gene can influence the transcription of another gene?" This question prompts the user to tell TIMEOR the window of time over which one gene can *directly* influence another. Within this window all interactions are considered. It is advised to keep this value small if the time points are spaced out. Said differently, at each time point $t$ for a differentially expressed gene $g$, if Question 6's answer were 2, TIMEOR would be asking, what are potential interactions of $g$ with other TFs across $t+1$ and $t+2$.
 
@@ -125,5 +130,5 @@ interacting with each stage and tab.
 
 - "Secondary Analysis: Factor Binding": the user is encouraged to "see each method's predicted transcription factors" and search for protein-DNA data (in .bigWig format) to view the binding profile of that transcription factor across each gene trajectory cluster.
 
-- "Secondary Analysis: Temporal Relations": the user can add additional genes or transcription factors (potentially viewed on Factor Binding tab) to the final gene regulatory network (GRN) within STRINGdb. NOTE: TIMEOR only reports the TF GRN using the observed and top one predicted TFs from the "Observed and Top Predicted Transcription Factors" table. The user is **encouraged** to view the results from individual methods (on Factor Binding tab) when constructing the final GRN, and view Temporal Relations Table to uncover the lead and lag relationships between TFs
+- "Secondary Analysis: Temporal Relations": the user can add additional genes or transcription factors (potentially viewed on Factor Binding tab) to the final gene regulatory network (GRN) within STRINGdb. NOTE: TIMEOR only reports the TF GRN using the observed and top one predicted TFs from the "Observed and Top Predicted Transcription Factors" table. The user is **encouraged** to view the results from individual methods (on Factor Binding tab) when constructing the final GRN, and view Temporal Relations Table to uncover the lead and lag relationships between TFs.
 

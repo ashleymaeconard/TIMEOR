@@ -239,21 +239,6 @@ produce count matrix can be performed with:
     user      5m53.331s
     sys       0m1.537s
 
-Primary and Secondary Analyses
-==================
-
-<center>
-<img src="table_outputs.png" title="fig:" style="width:100.0%" alt="Table of Primary and Secondary analysis outputs." />
-</center>
-
-These steps will take the user through comparison of differential
-expression methods, determining differential expression, and determining
-the appropriate number of clusters of temporally differentially
-expressed genes.
-
-## Primary Analysis
-
-
 ### Produce Gene by Replicate Transcript Count Matrix
 
 To produce a count matrix requires 2 steps, 1) convert aligned reads to
@@ -270,6 +255,111 @@ count matrix. Towards number 1, we first use HTSeq on all replicates.
 
 Using Bowtie2 for this example below. The steps are the same for HISAT2.
 
+**Command**:
+
+`./run_HTSeq.sh ~/Desktop/test_timeor_load/timeor/results/load/alignment/bowtie2/`
+
+**Outputs**:
+
+A `htseq_counts` text file containing `gene\tcount` for all genes in the
+organism genome is saved in each
+`~/Desktop/test_timeor_load/timeor/results/load/sample/replicate/`
+folder.
+
+<details>
+<summary>Long output</summary>
+<pre>
+RESULTS_DIR: /Users/ashleymaeconard/Desktop/test_timeor_load/timeor/results/load/count_matrix/htseq/
+Number of input files:  2
+Processing .fastq files with HTSeq on 1 processors.
+Subdir: /Users/ashleymaeconard/Desktop/test_timeor_load/timeor/results/load/alignment/bowtie2//baseline_baseline/SRR8843738
+Creating read counts from aligned reads.
+fastq /Users/ashleymaeconard/Desktop/test_timeor_load/timeor/results/load/alignment/bowtie2//baseline_baseline/SRR8843738/out.sorted.bam
+replicateFolder:  SRR8843738
+sampleFolder:  baseline_baseline
+Adding out.sorted.bam to run_HTSeq.txt script
+ 
+Subdir: /Users/ashleymaeconard/Desktop/test_timeor_load/timeor/results/load/alignment/bowtie2//insulin_40/SRR8843750
+Creating read counts from aligned reads.
+fastq /Users/ashleymaeconard/Desktop/test_timeor_load/timeor/results/load/alignment/bowtie2//insulin_40/SRR8843750/out.sorted.bam
+replicateFolder:  SRR8843750
+sampleFolder:  insulin_40
+Adding out.sorted.bam to run_HTSeq.txt script
+ 
+100000 GFF lines processed.
+200000 GFF lines processed.
+300000 GFF lines processed.
+400000 GFF lines processed.
+500000 GFF lines processed.
+...
+7000000 SAM alignment records processed.
+7100000 SAM alignment records processed.
+7200000 SAM alignment records processed.
+7300000 SAM alignment records processed.
+7400000 SAM alignment records processed.
+7500000 SAM alignment records processed.
+7600000 SAM alignment records processed.
+7700000 SAM alignment records processed.
+7800000 SAM alignment records processed.
+7865176 SAM alignments  processed.
+</pre>
+</details>
+
+Next towards number 2, we merge all replicate outputs from HTSeq into
+*one* gene by replicate transcript count matrix.
+
+**Parameters**:
+
+    Usage: python htseq_merge.py 
+        1) /FULL/PATH/TO/htseq/ (with subfolders e.g. ../htseq/SAMPLE/REP/htseq_counts stop at htseq/)
+
+**Command**:
+
+`python htseq_merge.py ~/Desktop/test_timeor_load/timeor/results/load/count_matrix/htseq/`
+
+**Outputs**:
+
+The output matrix `merged_htseq.csv` is placed in the output folder
+provided.
+
+<details>
+<summary>Long output</summary>
+<pre>
+Done
+</pre>
+</details>
+
+Primary and Secondary Analyses
+==================
+
+<center>
+<img src="table_outputs.png" title="fig:" style="width:100.0%" alt="Table of Primary and Secondary analysis outputs." />
+</center>
+
+These steps will take the user through comparison of differential
+expression methods, determining differential expression, and determining
+the appropriate number of clusters of temporally differentially
+expressed genes.
+
+## Primary Analysis
+
+
+### Produce Clustermap
+
+To produce a clustermap of the data the user must follow these commands:
+
+**Parameters**:
+
+    Rscript app/scripts/clustermap_script.r 
+        Error: Pass in 7 arguments: Rscript clustermap.r 
+        1)/FULL/PATH/TO/RESULTS_DIR/ 
+        2)/FULL/PATH/TO/HEATMAP_INPUT_FILE 
+        3)DESIRED_OUTPUT_NAME (e.g. insulin_test) 
+        4)CLOSE_TIMEPOINT (1: close timepoint, 0: distant timepoint) 
+        5)USER_CHOOSE_CLUST_NUMBER (if 0 TIMEOR finds optimal, else type desired number of clusters) 
+        6)DIST_METHOD (e.g. euclidean) 
+        7)CLUSTER_METHOD (e.g. ward.D2)
+        
 **Command**:
 
 `./run_HTSeq.sh ~/Desktop/test_timeor_load/timeor/results/load/alignment/bowtie2/`

@@ -182,9 +182,10 @@ interacting with each stage and tab.
             (e.g. case1min\_rep1)
         -   *condition*: one word description (e.g. case, control)
         -   *time*: numerical values e.g. (0, 20, 40)
-        -   *replicate*: one word description of replicate (e.g. b1, b2, b3)
+        -   *replicate*: one word description of replicate (e.g. r1, r2, r3)
 
-  - \*\*\* **count matrix**  requires Ensembl or Flybase unique gene identifiers, and columns should be the IDs from metadata file, and in the same order as metadata file.
+  - \*\*\* **count matrix**  requires Ensembl or Flybase unique gene identifiers, and columns should be the IDs
+    from metadata file, and in the same order as metadata file.
 
 Getting Started with TIMEOR 
 =======

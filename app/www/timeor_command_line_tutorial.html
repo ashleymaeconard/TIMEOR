@@ -932,6 +932,71 @@ user      5m53.331s
 sys       0m1.537s</code></pre>
 </div>
 </div>
+<div id="produce-gene-by-replicate-transcript-count-matrix" class="section level3">
+<h3>Produce Gene by Replicate Transcript Count Matrix</h3>
+<p>To produce a count matrix requires 2 steps, 1) convert aligned reads to a measure of the count of transcripts assigned to each gene per replicate (used to denote the level of expression of a gene), and 2) merge all replicates together to produce a gene by replicate transcript count matrix. Towards number 1, we first use HTSeq on all replicates.</p>
+<p><strong>Parameters</strong>:</p>
+<pre><code>./run_HTSeq.sh: Usage: ./run_HTSeq.sh 
+    1) /FULL/PATH/TO/timeor/results/load/alignment/
+    2) ALIGNMENT_METHOD (hisat2 OR bowtie2)</code></pre>
+<p>Using Bowtie2 for this example below. The steps are the same for HISAT2.</p>
+<p><strong>Command</strong>:</p>
+<p><code>./run_HTSeq.sh ~/Desktop/test_timeor_load/timeor/results/load/alignment/bowtie2/</code></p>
+<p><strong>Outputs</strong>:</p>
+<p>A <code>htseq_counts</code> text file containing <code>gene\tcount</code> for all genes in the organism genome is saved in each <code>~/Desktop/test_timeor_load/timeor/results/load/sample/replicate/</code> folder.</p>
+<details>
+<summary>Long output</summary>
+<pre>
+RESULTS_DIR: /Users/ashleymaeconard/Desktop/test_timeor_load/timeor/results/load/count_matrix/htseq/
+Number of input files:  2
+Processing .fastq files with HTSeq on 1 processors.
+Subdir: /Users/ashleymaeconard/Desktop/test_timeor_load/timeor/results/load/alignment/bowtie2//baseline_baseline/SRR8843738
+Creating read counts from aligned reads.
+fastq /Users/ashleymaeconard/Desktop/test_timeor_load/timeor/results/load/alignment/bowtie2//baseline_baseline/SRR8843738/out.sorted.bam
+replicateFolder:  SRR8843738
+sampleFolder:  baseline_baseline
+Adding out.sorted.bam to run_HTSeq.txt script
+ 
+Subdir: /Users/ashleymaeconard/Desktop/test_timeor_load/timeor/results/load/alignment/bowtie2//insulin_40/SRR8843750
+Creating read counts from aligned reads.
+fastq /Users/ashleymaeconard/Desktop/test_timeor_load/timeor/results/load/alignment/bowtie2//insulin_40/SRR8843750/out.sorted.bam
+replicateFolder:  SRR8843750
+sampleFolder:  insulin_40
+Adding out.sorted.bam to run_HTSeq.txt script
+ 
+100000 GFF lines processed.
+200000 GFF lines processed.
+300000 GFF lines processed.
+400000 GFF lines processed.
+500000 GFF lines processed.
+...
+7000000 SAM alignment records processed.
+7100000 SAM alignment records processed.
+7200000 SAM alignment records processed.
+7300000 SAM alignment records processed.
+7400000 SAM alignment records processed.
+7500000 SAM alignment records processed.
+7600000 SAM alignment records processed.
+7700000 SAM alignment records processed.
+7800000 SAM alignment records processed.
+7865176 SAM alignments  processed.
+</pre>
+</details>
+<p>Next towards number 2, we merge all replicate outputs from HTSeq into <em>one</em> gene by replicate transcript count matrix.</p>
+<p><strong>Parameters</strong>:</p>
+<pre><code>Usage: python htseq_merge.py 
+    1) /FULL/PATH/TO/htseq/ (with subfolders e.g. ../htseq/SAMPLE/REP/htseq_counts stop at htseq/)</code></pre>
+<p><strong>Command</strong>:</p>
+<p><code>python htseq_merge.py ~/Desktop/test_timeor_load/timeor/results/load/count_matrix/htseq/</code></p>
+<p><strong>Outputs</strong>:</p>
+<p>The output matrix <code>merged_htseq.csv</code> is placed in the output folder provided.</p>
+<details>
+<summary>Long output</summary>
+<pre>
+Done
+</pre>
+</details>
+</div>
 </div>
 </div>
 <div id="primary-and-secondary-analyses" class="section level1">
@@ -942,14 +1007,20 @@ sys       0m1.537s</code></pre>
 <p>These steps will take the user through comparison of differential expression methods, determining differential expression, and determining the appropriate number of clusters of temporally differentially expressed genes.</p>
 <div id="primary-analysis" class="section level2">
 <h2>Primary Analysis</h2>
-<div id="produce-gene-by-replicate-transcript-count-matrix" class="section level3">
-<h3>Produce Gene by Replicate Transcript Count Matrix</h3>
-<p>To produce a count matrix requires 2 steps, 1) convert aligned reads to a measure of the count of transcripts assigned to each gene per replicate (used to denote the level of expression of a gene), and 2) merge all replicates together to produce a gene by replicate transcript count matrix. Towards number 1, we first use HTSeq on all replicates.</p>
+<div id="produce-clustermap" class="section level3">
+<h3>Produce Clustermap</h3>
+<p>To produce a clustermap of the data the user must follow these commands:</p>
 <p><strong>Parameters</strong>:</p>
-<pre><code>./run_HTSeq.sh: Usage: ./run_HTSeq.sh 
-    1) /FULL/PATH/TO/timeor/results/load/alignment/
-    2) ALIGNMENT_METHOD (hisat2 OR bowtie2)</code></pre>
-<p>Using Bowtie2 for this example below. The steps are the same for HISAT2.</p>
+<pre><code>Rscript app/scripts/clustermap_script.r 
+    Error: Pass in 7 arguments: Rscript clustermap.r 
+    1)/FULL/PATH/TO/RESULTS_DIR/ 
+    2)/FULL/PATH/TO/HEATMAP_INPUT_FILE 
+    3)DESIRED_OUTPUT_NAME (e.g. insulin_test) 
+    4)CLOSE_TIMEPOINT (1: close timepoint, 0: distant timepoint) 
+    5)USER_CHOOSE_CLUST_NUMBER (if 0 TIMEOR finds optimal, else type desired number of clusters) 
+    6)DIST_METHOD (e.g. euclidean) 
+    7)CLUSTER_METHOD (e.g. ward.D2)
+    </code></pre>
 <p><strong>Command</strong>:</p>
 <p><code>./run_HTSeq.sh ~/Desktop/test_timeor_load/timeor/results/load/alignment/bowtie2/</code></p>
 <p><strong>Outputs</strong>:</p>
