@@ -798,7 +798,7 @@ summary {
 <li><em>ID</em>: a unique identifier (ID) for the user (e.g. case1min_rep1)</li>
 <li><em>condition</em>: one word description (e.g. case, control)</li>
 <li><em>time</em>: numerical values e.g. (0, 20, 40)</li>
-<li><em>replicate</em>: one word description of replicate (e.g. b1, b2, b3)</li>
+<li><em>replicate</em>: one word description of replicate (e.g. r1, r2, r3)</li>
 </ul></li>
 </ul></li>
 <li>*** <strong>count matrix</strong> requires Ensembl or Flybase unique gene identifiers, and columns should be the IDs from metadata file, and in the same order as metadata file.</li>
@@ -818,6 +818,7 @@ summary {
 <h2>Input Data: .fastq Files</h2>
 <ul>
 <li>The .fastq files are downloaded as .fastq.gz.</li>
+<li>Data should at least have two replicates.</li>
 </ul>
 </div>
 <div id="input-details-metadata-file" class="section level2">
@@ -826,9 +827,12 @@ summary {
 <li>Make sure there are an equal number of replicates for each sample.</li>
 <li>Label control as “control”.</li>
 <li>Have time point data in order where control or time point 1 is at the top and the last time point is at the bottom.</li>
-<li>have unique IDs follow these formats:
+<li>Have unique IDs that <em>ideally</em> follow one of these formats:
 <ul>
-<li>NAMETIME_REPLICATE_TIME</li>
+<li>NAMETIME.REPLICATE.BATCH</li>
+<li>NAMETIME.BATCH.REPLICATE</li>
+<li>NAMETIME_REPLICATE_BATCH</li>
+<li>NAMETIME_BATCH_REPLICATE</li>
 </ul></li>
 <li>Sometimes when using editors such as Excel, odd delimiters specific to the user’s machine are added at the end of lines. We advise users to check that these are not present.</li>
 <li>Please upload .csv files.</li>
@@ -841,6 +845,7 @@ summary {
 <li>Gene ID column should be named “ID” and populated with Ensembl IDs.</li>
 <li>Make sure columns are in the same order as the rows of metadata file.</li>
 <li>Please upload .csv files.</li>
+<li>Data should at least have two replicates.</li>
 </ul>
 </div>
 <div id="suggestions-for-how-to-answer-six-determine-adaptive-default-methods-questions" class="section level2">
@@ -857,7 +862,7 @@ summary {
 <li>Importantly, it is <span style="color:red"><strong>strongly</strong></span> advised to compare all three (ImpulseDE2, Next maSigPro, and DESeq2) DE methods’ results (<span style="color:red">by keeping ‘Yes’ for Question 5</span>), especially when there are “close time points and short time-series”. Recent studies such as Spies et al. 2019 show that DESeq2 performs well when determining differentially expressed genes when time-series is short. To compare all three these, keep ‘Yes’ as the answer for Question 5 (below).</li>
 <li><em>Please see our manuscript for more a more robust explanation and a series of citations for further reading.</em></li>
 </ul></li>
-<li><p>Question 5 asks: “Compare multiple methods (alignent and differential expression)?” If this question is left to ‘Yes’ (which is <strong>strongly</strong> encouraged), TIMEOR will run all methods for the user to determine the best suited method. This is important because in many cases the categorical method DESeq2 which does not consider gene trajectories, still returns a robust set of differentially expressed genes. If this is set to ‘No’, TIMEOR will run for alignment (if applicable): HISAT2, and for DE: DESeq2 (if distant time points selected in Question 4), or ImpulseDE2 (if close time points selected in Question 4).</p></li>
+<li><p>Question 5 asks: “Compare multiple methods (alignment and differential expression)?” If this question is left to ‘Yes’ (which is <strong>strongly</strong> encouraged), TIMEOR will run all methods for the user to determine the best suited method. This is important because in many cases the categorical method DESeq2 which does not consider gene trajectories, still returns a robust set of differentially expressed genes. If this is set to ‘No’, TIMEOR will run for alignment (if applicable): HISAT2, and for DE: DESeq2 (if distant time points selected in Question 4), or ImpulseDE2 (if close time points selected in Question 4).</p></li>
 <li><p>Question 6 asks: “What is the maximum number of time steps over which one gene can influence the transcription of another gene?” This question prompts the user to tell TIMEOR the window of time over which one gene can <em>directly</em> influence another. Within this window all interactions are considered. It is advised to keep this value small if the time points are spaced out. Said differently, at each time point <span class="math inline">\(t\)</span> for a differentially expressed gene <span class="math inline">\(g\)</span>, if Question 6’s answer were 2, TIMEOR would be asking, what are potential interactions of <span class="math inline">\(g\)</span> with other TFs across <span class="math inline">\(t+1\)</span> and <span class="math inline">\(t+2\)</span>.</p></li>
 </ul>
 </div>
@@ -877,7 +882,7 @@ summary {
 <li><p>“Primary Analysis” stage: the user can choose to allow TIMEOR to automatically cluster the DE gene trajectories, or the user can choose the number of gene trajectory clusters. Importantly, finding the optimal solution to this hierarchical clustering problem is an NP-hard. Thus, user input is needed to assess a reasonable number of clusters for downstream analysis. To help, TIMEOR provides an automatic clustering option (PDF visible when folder is downloaded) which takes the mode between three unsupervised clustering methods (partition around medoids (Reynolds et al. 2006), Silhouette (Rousseeuw et al. 1987), and Calinski criterion (Calinkski et al. 1974)) to automatically return the number of gene trajectory clusters to the user. TIMEOR also provides an Elbow plot to show the user how the explained variation changes as a function of the number of clusters. The user can leverage this plot by picking the elbow of the curve. The user is encouraged to use the interactive clustermap and the clustering plots (available on download) to determine whether the automatic clustering option provides suitable clusters.</p></li>
 <li><p>“Primary Analysis” stage: NOTE, there is not a fold change cut-off for the DE gene trajectories, only an adjusted p-value cutoff. This allows the user to view significant differences in expression trajectories while the fold change might be smaller. This is useful to observe changes for genes including non-coding genes and genes involved in dosage compensation.</p></li>
 <li><p>“Secondary Analysis: Factor Binding”: the user is encouraged to “see each method’s predicted transcription factors” and search for protein-DNA data (in .bigWig format) to view the binding profile of that transcription factor across each gene trajectory cluster.</p></li>
-<li><p>“Secondary Analysis: Temporal Relations”: the user can add additional genes or transcription factors (potentially viewed on Factor Binding tab) to the final gene regulatory network (GRN) within STRINGdb. NOTE: TIMEOR only reports the TF GRN using the observed and top one predicted TFs from the “Observed and Top Predicted Transcription Factors” table. The user is <strong>encouraged</strong> to view the results from individual methods (on Factor Binding tab) when constructing the final GRN, and view Temporal Relations Table to uncover the lead and lag relationships between TFs</p></li>
+<li><p>“Secondary Analysis: Temporal Relations”: the user can add additional genes or transcription factors (potentially viewed on Factor Binding tab) to the final gene regulatory network (GRN) within STRINGdb. NOTE: TIMEOR only reports the TF GRN using the observed and top one predicted TFs from the “Observed and Top Predicted Transcription Factors” table. The user is <strong>encouraged</strong> to view the results from individual methods (on Factor Binding tab) when constructing the final GRN, and view Temporal Relations Table to uncover the lead and lag relationships between TFs.</p></li>
 </ul>
 </div>
 
