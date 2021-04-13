@@ -15,7 +15,7 @@ TIMEOR accepts 2 input types: (1) raw .fastq files and SraRunTable [(e.g. here)]
 ## Important Points to Remember
 
 - <span style="color:red">We strongly encourage the user to input a read count matrix (and associated metadata file) when possible</span>, as the input file size limit is 10GB.
-- For larger dataset processing, the user is encouraged to use our ready-to-use Docker image. Read 5 steps [here](https://timeor.brown.edu/app_direct/timeor/timeor_getting_started.html##local-installation). If that is not possible, please feel free to contact us for specific space requirements. **We are happy to help**. 
+- For larger dataset processing, the user is encouraged to use our ready-to-use Docker image. Read 4 steps [here](https://timeor.brown.edu/app_direct/timeor/timeor_getting_started.html##local-installation), in Tutorials (left side-bar), 'Web Server' tab, 'Local Installation' section. If that is not possible, please feel free to contact us for specific space requirements. **We are happy to help**. 
 - <span style="color:red">While TIMEOR analysis is running, simply make sure to revisit the page at least once an hour.</span>
 - <span style="color:red">We strongly encourage the user to keep '5.Compare multiple methods' set to 'Yes' to see TIMEOR's full functionality.
 - Please click each button just once.
@@ -38,7 +38,7 @@ TIMEOR accepts 2 input types: (1) raw .fastq files and SraRunTable [(e.g. here)]
 1.   Import **SraRunTable from GEO**\* where TIMEOR will process raw data
     through retrieving .fastq files, quality control, alignment, and
     read count matrix creation. Read first tab of TIMEOR (Getting Started) for information about 
-    this input specification. Read [this section](https://timeor.brown.edu/app_direct/timeor/timeor_app_tutorial.html#run-timeor-from-raw-data-starting-from-.fastq-time-series-rna-seq) for information about how to process these data in TIMEOR. **We strongly encourage users to upload a read count matrix**, or process raw .fastq data via TIMEOR's interface locally using Docker ([see 5 steps here](https://timeor.brown.edu/app_direct/timeor/timeor_app_tutorial.html#local-installation)).
+    this input specification. Read [this section](https://timeor.brown.edu/app_direct/timeor/timeor_app_tutorial.html#run-timeor-from-raw-data-starting-from-.fastq-time-series-rna-seq) for information about how to process these data in TIMEOR. **We strongly encourage users to upload a read count matrix**, or process raw .fastq data via TIMEOR's interface locally using Docker ([see 4 steps here](https://timeor.brown.edu/app_direct/timeor/timeor_app_tutorial.html#local-installation)) in Tutorials (left side-bar), 'Web Server' tab, 'Local Installation' section.
 
 2.   Import **metadata file\*\* and count matrix \*\*\*** (skipping raw
     data retrieval, quality control, alignment, and read count matrix
@@ -101,7 +101,7 @@ interacting with each stage and tab.
 
 - Question 4 asks: "What type of time-series?" There are three options - "close time point and long time series", "close time point and short time series", and "distant time point". Based on the user's understanding of the biological system, the user should decide whether the timepoints are considered close or far in time. This question is important to determine how to model differential gene expression (DE) trajectories over time. 
     * DESeq2 is a categorical DE method generally used to analyze timepoints separately. When time points are far apart this is a good option. TIMEOR uses DESeq2 if the user toggles to "distant time point". 
-    * When we are interested to model gene trajectories (when time points are close), we assess the temporal dynamic expression between time point $t$ given $t-1$. In this context, it is advised a continuous DE method. TIMEOR uses ImpulseDE2 if the user toggles to "close time point ...". ImpulseDE2 employs an impulse model to determine differentally expressed genes. 
+    * When we are interested to model gene trajectories (when time points are close), we assess the temporal dynamic expression between time point $t$ given $t-1$. In this context, it is advised a continuous DE method. TIMEOR uses ImpulseDE2 if the user toggles to "close time point ...". ImpulseDE2 employs an impulse model to determine differentally expressed genes.
     * Importantly, it is <span style="color:red">**strongly**</span> advised to compare all three (ImpulseDE2, Next maSigPro, and DESeq2) DE methods' results (<span style="color:red">by keeping 'Yes' for Question 5</span>), especially when there are "close time points and short time-series". Recent studies such as Spies et al. 2019 show that DESeq2 performs well when determining differentially expressed genes when time-series is short. To compare all three these, keep 'Yes' as the answer for Question 5 (below).
     * *Please see our manuscript for more a more robust explanation and a series of citations for further reading.*
 

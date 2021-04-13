@@ -29,7 +29,7 @@ Run TIMEOR
 1.   Import **SraRunTable from GEO**\* where TIMEOR will process raw data
     through retrieving .fastq files, quality control, alignment, and
     read count matrix creation. Read first tab of TIMEOR (Getting Started) for information about 
-    this input specification. Read [this section](https://timeor.brown.edu/app_direct/timeor/timeor_app_tutorial.html#run-timeor-from-raw-data-starting-from-.fastq-time-series-rna-seq) for information about how to process these data in TIMEOR. **We strongly encourage users to upload a read count matrix**, or process raw .fastq data via TIMEOR's interface locally using Docker ([see 5 steps here](#local-installation)).
+    this input specification. Read [this section](https://timeor.brown.edu/app_direct/timeor/timeor_app_tutorial.html#run-timeor-from-raw-data-starting-from-.fastq-time-series-rna-seq) for information about how to process these data in TIMEOR. **We strongly encourage users to upload a read count matrix**, or process raw .fastq data via TIMEOR's interface locally using Docker ([see 4 steps here](#local-installation)).
 
 2.   Import **metadata file\*\* and count matrix \*\*\*** (skipping raw
     data retrieval, quality control, alignment, and read count matrix
@@ -102,7 +102,7 @@ This tutorial uses a subset of real data used in the TIMEOR publication to
 take the user through TIMEOR's "Process Raw Data" tab. You will first see this pop-up. Please read.
 There are 4 steps.
 
-**NOTE**: When possible we advise the user to start from a read count matrix, as our file size limit is 10GB. For larger datasets, the user can use TIMEOR locally (still through web interface) via Docker, by following the 5 steps [below, and here](#local-installation).
+**NOTE**: When possible we advise the user to start from a read count matrix, as our file size limit is 10GB. For larger datasets, the user can use TIMEOR locally (still through web interface) via Docker, by following the 4 steps [below, and here](#local-installation).
 
 1.  In the far-left side-bar click on “Example Data” and then
     under “Load raw data” click on "SraRunTable & raw .fastq files". This will load the answers to the adaptive default questions (left) and also load input details (right). 
