@@ -739,34 +739,28 @@ summary {
 <div id="docker-hub-and-docker" class="section level3">
 <h3>Docker Hub and Docker:</h3>
 <ol style="list-style-type: decimal">
-<li>Download organism genome folder (genomes_info).
+<li>Download contents of organism genome folder (<code>/genomes_info/</code>) into desired location (e.g. <code>/Users/USERNAME/Desktop/test_folder/genomes_info/</code>) to mount later.
 <ul>
-<li>The user is welcome to gather only the organism of interest. For example, for Drosophila melanogaster simply download <code>/genomes_info/dme/</code>
+<li>The user is welcome to gather only the organism of interest. For example, for <em>Drosophila melanogaster</em> simply download <code>/genomes_info/dme/</code>
 <ul>
 <li>Mouse is <code>/genomes_info/mmu/</code></li>
 <li>Human is <code>/genomes_info/hsa/</code></li>
 </ul></li>
 <li>Link <code>/genomes_info/</code>: <a href="https://drive.google.com/drive/folders/1KEnpCOU0dQU5p1tnEy3o9l02NE0uYnpm?usp=sharing" class="uri">https://drive.google.com/drive/folders/1KEnpCOU0dQU5p1tnEy3o9l02NE0uYnpm?usp=sharing</a></li>
 </ul></li>
-<li>Choose directory location for genomes_info (e.g. <code>/Users/USERNAME/Desktop/test_folder/genomes_info/</code>)</li>
+<li>Make sure contents of <code>/genome_info/</code> are readable. For example if using <em>Drosophila melanogaster</em>, in a console type <code>chmod -R 777 /Users/USERNAME/Desktop/test_folder/genomes_info/dme/</code>.</li>
 <li>Run TIMEOR via Docker
 <ul>
 <li>On command line type
 <ul>
 <li><code>$ docker pull ashleymaeconard/timeor:latest</code></li>
 <li><code>$ docker images</code></li>
-<li><code>$ docker run -v /Users/USERNAME/Desktop/test_folder/:/src_copy -p 3838:3838 &lt;IMAGE_ID&gt;</code></li>
+<li><code>$ docker run -v /Users/USERNAME/Desktop/test_folder/:/srv/ -p 3838:3838 &lt;IMAGE_ID&gt;</code></li>
 </ul></li>
 </ul></li>
-<li>Add <code>/genomes_info/</code> folder to Docker container
+<li>Open TIMEOR Application is available by typing:
 <ul>
-<li>In another command line window
-<ul>
-<li><code>$ docker container ls</code></li>
-<li><code>$ docker exec -it &lt;CONTAINER_NAME&gt; /bin/bash/</code></li>
-<li><code># chmod -R 777 /src_copy/genomes_info/</code></li>
-<li><code># mv /src_copy/genomes_info/ /srv/</code></li>
-</ul></li>
+<li>Shiny server will be running on port 3838. Thus, in a browser visit <code>localhost:3838</code>.</li>
 </ul></li>
 </ol>
 </div>
@@ -779,7 +773,9 @@ summary {
 <ul>
 <li><code>$ docker build -t timeor_env .</code></li>
 </ul></li>
-<li>Follow instructions above from “3. Run TIMEOR via Docker”</li>
+<li>Follow instructions 3 and 4 above.</li>
+<li>In another command line window * <code>$ docker container ls</code> * <code>$ docker exec -it &lt;CONTAINER_NAME&gt; /bin/bash/</code></li>
+<li>Now you have a console within Docker to run commands.</li>
 </ol>
 </div>
 </div>

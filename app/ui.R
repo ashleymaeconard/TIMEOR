@@ -241,7 +241,7 @@ function(request) {
                       ),
                       tags$hr(style = "border-color: black;"), # horizontal line 
                       fluidRow(height=50, 
-                              box(width=12, h3("Process Raw Data"), "Fields below are filled if raw data are processed. With a 10GB upload limit, it is advised that larger datasets be processed locally using Docker. Follow 5 steps ",tags$a(href = "https://timeor.brown.edu/app_direct/timeor/timeor_app_tutorial.html#local-installation", "here", target = "_blank"),". This information is also available by visiting 'Tutorials' in the side-bar, under the Web Server tab, and scrolling down to the bottom under 'Local Installation'.",style="background: #E8E8E8")),
+                              box(width=12, h3("Process Raw Data"), "Fields below are filled if raw data are processed. With a 10GB upload limit, it is advised that larger datasets be processed locally using Docker. Follow 4 steps ",tags$a(href = "https://timeor.brown.edu/app_direct/timeor/timeor_app_tutorial.html#local-installation", "here", target = "_blank"),". This information is also available by visiting 'Tutorials' in the side-bar, under the Web Server tab, and scrolling down to the bottom under 'Local Installation'.",style="background: #E8E8E8")),
 
                       # Process, quality control, and alignment quality text within lower leftmost text in app body within Process Raw Data Tab
                       fluidRow(

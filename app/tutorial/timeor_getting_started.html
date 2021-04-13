@@ -745,7 +745,7 @@ summary {
 <h2>Important Points to Remember</h2>
 <ul>
 <li><span style="color:red">We strongly encourage the user to input a read count matrix (and associated metadata file) when possible</span>, as the input file size limit is 10GB.</li>
-<li>For larger dataset processing, the user is encouraged to use our ready-to-use Docker image. Read 5 steps <a href="https://timeor.brown.edu/app_direct/timeor/timeor_getting_started.html##local-installation">here</a>. If that is not possible, please feel free to contact us for specific space requirements. <strong>We are happy to help</strong>.</li>
+<li>For larger dataset processing, the user is encouraged to use our ready-to-use Docker image. Read 4 steps <a href="https://timeor.brown.edu/app_direct/timeor/timeor_getting_started.html##local-installation">here</a>, in Tutorials (left side-bar), ‘Web Server’ tab, ‘Local Installation’ section. If that is not possible, please feel free to contact us for specific space requirements. <strong>We are happy to help</strong>.</li>
 <li><span style="color:red">While TIMEOR analysis is running, simply make sure to revisit the page at least once an hour.</span></li>
 <li><span style="color:red">We strongly encourage the user to keep ‘5.Compare multiple methods’ set to ‘Yes’ to see TIMEOR’s full functionality.</li>
 <li>Please click each button just once.</li>
@@ -768,13 +768,14 @@ summary {
 </ul></li>
 </ul></li>
 <li>It is advised to skip past the ‘Enrichment’ tab if time is limited, as programs such as MEME can take a long time, even though we limited the motif size to maximum 20 basepairs. The user can certainly go back to the ‘Enrichment’ tab once the rest of the analysis is complete.</li>
+<li>It is advised to wait until any running process is finished before downloading results or logs to ensure a successful download.</li>
 <li><span style="color:red"> Thank you for using TIMEOR! Please help us improve to better assist you. Please contact us with questions, ideas, and suggestions. If an error occurs with your data, please download the log file (far left) to check. When contacting us with questions, please send the <em>time</em>, the log file, and if possible <em>a screenshot</em> so we know where in TIMEOR you are.</span></li>
 </ul>
 </div>
 <div id="two-ways-to-input-data" class="section level2">
 <h2>Two ways to input data:</h2>
 <ol style="list-style-type: decimal">
-<li><p>Import <strong>SraRunTable from GEO</strong>* where TIMEOR will process raw data through retrieving .fastq files, quality control, alignment, and read count matrix creation. Read first tab of TIMEOR (Getting Started) for information about this input specification. Read <a href="https://timeor.brown.edu/app_direct/timeor/timeor_app_tutorial.html#run-timeor-from-raw-data-starting-from-.fastq-time-series-rna-seq">this section</a> for information about how to process these data in TIMEOR. <strong>We strongly encourage users to upload a read count matrix</strong>, or process raw .fastq data via TIMEOR’s interface locally using Docker (<a href="https://timeor.brown.edu/app_direct/timeor/timeor_app_tutorial.html#local-installation">see 5 steps here</a>).</p></li>
+<li><p>Import <strong>SraRunTable from GEO</strong>* where TIMEOR will process raw data through retrieving .fastq files, quality control, alignment, and read count matrix creation. Read first tab of TIMEOR (Getting Started) for information about this input specification. Read <a href="https://timeor.brown.edu/app_direct/timeor/timeor_app_tutorial.html#run-timeor-from-raw-data-starting-from-.fastq-time-series-rna-seq">this section</a> for information about how to process these data in TIMEOR. <strong>We strongly encourage users to upload a read count matrix</strong>, or process raw .fastq data via TIMEOR’s interface locally using Docker (<a href="https://timeor.brown.edu/app_direct/timeor/timeor_app_tutorial.html#local-installation">see 4 steps here</a>) in Tutorials (left side-bar), ‘Web Server’ tab, ‘Local Installation’ section.</p></li>
 <li><p>Import <strong>metadata file** and count matrix ***</strong> (skipping raw data retrieval, quality control, alignment, and read count matrix creation) and proceeding straight to normalization and correction. Read <a href="https://timeor.brown.edu/app_direct/timeor/timeor_app_tutorial.html#run-timeor-using-simulated-data-starting-from-read-count-matrix">this section</a> for information about how to process these data in TIMEOR.</p></li>
 </ol>
 <p>Then simply follow the prompts. Fill out the <strong>grey</strong> boxes to begin interacting with each stage and tab.</p>
