@@ -466,24 +466,18 @@ To run TIMEOR outside of website (recommended for preprocessing from raw .fastq 
 
 ### Docker Hub and Docker:
 
-  1.	Download organism genome folder (genomes_info).
-          * The user is welcome to gather only the organism of interest. For example, for Drosophila melanogaster simply download `/genomes_info/dme/`
+  1.	Download contents of organism genome folder (`/genomes_info/`) into desired location (e.g. `/Users/USERNAME/Desktop/test_folder/genomes_info/`) to mount later.
+          * The user is welcome to gather only the organism of interest. For example, for *Drosophila melanogaster* simply download `/genomes_info/dme/`
               * Mouse is `/genomes_info/mmu/`
               * Human is `/genomes_info/hsa/`
           * Link `/genomes_info/`: https://drive.google.com/drive/folders/1KEnpCOU0dQU5p1tnEy3o9l02NE0uYnpm?usp=sharing
-  2.	Choose directory location for genomes_info (e.g. `/Users/USERNAME/Desktop/test_folder/genomes_info/`)
+  2.  Make sure contents of `/genome_info/` are readable. For example if using *Drosophila melanogaster*, in a console type `chmod -R 777 /Users/USERNAME/Desktop/test_folder/genomes_info/dme/`.
   3.	Run TIMEOR via Docker
           * On command line type 
               * `$ docker pull ashleymaeconard/timeor:latest` 
               * `$ docker images`
-              * `$ docker run -v /Users/USERNAME/Desktop/test_folder/:/src_copy -p 3838:3838 <IMAGE_ID>`
-  4.	Add `/genomes_info/` folder to Docker container
-          * In another command line window
-              * `$ docker container ls`
-              * `$ docker exec -it <CONTAINER_NAME> /bin/bash/`
-              * `# chmod -R 777 /src_copy/genomes_info/`
-              * `# mv /src_copy/genomes_info/ /srv/`
-  5.	Open TIMEOR Application is available by typing: 
+              * `$ docker run -v /Users/USERNAME/Desktop/test_folder/:/srv/ -p 3838:3838 <IMAGE_ID>`
+  4.	Open TIMEOR Application is available by typing: 
           * Shiny server will be running on port 3838. Thus, in a browser visit `localhost:3838`.
   
 ### Or, build Docker image 
@@ -493,7 +487,11 @@ NOTE: This could take a while. Please follow these commands:
   1.	`$ cd /PATH/TO/TIMEOR/`
   2.	Build Docker image in TIMEOR directory:
           * `$ docker build -t timeor_env .`
-  3.	Follow instructions above from "3. Run TIMEOR via Docker"
+  3.	Follow instructions 3 and 4 above.
+  4.  In another command line window
+              * `$ docker container ls`
+              * `$ docker exec -it <CONTAINER_NAME> /bin/bash/`
+  5. Now you have a console within Docker to run commands.
   
 Details
 =======

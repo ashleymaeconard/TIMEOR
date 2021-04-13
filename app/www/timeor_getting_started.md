@@ -30,6 +30,7 @@ TIMEOR accepts 2 input types: (1) raw .fastq files and SraRunTable [(e.g. here)]
       - control v.s. case 1
       - control v.s. case 2
 - It is advised to skip past the 'Enrichment' tab if time is limited, as programs such as MEME can take a long time, even though we limited the motif size to maximum 20 basepairs. The user can certainly go back to the 'Enrichment' tab once the rest of the analysis is complete.
+- It is advised to wait until any running process is finished before downloading results or logs to ensure a successful download.
 - <span style="color:red"> Thank you for using TIMEOR! Please help us improve to better assist you. Please contact us with questions, ideas, and suggestions. If an error occurs with your data, please download the log file (far left) to check. When contacting us with questions, please send the *time*, the log file, and if possible *a screenshot* so we know where in TIMEOR you are.</span>
 
 ## Two ways to input data:
