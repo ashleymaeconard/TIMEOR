@@ -33,10 +33,9 @@ binding, and temporal relations)**.
 
 TIMEOR’s **interactive data visualizations and publication-ready figures 
 streamline the process of time series data analysis and assist the user 
-to design follow-up experiments**. At any point in the analysis, the user 
-can scroll down and click **“Save your place”** to return to analysis later. 
+to design follow-up experiments**. 
 TIMEOR is available for *Homo sapiens, Mus musculus,* and *Drosophila melanogaster*.
-The web server is **completely free**, and is **accessible** at https://timeor.brown.edu in **a partnership** between the [Computational Biology Core at Brown University](https://cbc.brown.edu/) and [Harvard Medical School's DRSC TRiP Core Facility](https://fgr.hms.harvard.edu/). It is **also available** through Docker.
+The web server is **completely free**, and is **accessible** at https://timeor.brown.edu in **a partnership** between the [Computational Biology Core at Brown University](https://cbc.brown.edu/) and [Harvard Medical School's DRSC TRiP Core Facility](https://fgr.hms.harvard.edu/). It is **also available** through Docker for large dataset processing from raw .fastq files (as the TIMEOR web server has an upload file size limit of 10GB per user).
 
 Quick Start: 3 Steps
 =======
@@ -127,7 +126,7 @@ To run TIMEOR on large raw data time-series RNA-seq data, or to run TIMEOR scrip
               * Human is `/genomes_info/hsa/`
           * Link `/genomes_info/`: https://drive.google.com/drive/folders/1KEnpCOU0dQU5p1tnEy3o9l02NE0uYnpm?usp=sharing
   2.  Make sure contents of `/genome_info/` are readable. 
-          * For example if using *Drosophila melanogaster*, in a console type `chmod -R 777 /Users/USERNAME/Desktop/test_folder/genomes_info/dme/`.
+      * For example if using *Drosophila melanogaster*, in a console type `chmod -R 777 /Users/USERNAME/Desktop/test_folder/genomes_info/dme/`.
   3.	Run TIMEOR via Docker
           * On command line type 
               * `$ docker pull ashleymaeconard/timeor:latest` 
@@ -145,8 +144,8 @@ NOTE: This could take a while. Please follow these commands:
           * `$ docker build -t timeor_env .`
   3.	Follow instructions 3 and 4 above.
   4.  In another command line window
-              * `$ docker container ls`
-              * `$ docker exec -it <CONTAINER_NAME> /bin/bash/`
+      * `$ docker container ls`
+      * `$ docker exec -it <CONTAINER_NAME> /bin/bash/`
   5. Now you have a console within Docker to run commands.
 
 Run TIMEOR
