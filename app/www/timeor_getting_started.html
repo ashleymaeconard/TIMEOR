@@ -750,6 +750,7 @@ summary {
 <li><span style="color:red">We strongly encourage the user to keep ‘5.Compare multiple methods’ set to ‘Yes’ to see TIMEOR’s full functionality.</li>
 <li>Please click each button just once.</li>
 <li><span style="color:red"> Once analysis has begun, please proceed through TIMEOR sequentially</span>. <strong>The user can visit previous tabs</strong>, but proceed forward sequentially. Before beginning the analysis, the user can skim through each tab to see what is to come.</li>
+<li>The user can download the demo data and go through the tutorial to get a sense for how long the analysis will take given user interface interaction (such as choosing a certain number of clusters besides 3).</li>
 <li><strong>TIMEOR supports these types of time-series data</strong> (note this is asked in Question 3 of “Determine Adaptive Default Methods”):
 <ul>
 <li>control at 1st time point vs case (i.e. treatment) at subsequent time points</li>
@@ -793,12 +794,12 @@ summary {
 </ul></li>
 <li>** <strong>metadata file</strong> requires <em>at least</em> these columns.
 <ul>
-<li><em>ID, condition, time, replicate</em>
+<li><em>ID, condition, time, batch</em>
 <ul>
-<li><em>ID</em>: a unique identifier (ID) for the user (e.g. case1min_rep1)</li>
+<li><em>ID</em>: a unique identifier (ID) for the user (e.g. case1min_batch1)</li>
 <li><em>condition</em>: one word description (e.g. case, control)</li>
 <li><em>time</em>: numerical values e.g. (0, 20, 40)</li>
-<li><em>replicate</em>: one word description of replicate (e.g. r1, r2, r3)</li>
+<li><em>batch</em>: one word description of batch (e.g. b1, b2, b3)</li>
 </ul></li>
 </ul></li>
 <li>*** <strong>count matrix</strong> requires Ensembl or Flybase unique gene identifiers, and columns should be the IDs from metadata file, and in the same order as metadata file.</li>
@@ -884,6 +885,59 @@ summary {
 <li><p>“Secondary Analysis: Factor Binding”: the user is encouraged to “see each method’s predicted transcription factors” and search for protein-DNA data (in .bigWig format) to view the binding profile of that transcription factor across each gene trajectory cluster.</p></li>
 <li><p>“Secondary Analysis: Temporal Relations”: the user can add additional genes or transcription factors (potentially viewed on Factor Binding tab) to the final gene regulatory network (GRN) within STRINGdb. NOTE: TIMEOR only reports the TF GRN using the observed and top one predicted TFs from the “Observed and Top Predicted Transcription Factors” table. The user is <strong>encouraged</strong> to view the results from individual methods (on Factor Binding tab) when constructing the final GRN, and view Temporal Relations Table to uncover the lead and lag relationships between TFs.</p></li>
 </ul>
+</div>
+<div id="local-installation" class="section level2">
+<h2>Local Installation</h2>
+<p>To run TIMEOR outside of website (recommended for preprocessing from raw .fastq files), users may use Docker and Docker Hub. First, the TIMEOR repository must be cloned (<a href="https://github.com/ashleymaeconard/TIMEOR.git" class="uri">https://github.com/ashleymaeconard/TIMEOR.git</a>). To use Docker, it must be installed (version 20.10.0 recommended).</p>
+<div id="docker-hub-and-docker" class="section level3">
+<h3>Docker Hub and Docker:</h3>
+<ol style="list-style-type: decimal">
+<li>Download contents of organism genome folder (<code>/genomes_info/</code>) into desired location (e.g. <code>/Users/USERNAME/Desktop/test_folder/genomes_info/</code>) to mount later.
+<ul>
+<li>The user is welcome to gather only the organism of interest. For example, for <em>Drosophila melanogaster</em> simply download <code>/genomes_info/dme/</code>
+<ul>
+<li>Mouse is <code>/genomes_info/mmu/</code></li>
+<li>Human is <code>/genomes_info/hsa/</code></li>
+</ul></li>
+<li>Link <code>/genomes_info/</code>: <a href="https://drive.google.com/drive/folders/1KEnpCOU0dQU5p1tnEy3o9l02NE0uYnpm?usp=sharing" class="uri">https://drive.google.com/drive/folders/1KEnpCOU0dQU5p1tnEy3o9l02NE0uYnpm?usp=sharing</a></li>
+</ul></li>
+<li>Make sure contents of <code>/genome_info/</code> are readable.
+<ul>
+<li>For example if using <em>Drosophila melanogaster</em>, in a console type <code>chmod -R 777 /Users/USERNAME/Desktop/test_folder/genomes_info/dme/</code>.</li>
+</ul></li>
+<li>Run TIMEOR via Docker
+<ul>
+<li>On command line type
+<ul>
+<li><code>$ docker pull ashleymaeconard/timeor:latest</code></li>
+<li><code>$ docker images</code></li>
+<li><code>$ docker run -v /Users/USERNAME/Desktop/test_folder/:/srv/ -p 3838:3838 &lt;IMAGE_ID&gt;</code></li>
+</ul></li>
+</ul></li>
+<li>Open TIMEOR Application is available by typing:
+<ul>
+<li>Shiny server will be running on port 3838. Thus, in a browser visit <code>localhost:3838</code>.</li>
+</ul></li>
+</ol>
+</div>
+<div id="or-build-docker-image" class="section level3">
+<h3>Or, build Docker image</h3>
+<p>NOTE: This could take a while. Please follow these commands:</p>
+<ol style="list-style-type: decimal">
+<li><code>$ cd /PATH/TO/TIMEOR/</code></li>
+<li>Build Docker image in TIMEOR directory:
+<ul>
+<li><code>$ docker build -t timeor_env .</code></li>
+</ul></li>
+<li>Follow instructions 3 and 4 above.</li>
+<li>In another command line window
+<ul>
+<li><code>$ docker container ls</code></li>
+<li><code>$ docker exec -it &lt;CONTAINER_NAME&gt; /bin/bash/</code></li>
+</ul></li>
+<li>Now you have a console within Docker to run commands.</li>
+</ol>
+</div>
 </div>
 
 
