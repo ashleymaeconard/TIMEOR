@@ -30,6 +30,9 @@ TIMEOR accepts 2 input types: (1) raw .fastq files and SraRunTable [(e.g. here)]
   - In this case, simply perform the analysis **separately**:
       - control v.s. case 1
       - control v.s. case 2
+- <span style="color:red">**NOTE** Importantly, we assume that replicate batches are sampled with each batch sampled at each time point.</span> That means batch 1 across 4 timepoints would have corresponding replicate values r1 at time point 1, r1 at time point 2, r1 at time point 3 and r1 at time point 4. This process continues for all batches. This structure is adopted to work with all *three* differential expression methods. Moreover, it is a common structure to control for non-biological variation in a time-series experiment. For example, say RNA-seq was performed on a cell line after insulin stimulation, on 10 consecutive time points, every 20 minutes, with three biological replicates (such as in our manuscript). This means that non-biological factors could be considered when determining temporal differential expression by being able to compare three biological replicates!
+
+- Some time-series experimental designs are complex. In those cases, and it is advised to reach out to us with any questions before beginning the analysis. We are *very* willing to help, and are responsive!
 - It is advised to skip past the 'Enrichment' tab if time is limited, as programs such as MEME can take a long time, even though we limited the motif size to maximum 20 basepairs. The user can certainly go back to the 'Enrichment' tab once the rest of the analysis is complete.
 - It is advised to wait until any running process is finished before downloading results or logs to ensure a successful download.
 - <span style="color:red"> Thank you for using TIMEOR! Please help us improve to better assist you. Please contact us with questions, ideas, and suggestions. If an error occurs with your data, please download the log file (far left) to check. When contacting us with questions, please send the *time*, the log file, and if possible *a screenshot* so we know where in TIMEOR you are.</span>
@@ -54,7 +57,8 @@ interacting with each stage and tab.
     - *treatment, time, Run, replicate, batch*
         - *treatment*: one word describing experiment
         - *time*: numerical values e.g. (0, 20, 40)
-        - *replicate*: one word description of replicate
+        - *Run*: ID for the .fastq file (typically begins with SRR)
+        - *batch*: one word description of batch (e.g. b1, b2, b3)
 
   - \*\* **metadata file** requires *at least* these columns.
     -   *ID, condition, time, batch*

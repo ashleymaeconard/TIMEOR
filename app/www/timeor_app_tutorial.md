@@ -57,8 +57,9 @@ interacting with each stage and tab.
         -   *time*: numerical values e.g. (0, 20, 40)
         -   *batch*: one word description of batch (e.g. b1, b2, b3)
 
-  - \*\*\* **count matrix**  requires Ensembl or Flybase unique gene identifiers, and columns should be the IDs
-    from metadata file, and in the same order as metadata file.
+  - \*\*\* **count matrix**  requires Ensembl or Flybase unique gene identifiers, and columns should be the IDs from metadata file, and in the same order as metadata file.
+
+**NOTE Importantly, we assume that replicate batches are sampled with each batch sampled at each time point.** That means batch 1 across 4 timepoints would have corresponding replicate values r1 at time point 1, r1 at time point 2, r1 at time point 3 and r1 at time point 4. This process continues for all batches. This structure is adopted to work with all *three* differential expression methods. Moreover, it is a common structure to control for non-biological variation in a time-series experiment. For example, say RNA-seq was performed on a cell line after insulin stimulation, on 10 consecutive time points, every 20 minutes, with three biological replicates (such as in our manuscript). This means that non-biological factors could be considered when determining temporal differential expression by being able to compare three biological replicates! A nice example is in our demo data [here](https://github.com/ashleymaeconard/TIMEOR/blob/master/demos/simulated_data/timeor/data/metadata.csv).
 
 Getting Started with TIMEOR 
 =======
