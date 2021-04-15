@@ -50,12 +50,12 @@ interacting with each stage and tab.
         - *replicate*: one word description of replicate
 
   - \*\* **metadata file** requires *at least* these columns.
-    -   *ID, condition, time, replicate*
+    -   *ID, condition, time, batch*
         -   *ID*: a unique identifier (ID) for the user
             (e.g. case1min\_rep1)
         -   *condition*: one word description (e.g. case, control)
         -   *time*: numerical values e.g. (0, 20, 40)
-        -   *replicate*: one word description of replicate (e.g. r1, r2, r3)
+        -   *batch*: one word description of batch (e.g. b1, b2, b3)
 
   - \*\*\* **count matrix**  requires Ensembl or Flybase unique gene identifiers, and columns should be the IDs
     from metadata file, and in the same order as metadata file.
@@ -473,7 +473,8 @@ To run TIMEOR outside of website (recommended for preprocessing from raw .fastq 
               * Mouse is `/genomes_info/mmu/`
               * Human is `/genomes_info/hsa/`
           * Link `/genomes_info/`: https://drive.google.com/drive/folders/1KEnpCOU0dQU5p1tnEy3o9l02NE0uYnpm?usp=sharing
-  2.  Make sure contents of `/genome_info/` are readable. For example if using *Drosophila melanogaster*, in a console type `chmod -R 777 /Users/USERNAME/Desktop/test_folder/genomes_info/dme/`.
+  2.  Make sure contents of `/genome_info/` are readable. 
+      * For example if using *Drosophila melanogaster*, in a console type `chmod -R 777 /Users/USERNAME/Desktop/test_folder/genomes_info/dme/`.
   3.	Run TIMEOR via Docker
           * On command line type 
               * `$ docker pull ashleymaeconard/timeor:latest` 
@@ -491,8 +492,8 @@ NOTE: This could take a while. Please follow these commands:
           * `$ docker build -t timeor_env .`
   3.	Follow instructions 3 and 4 above.
   4.  In another command line window
-              * `$ docker container ls`
-              * `$ docker exec -it <CONTAINER_NAME> /bin/bash/`
+      * `$ docker container ls`
+      * `$ docker exec -it <CONTAINER_NAME> /bin/bash/`
   5. Now you have a console within Docker to run commands.
   
 Details
