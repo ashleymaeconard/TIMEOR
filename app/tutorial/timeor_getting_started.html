@@ -744,19 +744,19 @@ summary {
 <div id="important-points-to-remember" class="section level2">
 <h2>Important Points to Remember</h2>
 <ul>
-<li><span style="color:red">We strongly encourage the user to input a read count matrix (and associated metadata file) when possible</span>, as the input file size limit is 10GB.</li>
-<li>For larger dataset processing, the user is encouraged to use our ready-to-use Docker image. Read 4 steps <a href="https://timeor.brown.edu/app_direct/timeor/timeor_getting_started.html##local-installation">here</a>, in Tutorials (left side-bar), ‘Web Server’ tab, ‘Local Installation’ section. If that is not possible, please feel free to contact us for specific space requirements. <strong>We are happy to help</strong>.</li>
-<li><span style="color:red">While TIMEOR analysis is running, simply make sure to revisit the page at least once an hour.</span></li>
-<li><span style="color:red">We strongly encourage the user to keep ‘5.Compare multiple methods’ set to ‘Yes’ to see TIMEOR’s full functionality.</li>
-<li>Please click each button just once.</li>
-<li><span style="color:red"> Once analysis has begun, please proceed through TIMEOR sequentially</span>. <strong>The user can visit previous tabs</strong>, but proceed forward sequentially. Before beginning the analysis, the user can skim through each tab to see what is to come.</li>
-<li>The user can download the demo data and go through the tutorial to get a sense for how long the analysis will take given user interface interaction (such as choosing a certain number of clusters besides 3).</li>
-<li><strong>TIMEOR supports these types of time-series data</strong> (note this is asked in Question 3 of “Determine Adaptive Default Methods”):
+<li><p><span style="color:red">We strongly encourage the user to input a read count matrix (and associated metadata file) when possible</span>, as the input file size limit is 10GB.</p></li>
+<li><p>For larger dataset processing, the user is encouraged to use our ready-to-use Docker image. Read 4 steps <a href="https://timeor.brown.edu/app_direct/timeor/timeor_getting_started.html##local-installation">here</a>, in Tutorials (left side-bar), ‘Web Server’ tab, ‘Local Installation’ section. If that is not possible, please feel free to contact us for specific space requirements. <strong>We are happy to help</strong>.</p></li>
+<li><p><span style="color:red">While TIMEOR analysis is running, simply make sure to revisit the page at least once an hour.</span></p></li>
+<li><p><span style="color:red">We strongly encourage the user to keep ‘5.Compare multiple methods’ set to ‘Yes’ to see TIMEOR’s full functionality.</p></li>
+<li><p>Please click each button just once.</p></li>
+<li><p><span style="color:red"> Once analysis has begun, please proceed through TIMEOR sequentially</span>. <strong>The user can visit previous tabs</strong>, but proceed forward sequentially. Before beginning the analysis, the user can skim through each tab to see what is to come.</p></li>
+<li><p>The user can download the demo data and go through the tutorial to get a sense for how long the analysis will take given user interface interaction (such as choosing a certain number of clusters besides 3).</p></li>
+<li><p><strong>TIMEOR supports these types of time-series data</strong> (note this is asked in Question 3 of “Determine Adaptive Default Methods”):</p>
 <ul>
 <li>control at 1st time point vs case (i.e. treatment) at subsequent time points</li>
 <li>control <strong>or</strong> case over time</li>
 </ul></li>
-<li>Please compare one set of time-series experiments at a time.
+<li><p>Please compare one set of time-series experiments at a time.</p>
 <ul>
 <li>TIMEOR v1 does <strong>not</strong> support time-series RNA-seq of these types:
 <ul>
@@ -768,9 +768,11 @@ summary {
 <li>control v.s. case 2</li>
 </ul></li>
 </ul></li>
-<li>It is advised to skip past the ‘Enrichment’ tab if time is limited, as programs such as MEME can take a long time, even though we limited the motif size to maximum 20 basepairs. The user can certainly go back to the ‘Enrichment’ tab once the rest of the analysis is complete.</li>
-<li>It is advised to wait until any running process is finished before downloading results or logs to ensure a successful download.</li>
-<li><span style="color:red"> Thank you for using TIMEOR! Please help us improve to better assist you. Please contact us with questions, ideas, and suggestions. If an error occurs with your data, please download the log file (far left) to check. When contacting us with questions, please send the <em>time</em>, the log file, and if possible <em>a screenshot</em> so we know where in TIMEOR you are.</span></li>
+<li><p><span style="color:red"><strong>NOTE</strong> Importantly, we assume that replicate batches are sampled with each batch sampled at each time point.</span> That means batch 1 across 4 timepoints would have corresponding replicate values r1 at time point 1, r1 at time point 2, r1 at time point 3 and r1 at time point 4. This process continues for all batches. This structure is adopted to work with all <em>three</em> differential expression methods. Moreover, it is a common structure to control for non-biological variation in a time-series experiment. For example, say RNA-seq was performed on a cell line after insulin stimulation, on 10 consecutive time points, every 20 minutes, with three biological replicates (such as in our manuscript). This means that non-biological factors could be considered when determining temporal differential expression by being able to compare three biological replicates!</p></li>
+<li><p>Some time-series experimental designs are complex. In those cases, and it is advised to reach out to us with any questions before beginning the analysis. We are <em>very</em> willing to help, and are responsive!</p></li>
+<li><p>It is advised to skip past the ‘Enrichment’ tab if time is limited, as programs such as MEME can take a long time, even though we limited the motif size to maximum 20 basepairs. The user can certainly go back to the ‘Enrichment’ tab once the rest of the analysis is complete.</p></li>
+<li><p>It is advised to wait until any running process is finished before downloading results or logs to ensure a successful download.</p></li>
+<li><p><span style="color:red"> Thank you for using TIMEOR! Please help us improve to better assist you. Please contact us with questions, ideas, and suggestions. If an error occurs with your data, please download the log file (far left) to check. When contacting us with questions, please send the <em>time</em>, the log file, and if possible <em>a screenshot</em> so we know where in TIMEOR you are.</span></p></li>
 </ul>
 </div>
 <div id="two-ways-to-input-data" class="section level2">
@@ -789,7 +791,8 @@ summary {
 <ul>
 <li><em>treatment</em>: one word describing experiment</li>
 <li><em>time</em>: numerical values e.g. (0, 20, 40)</li>
-<li><em>replicate</em>: one word description of replicate</li>
+<li><em>Run</em>: ID for the .fastq file (typically begins with SRR)</li>
+<li><em>batch</em>: one word description of batch (e.g. b1, b2, b3)</li>
 </ul></li>
 </ul></li>
 <li>** <strong>metadata file</strong> requires <em>at least</em> these columns.
