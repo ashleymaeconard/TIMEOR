@@ -85,8 +85,8 @@ def create_metadata_and_accession():
     sraRunTable_df['replicate'] = sraRunTable_df['replicate'].astype(str)
     sraRunTable_df['batch'] = sraRunTable_df['batch'].astype(str)
     
-    # Creating the unique ID (treatment_time.replicate)
-    sraRunTable_df['ID'] = sraRunTable_df.treatment.str.split().str.get(0).str.cat(sraRunTable_df.time.str.split().str.get(0), sep ="_").str.cat(sraRunTable_df.replicate.str.split().str.get(0), sep =".").str.cat(sraRunTable_df.batch.str.split().str.get(0), sep =".")
+    # Creating the unique ID (treatmenttime.replicate)
+    sraRunTable_df['ID'] = sraRunTable_df.treatment.str.split().str.get(0).str.cat(sraRunTable_df.time.str.split().str.get(0), sep ="").str.cat(sraRunTable_df.replicate.str.split().str.get(0), sep =".").str.cat(sraRunTable_df.batch.str.split().str.get(0), sep =".")
     
     # Change column order
     sraRunTable_df = sraRunTable_df.reindex(columns=['ID','treatment','time','replicate','batch','Run'])

@@ -170,10 +170,12 @@ run_DESeq2 <- function(METDATA, COUNTDATA, OUTPUTDIR, CONDITION, BATCH_EFFECT, T
     res <- res_no_padj[which(res_no_padj$padj < PVAL_THRESH),]
 
     # Saving MA plots before and after shrinkage
-    pdf(paste(FULL_OUTDIR,paste('ma_plot_noShrinkage_padj',toString(PVAL_THRESH),'.pdf',sep=""),sep="/"))
-    plotMA(res, ylim=c(-4,4), cex=.8)
-    abline(h=c(-1,1), col="dodgerblue", lwd=2)
-    dev.off()
+    if(length(res$baseMean)!=0){
+        pdf(paste(FULL_OUTDIR,paste('ma_plot_noShrinkage_padj',toString(PVAL_THRESH),'.pdf',sep=""),sep="/"))
+        plotMA(res, ylim=c(-4,4), cex=.8)
+        abline(h=c(-1,1), col="dodgerblue", lwd=2)
+        dev.off()
+    }
 
     # Adding gene symbol and placing it in the front for no shrinkage matricies
     ids <- rownames(res)

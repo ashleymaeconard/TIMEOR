@@ -47,7 +47,8 @@ interacting with each stage and tab.
     - *treatment, time, Run, replicate, batch*
         - *treatment*: one word describing experiment
         - *time*: numerical values e.g. (0, 20, 40)
-        - *replicate*: one word description of replicate
+        - *replicate*: one integer description of replicate (e.g. 1, 2, 3) (could have same information as batch)
+        - *batch*: one integer description of batch (e.g. 1, 2, 3)
 
   - \*\* **metadata file** requires *at least* these columns.
     -   *ID, condition, time, batch*
@@ -55,11 +56,28 @@ interacting with each stage and tab.
             (e.g. case1min\_rep1)
         -   *condition*: one word description (e.g. case, control)
         -   *time*: numerical values e.g. (0, 20, 40)
-        -   *batch*: one word description of batch (e.g. b1, b2, b3)
+        -   *batch*: one integer description of batch (e.g. 1, 2, 3)
+    - An example might be: 
+    
+            
+            ID	  batch	condition	time
+            simT0.1	1	control	  0
+            simT0.2	2	control	  0
+            simT0.3	3	control	  0
+            simT1.1	1	case	  1
+            simT1.2	2	case	  1
+            simT1.3	3	case	  1
+            simT2.1	1	case	  2
+            simT2.2	2	case	  2
+            simT2.3	3	case	  2
+            simT3.1	1	case	  3
+            simT3.2	2	case	  3
+            simT3.3	3	case	  3
+
 
   - \*\*\* **count matrix**  requires Ensembl or Flybase unique gene identifiers, and columns should be the IDs from metadata file, and in the same order as metadata file.
 
-**NOTE Importantly, we assume that replicate batches are sampled with each batch sampled at each time point.** That means batch 1 across 4 timepoints would have corresponding replicate values r1 at time point 1, r1 at time point 2, r1 at time point 3 and r1 at time point 4. This process continues for all batches. This structure is adopted to work with all *three* differential expression methods. Moreover, it is a common structure to control for non-biological variation in a time-series experiment. For example, say RNA-seq was performed on a cell line after insulin stimulation, on 10 consecutive time points, every 20 minutes, with three biological replicates (such as in our manuscript). This means that non-biological factors could be considered when determining temporal differential expression by being able to compare three biological replicates! A nice example is in our demo data [here](https://github.com/ashleymaeconard/TIMEOR/blob/master/demos/simulated_data/timeor/data/metadata.csv).
+<span style="color:red">**NOTE** Importantly, we assume that replicate batches are sampled with each batch sampled at each time point.</span> That means batch 1 across 4 timepoints would have corresponding replicate 1 at time point 1, replicate 1 at time point 2, replicate 1 at time point 3 and replicate 1 at time point 4. This process continues for all batches. This structure is adopted to work with all *three* differential expression methods. Moreover, it is a common structure to control for non-biological variation in a time-series experiment. For example, say RNA-seq was performed on a cell line after insulin stimulation, on 10 consecutive time points, every 20 minutes, with three biological replicates (such as in our manuscript). This means that non-biological factors could be considered when determining temporal differential expression by being able to compare three biological replicates!
 
 Getting Started with TIMEOR 
 =======
