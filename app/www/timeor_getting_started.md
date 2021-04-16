@@ -85,11 +85,13 @@ interacting with each stage and tab.
 - Make sure there are an equal number of replicates for each sample.
 - Label control as “control”.
 - Have time point data in order where control or time point 1 is at the top and the last time point is at the bottom.
-- Have unique IDs that *ideally* follow one of these formats:
+- Have unique IDs that *ideally* follow one of these formats (where "." and "_" are interchangeable):
+  - NAMETIMEREPLICATE.BATCH
+  - NAMETIMEBATCH.REPLICATE
   - NAMETIME.REPLICATE.BATCH
   - NAMETIME.BATCH.REPLICATE
-  - NAMETIME_REPLICATE_BATCH
-  - NAMETIME_BATCH_REPLICATE
+  - NAMETIME_REPLICATE.BATCH
+  - NAMETIME_BATCH.REPLICATE
 - Sometimes when using editors such as Excel, odd delimiters specific to the user's machine are added at the end of lines. We advise users to check that these are not present.
 - Please upload .csv files.
 
