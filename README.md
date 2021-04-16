@@ -173,7 +173,8 @@ interacting with each stage and tab.
     - *treatment, time, Run, replicate, batch*
         - *treatment*: one word describing experiment
         - *time*: numerical values e.g. (0, 20, 40)
-        - *replicate*: one word description of replicate
+        - *replicate*: one integer description of replicate (e.g. 1, 2, 3) (could have same information as batch)
+        - *batch*: one integer description of batch (e.g. 1, 2, 3)
 
   - \*\* **metadata file** requires *at least* these columns.
     -   *ID, condition, time, batch*
@@ -181,7 +182,23 @@ interacting with each stage and tab.
             (e.g. case1min\_rep1)
         -   *condition*: one word description (e.g. case, control)
         -   *time*: numerical values e.g. (0, 20, 40)
-        -   *batch*: one word description of batch (e.g. b1, b2, b3)
+        -   *batch*: one integer description of batch (e.g. 1, 2, 3)
+    - An example might be: 
+    
+            
+            ID	  batch	condition	time
+            simT0.1	1	control	  0
+            simT0.2	2	control	  0
+            simT0.3	3	control	  0
+            simT1.1	1	case	  1
+            simT1.2	2	case	  1
+            simT1.3	3	case	  1
+            simT2.1	1	case	  2
+            simT2.2	2	case	  2
+            simT2.3	3	case	  2
+            simT3.1	1	case	  3
+            simT3.2	2	case	  3
+            simT3.3	3	case	  3
 
   - \*\*\* **count matrix**  requires Ensembl or Flybase unique gene identifiers, and columns should be the IDs from metadata file, and in the same order as metadata file.
 

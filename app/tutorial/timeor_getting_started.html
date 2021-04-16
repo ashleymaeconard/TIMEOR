@@ -768,7 +768,7 @@ summary {
 <li>control v.s. case 2</li>
 </ul></li>
 </ul></li>
-<li><p><span style="color:red"><strong>NOTE</strong> Importantly, we assume that replicate batches are sampled with each batch sampled at each time point.</span> That means batch 1 across 4 timepoints would have corresponding replicate values r1 at time point 1, r1 at time point 2, r1 at time point 3 and r1 at time point 4. This process continues for all batches. This structure is adopted to work with all <em>three</em> differential expression methods. Moreover, it is a common structure to control for non-biological variation in a time-series experiment. For example, say RNA-seq was performed on a cell line after insulin stimulation, on 10 consecutive time points, every 20 minutes, with three biological replicates (such as in our manuscript). This means that non-biological factors could be considered when determining temporal differential expression by being able to compare three biological replicates!</p></li>
+<li><p><span style="color:red"><strong>NOTE</strong> Importantly, we assume that replicate batches are sampled with each batch sampled at each time point.</span> That means batch 1 across 4 timepoints would have corresponding replicate 1 at time point 1, replicate 1 at time point 2, replicate 1 at time point 3 and replicate 1 at time point 4. This process continues for all batches. This structure is adopted to work with all <em>three</em> differential expression methods. Moreover, it is a common structure to control for non-biological variation in a time-series experiment. For example, say RNA-seq was performed on a cell line after insulin stimulation, on 10 consecutive time points, every 20 minutes, with three biological replicates (such as in our manuscript). This means that non-biological factors could be considered when determining temporal differential expression by being able to compare three biological replicates!</p></li>
 <li><p>Some time-series experimental designs are complex. In those cases, and it is advised to reach out to us with any questions before beginning the analysis. We are <em>very</em> willing to help, and are responsive!</p></li>
 <li><p>It is advised to skip past the ‘Enrichment’ tab if time is limited, as programs such as MEME can take a long time, even though we limited the motif size to maximum 20 basepairs. The user can certainly go back to the ‘Enrichment’ tab once the rest of the analysis is complete.</p></li>
 <li><p>It is advised to wait until any running process is finished before downloading results or logs to ensure a successful download.</p></li>
@@ -784,6 +784,7 @@ summary {
 <p>Then simply follow the prompts. Fill out the <strong>grey</strong> boxes to begin interacting with each stage and tab.</p>
 <div id="input-file-types" class="section level4">
 <h4>Input file types:</h4>
+<pre><code>  NOTE: see first tab of TIMEOR called Getting Started for specifications.</code></pre>
 <ul>
 <li>* <strong>SraRunTable from GEO</strong> requires at least these columns (which will be reordered to produce the metadata file).
 <ul>
@@ -791,19 +792,33 @@ summary {
 <ul>
 <li><em>treatment</em>: one word describing experiment</li>
 <li><em>time</em>: numerical values e.g. (0, 20, 40)</li>
-<li><em>Run</em>: ID for the .fastq file (typically begins with SRR)</li>
-<li><em>batch</em>: one word description of batch (e.g. b1, b2, b3)</li>
+<li><em>replicate</em>: one integer description of replicate (e.g. 1, 2, 3) (could have same information as batch)</li>
+<li><em>batch</em>: one integer description of batch (e.g. 1, 2, 3)</li>
 </ul></li>
 </ul></li>
 <li>** <strong>metadata file</strong> requires <em>at least</em> these columns.
 <ul>
-<li><em>ID, condition, time, batch</em>
+<li><p><em>ID, condition, time, batch</em></p>
 <ul>
-<li><em>ID</em>: a unique identifier (ID) for the user (e.g. case1min_batch1)</li>
+<li><em>ID</em>: a unique identifier (ID) for the user (e.g. case1min_rep1)</li>
 <li><em>condition</em>: one word description (e.g. case, control)</li>
 <li><em>time</em>: numerical values e.g. (0, 20, 40)</li>
-<li><em>batch</em>: one word description of batch (e.g. b1, b2, b3)</li>
+<li><em>batch</em>: one integer description of batch (e.g. 1, 2, 3)</li>
 </ul></li>
+<li><p>An example might be:</p>
+<pre><code>  ID    batch condition   time
+  simT0.1 1   control   0
+  simT0.2 2   control   0
+  simT0.3 3   control   0
+  simT1.1 1   case      1
+  simT1.2 2   case      1
+  simT1.3 3   case      1
+  simT2.1 1   case      2
+  simT2.2 2   case      2
+  simT2.3 3   case      2
+  simT3.1 1   case      3
+  simT3.2 2   case      3
+  simT3.3 3   case      3</code></pre></li>
 </ul></li>
 <li>*** <strong>count matrix</strong> requires Ensembl or Flybase unique gene identifiers, and columns should be the IDs from metadata file, and in the same order as metadata file.</li>
 </ul>
@@ -833,10 +848,9 @@ summary {
 <li>Have time point data in order where control or time point 1 is at the top and the last time point is at the bottom.</li>
 <li>Have unique IDs that <em>ideally</em> follow one of these formats:
 <ul>
-<li>NAMETIME.REPLICATE.BATCH</li>
-<li>NAMETIME.BATCH.REPLICATE</li>
-<li>NAMETIME_REPLICATE_BATCH</li>
-<li>NAMETIME_BATCH_REPLICATE</li>
+<li>NAMETIME.BATCH (e.g.)</li>
+<li>NAMETIMEREPLICATE.BATCH</li>
+<li>NAMETIMEBATCH.REPLICATE</li>
 </ul></li>
 <li>Sometimes when using editors such as Excel, odd delimiters specific to the user’s machine are added at the end of lines. We advise users to check that these are not present.</li>
 <li>Please upload .csv files.</li>
