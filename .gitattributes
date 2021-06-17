@@ -1,0 +1,5 @@
+*.sh linguist-detectable=false
+*.py linguist-detectable=false
+*.r linguist-detectable=true
+*.html linguist-detectable=false
+
