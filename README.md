@@ -48,9 +48,9 @@ TIMEOR accepts 2 input types: (1) raw .fastq files and SraRunTable [(e.g. here)]
 Paper and Citation
 =======
 
-Please join a number of labs already using TIMEOR. [Read our paper here](https://www.biorxiv.org/content/10.1101/2020.09.14.296418v1), and cite:
+Please join a number of labs already using TIMEOR. See our NAR paper here [Read our paper here](https://academic.oup.com/nar/article/49/W1/W641/6298618), and cite:
 
-Conard, A. M., Goodman, N., Hu, Y., Perrimon, N., Singh, R., Lawrence, C., & Larschan, E. (2020). TIMEOR: a web-based tool to uncover temporal regulatory mechanisms from multi-omics data. bioRxiv.
+Conard, A. M., Goodman, N., Hu, Y., Perrimon, N., Singh, R., Lawrence, C., & Larschan, E. (2021). TIMEOR: a web-based tool to uncover temporal regulatory mechanisms from multi-omics data. Nucleic Acids Research, 49(W1), W641-W653.
 
 Overview
 ========
